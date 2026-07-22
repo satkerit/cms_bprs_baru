@@ -44,8 +44,6 @@ implementation_plan.md
 task.md
 walkthrough.md
 /.ulpi
-/.vscode
-/.trae
 /.claude
 # ============================================
 # IDE & EDITOR
@@ -57,6 +55,7 @@ walkthrough.md
 /.qoder
 /.sixth
 /.agents
+/.trae
 
 # ============================================
 # OS FILES
