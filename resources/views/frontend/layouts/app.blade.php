@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @php
-    $company = \App\Models\CompanyInfo::getInfo();
+    try {
+        $company = \App\Models\CompanyInfo::getInfo();
+    } catch (\Throwable $e) {
+        $company = null;
+    }
 @endphp
 <head>
     <meta charset="utf-8">
