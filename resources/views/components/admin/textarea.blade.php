@@ -2,6 +2,7 @@
     'label' => null,
     'name' => null,
     'model' => null,
+    'value' => '',
     'error' => null,
     'helper' => null,
     'required' => false,
@@ -34,7 +35,7 @@
         {{ $attributes->merge([
             'class' => 'input resize-y min-h-[100px] ' . ($error ? 'input-error' : '')
         ]) }}
-    >{{ $attributes->whereStartsWith('value')->first() ?? '' }}</textarea>
+    >{{ $value }}</textarea>
 
     @if($helper && !$error)
         <p class="mt-1 text-[12px] text-slate-400 flex items-center gap-1">

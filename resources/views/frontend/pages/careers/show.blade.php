@@ -9,8 +9,7 @@
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-100 rounded-full blur-3xl"></div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="max-w-4xl">
-                <a href="{{ route('careers.index') }}" class="inline-flex items-center gap-1.5 sm:gap-2 text-white/80 hover:text-white mb-3 sm:mb-4 transition-colors text-xs sm:text-base min-h-[44px] sm:min-h-0 -my-2 sm:my-0 touch-manipulation active:scale-95">
+            <a href="{{ route('careers.index') }}" class="inline-flex items-center gap-1.5 sm:gap-2 text-white/80 hover:text-white mb-3 sm:mb-4 transition-colors text-xs sm:text-base min-h-[44px] sm:min-h-0 -my-2 sm:my-0 touch-manipulation active:scale-95">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -60,7 +59,6 @@
                         </span>
                     @endif
                 </div>
-            </div>
         </div>
     </section>
 

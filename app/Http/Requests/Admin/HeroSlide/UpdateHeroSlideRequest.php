@@ -14,8 +14,8 @@ class UpdateHeroSlideRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'sometimes|string|max:255',
-            'subtitle' => 'sometimes|string|max:500',
+            'title' => 'nullable|string|max:255',
+            'subtitle' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120|dimensions:min_width=1920,min_height=800,max_width=7680,max_height=4320',
             'link_url' => 'nullable|string|max:255',
             'link_text' => 'nullable|string|max:100',
