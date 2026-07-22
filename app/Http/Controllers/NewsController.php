@@ -14,27 +14,33 @@ class NewsController extends Controller
         SeoMeta::setTitle('Berita & Artikel')
             ->setDescription('Berita terbaru dan artikel informatif seputar perbankan syariah dari BPRS Bangka Belitung.');
 
-        $query = News::query()
-            ->select(['id', 'title', 'slug', 'excerpt', 'featured_image', 'published_at', 'category'])
-            ->where('is_published', true)
-            ->where('published_at', '<=', now());
+        // Build a cache key from current query params (page/search/category)
+        $page = $request->input('page', 1);
+        $search = $request->input('search', '');
+        $category = $request->input('category', '');
+        $cacheKey = 'news_index_' . md5("{$page}|{$search}|{$category}");
 
-        // Search filter
-        if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->search . '%')
-                    ->orWhere('excerpt', 'like', '%' . $request->search . '%');
-            });
-        }
+        $news = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($request) {
+            $query = News::query()
+                ->select(['id', 'title', 'slug', 'excerpt', 'featured_image', 'published_at', 'category'])
+                ->where('is_published', true)
+                ->where('published_at', '<=', now());
 
-        // Category filter
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
-        }
+            if ($request->filled('search')) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('title', 'like', '%' . $request->search . '%')
+                        ->orWhere('excerpt', 'like', '%' . $request->search . '%');
+                });
+            }
 
-        $news = $query->orderBy('published_at', 'desc')->paginate(12)->withQueryString();
+            if ($request->filled('category')) {
+                $query->where('category', $request->category);
+            }
 
-        // Get categories for filter
+            return $query->orderBy('published_at', 'desc')->paginate(12)->withQueryString();
+        });
+
+        // Categories are already cached via CacheService
         $categories = app(\App\Services\CacheService::class)->getNewsCategories();
 
         return view('frontend.pages.news.index', compact('news', 'categories'));
@@ -42,10 +48,12 @@ class NewsController extends Controller
 
     public function show(string $slug)
     {
-        $news = News::with('images')
-            ->where('slug', $slug)
-            ->where('is_published', true)
-            ->firstOrFail();
+        $news = Cache::remember(config('cache-keys.news_detail') . $slug, now()->addHours(6), function () use ($slug) {
+            return News::with('images')
+                ->where('slug', $slug)
+                ->where('is_published', true)
+                ->firstOrFail();
+        });
 
         // SEO Implementation
         SeoMeta::setTitle($news->title)
@@ -70,16 +78,19 @@ class NewsController extends Controller
                 ]
             ]);
 
-        // Get related news from same category
+        // Cache related news — invalidated when news is saved/deleted (see News model booted)
         $relatedNews = collect();
         if ($news->category) {
-            $relatedNews = News::select(['id', 'title', 'slug', 'featured_image', 'published_at'])
-                ->where('is_published', true)
-                ->where('id', '!=', $news->id)
-                ->where('category', $news->category)
-                ->latest('published_at')
-                ->take(3)
-                ->get();
+            $cacheKey = config('cache-keys.news_detail') . 'related_' . md5($news->category . '_' . $news->id);
+            $relatedNews = Cache::remember($cacheKey, now()->addHours(6), function () use ($news) {
+                return News::select(['id', 'title', 'slug', 'featured_image', 'published_at'])
+                    ->where('is_published', true)
+                    ->where('id', '!=', $news->id)
+                    ->where('category', $news->category)
+                    ->latest('published_at')
+                    ->take(3)
+                    ->get();
+            });
         }
 
         return view('frontend.pages.news.show', compact('news', 'relatedNews'));

@@ -53,19 +53,52 @@ class OptimizeFileUpload
             }
 
             // Upload settings
+            // NOTE: upload_max_filesize & post_max_size are PHP_INI_PERDIR settings.
+            // ini_set() does NOT work for these in PHP-FPM/CGI — they MUST be set in
+            // php.ini, .user.ini, or .htaccess. We still attempt ini_set() for Apache
+            // mod_php where it works, and log a warning if the value didn't change.
             $uploadMaxFilesize = $settings->upload_max_filesize ?? '100M';
             $postMaxSize = $settings->post_max_size ?? '100M';
             $maxFileUploads = $settings->max_file_uploads ?? 20;
 
+            $originalUploadMax = ini_get('upload_max_filesize');
             ini_set('upload_max_filesize', $uploadMaxFilesize);
+            $afterUploadMax = ini_get('upload_max_filesize');
+
+            $originalPostMax = ini_get('post_max_size');
             ini_set('post_max_size', $postMaxSize);
+            $afterPostMax = ini_get('post_max_size');
+
             ini_set('max_file_uploads', (string)$maxFileUploads);
+
+            // Log whether ini_set actually changed the settings
+            $uploadChanged = ($originalUploadMax !== $afterUploadMax);
+            $postChanged = ($originalPostMax !== $afterPostMax);
+
+            if (!$uploadChanged || !$postChanged) {
+                \Illuminate\Support\Facades\Log::warning('ini_set() for PHP_INI_PERDIR settings had no effect', [
+                    'upload_max_filesize' => [
+                        'before' => $originalUploadMax,
+                        'attempted' => $uploadMaxFilesize,
+                        'after' => $afterUploadMax,
+                        'changed' => $uploadChanged,
+                    ],
+                    'post_max_size' => [
+                        'before' => $originalPostMax,
+                        'attempted' => $postMaxSize,
+                        'after' => $afterPostMax,
+                        'changed' => $postChanged,
+                    ],
+                    'sapi' => PHP_SAPI,
+                    'hint' => 'Set upload_max_filesize and post_max_size in .user.ini or php.ini',
+                ]);
+            }
 
             // Log the settings
             if (function_exists('Log')) {
                 \Illuminate\Support\Facades\Log::info('Dynamic upload settings applied', [
-                    'upload_max_filesize' => ini_get('upload_max_filesize'),
-                    'post_max_size' => ini_get('post_max_size'),
+                    'upload_max_filesize' => $afterUploadMax,
+                    'post_max_size' => $afterPostMax,
                     'max_execution_time' => ini_get('max_execution_time'),
                     'max_input_time' => ini_get('max_input_time'),
                     'memory_limit' => ini_get('memory_limit'),

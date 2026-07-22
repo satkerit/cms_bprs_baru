@@ -114,18 +114,19 @@
 
  <x-admin.card title="File Laporan">
  <div class="space-y-3">
- @if(isset($report) && $report->file_path)
- <div class="p-3 bg-zinc-50 rounded-xl">
- <p class="text-[11px] text-zinc-700">File saat ini:</p>
- <a href="{{ \App\Helpers\StorageHelper::url($report->file_path) }}" target="_blank" class="text-[11px] text-sky-600 hover:underline">
- 📄 Lihat File ({{ number_format($report->file_size / 1024 / 1024, 2) }} MB)
- </a>
- </div>
- @endif
- <input type="file" name="file" accept=".pdf" {{ isset($report) ? '' : 'required' }}
- class="block w-full text-[13px] text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-sky-100">
- <p class="text-[11px] text-zinc-500">Format PDF. Maks 50MB</p>
- @error('file')<p class="text-[11px] text-red-600">{{ $message }}</p>@enderror
+ @if(isset($report) && $report->file_path)                <div class="p-3 bg-zinc-50 rounded-xl">
+                            <p class="text-[11px] text-zinc-700">File saat ini:</p>
+                            <a href="{{ \App\Helpers\StorageHelper::url($report->file_path) }}" target="_blank" class="text-[11px] text-sky-600 hover:underline">
+                                📄 Lihat File ({{ number_format($report->file_size / 1024 / 1024, 2) }} MB)
+                            </a>
+                        </div>
+                        @endif
+                        <input type="file" name="file" accept=".pdf" {{ isset($report) ? '' : 'required' }}
+                            onchange="validateReportFileSize(this, {{ get_max_upload_size_kb() * 1024 }})"
+                            class="block w-full text-[13px] text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-sky-100">
+                        <p class="text-[11px] text-zinc-500">Format PDF. Maks {{ round(get_max_upload_size_kb() / 1024) }}MB</p>
+                        <p id="file-size-error" class="text-[11px] text-red-600 hidden"></p>
+                        @error('file')<p class="text-[11px] text-red-600">{{ $message }}</p>@enderror
  </div>
  </x-admin.card>
 
@@ -136,3 +137,26 @@
  </div>
 </form>
 @endsection
+
+@push('scripts')
+<script nonce="{{ $nonce }}">
+function validateReportFileSize(input, maxBytes) {
+    const errorEl = document.getElementById('file-size-error');
+    if (!input.files || !input.files[0]) {
+        errorEl.classList.add('hidden');
+        return;
+    }
+    const file = input.files[0];
+    if (file.size > maxBytes) {
+        const maxMB = (maxBytes / (1024 * 1024)).toFixed(0);
+        const fileMB = (file.size / (1024 * 1024)).toFixed(1);
+        errorEl.textContent = 'Ukuran file terlalu besar (' + fileMB + 'MB). Maksimal ' + maxMB + 'MB.';
+        errorEl.classList.remove('hidden');
+        input.value = '';
+    } else {
+        errorEl.classList.add('hidden');
+    }
+}
+</script>
+@endpush
+

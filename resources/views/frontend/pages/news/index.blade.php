@@ -75,13 +75,15 @@
                 @forelse($news as $index => $item)
                 <article class="group bg-white rounded-2xl overflow-hidden border border-border hover:border-emerald-100 card-hover flex flex-col h-full">
                     <!-- Image -->
-                    <div class="relative h-48 sm:h-56 md:h-60 overflow-hidden bg-muted">
+                    <div class="relative h-48 sm:h-56 md:h-60 overflow-hidden bg-muted" style="aspect-ratio: 16/9">
                         @if($item->featured_image)
-                        <img src="{{ \App\Helpers\StorageHelper::url($item->featured_image) }}"
-                             alt="{{ $item->title }}"
-                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                             loading="{{ $index < 3 ? 'eager' : 'lazy' }}"
-                             fetchpriority="{{ $index < 3 ? 'high' : 'auto' }}">
+                        <x-optimized-image
+                            :src="\App\Helpers\StorageHelper::url($item->featured_image)"
+                            :alt="$item->title"
+                            :priority="$index < 3"
+                            :lazy="$index >= 3"
+                            class="w-full h-full"
+                            aspect-ratio="16/9" />
                         @else
                         <div class="w-full h-full bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center">
                             <svg class="w-16 h-16 text-emerald-600/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">

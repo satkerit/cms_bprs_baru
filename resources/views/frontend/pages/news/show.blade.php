@@ -70,12 +70,14 @@
                 <div class="lg:col-span-8">
                     <div class="bg-white rounded-2xl border border-border overflow-hidden">
                         @if($news->featured_image)
-                        <div class="relative overflow-hidden aspect-video">
-                            <img src="{{ storage_url($news->featured_image) }}"
-                                 alt="{{ $news->title }}"
-                                 class="w-full h-full object-cover"
-                                 loading="eager"
-                                 fetchpriority="high">
+                        <div class="relative overflow-hidden" style="aspect-ratio: 16/9">
+                            <x-optimized-image
+                                :src="storage_url($news->featured_image)"
+                                :alt="$news->title"
+                                :priority="true"
+                                :lazy="false"
+                                class="w-full h-full"
+                                aspect-ratio="16/9" />
                         </div>
                         @endif
                         <div class="p-6 sm:p-8 md:p-10">
@@ -138,8 +140,13 @@
                             <a href="{{ route('news.show', $related->slug) }}"
                                class="group flex gap-3 sm:gap-4 p-2 -mx-2 rounded-xl hover:bg-muted transition-all duration-200">
                                 @if($related->featured_image)
-                                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-muted">
-                                    <img src="{{ storage_url($related->featured_image) }}" alt="{{ $related->title }}" class="w-full h-full object-cover" loading="lazy">
+                                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-muted" style="aspect-ratio: 1/1">
+                                    <x-optimized-image
+                                        :src="storage_url($related->featured_image)"
+                                        :alt="$related->title"
+                                        :lazy="true"
+                                        class="w-full h-full"
+                                        aspect-ratio="1/1" />
                                 </div>
                                 @else
                                 <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl shrink-0 bg-muted flex items-center justify-center">
