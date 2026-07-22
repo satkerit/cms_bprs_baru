@@ -166,7 +166,7 @@ class CacheService
                 function () use ($limit) {
                     if (!class_exists('\App\Models\Auction')) return collect();
                     try {
-                        return Auction::active()
+                        return Auction::published()
                             ->orderBy('auction_date', 'asc')
                             ->limit($limit)
                             ->get(['id', 'title', 'slug', 'city', 'limit_price', 'auction_date', 'images', 'asset_type', 'status']);

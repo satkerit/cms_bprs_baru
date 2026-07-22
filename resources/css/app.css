@@ -169,6 +169,13 @@
 }
 
 /* ═══════════════════════════════════════════════
+ * ALPINE.JS — x-cloak: hide elements before Alpine loads
+ * ═══════════════════════════════════════════════ */
+[x-cloak] {
+    display: none !important;
+}
+
+/* ═══════════════════════════════════════════════
  * COMPONENT LAYER
  * ═══════════════════════════════════════════════ */
 @layer components {
@@ -469,7 +476,40 @@
         transform: scale(0.97);
     }
 
-    /* Hero responsive aspect ratio */
+    /* ── Product Gallery ── */
+    .product-image-zoom {
+        cursor: crosshair;
+        overflow: hidden;
+    }
+    .product-image-zoom img {
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: transform;
+    }
+    .product-image-zoom:hover img {
+        transform: scale(1.8);
+    }
+
+    .product-image-skeleton {
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+
+    .lightbox-image-container {
+        animation: lightbox-zoom-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes lightbox-zoom-in {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* ── Hero responsive aspect ratio ── */
     .hero-slider-hybrid {
         aspect-ratio: 21 / 9;
         max-height: 85vh;
@@ -510,6 +550,186 @@
             transition-duration: 0.01ms !important;
         }
     }
+}
+
+/* ═══════════════════════════════════════════════
+ * SCROLL REVEAL ANIMATIONS — Intersection Observer
+ * ═══════════════════════════════════════════════ */
+.fade-in-section,
+.slide-in-left,
+.slide-in-right,
+.scale-in {
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.fade-in-section {
+    transform: translateY(30px);
+}
+
+.slide-in-left {
+    transform: translateX(-30px);
+}
+
+.slide-in-right {
+    transform: translateX(30px);
+}
+
+.scale-in {
+    transform: scale(0.92);
+}
+
+.fade-in-section.is-visible,
+.slide-in-left.is-visible,
+.slide-in-right.is-visible,
+.scale-in.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Animation delay utilities */
+.animation-delay-100 { animation-delay: 100ms !important; }
+.animation-delay-200 { animation-delay: 200ms !important; }
+.animation-delay-300 { animation-delay: 300ms !important; }
+.animation-delay-400 { animation-delay: 400ms !important; }
+.animation-delay-500 { animation-delay: 500ms !important; }
+.animation-delay-700 { animation-delay: 700ms !important; }
+.animation-delay-1000 { animation-delay: 1000ms !important; }
+
+/* ═══════════════════════════════════════════════
+ * KEYFRAME ANIMATIONS — GPU-composited, performant
+ * ═══════════════════════════════════════════════ */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+}
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+@keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes count-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Animation utility classes */
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+.animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+}
+.animate-slide-up {
+    animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-scale-in {
+    animation: scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+.animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
+}
+
+/* ═══════════════════════════════════════════════
+ * CARD INTERACTIONS — Micro-interactions
+ * ═══════════════════════════════════════════════ */
+.card-hover {
+    @apply transition-all duration-300;
+}
+.card-hover:hover {
+    @apply -translate-y-1 shadow-lg;
+}
+
+/* Shine effect on hover */
+.hover-shine {
+    position: relative;
+    overflow: hidden;
+}
+.hover-shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.15) 45%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 55%
+    );
+    background-size: 200% 100%;
+    background-position: 200% 0;
+    transition: background-position 0.6s ease;
+    pointer-events: none;
+}
+.hover-shine:hover::after {
+    background-position: -200% 0;
+}
+
+/* Image zoom container */
+.image-zoom {
+    overflow: hidden;
+}
+.image-zoom img {
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+.image-zoom:hover img {
+    transform: scale(1.08);
+}
+
+/* ═══════════════════════════════════════════════
+ * LINE CLAMP (fallback for Tailwind v4)
+ * ═══════════════════════════════════════════════ */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+ * SCROLL PROGRESS BAR
+ * ═══════════════════════════════════════════════ */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #059669, #10b981);
+    z-index: 9999;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════
+ * SMOOTH NUMBER COUNT-UP
+ * ═══════════════════════════════════════════════ */
+.stats-counter {
+    display: inline-block;
+    will-change: contents;
 }
 
 /* ═══════════════════════════════════════════════

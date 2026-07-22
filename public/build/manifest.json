@@ -94,7 +94,7 @@
     "src": "node_modules/summernote/dist/font/summernote.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/css/app-DWGvynni.css",
+    "file": "assets/css/app-BIYeS12j.css",
     "name": "app",
     "names": [
       "app.css"
@@ -143,7 +143,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/js/app-CpBb7L7K.js",
+    "file": "assets/js/app-C5d7POls.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,

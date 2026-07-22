@@ -100,20 +100,19 @@ window.heroSlider = (delay = 7000) => ({
     },
 });
 
-// Register Alpine plugins via alpine:init (Livewire-safe)
-// Always use the event listener to ensure Alpine hasn't started yet.
-document.addEventListener("alpine:init", () => {
-    window.Alpine.plugin(collapse);
-});
+// =====================================================================
+// PRAYER WIDGET COMPONENTS
+// Defined on window IMMEDIATELY so Alpine can resolve via JS eval
+// even if alpine:init hasn't fired yet (Vite module load timing bug).
+// Also registered via Alpine.data() inside alpine:init for Livewire.
+// =====================================================================
 
-// Prayer Widget Sidebar Controller — Bottom Right
 window.prayerWidgetSidebar = () => ({
     show: true,
     minimized: false,
     ready: false,
 
     init() {
-        // Defer rendering to improve FCP
         setTimeout(() => {
             this.ready = true;
             this.minimized = window.innerWidth < 1024;
@@ -128,7 +127,6 @@ window.prayerWidgetSidebar = () => ({
     },
 });
 
-// Prayer Time Widget
 window.prayerTimeWidget = () => ({
     loading: true,
     error: null,
@@ -181,7 +179,11 @@ window.prayerTimeWidget = () => ({
                 this.fetchPrayerTimes();
             },
             () => this.fetchPrayerTimes(),
-            { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false },
+            {
+                timeout: 10000,
+                maximumAge: 300000,
+                enableHighAccuracy: false,
+            },
         );
     },
 
@@ -315,6 +317,132 @@ window.prayerTimeWidget = () => ({
     destroy() {
         if (this.timeInterval) clearInterval(this.timeInterval);
         if (this.countdownInterval) clearInterval(this.countdownInterval);
+    },
+});
+
+// Always use the event listener to ensure Alpine hasn't started yet.
+document.addEventListener("alpine:init", () => {
+    window.Alpine.plugin(collapse);
+
+    // Register via Alpine.data (Livewire-compatible)
+    window.Alpine.data("prayerWidgetSidebar", window.prayerWidgetSidebar);
+    window.Alpine.data("prayerTimeWidget", window.prayerTimeWidget);
+
+    // Register Stats Count-Up animation component
+    window.Alpine.data("statsCounter", () => ({
+        value: 0,
+        target: 0,
+        suffix: "",
+        prefix: "",
+        hasAnimated: false,
+        observer: null,
+
+        init() {
+            const el = this.$el;
+            this.target = parseInt(el.dataset.target) || 0;
+            this.suffix = el.dataset.suffix || "";
+            this.prefix = el.dataset.prefix || "";
+            this.value = 0;
+
+            // Use IntersectionObserver to trigger once
+            this.observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting && !this.hasAnimated) {
+                            this.hasAnimated = true;
+                            this.animateCount();
+                            this.observer.disconnect();
+                        }
+                    });
+                },
+                { threshold: 0.3 },
+            );
+            this.observer.observe(el);
+        },
+
+        animateCount() {
+            const duration = 2000;
+            const start = performance.now();
+
+            const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+            const frame = (now) => {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easeOutCubic(progress);
+                this.value = Math.round(easedProgress * this.target);
+
+                if (progress < 1) {
+                    requestAnimationFrame(frame);
+                } else {
+                    this.value = this.target;
+                }
+            };
+
+            requestAnimationFrame(frame);
+        },
+
+        destroy() {
+            if (this.observer) this.observer.disconnect();
+        },
+    }));
+
+    // Register Scroll Progress component
+    window.Alpine.data("scrollProgress", () => ({
+        progress: 0,
+
+        init() {
+            const updateProgress = () => {
+                const scrollTop = window.scrollY;
+                const docHeight =
+                    document.documentElement.scrollHeight - window.innerHeight;
+                this.progress = docHeight > 0 ? scrollTop / docHeight : 0;
+            };
+
+            window.addEventListener("scroll", updateProgress, {
+                passive: true,
+            });
+            updateProgress();
+        },
+    }));
+});
+
+// ============================================
+// PRODUCT GALLERY — Zoom + Lightbox
+// ============================================
+window.productGallery = () => ({
+    lightboxOpen: false,
+    zoomActive: false,
+    zoomX: 50,
+    zoomY: 50,
+    loaded: false,
+    imageEl: null,
+
+    init() {
+        this.imageEl = this.$refs.mainImage;
+        if (this.imageEl && this.imageEl.complete) {
+            this.loaded = true;
+        }
+    },
+
+    onImageLoad() {
+        this.loaded = true;
+    },
+
+    handleMouseMove(e) {
+        const rect = this.imageEl.getBoundingClientRect();
+        this.zoomX = ((e.clientX - rect.left) / rect.width) * 100;
+        this.zoomY = ((e.clientY - rect.top) / rect.height) * 100;
+    },
+
+    openLightbox() {
+        this.lightboxOpen = true;
+        document.body.style.overflow = "hidden";
+    },
+
+    closeLightbox() {
+        this.lightboxOpen = false;
+        document.body.style.overflow = "";
     },
 });
 

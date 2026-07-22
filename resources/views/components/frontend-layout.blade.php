@@ -52,6 +52,13 @@
     {{-- Performance Optimizations --}}
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.bunny.net">
+
+    {{-- Scroll Progress Bar --}}
+    <div x-data="scrollProgress"
+         class="scroll-progress"
+         :style="{ transform: `scaleX(${progress})`, opacity: progress > 0.02 ? 1 : 0 }"
+         style="opacity: 0;"
+         aria-hidden="true"></div>
     @php
         $storageHost = parse_url(\App\Helpers\StorageHelper::url('x'), PHP_URL_HOST);
     @endphp
@@ -120,7 +127,7 @@
     </main>
 
     <!-- Floating Prayer Time Widget — Bottom Right -->
-    <div x-data="prayerWidgetSidebar()"
+    <div x-data="prayerWidgetSidebar"
          x-show="ready"
          x-transition:enter="transition ease-out duration-500"
          x-transition:enter-start="opacity-0 translate-x-full"

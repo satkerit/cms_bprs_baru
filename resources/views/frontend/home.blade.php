@@ -32,35 +32,36 @@
     </div>
 
     <!-- ═══ TRUST BADGES ═══ -->
-    <section class="bg-white border-b border-border">
+    <section class="bg-white border-b border-border" x-data>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:divide-x md:divide-border">
-                <div class="flex items-center gap-3 px-4">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
+            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:divide-x md:divide-border"
+                 x-intersect="$el.querySelectorAll('.trust-badge').forEach((el, i) => { setTimeout(() => el.classList.add('is-visible'), i * 100) })">
+                <div class="flex items-center gap-3 px-4 trust-badge fade-in-section">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 shrink-0 group hover:scale-110 hover:rotate-3 transition-all duration-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-foreground leading-tight">Terdaftar & Diawasi OJK</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 px-4">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 text-blue-600 shrink-0">
+                <div class="flex items-center gap-3 px-4 trust-badge fade-in-section">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 text-blue-600 shrink-0 group hover:scale-110 hover:rotate-3 transition-all duration-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-foreground leading-tight">Dijamin oleh LPS</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 px-4">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 text-amber-600 shrink-0">
+                <div class="flex items-center gap-3 px-4 trust-badge fade-in-section">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 text-amber-600 shrink-0 group hover:scale-110 hover:rotate-3 transition-all duration-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-foreground leading-tight">Sesuai Prinsip Syariah</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 px-4">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
+                <div class="flex items-center gap-3 px-4 trust-badge fade-in-section">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 shrink-0 group hover:scale-110 hover:rotate-3 transition-all duration-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
                     <div>
@@ -86,11 +87,16 @@
     </section>
 
     <!-- ═══ CTA - FINANCING SIMULATION ═══ -->
-    <section class="relative py-16 lg:py-20 overflow-hidden">
+    <section class="relative py-16 lg:py-20 overflow-hidden" x-data="{ scrollOffset: 0 }"
+             x-init="window.addEventListener('scroll', () => { scrollOffset = window.scrollY; }, { passive: true })">
         <div class="absolute inset-0 gradient-primary-deep"></div>
         <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.04\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
-        <div class="absolute top-10 left-10 w-64 h-64 bg-yellow-300/15 rounded-full blur-3xl animate-float-slow"></div>
-        <div class="absolute bottom-10 right-10 w-80 h-80 bg-yellow-300/15 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
+        <!-- Parallax decorative circles -->
+        <div class="absolute top-10 left-10 w-64 h-64 bg-yellow-300/15 rounded-full blur-3xl animate-float-slow"
+             :style="{ transform: `translateY(${scrollOffset * 0.04}px)` }"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-yellow-300/15 rounded-full blur-3xl animate-float-slow"
+             :style="{ transform: `translateY(${-scrollOffset * 0.03}px)` }"
+             style="animation-delay: 3s;"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -123,28 +129,28 @@
 
                 <!-- Right - Feature Cards -->
                 <div class="hidden lg:grid grid-cols-2 gap-4 fade-in-section" x-intersect="$el.classList.add('is-visible')">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 transition-all duration-300 min-h-[180px] flex flex-col">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all duration-300 min-h-[180px] flex flex-col">
                         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-800/30 mb-4">
                             <svg class="w-6 h-6 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <h4 class="text-white font-semibold text-sm mb-1">Perhitungan Cepat</h4>
                         <p class="text-xs text-white/80">Hasil simulasi instan dalam hitungan detik</p>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 transition-all duration-300 min-h-[180px] flex flex-col">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all duration-300 min-h-[180px] flex flex-col">
                         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-800/30 mb-4">
                             <svg class="w-6 h-6 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                         </div>
                         <h4 class="text-white font-semibold text-sm mb-1">Transparan</h4>
                         <p class="text-xs text-white/80">Tanpa biaya tersembunyi, semua jelas</p>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 transition-all duration-300 min-h-[180px] flex flex-col">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all duration-300 min-h-[180px] flex flex-col">
                         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-800/30 mb-4">
                             <svg class="w-6 h-6 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                         </div>
                         <h4 class="text-white font-semibold text-sm mb-1">Sesuai Kemampuan</h4>
                         <p class="text-xs text-white/80">Sesuaikan dengan budget Anda</p>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 transition-all duration-300 min-h-[180px] flex flex-col">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all duration-300 min-h-[180px] flex flex-col">
                         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-800/30 mb-4">
                             <svg class="w-6 h-6 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                         </div>
@@ -209,15 +215,15 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                 x-intersect="$el.querySelectorAll('.news-card').forEach((el, i) => { setTimeout(() => el.classList.add('is-visible'), i * 120) })">
                 @forelse($news as $index => $item)
                 <x-frontend.card
                     :title="$item->title"
                     :subtitle="$item->published_at->format('d M Y')"
                     :image="$item->featured_image ? \App\Helpers\StorageHelper::url($item->featured_image) : null"
                     :href="route('news.show', $item->slug)"
-                    class="fade-in-section"
-                    x-intersect="$el.classList.add('is-visible')"
+                    class="news-card fade-in-section image-zoom"
                 >
                     {{ $item->excerpt }}
                 </x-frontend.card>
@@ -300,7 +306,8 @@
     <!-- ═══ CONTACT CTA ═══ -->
     <section class="py-16 lg:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden">
+            <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden fade-in-section"
+                 x-intersect="$el.classList.add('is-visible')">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-300/15 rounded-full -mr-20 -mt-20 animate-float-slow"></div>
                 <div class="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/15 rounded-full -ml-16 -mb-16 animate-float-slow" style="animation-delay: 3s;"></div>
 
@@ -311,12 +318,12 @@
                     </p>
                     <div class="flex flex-wrap justify-center gap-3">
                         <a href="{{ route('contact') }}"
-                           class="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-emerald-600 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-300 btn-press">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                           class="group inline-flex items-center gap-2 px-6 py-3.5 bg-white text-emerald-600 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-300 btn-press">
+                            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                             Hubungi Kami
                         </a>
                         <a href="{{ route('about.offices') }}"
-                           class="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/25 hover:bg-white/20 transition-all duration-300">
+                           class="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/25 hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-300">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             Temukan Kantor
                         </a>

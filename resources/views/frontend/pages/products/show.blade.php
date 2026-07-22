@@ -9,58 +9,154 @@
     @endif
     @endpush
 
-    <!-- Hero -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 overflow-hidden">
+    <!-- Breadcrumb + Hero -->
+    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-6 sm:pb-8 overflow-hidden">
         <div class="absolute inset-0 gradient-primary-deep">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.04\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.04&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <a href="{{ $product->type ? route('products.' . str_replace('_', '-', $product->type)) : '#' }}" class="inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-4 transition-colors text-sm group">
-                    <svg class="w-4 h-4 shrink-0 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Kembali ke Produk
-                </a>
+            <a href="{{ $product->type ? route('products.' . str_replace('_', '-', $product->type)) : '#' }}" class="inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-4 transition-colors text-sm group">
+                <svg class="w-4 h-4 shrink-0 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Kembali ke Produk
+            </a>
 
-                <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-                    <div class="flex-1 text-center md:text-left fade-in-section" x-intersect="$el.classList.add('is-visible')">
-                        @if($product->type)
-                        <span class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white border border-white/30 mb-3">
-                            @switch($product->type)
-                                @case('simpanan_syariah') Simpanan
-                                @break
-                                @case('pembiayaan_syariah') Pembiayaan
-                                @break
-                                @case('deposito_syariah') Deposito
-                                @break
-                                @default {{ ucwords(str_replace('_', ' ', $product->type)) }}
-                            @endswitch
-                        </span>
-                        @endif
-                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight">{{ $product->name }}</h1>
-                        @if($product->short_description)
-                        <p class="text-base sm:text-lg text-white/80 leading-relaxed">{{ $product->short_description }}</p>
-                        @endif
-                    </div>
-                    @if($product->image)
-                    <div class="shrink-0 mx-auto md:mx-0 fade-in-section" x-intersect="$el.classList.add('is-visible')">
-                        <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center ring-1 ring-white/30 overflow-hidden">
-                            <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-contain p-3 sm:p-4">
-                        </div>
-                    </div>
+            <div class="flex flex-col md:flex-row md:items-end gap-4 md:gap-6">
+                <div class="flex-1 fade-in-section" x-intersect="$el.classList.add('is-visible')">
+                    @if($product->type)
+                    <span class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white border border-white/30 mb-3">
+                        @switch($product->type)
+                            @case('simpanan_syariah') Simpanan
+                            @break
+                            @case('pembiayaan_syariah') Pembiayaan
+                            @break
+                            @case('deposito_syariah') Deposito
+                            @break
+                            @default {{ ucwords(str_replace('_', ' ', $product->type)) }}
+                        @endswitch
+                    </span>
+                    @endif
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">{{ $product->name }}</h1>
+                    @if($product->short_description)
+                    <p class="text-base sm:text-lg text-white/80 leading-relaxed max-w-4xl">{{ $product->short_description }}</p>
                     @endif
                 </div>
+            </div>
         </div>
     </section>
 
-    <!-- Content -->
-    <section class="py-12 sm:py-16 md:py-20 bg-muted">
+    <!-- Main Content -->
+    <section class="py-8 sm:py-12 md:py-16 bg-muted">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            {{-- Product Image Gallery (prominent, interactive) --}}
+            @if($product->image)
+            <div class="mb-8 sm:mb-12 fade-in-section" x-intersect="$el.classList.add('is-visible')" x-data="productGallery()">
+                <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-border overflow-hidden">
+                    {{-- Main Image with Zoom --}}
+                    <div class="relative group">
+                        {{-- Skeleton Loader --}}
+                        <div x-show="!loaded" class="w-full aspect-[16/9] sm:aspect-[21/9] product-image-skeleton"></div>
+
+                        {{-- Image with Hover Zoom --}}
+                        <div
+                            class="relative w-full overflow-hidden product-image-zoom cursor-zoom-in"
+                            :class="{ 'hidden': !loaded }"
+                            @click="openLightbox()"
+                            @mousemove="handleMouseMove($event)"
+                            @mouseleave="zoomActive = false"
+                            @mouseenter="zoomActive = true"
+                            style="aspect-ratio: 16/9;"
+                        >
+                            <img
+                                x-ref="mainImage"
+                                src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
+                                alt="{{ $product->image_alt ?? $product->name }}"
+                                class="w-full h-full object-cover"
+                                loading="eager"
+                                @load="onImageLoad()"
+                                :style="zoomActive ? `transform-origin: ${zoomX}% ${zoomY}%; transform: scale(1.8)` : ''"
+                            >
+
+                            {{-- Zoom Indicator --}}
+                            <div class="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5 pointer-events-none">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                                </svg>
+                                Zoom
+                            </div>
+
+                            {{-- Click to View Full --}}
+                            <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5 pointer-events-none">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                                </svg>
+                                Lihat Penuh
+                            </div>
+                        </div>
+
+                        {{-- Alt Text --}}
+                        @if($product->image_alt)
+                        <div class="px-4 sm:px-6 py-3 bg-muted/50 border-t border-border">
+                            <p class="text-xs text-muted-foreground text-center">
+                                <svg class="w-3.5 h-3.5 inline-block mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                {{ $product->image_alt }}
+                            </p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- Lightbox --}}
+                <div
+                    x-show="lightboxOpen"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+                    @click.self="closeLightbox()"
+                    @keydown.escape.window="closeLightbox()"
+                    x-cloak
+                >
+                    <div class="lightbox-image-container relative max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                        <img
+                            src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
+                            alt="{{ $product->image_alt ?? $product->name }}"
+                            class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                        >
+
+                        {{-- Close Button --}}
+                        <button
+                            @click="closeLightbox()"
+                            class="absolute -top-12 right-0 sm:top-0 sm:-right-12 w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"
+                            aria-label="Tutup"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+
+                        {{-- Image Name --}}
+                        <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-white/70 text-sm font-medium whitespace-nowrap">
+                            {{ $product->name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            {{-- Content Grid --}}
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
                 <!-- Main Content -->
                 <div class="lg:col-span-2 space-y-6 sm:space-y-8">
                     @if($product->description)
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border card-hover">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border card-hover fade-in-section" x-intersect="$el.classList.add('is-visible')">
                         <h2 class="text-xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
                             <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -74,7 +170,7 @@
                     @endif
 
                     @if($product->benefits)
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border card-hover">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border card-hover fade-in-section" x-intersect="$el.classList.add('is-visible')">
                         <h2 class="text-xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
                             <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-100 text-amber-600 shrink-0">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
@@ -83,8 +179,8 @@
                         </h2>
                         <ul class="space-y-3">
                             @foreach($product->benefits as $benefit)
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <li class="flex items-start gap-3 group/item">
+                                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0 transition-transform group-hover/item:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                 <span class="text-muted-foreground">{{ $benefit }}</span>
                             </li>
                             @endforeach
@@ -93,7 +189,7 @@
                     @endif
 
                     @if($product->requirements)
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border card-hover">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border card-hover fade-in-section" x-intersect="$el.classList.add('is-visible')">
                         <h2 class="text-xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
                             <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 text-blue-600 shrink-0">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
@@ -102,8 +198,8 @@
                         </h2>
                         <ul class="space-y-3">
                             @foreach($product->requirements as $requirement)
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <li class="flex items-start gap-3 group/item">
+                                <svg class="w-5 h-5 text-blue-500 mt-0.5 shrink-0 transition-transform group-hover/item:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 <span class="text-muted-foreground">{{ $requirement }}</span>
                             </li>
                             @endforeach
@@ -114,7 +210,7 @@
 
                 <!-- Sidebar -->
                 <div class="space-y-6">
-                    <div class="bg-white rounded-2xl border border-border p-6 sticky top-24 shadow-sm">
+                    <div class="bg-white rounded-2xl border border-border p-6 sticky top-24 shadow-sm fade-in-section" x-intersect="$el.classList.add('is-visible')">
                         <h3 class="text-base font-bold text-foreground mb-4 pb-3 border-b border-border">Informasi Produk</h3>
                         <div class="space-y-3">
                             @if($product->type)
@@ -141,12 +237,12 @@
 
                         <div class="mt-6 pt-4 border-t border-border space-y-3">
                             <a href="{{ route('contact') }}"
-                               class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 gradient-primary text-white font-bold rounded-xl hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 btn-press">
+                               class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 gradient-primary text-white font-bold rounded-xl hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 btn-press">
                                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                                 Ajukan Sekarang
                             </a>
                             <a href="{{ route('about.offices') }}"
-                               class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-emerald-600 font-bold rounded-xl border-2 border-emerald-100 hover:bg-emerald-50 transition-all duration-300 btn-press">
+                               class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-emerald-600 font-bold rounded-xl border-2 border-emerald-100 hover:bg-emerald-50 transition-all duration-300 btn-press">
                                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                 Kunjungi Kantor
                             </a>
@@ -154,11 +250,11 @@
                     </div>
 
                     @if($product->brochure)
-                    <div class="bg-white rounded-2xl border border-border p-6 shadow-sm">
+                    <div class="bg-white rounded-2xl border border-border p-6 shadow-sm fade-in-section" x-intersect="$el.classList.add('is-visible')">
                         <h3 class="text-base font-bold text-foreground mb-4">Brosur Produk</h3>
                         <a href="{{ \App\Helpers\StorageHelper::url($product->brochure) }}"
                            target="_blank"
-                           class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300 btn-press">
+                           class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300 btn-press">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                             </svg>
@@ -167,7 +263,7 @@
                     </div>
                     @endif
 
-                    <div class="bg-white rounded-2xl border border-border p-6 shadow-sm">
+                    <div class="bg-white rounded-2xl border border-border p-6 shadow-sm fade-in-section" x-intersect="$el.classList.add('is-visible')">
                         <h3 class="text-base font-bold text-foreground mb-4">Bagikan Produk</h3>
                         <div class="flex gap-2" x-data="{ copied: false }">
                             <a href="https://wa.me/?text={{ urlencode($product->name . ' - ' . url()->current()) }}"
