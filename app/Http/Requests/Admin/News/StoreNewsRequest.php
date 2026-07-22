@@ -22,6 +22,9 @@ class StoreNewsRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageMaxKb = get_upload_max_size('image');
+        $imageMaxMb = round($imageMaxKb / 1024);
+
         return [
             'title' => 'required|string|max:255',
             'slug' => [
@@ -39,8 +42,8 @@ class StoreNewsRequest extends FormRequest
             'tags' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048|dimensions:min_width=800,min_height=450,max_width=7680,max_height=4320',
-            'slide_images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048|dimensions:min_width=400,min_height=225,max_width=7680,max_height=4320'
+            'featured_image' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$imageMaxKb}|dimensions:min_width=800,min_height=450,max_width=7680,max_height=4320",
+            'slide_images.*' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$imageMaxKb}|dimensions:min_width=400,min_height=225,max_width=7680,max_height=4320"
         ];
     }
 
@@ -51,6 +54,9 @@ class StoreNewsRequest extends FormRequest
      */
     public function messages(): array
     {
+        $imageMaxKb = get_upload_max_size('image');
+        $imageMaxMb = round($imageMaxKb / 1024);
+
         return [
             'title.required' => 'Judul berita wajib diisi.',
             'title.max' => 'Judul berita maksimal 255 karakter.',
@@ -65,11 +71,11 @@ class StoreNewsRequest extends FormRequest
             'tags.max' => 'Tags maksimal 255 karakter.',
             'featured_image.image' => 'File gambar utama harus berupa gambar.',
             'featured_image.mimes' => 'Gambar utama harus berformat JPEG, PNG, JPG, atau WebP.',
-            'featured_image.max' => 'Ukuran gambar utama maksimal 2MB.',
+            'featured_image.max' => "Ukuran gambar utama maksimal {$imageMaxMb}MB.",
             'featured_image.dimensions' => 'Gambar utama minimal 800×450px (16:9) dan maksimal 7680×4320px.',
             'slide_images.*.image' => 'File galeri harus berupa gambar.',
             'slide_images.*.mimes' => 'Gambar galeri harus berformat JPEG, PNG, JPG, atau WebP.',
-            'slide_images.*.max' => 'Ukuran gambar galeri maksimal 2MB.',
+            'slide_images.*.max' => "Ukuran gambar galeri maksimal {$imageMaxMb}MB.",
             'slide_images.*.dimensions' => 'Gambar galeri minimal 400×225px dan maksimal 7680×4320px.'
         ];
     }

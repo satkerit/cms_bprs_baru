@@ -34,13 +34,19 @@ class Form extends Component
     public $ticketNumber = null;
     public $submitted = false;
 
-    protected $rules = [
-        'type' => 'required|in:fraud,violation,ethics,abuse,safety,other',
-        'subject' => 'required|string|max:255',
-        'description' => 'required|string|min:50|max:5000',
-        'attachments.*' => 'nullable|file|max:5120|mimes:pdf,doc,docx,jpg,jpeg,png',
-        'agree_terms' => 'accepted'
-    ];
+    protected function rules()
+    {
+        $complaintSettings = \App\Models\ComplaintSetting::getSettings();
+        $maxFileKb = ($complaintSettings->max_file_size_mb ?? 5) * 1024;
+
+        return [
+            'type' => 'required|in:fraud,violation,ethics,abuse,safety,other',
+            'subject' => 'required|string|max:255',
+            'description' => 'required|string|min:50|max:5000',
+            'attachments.*' => "nullable|file|max:{$maxFileKb}|mimes:pdf,doc,docx,jpg,jpeg,png",
+            'agree_terms' => 'accepted',
+        ];
+    }
 
     protected $messages = [
         'type.required' => 'Pilih jenis pelanggaran',

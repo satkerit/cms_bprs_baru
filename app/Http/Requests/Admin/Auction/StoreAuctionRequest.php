@@ -16,6 +16,8 @@ class StoreAuctionRequest extends FormRequest
 
     public function rules(): array
     {
+        $auctionImageMaxKb = get_upload_max_size('auction_image');
+
         return [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -117,20 +119,22 @@ class StoreAuctionRequest extends FormRequest
             'winner_name' => 'nullable|string|max:255',
             'winner_phone' => 'nullable|string|max:20',
             'sold_at' => 'nullable|date',
-            'images' => ['required', 'array', new MinimumImages(3)],
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120|dimensions:min_width=400,min_height=300',
+            'images' => ['required', 'array', new MinimumImages(3, $auctionImageMaxKb)],
+            'images.*' => "required|image|mimes:jpeg,png,jpg,webp|max:{$auctionImageMaxKb}|dimensions:min_width=400,min_height=300",
         ];
     }
 
     public function messages(): array
     {
+        $auctionImageMaxMb = round(get_upload_max_size('auction_image') / 1024);
+
         return [
             'images.required' => 'Gambar aset wajib diupload.',
             'images.min' => 'Minimal 3 gambar aset diperlukan untuk lelang.',
             'images.*.required' => 'Setiap file gambar wajib diisi.',
             'images.*.image' => 'File harus berupa gambar.',
             'images.*.mimes' => 'Format gambar harus JPEG, PNG, JPG, atau WebP.',
-            'images.*.max' => 'Ukuran gambar maksimal 5MB.',
+            'images.*.max' => "Ukuran gambar maksimal {$auctionImageMaxMb}MB.",
         ];
     }
 }

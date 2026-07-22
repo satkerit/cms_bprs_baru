@@ -141,7 +141,7 @@ class WhyChooseUsController extends Controller
         $validated = $request->validate([
             'section_title' => 'required|string|max:255',
             'section_subtitle' => 'required|string',
-            'section_image' => 'nullable|image|max:4096|mimes:png,jpg,jpeg,webp',
+            'section_image' => 'nullable|image|max:' . get_upload_max_size('image') . '|mimes:png,jpg,jpeg,webp',
             'badge_text' => 'nullable|string|max:50',
             'is_active' => 'boolean',
         ]);

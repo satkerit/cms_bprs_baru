@@ -23,12 +23,13 @@ class HeroSliderController extends Controller
     {
         try {
             // Validasi input
+            $heroMaxKb = get_upload_max_size('hero_image');
             $validator = Validator::make($request->all(), [
                 'hero_image' => [
                     'required',
                     'image',
                     'mimes:jpeg,jpg,png,webp',
-                    'max:5120', // 5MB max
+                    'max:' . $heroMaxKb,
                 ],
                 'title' => 'nullable|string|max:255',
                 'subtitle' => 'nullable|string|max:500',
@@ -91,12 +92,13 @@ class HeroSliderController extends Controller
      */
     public function preview(Request $request): JsonResponse
     {
+        $heroMaxKb = get_upload_max_size('hero_image');
         $validator = Validator::make($request->all(), [
             'hero_image' => [
                 'required',
                 'image',
                 'mimes:jpeg,jpg,png,webp',
-                'max:5120',
+                'max:' . $heroMaxKb,
             ]
         ]);
 

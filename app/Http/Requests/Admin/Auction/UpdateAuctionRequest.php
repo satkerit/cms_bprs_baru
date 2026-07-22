@@ -15,6 +15,7 @@ class UpdateAuctionRequest extends FormRequest
 
     public function rules(): array
     {
+        $auctionImageMaxKb = get_upload_max_size('auction_image');
         $auctionId = $this->route('auction')->id ?? null;
 
         return [
@@ -118,7 +119,7 @@ class UpdateAuctionRequest extends FormRequest
             'winner_name' => 'nullable|string|max:255',
             'winner_phone' => 'nullable|string|max:20',
             'sold_at' => 'nullable|date',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'images.*' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$auctionImageMaxKb}",
         ];
     }
 }

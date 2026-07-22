@@ -26,7 +26,7 @@ class UpdateReportRequest extends FormRequest
             'type' => 'required|in:keuangan_publikasi,tata_kelola,tahunan,tahunan_berkelanjutan',
             'year' => 'required|integer|min:2000|max:' . (date('Y') + 1),
             'quarter' => 'nullable|integer|min:1|max:4',
-            'file' => 'nullable|file|mimes:pdf|mimetypes:application/pdf|max:' . get_max_upload_size_kb(),
+            'file' => 'nullable|file|mimes:pdf|mimetypes:application/pdf|max:' . get_upload_max_size('document'),
             'description' => 'nullable|string|max:500',
             'is_published' => 'boolean',
             'posting_mode' => 'required|in:auto,manual',
@@ -55,7 +55,7 @@ class UpdateReportRequest extends FormRequest
      */
     public function messages(): array
     {
-        $maxMb = round(get_max_upload_size_kb() / 1024);
+        $maxMb = round(get_upload_max_size('document') / 1024);
         
         return [
             'title.required' => 'Judul laporan wajib diisi.',

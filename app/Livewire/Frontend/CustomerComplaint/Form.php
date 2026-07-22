@@ -34,17 +34,23 @@ class Form extends Component
     public $submitted = false;
     public $offices = [];
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'phone' => 'required|string|max:20',
-        'category' => 'required|in:service,product,transaction,facility,staff,other',
-        'subcategory' => 'required_if:category,product|nullable|in:tabungan,pembiayaan',
-        'subject' => 'required|string|max:255',
-        'description' => 'required|string|min:20|max:3000',
-        'attachments.*' => 'nullable|file|max:5120|mimes:pdf,doc,docx,jpg,jpeg,png',
-        'agree_terms' => 'accepted'
-    ];
+    protected function rules()
+    {
+        $complaintSettings = \App\Models\ComplaintSetting::getSettings();
+        $maxFileKb = ($complaintSettings->max_file_size_mb ?? 5) * 1024;
+
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'category' => 'required|in:service,product,transaction,facility,staff,other',
+            'subcategory' => 'required_if:category,product|nullable|in:tabungan,pembiayaan',
+            'subject' => 'required|string|max:255',
+            'description' => 'required|string|min:20|max:3000',
+            'attachments.*' => "nullable|file|max:{$maxFileKb}|mimes:pdf,doc,docx,jpg,jpeg,png",
+            'agree_terms' => 'accepted',
+        ];
+    }
 
     protected $messages = [
         'name.required' => 'Nama wajib diisi',

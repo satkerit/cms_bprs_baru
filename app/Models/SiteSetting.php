@@ -34,6 +34,12 @@ class SiteSetting extends Model
         'max_input_time',
         'memory_limit',
         'max_file_uploads',
+        // ===== Feature-specific upload size limits (all in KB) =====
+        'max_image_size_kb',
+        'max_product_image_size_kb',
+        'max_document_size_kb',
+        'max_hero_image_size_kb',
+        'max_auction_image_size_kb',
 
     ];
 
@@ -49,6 +55,12 @@ class SiteSetting extends Model
         'max_input_time' => 'integer',
         'memory_limit' => 'string',
         'max_file_uploads' => 'integer',
+        // ===== Feature-specific upload size limits =====
+        'max_image_size_kb' => 'integer',
+        'max_product_image_size_kb' => 'integer',
+        'max_document_size_kb' => 'integer',
+        'max_hero_image_size_kb' => 'integer',
+        'max_auction_image_size_kb' => 'integer',
 
     ];
 
@@ -119,6 +131,11 @@ class SiteSetting extends Model
                     'max_input_time' => 300,
                     'memory_limit' => '512M',
                     'max_file_uploads' => 20,
+                    'max_image_size_kb' => 2048,
+                    'max_product_image_size_kb' => 5120,
+                    'max_document_size_kb' => 15360,
+                    'max_hero_image_size_kb' => 5120,
+                    'max_auction_image_size_kb' => 5120,
                     'report_keuangan_publikasi_title' => 'Laporan Keuangan Publikasi',
                     'report_keuangan_publikasi_subtitle' => 'Laporan keuangan publikasi BPR Syariah',
                     'report_tata_kelola_title' => 'Laporan Tata Kelola',
@@ -145,6 +162,11 @@ class SiteSetting extends Model
             $settings->max_input_time = 300;
             $settings->memory_limit = '512M';
             $settings->max_file_uploads = 20;
+            $settings->max_image_size_kb = 2048;
+            $settings->max_product_image_size_kb = 5120;
+            $settings->max_document_size_kb = 15360;
+            $settings->max_hero_image_size_kb = 5120;
+            $settings->max_auction_image_size_kb = 5120;
             $settings->report_keuangan_publikasi_title = 'Laporan Keuangan Publikasi';
             $settings->report_keuangan_publikasi_subtitle = 'Laporan keuangan publikasi BPR Syariah';
             $settings->report_tata_kelola_title = 'Laporan Tata Kelola';
@@ -179,6 +201,11 @@ class SiteSetting extends Model
             'max_input_time' => 300,
             'memory_limit' => '512M',
             'max_file_uploads' => 20,
+            'max_image_size_kb' => 2048,
+            'max_product_image_size_kb' => 5120,
+            'max_document_size_kb' => 15360,
+            'max_hero_image_size_kb' => 5120,
+            'max_auction_image_size_kb' => 5120,
             'report_keuangan_publikasi_title' => 'Laporan Keuangan Publikasi',
             'report_keuangan_publikasi_subtitle' => 'Laporan keuangan publikasi BPR Syariah',
             'report_tata_kelola_title' => 'Laporan Tata Kelola',
@@ -351,6 +378,11 @@ class SiteSetting extends Model
                 'max_input_time' => 300,
                 'memory_limit' => '512M',
                 'max_file_uploads' => 20,
+                'max_image_size_kb' => 2048,
+                'max_product_image_size_kb' => 5120,
+                'max_document_size_kb' => 15360,
+                'max_hero_image_size_kb' => 5120,
+                'max_auction_image_size_kb' => 5120,
                 'report_keuangan_publikasi_title' => 'Laporan Keuangan Publikasi',
                 'report_keuangan_publikasi_subtitle' => 'Laporan keuangan publikasi BPR Syariah',
                 'report_tata_kelola_title' => 'Laporan Tata Kelola',

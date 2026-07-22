@@ -8,10 +8,12 @@ use Illuminate\Contracts\Validation\ValidationRule;
 class MinimumImages implements ValidationRule
 {
     protected $minimum;
+    protected $maxSizeKb;
 
-    public function __construct(int $minimum = 3)
+    public function __construct(int $minimum = 3, ?int $maxSizeKb = null)
     {
         $this->minimum = $minimum;
+        $this->maxSizeKb = $maxSizeKb ?? get_upload_max_size('auction_image');
     }
 
     /**
@@ -31,6 +33,9 @@ class MinimumImages implements ValidationRule
             return;
         }
 
+        $maxBytes = $this->maxSizeKb * 1024;
+        $maxMb = round($this->maxSizeKb / 1024, 1);
+
         // Validasi setiap file adalah gambar yang valid
         foreach ($value as $index => $file) {
             if (!$file || !$file->isValid()) {
@@ -43,8 +48,8 @@ class MinimumImages implements ValidationRule
                 return;
             }
 
-            if ($file->getSize() > 5120 * 1024) { // 5MB in bytes
-                $fail("Gambar ke-" . ($index + 1) . " maksimal berukuran 5MB.");
+            if ($file->getSize() > $maxBytes) {
+                $fail("Gambar ke-" . ($index + 1) . " maksimal berukuran {$maxMb}MB.");
                 return;
             }
         }

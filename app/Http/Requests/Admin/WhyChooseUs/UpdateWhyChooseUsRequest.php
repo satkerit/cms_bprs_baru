@@ -13,10 +13,12 @@ class UpdateWhyChooseUsRequest extends FormRequest
 
     public function rules(): array
     {
+        $imageMaxKb = get_upload_max_size('image');
+
         return [
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
-            'icon' => 'nullable|image|max:2048|mimes:png,jpg,jpeg,svg,webp',
+            'icon' => "nullable|image|max:{$imageMaxKb}|mimes:png,jpg,jpeg,svg,webp",
             'color_theme' => 'sometimes|string|in:primary,emerald,blue,amber,rose,purple,teal,cyan,indigo',
             'sort_order' => 'sometimes|integer|min:0',
             'is_active' => 'boolean',
@@ -25,11 +27,13 @@ class UpdateWhyChooseUsRequest extends FormRequest
 
     public function messages(): array
     {
+        $imageMaxMb = round(get_upload_max_size('image') / 1024);
+
         return [
             'title.max' => 'Judul maksimal 255 karakter.',
             'color_theme.in' => 'Tema warna tidak valid.',
             'icon.image' => 'Ikon harus berupa gambar.',
-            'icon.max' => 'Ukuran ikon maksimal 2MB.',
+            'icon.max' => "Ukuran ikon maksimal {$imageMaxMb}MB.",
         ];
     }
 

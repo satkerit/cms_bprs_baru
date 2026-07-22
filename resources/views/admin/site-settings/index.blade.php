@@ -58,6 +58,9 @@
  <div class="border-b border-zinc-200 pb-6">
  <h3 class="text-3xl font-semibold text-zinc-900 mb-4">Pengaturan Upload File</h3>
 
+ {{-- PHP-level Settings --}}
+ <div class="mb-6">
+ <h4 class="text-sm font-medium text-zinc-700 mb-3">PHP-Level Settings</h4>
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
  <label for="upload_max_filesize" class="block text-[11px] font-medium text-zinc-700 mb-2">
@@ -138,6 +141,84 @@
  min="1"
  max="100">
  <p class="mt-1 text-[11px] text-zinc-500">Jumlah file yang bisa diupload sekaligus (1-100)</p>
+ </div>
+ </div>
+ </div>
+
+ {{-- Feature-specific Upload Limits --}}
+ <div>
+ <h4 class="text-sm font-medium text-zinc-700 mb-3">Batas Ukuran Per Fitur (KB)</h4>
+ <p class="text-[11px] text-zinc-500 mb-4">Atur batas ukuran upload untuk setiap jenis file. 1MB = 1024KB.</p>
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+ <div>
+ <label for="max_image_size_kb" class="block text-[11px] font-medium text-zinc-700 mb-2">
+ Gambar Umum (KB)
+ </label>
+ <input type="number"
+ name="max_image_size_kb"
+ id="max_image_size_kb"
+ value="{{ old('max_image_size_kb', $settings->max_image_size_kb ?? 2048) }}"
+ class="w-full rounded-xl border-zinc-300"
+ min="512"
+ max="102400">
+ <p class="mt-1 text-[11px] text-zinc-500">Berita, Board Member, Office, Logo, WhyChooseUs (512-102400 KB)</p>
+ </div>
+
+ <div>
+ <label for="max_product_image_size_kb" class="block text-[11px] font-medium text-zinc-700 mb-2">
+ Gambar Produk (KB)
+ </label>
+ <input type="number"
+ name="max_product_image_size_kb"
+ id="max_product_image_size_kb"
+ value="{{ old('max_product_image_size_kb', $settings->max_product_image_size_kb ?? 5120) }}"
+ class="w-full rounded-xl border-zinc-300"
+ min="512"
+ max="102400">
+ <p class="mt-1 text-[11px] text-zinc-500">Gambar produk & layanan (512-102400 KB)</p>
+ </div>
+
+ <div>
+ <label for="max_document_size_kb" class="block text-[11px] font-medium text-zinc-700 mb-2">
+ Dokumen PDF (KB)
+ </label>
+ <input type="number"
+ name="max_document_size_kb"
+ id="max_document_size_kb"
+ value="{{ old('max_document_size_kb', $settings->max_document_size_kb ?? 15360) }}"
+ class="w-full rounded-xl border-zinc-300"
+ min="1024"
+ max="512000">
+ <p class="mt-1 text-[11px] text-zinc-500">Laporan & Brosur PDF (1024-512000 KB)</p>
+ </div>
+
+ <div>
+ <label for="max_hero_image_size_kb" class="block text-[11px] font-medium text-zinc-700 mb-2">
+ Gambar Hero Slider (KB)
+ </label>
+ <input type="number"
+ name="max_hero_image_size_kb"
+ id="max_hero_image_size_kb"
+ value="{{ old('max_hero_image_size_kb', $settings->max_hero_image_size_kb ?? 5120) }}"
+ class="w-full rounded-xl border-zinc-300"
+ min="512"
+ max="102400">
+ <p class="mt-1 text-[11px] text-zinc-500">Slide hero slider utama (512-102400 KB)</p>
+ </div>
+
+ <div>
+ <label for="max_auction_image_size_kb" class="block text-[11px] font-medium text-zinc-700 mb-2">
+ Gambar Lelang (KB)
+ </label>
+ <input type="number"
+ name="max_auction_image_size_kb"
+ id="max_auction_image_size_kb"
+ value="{{ old('max_auction_image_size_kb', $settings->max_auction_image_size_kb ?? 5120) }}"
+ class="w-full rounded-xl border-zinc-300"
+ min="512"
+ max="102400">
+ <p class="mt-1 text-[11px] text-zinc-500">Gambar aset lelang (512-102400 KB)</p>
+ </div>
  </div>
  </div>
  </div>

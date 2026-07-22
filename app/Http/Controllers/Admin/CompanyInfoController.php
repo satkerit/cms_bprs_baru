@@ -76,13 +76,13 @@ class CompanyInfoController extends Controller
                 'website' => 'nullable|url|max:255',
 
                 // Visual Assets
-                'logo' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
-                'logo_footer' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
+                'logo' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:' . get_upload_max_size('image'),
+                'logo_footer' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:' . get_upload_max_size('image'),
                 'logo_footer_remove_bg' => 'nullable|boolean',
                 'logo_footer_opacity' => 'nullable|integer|min:0|max:100',
                 'favicon' => 'nullable|file|mimes:ico,png,jpg,jpeg|max:512',
-                'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-                'organization_structure' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+                'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:' . get_upload_max_size('image'),
+                'organization_structure' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:' . get_upload_max_size('image'),
 
                 // Company Profile
                 'vision' => 'nullable|string',
@@ -293,7 +293,7 @@ class CompanyInfoController extends Controller
         $this->authorizeEdit('settings.company');
 
         $request->validate([
-            'file' => 'required|file|max:5120',
+            'file' => 'required|file|max:' . get_upload_max_size('image'),
             'path' => 'nullable|string',
             'type' => 'required|in:image,icon,document',
         ]);

@@ -121,10 +121,11 @@
                             </a>
                         </div>
                         @endif
+                        @php $documentMaxKb = get_upload_max_size('document'); $documentMaxBytes = $documentMaxKb * 1024; $documentMaxMb = round($documentMaxKb / 1024); @endphp
                         <input type="file" name="file" accept=".pdf" {{ isset($report) ? '' : 'required' }}
-                            onchange="validateReportFileSize(this, {{ get_max_upload_size_kb() * 1024 }})"
+                            onchange="validateReportFileSize(this, {{ $documentMaxBytes }})"
                             class="block w-full text-[13px] text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-sky-100">
-                        <p class="text-[11px] text-zinc-500">Format PDF. Maks {{ round(get_max_upload_size_kb() / 1024) }}MB</p>
+                        <p class="text-[11px] text-zinc-500">Format PDF. Maks {{ $documentMaxMb }}MB</p>
                         <p id="file-size-error" class="text-[11px] text-red-600 hidden"></p>
                         @error('file')<p class="text-[11px] text-red-600">{{ $message }}</p>@enderror
  </div>

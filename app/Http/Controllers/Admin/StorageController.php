@@ -36,9 +36,10 @@ class StorageController extends Controller
     {
         $this->authorizeEdit("storage.manage");
 
+        $maxStorageKb = get_upload_max_size('image') * 5; // 5x image size for storage manager
         $request->validate([
             "files.*" =>
-            "required|file|max:51200|mimes:jpeg,jpg,png,gif,webp,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv", // Restrict file types — ZIP/RAR removed for security
+            "required|file|max:{$maxStorageKb}|mimes:jpeg,jpg,png,gif,webp,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv", // Restrict file types — ZIP/RAR removed for security
             "path" => "nullable|string",
         ]);
 
@@ -475,9 +476,10 @@ class StorageController extends Controller
     {
         try {
             // Validate request
+            $editorImageMaxKb = get_upload_max_size('image');
             $validator = \Validator::make($request->all(), [
                 "image" =>
-                "required|image|mimes:jpeg,jpg,png,gif,webp|max:5120", // Max 5MB
+                "required|image|mimes:jpeg,jpg,png,gif,webp|max:{$editorImageMaxKb}",
             ]);
 
             if ($validator->fails()) {

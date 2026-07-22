@@ -161,14 +161,15 @@ if (!function_exists('get_max_upload_size_kb')) {
      * Get maximum upload size in KB based on SiteSetting or fallback to default
      * Useful for Laravel's max: validation rule which expects size in KB
      *
+     * This function reads from upload_max_filesize to determine the PHP-level max.
+     * For feature-specific limits, use get_upload_max_size() instead.
+     *
      * @param int $default_kb Default size in KB (default: 15360 = 15MB)
      * @return int
      */
     function get_max_upload_size_kb(int $default_kb = 15360): int
     {
         try {
-            // Kita coba pakai try-catch karena ini bisa dipanggil saat cache tidak tersedia
-            // atau tabel settings belum migrate.
             $settings = \App\Models\SiteSetting::getSettings();
             if (isset($settings->upload_max_filesize)) {
                 $val = trim($settings->upload_max_filesize);
@@ -190,13 +191,56 @@ if (!function_exists('get_max_upload_size_kb')) {
                         break;
                 }
                 
-                // Pastikan nilainya masuk akal (minimal 1KB)
                 return max(1, (int)$val);
             }
         } catch (\Exception $e) {
             // Silently fallback to default if settings unavailable
         }
         
+        return $default_kb;
+    }
+}
+
+if (!function_exists('get_upload_max_size')) {
+    /**
+     * Get feature-specific maximum upload size in KB from SiteSetting.
+     *
+     * Supported feature types:
+     * - 'image'          → max_image_size_kb (default: 2048 = 2MB)  — Berita, Board Member, Office, Logo, WhyChooseUs
+     * - 'product_image'  → max_product_image_size_kb (default: 5120 = 5MB)
+     * - 'document'       → max_document_size_kb (default: 15360 = 15MB) — PDF Laporan & Brosur
+     * - 'hero_image'     → max_hero_image_size_kb (default: 5120 = 5MB)
+     * - 'auction_image'  → max_auction_image_size_kb (default: 5120 = 5MB)
+     *
+     * @param string $feature Nama fitur (image, product_image, document, hero_image, auction_image)
+     * @param int $default_kb Fallback size in KB jika settings tidak tersedia
+     * @return int
+     */
+    function get_upload_max_size(string $feature = 'image', int $default_kb = 2048): int
+    {
+        $columnMap = [
+            'image'         => 'max_image_size_kb',
+            'product_image' => 'max_product_image_size_kb',
+            'document'      => 'max_document_size_kb',
+            'hero_image'    => 'max_hero_image_size_kb',
+            'auction_image' => 'max_auction_image_size_kb',
+        ];
+
+        $column = $columnMap[$feature] ?? null;
+
+        if ($column === null) {
+            return $default_kb;
+        }
+
+        try {
+            $settings = \App\Models\SiteSetting::getSettings();
+            if (isset($settings->{$column}) && $settings->{$column} > 0) {
+                return (int) $settings->{$column};
+            }
+        } catch (\Exception $e) {
+            // Silently fallback if settings unavailable
+        }
+
         return $default_kb;
     }
 }

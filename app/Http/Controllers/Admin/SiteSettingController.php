@@ -39,6 +39,12 @@ class SiteSettingController extends Controller
                 'max_input_time' => 'nullable|integer|min:30|max:3600',
                 'memory_limit' => 'nullable|string|regex:/^\d+(K|M|G)?$/i',
                 'max_file_uploads' => 'nullable|integer|min:1|max:100',
+                // ===== Feature-specific upload size limits =====
+                'max_image_size_kb' => 'nullable|integer|min:512|max:102400',
+                'max_product_image_size_kb' => 'nullable|integer|min:512|max:102400',
+                'max_document_size_kb' => 'nullable|integer|min:1024|max:512000',
+                'max_hero_image_size_kb' => 'nullable|integer|min:512|max:102400',
+                'max_auction_image_size_kb' => 'nullable|integer|min:512|max:102400',
 
             ], [
                 'hero_slider_delay.min' => 'Delay slider minimal 1000ms',
@@ -55,6 +61,17 @@ class SiteSettingController extends Controller
                 'memory_limit.regex' => 'Format batas memori tidak valid (contoh: 512M, 2G)',
                 'max_file_uploads.min' => 'Jumlah file upload minimal 1',
                 'max_file_uploads.max' => 'Jumlah file upload maksimal 100',
+                // ===== Feature-specific upload size limit messages =====
+                'max_image_size_kb.min' => 'Ukuran gambar umum minimal 512KB (0.5MB)',
+                'max_image_size_kb.max' => 'Ukuran gambar umum maksimal 100MB',
+                'max_product_image_size_kb.min' => 'Ukuran gambar produk minimal 512KB (0.5MB)',
+                'max_product_image_size_kb.max' => 'Ukuran gambar produk maksimal 100MB',
+                'max_document_size_kb.min' => 'Ukuran dokumen minimal 1MB',
+                'max_document_size_kb.max' => 'Ukuran dokumen maksimal 500MB',
+                'max_hero_image_size_kb.min' => 'Ukuran gambar hero slider minimal 512KB (0.5MB)',
+                'max_hero_image_size_kb.max' => 'Ukuran gambar hero slider maksimal 100MB',
+                'max_auction_image_size_kb.min' => 'Ukuran gambar lelang minimal 512KB (0.5MB)',
+                'max_auction_image_size_kb.max' => 'Ukuran gambar lelang maksimal 100MB',
             ]);
 
             // Handle maintenance_mode checkbox

@@ -14,13 +14,13 @@ class StoreBrochureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|file|mimes:pdf|mimetypes:application/pdf|max:' . get_max_upload_size_kb(),
+            'file' => 'required|file|mimes:pdf|mimetypes:application/pdf|max:' . get_upload_max_size('document'),
         ];
     }
 
     public function messages(): array
     {
-        $maxMb = round(get_max_upload_size_kb() / 1024);
+        $maxMb = round(get_upload_max_size('document') / 1024);
 
         return [
             'file.required' => 'File brosur wajib diunggah.',
