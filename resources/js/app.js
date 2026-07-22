@@ -102,233 +102,248 @@ window.heroSlider = (delay = 7000) => ({
 
 // =====================================================================
 // PRAYER WIDGET COMPONENTS
-// Defined on window IMMEDIATELY so Alpine can resolve via JS eval
-// even if alpine:init hasn't fired yet (Vite module load timing bug).
-// Also registered via Alpine.data() inside alpine:init for Livewire.
+// These are already defined in public/js/alpine-preload.js (loaded
+// synchronously before @livewireScripts). Guards here prevent
+// overriding the full implementation with this module-level def.
+// Alpine.data() registration inside alpine:init is for Livewire's
+// string-name lookup (x-data="name" without parens).
 // =====================================================================
 
-window.prayerWidgetSidebar = () => ({
-    show: true,
-    minimized: false,
-    ready: false,
+window.prayerWidgetSidebar =
+    window.prayerWidgetSidebar ||
+    (() => ({
+        show: true,
+        minimized: false,
+        ready: false,
 
-    init() {
-        setTimeout(() => {
-            this.ready = true;
-            this.minimized = window.innerWidth < 1024;
-            window.addEventListener(
-                "resize",
-                () => {
-                    this.minimized = window.innerWidth < 1024;
-                },
-                { passive: true },
+        init() {
+            setTimeout(() => {
+                this.ready = true;
+                this.minimized = window.innerWidth < 1024;
+                window.addEventListener(
+                    "resize",
+                    () => {
+                        this.minimized = window.innerWidth < 1024;
+                    },
+                    { passive: true },
+                );
+            }, 1500);
+        },
+    }));
+
+window.prayerTimeWidget =
+    window.prayerTimeWidget ||
+    (() => ({
+        loading: true,
+        error: null,
+        location: "Jakarta, Indonesia",
+        latitude: -6.2088,
+        longitude: 106.8456,
+        currentTime: "",
+        currentDate: "",
+        prayerTimes: [],
+        nextPrayer: null,
+        countdown: { hours: "00", minutes: "00", seconds: "00" },
+        timeInterval: null,
+        countdownInterval: null,
+        lastDate: null,
+
+        init() {
+            this.updateCurrentTime();
+            this.timeInterval = setInterval(
+                () => this.updateCurrentTime(),
+                1000,
             );
-        }, 1500);
-    },
-});
+            const deferredInit = () => this.getUserLocation();
+            if (window.requestIdleCallback) {
+                requestIdleCallback(deferredInit, { timeout: 3000 });
+            } else {
+                setTimeout(deferredInit, 1000);
+            }
+        },
 
-window.prayerTimeWidget = () => ({
-    loading: true,
-    error: null,
-    location: "Jakarta, Indonesia",
-    latitude: -6.2088,
-    longitude: 106.8456,
-    currentTime: "",
-    currentDate: "",
-    prayerTimes: [],
-    nextPrayer: null,
-    countdown: { hours: "00", minutes: "00", seconds: "00" },
-    timeInterval: null,
-    countdownInterval: null,
-    lastDate: null,
-
-    init() {
-        this.updateCurrentTime();
-        this.timeInterval = setInterval(() => this.updateCurrentTime(), 1000);
-        const deferredInit = () => this.getUserLocation();
-        if (window.requestIdleCallback) {
-            requestIdleCallback(deferredInit, { timeout: 3000 });
-        } else {
-            setTimeout(deferredInit, 1000);
-        }
-    },
-
-    async getUserLocation() {
-        if (!navigator.geolocation) {
-            this.fetchPrayerTimes();
-            return;
-        }
-        if (navigator.permissions) {
-            try {
-                const permission = await navigator.permissions.query({
-                    name: "geolocation",
-                });
-                if (permission.state === "denied") {
+        async getUserLocation() {
+            if (!navigator.geolocation) {
+                this.fetchPrayerTimes();
+                return;
+            }
+            if (navigator.permissions) {
+                try {
+                    const permission = await navigator.permissions.query({
+                        name: "geolocation",
+                    });
+                    if (permission.state === "denied") {
+                        this.fetchPrayerTimes();
+                        return;
+                    }
+                } catch (e) {
+                    /* ignore */
+                }
+            }
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    this.latitude = position.coords.latitude;
+                    this.longitude = position.coords.longitude;
+                    this.reverseGeocode();
                     this.fetchPrayerTimes();
-                    return;
+                },
+                () => this.fetchPrayerTimes(),
+                {
+                    timeout: 10000,
+                    maximumAge: 300000,
+                    enableHighAccuracy: false,
+                },
+            );
+        },
+
+        async reverseGeocode() {
+            try {
+                const r = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${this.latitude}&lon=${this.longitude}&format=json`,
+                );
+                const d = await r.json();
+                if (d.address) {
+                    const city =
+                        d.address.city ||
+                        d.address.town ||
+                        d.address.village ||
+                        d.address.county;
+                    const state = d.address.state;
+                    this.location =
+                        city && state ? `${city}, ${state}` : "Indonesia";
                 }
             } catch (e) {
                 /* ignore */
             }
-        }
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                this.latitude = position.coords.latitude;
-                this.longitude = position.coords.longitude;
-                this.reverseGeocode();
-                this.fetchPrayerTimes();
-            },
-            () => this.fetchPrayerTimes(),
-            {
-                timeout: 10000,
-                maximumAge: 300000,
-                enableHighAccuracy: false,
-            },
-        );
-    },
+        },
 
-    async reverseGeocode() {
-        try {
-            const r = await fetch(
-                `https://nominatim.openstreetmap.org/reverse?lat=${this.latitude}&lon=${this.longitude}&format=json`,
-            );
-            const d = await r.json();
-            if (d.address) {
-                const city =
-                    d.address.city ||
-                    d.address.town ||
-                    d.address.village ||
-                    d.address.county;
-                const state = d.address.state;
-                this.location =
-                    city && state ? `${city}, ${state}` : "Indonesia";
+        async fetchPrayerTimes() {
+            this.loading = true;
+            this.error = null;
+            try {
+                const r = await fetch(
+                    `/api/prayer-times?latitude=${this.latitude}&longitude=${this.longitude}`,
+                );
+                const d = await r.json();
+                if (d.success && d.timings) {
+                    this.processPrayerTimes(d.timings);
+                    this.findNextPrayer();
+                    this.startCountdown();
+                } else {
+                    this.error = "Gagal memuat jadwal sholat";
+                }
+            } catch (e) {
+                this.error = "Terjadi kesalahan";
+            } finally {
+                this.loading = false;
             }
-        } catch (e) {
-            /* ignore */
-        }
-    },
+        },
 
-    async fetchPrayerTimes() {
-        this.loading = true;
-        this.error = null;
-        try {
-            const r = await fetch(
-                `/api/prayer-times?latitude=${this.latitude}&longitude=${this.longitude}`,
+        processPrayerTimes(timings) {
+            const prayers = [
+                { name: "Subuh", key: "Fajr", icon: "🌅" },
+                { name: "Dzuhur", key: "Dhuhr", icon: "☀️" },
+                { name: "Ashar", key: "Asr", icon: "🌤️" },
+                { name: "Maghrib", key: "Maghrib", icon: "🌆" },
+                { name: "Isya", key: "Isha", icon: "🌙" },
+            ];
+            this.prayerTimes = prayers.map((p) => ({
+                name: p.name,
+                time: timings[p.key],
+                icon: p.icon,
+                key: p.key,
+                isNext: false,
+            }));
+        },
+
+        findNextPrayer() {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            for (let prayer of this.prayerTimes) {
+                const [h, m] = prayer.time.split(":").map(Number);
+                if (h * 60 + m > currentMinutes) {
+                    prayer.isNext = true;
+                    this.nextPrayer = prayer;
+                    return;
+                }
+            }
+            if (this.prayerTimes.length > 0) {
+                this.prayerTimes[0].isNext = true;
+                this.nextPrayer = this.prayerTimes[0];
+            }
+        },
+
+        startCountdown() {
+            if (this.countdownInterval) clearInterval(this.countdownInterval);
+            this.updateCountdown();
+            this.countdownInterval = setInterval(
+                () => this.updateCountdown(),
+                1000,
             );
-            const d = await r.json();
-            if (d.success && d.timings) {
-                this.processPrayerTimes(d.timings);
+        },
+
+        updateCountdown() {
+            if (!this.nextPrayer) return;
+            const now = new Date();
+            const [h, m] = this.nextPrayer.time.split(":").map(Number);
+            let target = new Date();
+            target.setHours(h, m, 0, 0);
+            if (target <= now) target.setDate(target.getDate() + 1);
+            const diff = target - now;
+            if (diff <= 0) {
                 this.findNextPrayer();
-                this.startCountdown();
-            } else {
-                this.error = "Gagal memuat jadwal sholat";
-            }
-        } catch (e) {
-            this.error = "Terjadi kesalahan";
-        } finally {
-            this.loading = false;
-        }
-    },
-
-    processPrayerTimes(timings) {
-        const prayers = [
-            { name: "Subuh", key: "Fajr", icon: "🌅" },
-            { name: "Dzuhur", key: "Dhuhr", icon: "☀️" },
-            { name: "Ashar", key: "Asr", icon: "🌤️" },
-            { name: "Maghrib", key: "Maghrib", icon: "🌆" },
-            { name: "Isya", key: "Isha", icon: "🌙" },
-        ];
-        this.prayerTimes = prayers.map((p) => ({
-            name: p.name,
-            time: timings[p.key],
-            icon: p.icon,
-            key: p.key,
-            isNext: false,
-        }));
-    },
-
-    findNextPrayer() {
-        const now = new Date();
-        const currentMinutes = now.getHours() * 60 + now.getMinutes();
-        for (let prayer of this.prayerTimes) {
-            const [h, m] = prayer.time.split(":").map(Number);
-            if (h * 60 + m > currentMinutes) {
-                prayer.isNext = true;
-                this.nextPrayer = prayer;
                 return;
             }
-        }
-        if (this.prayerTimes.length > 0) {
-            this.prayerTimes[0].isNext = true;
-            this.nextPrayer = this.prayerTimes[0];
-        }
-    },
+            const totalSeconds = Math.floor(diff / 1000);
+            this.countdown = {
+                hours: String(Math.floor(totalSeconds / 3600)).padStart(2, "0"),
+                minutes: String(
+                    Math.floor((totalSeconds % 3600) / 60),
+                ).padStart(2, "0"),
+                seconds: String(totalSeconds % 60).padStart(2, "0"),
+            };
+        },
 
-    startCountdown() {
-        if (this.countdownInterval) clearInterval(this.countdownInterval);
-        this.updateCountdown();
-        this.countdownInterval = setInterval(
-            () => this.updateCountdown(),
-            1000,
-        );
-    },
+        updateCurrentTime() {
+            const now = new Date();
+            this.currentTime = now.toLocaleTimeString("id-ID", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            });
+            this.currentDate = now.toLocaleDateString("id-ID", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            });
+            if (this.lastDate && this.lastDate !== now.toDateString())
+                this.fetchPrayerTimes();
+            this.lastDate = now.toDateString();
+        },
 
-    updateCountdown() {
-        if (!this.nextPrayer) return;
-        const now = new Date();
-        const [h, m] = this.nextPrayer.time.split(":").map(Number);
-        let target = new Date();
-        target.setHours(h, m, 0, 0);
-        if (target <= now) target.setDate(target.getDate() + 1);
-        const diff = target - now;
-        if (diff <= 0) {
-            this.findNextPrayer();
-            return;
-        }
-        const totalSeconds = Math.floor(diff / 1000);
-        this.countdown = {
-            hours: String(Math.floor(totalSeconds / 3600)).padStart(2, "0"),
-            minutes: String(Math.floor((totalSeconds % 3600) / 60)).padStart(
-                2,
-                "0",
-            ),
-            seconds: String(totalSeconds % 60).padStart(2, "0"),
-        };
-    },
+        destroy() {
+            if (this.timeInterval) clearInterval(this.timeInterval);
+            if (this.countdownInterval) clearInterval(this.countdownInterval);
+        },
+    }));
 
-    updateCurrentTime() {
-        const now = new Date();
-        this.currentTime = now.toLocaleTimeString("id-ID", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-        });
-        this.currentDate = now.toLocaleDateString("id-ID", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        });
-        if (this.lastDate && this.lastDate !== now.toDateString())
-            this.fetchPrayerTimes();
-        this.lastDate = now.toDateString();
-    },
+// Register components via Alpine.data() for string-name lookup
+// Used both as alpine:init listener (normal case) and direct call
+// (fallback if Alpine already initialized).
+function registerAlpineComponents() {
+    if (typeof window.Alpine === "undefined") return;
 
-    destroy() {
-        if (this.timeInterval) clearInterval(this.timeInterval);
-        if (this.countdownInterval) clearInterval(this.countdownInterval);
-    },
-});
+    try {
+        window.Alpine.plugin(collapse);
+    } catch (e) {
+        /* collapse plugin may already be registered */
+    }
 
-// Always use the event listener to ensure Alpine hasn't started yet.
-document.addEventListener("alpine:init", () => {
-    window.Alpine.plugin(collapse);
-
-    // Register via Alpine.data (Livewire-compatible)
     window.Alpine.data("prayerWidgetSidebar", window.prayerWidgetSidebar);
     window.Alpine.data("prayerTimeWidget", window.prayerTimeWidget);
 
-    // Register Stats Count-Up animation component
+    // Stats Count-Up (uses Alpine.data lookup, no window global)
     window.Alpine.data("statsCounter", () => ({
         value: 0,
         target: 0,
@@ -344,7 +359,6 @@ document.addEventListener("alpine:init", () => {
             this.prefix = el.dataset.prefix || "";
             this.value = 0;
 
-            // Use IntersectionObserver to trigger once
             this.observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
@@ -363,7 +377,6 @@ document.addEventListener("alpine:init", () => {
         animateCount() {
             const duration = 2000;
             const start = performance.now();
-
             const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
             const frame = (now) => {
@@ -371,12 +384,8 @@ document.addEventListener("alpine:init", () => {
                 const progress = Math.min(elapsed / duration, 1);
                 const easedProgress = easeOutCubic(progress);
                 this.value = Math.round(easedProgress * this.target);
-
-                if (progress < 1) {
-                    requestAnimationFrame(frame);
-                } else {
-                    this.value = this.target;
-                }
+                if (progress < 1) requestAnimationFrame(frame);
+                else this.value = this.target;
             };
 
             requestAnimationFrame(frame);
@@ -387,7 +396,7 @@ document.addEventListener("alpine:init", () => {
         },
     }));
 
-    // Register Scroll Progress component
+    // Scroll Progress (uses Alpine.data lookup)
     window.Alpine.data("scrollProgress", () => ({
         progress: 0,
 
@@ -398,14 +407,21 @@ document.addEventListener("alpine:init", () => {
                     document.documentElement.scrollHeight - window.innerHeight;
                 this.progress = docHeight > 0 ? scrollTop / docHeight : 0;
             };
-
             window.addEventListener("scroll", updateProgress, {
                 passive: true,
             });
             updateProgress();
         },
     }));
-});
+}
+
+// If Alpine already loaded (e.g. via Livewire), register immediately.
+// Otherwise wait for alpine:init event.
+if (window.Alpine) {
+    registerAlpineComponents();
+} else {
+    document.addEventListener("alpine:init", registerAlpineComponents);
+}
 
 // ============================================
 // PRODUCT GALLERY — Zoom + Lightbox

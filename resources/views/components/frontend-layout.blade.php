@@ -127,7 +127,7 @@
     </main>
 
     <!-- Floating Prayer Time Widget — Bottom Right -->
-    <div x-data="prayerWidgetSidebar"
+    <div x-data="prayerWidgetSidebar()"
          x-show="ready"
          x-transition:enter="transition ease-out duration-500"
          x-transition:enter-start="opacity-0 translate-x-full"
@@ -168,6 +168,12 @@
     <!-- Footer -->
     @include('frontend.partials.footer', ['company' => $company])
 
+    {{-- Preload Alpine component functions BEFORE Livewire loads Alpine.
+         Livewire's @livewireScripts loads Alpine synchronously — if the Vite
+         ES module (app.js) hasn't executed yet, window.* won't exist when
+         Alpine evaluates x-data. This regular <script> tag loads synchronously
+         and defines the functions before Alpine initializes. --}}
+    <script src="{{ asset('js/alpine-preload.js') }}" nonce="{{ $nonce }}"></script>
     @livewireScripts(['nonce' => $nonce])
     @vite(['resources/js/pagination-fix.js'])
     @stack('scripts')

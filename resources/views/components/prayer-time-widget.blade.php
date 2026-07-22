@@ -1,4 +1,4 @@
-<div x-data="prayerTimeWidget" class="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden">
+<div x-data="prayerTimeWidget()" class="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden">
     <!-- Compact Header -->
     <div class="bg-white/10 backdrop-blur-sm px-5 py-4 border-b border-white/20">
         <!-- Drag Handle for Mobile -->
