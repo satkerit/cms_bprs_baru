@@ -26,7 +26,7 @@
  </select>
  <x-admin.button type="submit" variant="secondary">Filter</x-admin.button>
  @if(request('search') || request('type'))
- <a href="{{ route('admin.offices.index') }}" class="inline-flex items-center px-4 py-2 text-xs font-medium text-zinc-700 bg-white border border-zinc-200 rounded-xl hover:bg-zinc-50 transition-colors">
+ <a href="{{ route('admin.offices.index') }}" class="inline-flex items-center px-4 py-2 text-[13px] font-medium text-zinc-700 bg-white border border-zinc-200 rounded-xl hover:bg-zinc-50 transition-colors">
  Reset
  </a>
  @endif
@@ -141,7 +141,7 @@
  </div>
 
  @if($offices->hasPages())
- <div class="p-4 border-t border-zinc-200">{{ $offices->links() }}</div>
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">{{ $offices->links() }}</div>
  @endif
 </x-admin.card>
 

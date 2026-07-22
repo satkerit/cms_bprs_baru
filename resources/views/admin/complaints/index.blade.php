@@ -135,8 +135,8 @@
  @break
  @endswitch
  </td>
- <td class="px-4 py-3 text-[13px] text-zinc-500 border-b border-zinc-200 tabular-nums">{{ $complaint->created_at->format('d M Y') }}</td>
- <td class="px-4 py-3 border-b border-zinc-200">
+ <td class="px-4 py-3 text-[13px] text-zinc-500 tabular-nums">{{ $complaint->created_at->format('d M Y') }}</td>
+ <td class="px-4 py-3">
  <div class="flex items-center gap-1">
  <a href="{{ route('admin.complaints.show', $complaint) }}" class="p-1.5 text-zinc-500 hover:text-zinc-900 border border-transparent hover:border-zinc-200 rounded-xl">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,7 +159,7 @@
  </div>
 
  @if($complaints->hasPages())
- <div class="p-4 border-t border-zinc-200">{{ $complaints->links() }}</div>
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">{{ $complaints->links() }}</div>
  @endif
 </x-admin.card>
 

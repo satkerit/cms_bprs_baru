@@ -123,7 +123,7 @@
 
  {{-- Pagination --}}
  @if($brochures->hasPages())
- <div class="px-6 py-4 border-t border-zinc-100 bg-zinc-50/30">
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">
  {{ $brochures->links() }}
  </div>
  @endif

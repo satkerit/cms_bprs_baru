@@ -64,16 +64,16 @@
  <form method="GET" class="flex flex-col gap-3">
  <div class="flex flex-col sm:flex-row gap-3">
  <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari tiket/nama/subjek..."
- class="w-full sm:flex-1 sm:min-w-[200px] rounded-xl border-gray-300 text-[13px]">
+ class="w-full sm:flex-1 sm:min-w-[200px] rounded-xl border-zinc-300 text-[13px]">
  <div class="flex flex-wrap gap-3">
- <select name="status" class="flex-1 sm:flex-none rounded-xl border-gray-300 text-[13px]">
+ <select name="status" class="flex-1 sm:flex-none rounded-xl border-zinc-300 text-[13px]">
  <option value="">Semua Status</option>
  <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu</option>
  <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>Diproses</option>
  <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Selesai</option>
  <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Ditutup</option>
  </select>
- <select name="category" class="flex-1 sm:flex-none rounded-xl border-gray-300 text-[13px]">
+ <select name="category" class="flex-1 sm:flex-none rounded-xl border-zinc-300 text-[13px]">
  <option value="">Semua Kategori</option>
  <option value="service" {{ request('category') == 'service' ? 'selected' : '' }}>Pelayanan</option>
  <option value="product" {{ request('category') == 'product' ? 'selected' : '' }}>Produk</option>
@@ -82,7 +82,7 @@
  <option value="staff" {{ request('category') == 'staff' ? 'selected' : '' }}>Petugas</option>
  <option value="other" {{ request('category') == 'other' ? 'selected' : '' }}>Lainnya</option>
  </select>
- <select name="priority" class="flex-1 sm:flex-none rounded-xl border-gray-300 text-[13px]">
+ <select name="priority" class="flex-1 sm:flex-none rounded-xl border-zinc-300 text-[13px]">
  <option value="">Semua Prioritas</option>
  <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>Tinggi</option>
  <option value="medium" {{ request('priority') == 'medium' ? 'selected' : '' }}>Sedang</option>
@@ -99,11 +99,11 @@
  <div class="flex flex-wrap items-center gap-3 pt-1">
  <span class="text-[11px] text-zinc-500 font-medium">Periode:</span>
  <input type="date" name="date_from" value="{{ request('date_from') }}"
- class="rounded-xl border-gray-300 text-[13px]"
+ class="rounded-xl border-zinc-300 text-[13px]"
  placeholder="Dari tanggal">
  <span class="text-[11px] text-zinc-400">s/d</span>
  <input type="date" name="date_to" value="{{ request('date_to') }}"
- class="rounded-xl border-gray-300 text-[13px]"
+ class="rounded-xl border-zinc-300 text-[13px]"
  placeholder="Sampai tanggal">
  @if(request('date_from') || request('date_to'))
  <span class="text-[11px] text-emerald-600 font-medium">● Filter tanggal aktif</span>
@@ -244,7 +244,7 @@
  </div>
 
  @if($complaints->hasPages())
- <div class="p-4 border-t border-zinc-200/60">{{ $complaints->links() }}</div>
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">{{ $complaints->links() }}</div>
  @endif
 </x-admin.card>
 

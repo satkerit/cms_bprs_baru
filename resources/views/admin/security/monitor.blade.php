@@ -316,7 +316,7 @@
             </div>
 
  @if($threats->hasPages())
- <div class="p-4 border-t">
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">
  {{ $threats->links() }}
  </div>
  @endif

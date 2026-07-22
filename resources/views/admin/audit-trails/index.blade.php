@@ -155,7 +155,7 @@
  </div>
 
  @if($audits->hasPages())
- <div class="px-6 py-4 border-t border-zinc-100">
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">
  {{ $audits->links() }}
  </div>
  @endif

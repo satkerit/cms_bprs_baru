@@ -66,7 +66,7 @@ class SecurityHeaders
             "default-src 'self'",
             // Tidak pakai 'strict-dynamic' karena browser mengabaikan host-based allowlisting saat strict-dynamic ada.
             // Dengan nonce + host allowlist, script dari CDN dan inline script yang diberi nonce tetap diizinkan.
-            "script-src 'nonce-{$nonce}' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com https://cdn.ckeditor.com https://analytics.ahrefs.com",
+            "script-src 'nonce-{$nonce}' 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com https://cdn.ckeditor.com https://analytics.ahrefs.com",
             // Styles: Allow self, unsafe-inline (for Alpine.js dynamic styles and nonce-based <style> tags),
             // unsafe-hashes (for style attributes), and trusted CDNs
             // Note: 'unsafe-inline' takes effect when no nonce is present in style-src.

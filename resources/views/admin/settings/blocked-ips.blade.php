@@ -100,7 +100,7 @@
  </div>
 
  @if($blockedIps->hasPages())
- <div class="px-5 py-4 border-t border-zinc-100/80">
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">
  {{ $blockedIps->links() }}
  </div>
  @endif

@@ -79,22 +79,22 @@
         <x-admin.table :headers="['Role', 'Deskripsi', 'Pengguna', 'Permission', 'Status', 'Aksi']">
             @forelse($roles as $role)
                 <tr>
-                    <td class="px-4 py-3 border-b border-zinc-200">
+                    <td class="px-4 py-3">
                         <div>
                             <p class="font-medium text-zinc-900">{{ $role->display_name }}</p>
                             <p class="text-[11px] text-zinc-500 font-mono">{{ $role->name }}</p>
                         </div>
                     </td>
-                    <td class="px-4 py-3 text-[13px] text-zinc-600 max-w-xs border-b border-zinc-200">
+                    <td class="px-4 py-3 text-[13px] text-zinc-600 max-w-xs">
                         <span title="{{ $role->description }}">{{ Str::limit($role->description, 50) }}</span>
                     </td>
-                    <td class="px-4 py-3 text-[13px] text-zinc-600 whitespace-nowrap border-b border-zinc-200">
+                    <td class="px-4 py-3 text-[13px] text-zinc-600 whitespace-nowrap">
                         {{ $role->users_count }} pengguna
                     </td>
-                    <td class="px-4 py-3 text-[13px] text-zinc-600 whitespace-nowrap border-b border-zinc-200">
+                    <td class="px-4 py-3 text-[13px] text-zinc-600 whitespace-nowrap">
                         {{ $role->permissions_count }} permission
                     </td>
-                    <td class="px-4 py-3 whitespace-nowrap border-b border-zinc-200">
+                    <td class="px-4 py-3 whitespace-nowrap">
                         <div class="flex items-center gap-2">
                             @if($role->is_active)
                                 <x-admin.badge variant="success">Aktif</x-admin.badge>
@@ -106,7 +106,7 @@
                             @endif
                         </div>
                     </td>
-                    <td class="px-4 py-3 whitespace-nowrap border-b border-zinc-200">
+                    <td class="px-4 py-3 whitespace-nowrap">
                         <div class="flex items-center gap-1">
                             <a href="{{ route('admin.roles.show', $role) }}" class="p-1.5 text-zinc-500 hover:text-zinc-600" title="Lihat">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,7 +138,7 @@
     </div>
 
     @if($roles->hasPages())
-        <div class="p-4 border-t border-zinc-100">{{ $roles->links() }}</div>
+        <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">{{ $roles->links() }}</div>
     @endif
 </x-admin.card>
 

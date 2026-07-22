@@ -128,7 +128,7 @@
  </div>
 
  @if($careers->hasPages())
- <div class="p-4 border-t border-zinc-200">
+ <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">
  {{ $careers->links() }}
  </div>
  @endif

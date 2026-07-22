@@ -184,7 +184,7 @@
     </div>
 
     @if($users->hasPages())
-        <div class="p-4 border-t border-zinc-200/60">{{ $users->links() }}</div>
+        <div class="p-5 border-t border-slate-200/60 bg-slate-50/30">{{ $users->links() }}</div>
     @endif
 </x-admin.card>
 @endsection
