@@ -14,6 +14,7 @@
  </x-slot:actions>
 </x-admin.page-header>
 
+<div class="max-w-7xl mx-auto">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <!-- Main Info -->
  <div class="lg:col-span-2 col-span-1 space-y-6">
@@ -195,5 +196,6 @@
  </div>
  </x-admin.card>
  </div>
+</div>
 </div>
 @endsection

@@ -26,7 +26,8 @@
     </x-slot:actions>
 </x-admin.page-header>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     {{-- Main Content --}}
     <div class="lg:col-span-2 space-y-6">
         {{-- Product Header --}}

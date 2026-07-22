@@ -17,6 +17,7 @@
  </x-slot:actions>
 </x-admin.page-header>
 
+<div class="max-w-7xl mx-auto">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div class="lg:col-span-2 col-span-1 space-y-6">
  <x-admin.card title="Detail Pengaduan">
@@ -188,5 +189,6 @@
  </x-admin.card>
  @endif
  </div>
+</div>
 </div>
 @endsection

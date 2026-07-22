@@ -12,7 +12,8 @@
     </x-slot:actions>
 </x-admin.page-header>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     {{-- Role Info --}}
     <div class="lg:col-span-1 space-y-6">
         <x-admin.card title="Informasi Role">
@@ -119,5 +120,6 @@
             @endif
         </x-admin.card>
     </div>
+</div>
 </div>
 @endsection

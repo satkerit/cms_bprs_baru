@@ -2,7 +2,7 @@
     <x-slot name="header">Detail Lelang Agunan</x-slot>
     <x-slot name="subtitle">{{ $auction->title }}</x-slot>
 
-    <div class="animate-fade-in-up">
+    <div class="max-w-7xl mx-auto animate-fade-in-up">
         <!-- Breadcrumb -->
         <nav class="flex mb-6" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">

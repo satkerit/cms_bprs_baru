@@ -3,7 +3,7 @@
 @section('title', 'Detail Ancaman')
 
 @section('content')
-<div class="space-y-6">
+<div class="max-w-7xl mx-auto space-y-6">
  {{-- Header --}}
  <div class="flex items-center gap-4">
  <a href="{{ route('admin.security-monitor.index') }}"
