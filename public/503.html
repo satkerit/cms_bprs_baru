@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>503 - Layanan Tidak Tersedia</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+.container {
+    text-align: center;
+    max-width: 500px;
+}
+.icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: #fef2f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon svg {
+    width: 40px;
+    height: 40px;
+    color: #ef4444;
+}
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #0f172a;
+}
+p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+.hint {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 24px;
+    padding: 16px;
+    background: #f1f5f9;
+    border-radius: 12px;
+}
+.btn {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: #059669;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn:hover { background: #047857; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+    </div>
+    <h1>Layanan Tidak Tersedia</h1>
+    <p>Server sedang sibuk memproses permintaan sebelumnya.</p>
+    <p>Silakan tunggu beberapa saat dan coba lagi.</p>
+    <div class="hint">
+        <strong>Tips:</strong> Jika Anda mengunggah file, pastikan ukuran file tidak terlalu besar (maksimal 100MB). File yang besar membutuhkan waktu lebih lama untuk diproses.
+    </div>
+    <a href="javascript:location.reload()" class="btn">Coba Lagi</a>
+</div>
+</body>
+</html>

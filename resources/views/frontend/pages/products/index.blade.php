@@ -38,8 +38,8 @@
                     @foreach($products as $product)
                         <div class="group bg-card rounded-lg sm:rounded-lg shadow-gray-200/50 border border-border card-hover overflow-hidden flex flex-col h-full touch-manipulation">
                             <div class="relative h-44 sm:h-52 md:h-56 overflow-hidden bg-muted aspect-[4/3]">
-                                @if($product->icon)
-                                    <img src="{{ \App\Helpers\StorageHelper::url($product->icon) }}"
+                                @if($product->image)
+                                    <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
                                          alt="{{ $product->name }}"
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                          loading="{{ $loop->first ? 'eager' : 'lazy' }}">
@@ -52,9 +52,14 @@
                                 @endif
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 <div class="absolute top-3 left-3 sm:top-4 sm:left-4">
-                                    @if($product->category)
+                                    @if($product->type)
                                         <span class="px-2.5 py-1 sm:px-3 text-xs sm:text-sm font-bold rounded-full bg-white/90 backdrop-blur-sm text-emerald-600 border border-white/50 shadow-sm">
-                                            {{ $product->category->name }}
+                                            @switch($product->type)
+                                                @case('simpanan_syariah') Simpanan @break
+                                                @case('pembiayaan_syariah') Pembiayaan @break
+                                                @case('deposito_syariah') Deposito @break
+                                                @default {{ ucwords(str_replace('_', ' ', $product->type)) }}
+                                            @endswitch
                                         </span>
                                     @endif
                                 </div>

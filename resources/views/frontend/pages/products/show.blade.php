@@ -4,8 +4,8 @@
     @push('meta')
     <meta property="og:title" content="{{ $product->name }}" />
     <meta property="og:description" content="{{ $product->short_description ?? 'Produk BPRS Bangka Belitung' }}" />
-    @if($product->icon)
-    <meta property="og:image" content="{{ \App\Helpers\StorageHelper::url($product->icon) }}" />
+    @if($product->image)
+    <meta property="og:image" content="{{ \App\Helpers\StorageHelper::url($product->image) }}" />
     @endif
     @endpush
 
@@ -15,7 +15,7 @@
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.04\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <a href="{{ route('products.simpanan-syariah') }}" class="inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-4 transition-colors text-sm group">
+                <a href="{{ $product->type ? route('products.' . str_replace('_', '-', $product->type)) : '#' }}" class="inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-4 transition-colors text-sm group">
                     <svg class="w-4 h-4 shrink-0 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -24,9 +24,17 @@
 
                 <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
                     <div class="flex-1 text-center md:text-left fade-in-section" x-intersect="$el.classList.add('is-visible')">
-                        @if($product->category)
+                        @if($product->type)
                         <span class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white border border-white/30 mb-3">
-                            {{ $product->category->name }}
+                            @switch($product->type)
+                                @case('simpanan_syariah') Simpanan
+                                @break
+                                @case('pembiayaan_syariah') Pembiayaan
+                                @break
+                                @case('deposito_syariah') Deposito
+                                @break
+                                @default {{ ucwords(str_replace('_', ' ', $product->type)) }}
+                            @endswitch
                         </span>
                         @endif
                         <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight">{{ $product->name }}</h1>
@@ -34,10 +42,10 @@
                         <p class="text-base sm:text-lg text-white/80 leading-relaxed">{{ $product->short_description }}</p>
                         @endif
                     </div>
-                    @if($product->icon)
+                    @if($product->image)
                     <div class="shrink-0 mx-auto md:mx-0 fade-in-section" x-intersect="$el.classList.add('is-visible')">
                         <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center ring-1 ring-white/30 overflow-hidden">
-                            <img src="{{ \App\Helpers\StorageHelper::url($product->icon) }}" alt="{{ $product->name }}" class="w-full h-full object-contain p-3 sm:p-4">
+                            <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-contain p-3 sm:p-4">
                         </div>
                     </div>
                     @endif
@@ -92,20 +100,6 @@
                         </div>
                     </div>
                     @endif
-
-                    @if($product->procedure)
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border card-hover">
-                        <h2 class="text-xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-purple-100 text-purple-600 shrink-0">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                            </div>
-                            Prosedur Pengajuan
-                        </h2>
-                        <div class="prose prose-sm sm:prose-base lg:prose-lg prose-amber max-w-none text-muted-foreground">
-                            {!! $product->procedure !!}
-                        </div>
-                    </div>
-                    @endif
                 </div>
 
                 <!-- Sidebar -->
@@ -113,10 +107,18 @@
                     <div class="bg-white rounded-2xl border border-border p-6 sticky top-24 shadow-sm">
                         <h3 class="text-base font-bold text-foreground mb-4 pb-3 border-b border-border">Informasi Produk</h3>
                         <div class="space-y-3">
-                            @if($product->category)
+                            @if($product->type)
                             <div class="flex items-center justify-between">
                                 <span class="text-sm text-muted-foreground">Kategori</span>
-                                <span class="text-sm font-semibold text-emerald-600">{{ $product->category->name }}</span>
+                                <span class="text-sm font-semibold text-emerald-600">
+                                    @switch($product->type)
+                                        @case('simpanan_syariah') Simpanan @break
+                                        @case('pembiayaan_syariah') Pembiayaan @break
+                                        @case('deposito_syariah') Deposito @break
+                                        @case('kas_keliling') Kas Keliling @break
+                                        @default {{ ucwords(str_replace('_', ' ', $product->type)) }}
+                                    @endswitch
+                                </span>
                             </div>
                             @endif
                             @if($product->created_at)
@@ -141,10 +143,10 @@
                         </div>
                     </div>
 
-                    @if($product->brochure_file)
+                    @if($product->brochure)
                     <div class="bg-white rounded-2xl border border-border p-6 shadow-sm">
                         <h3 class="text-base font-bold text-foreground mb-4">Brosur Produk</h3>
-                        <a href="{{ \App\Helpers\StorageHelper::url($product->brochure_file) }}"
+                        <a href="{{ \App\Helpers\StorageHelper::url($product->brochure) }}"
                            target="_blank"
                            class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300 btn-press">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

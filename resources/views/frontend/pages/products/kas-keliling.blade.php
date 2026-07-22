@@ -69,9 +69,9 @@
                             {!! $product->description ? nl2br(e($product->description)) : '<p>Informasi produk kas keliling belum tersedia.</p>' !!}
                         </div>
                     </div>
-                    @if($product->brochure_file)
+                    @if($product->brochure)
                         <div class="mt-6 sm:mt-8">
-                            <a href="{{ \App\Helpers\StorageHelper::url($product->brochure_file) }}"
+                            <a href="{{ \App\Helpers\StorageHelper::url($product->brochure) }}"
                                target="_blank"
                                class="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-lg hover:shadow-md hover:shadow-emerald-500/30 transition-all duration-300 min-h-[48px] touch-manipulation active:scale-95">
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

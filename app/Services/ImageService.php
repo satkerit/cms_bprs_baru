@@ -90,6 +90,9 @@ class ImageService
             $encoded = $image->toJpeg(quality: $quality, progressive: true);
             self::disk()->put($originalPath, (string) $encoded);
 
+            // Encode image as string blob — used as source for each resize to avoid clone issues
+            $imageBlob = (string) $image->encode();
+
             $result = [
                 'original' => $originalPath,
                 'sizes' => [],
@@ -107,7 +110,7 @@ class ImageService
             }
 
             foreach ($namedSizes as $name => $width) {
-                $resized = clone $image;
+                $resized = $manager->read($imageBlob);
                 $resized->scaleDown(width: $width);
 
                 // JPEG
