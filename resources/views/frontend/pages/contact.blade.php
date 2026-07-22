@@ -1,0 +1,295 @@
+<x-frontend-layout>
+    <x-slot name="title">Hubungi Kami - {{ $companyInfo->name ?? 'BPRS Bangka Belitung' }}</x-slot>
+
+    @php
+        $offices = \Illuminate\Support\Facades\Cache::remember('contact_offices', 3600, fn() =>
+            \App\Models\Office::active()
+                ->orderByRaw("CASE type WHEN 'pusat' THEN 1 WHEN 'cabang' THEN 2 WHEN 'kas' THEN 3 WHEN 'kas_keliling' THEN 4 ELSE 5 END")
+                ->get()
+        );
+        $officesWithCoords = $offices->filter(fn($o) => $o->has_coordinates);
+        $centerLat = $officesWithCoords->avg('latitude') ?? -2.1316;
+        $centerLng = $officesWithCoords->avg('longitude') ?? 106.1169;
+
+        // Prepare offices data for JavaScript
+        $officesJson = $offices->map(function($o) {
+            return [
+                'id' => $o->id,
+                'name' => $o->name,
+                'type' => $o->type,
+                'type_label' => $o->type_label,
+                'address' => $o->address,
+                'phone' => $o->phone,
+                'lat' => $o->latitude,
+                'lng' => $o->longitude,
+                'has_coords' => $o->has_coordinates,
+                'directions_url' => $o->directions_url
+            ];
+        });
+    @endphp
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-100 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-flex items-center px-3 sm:px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-xs sm:text-sm font-semibold mb-6 sm:mb-8 border border-white/20">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                Kontak Kami
+            </span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight drop-shadow-sm">Hubungi Kami</h1>
+            <p class="text-base sm:text-lg md:text-xl text-emerald-50 leading-relaxed px-4">
+                Kami siap membantu Anda dengan layanan perbankan syariah terbaik. Temukan kantor terdekat atau kirim pesan kepada kami.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12 md:py-20 bg-muted -mt-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Quick Contact Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+                <a href="tel:{{ $companyInfo->phone ?? '' }}" class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 shadow-sm transition-all duration-300 group border border-border hover:border-emerald-100 card-hover touch-manipulation min-h-[120px] flex flex-col justify-center">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 rounded-lg sm:rounded-lg flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform shrink-0">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <p class="text-xs sm:text-sm font-medium text-secondary mb-1">Telepon</p>
+                        <p class="text-lg sm:text-lg font-bold text-foreground truncate group-hover:text-emerald-600 transition-colors">{{ $companyInfo->phone ?? '-' }}</p>
+                    </div>
+                </a>
+
+                <a href="mailto:{{ $companyInfo->email ?? '' }}" class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 shadow-sm transition-all duration-300 group border border-border hover:border-emerald-100 card-hover touch-manipulation min-h-[120px] flex flex-col justify-center">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 rounded-lg sm:rounded-lg flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform shrink-0">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <p class="text-xs sm:text-sm font-medium text-secondary mb-1">Email</p>
+                        <p class="text-lg sm:text-lg font-bold text-foreground truncate group-hover:text-emerald-600 transition-colors">{{ $companyInfo->email ?? '-' }}</p>
+                    </div>
+                </a>
+
+                <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 shadow-sm border border-border card-hover transition-all duration-300 min-h-[120px] flex flex-col justify-center sm:col-span-2 lg:col-span-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 rounded-lg sm:rounded-lg flex items-center justify-center mb-3 sm:mb-4 shrink-0">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <p class="text-xs sm:text-sm font-medium text-secondary mb-1">Jam Operasional</p>
+                        <p class="text-lg sm:text-lg font-bold text-foreground">Sen-Jum 08:00-16:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map & Offices Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12" id="mapContainer" x-data="officeMapData()" x-init="init()">
+                <!-- Interactive Map -->
+                <div class="lg:col-span-2 bg-white rounded-lg sm:rounded-lg shadow-sm overflow-hidden border border-border h-[400px] sm:h-[500px] flex flex-col hover:shadow-sm transition-shadow duration-300">
+                    <div class="p-4 sm:p-6 border-b border-border flex items-center justify-between bg-muted/50">
+                        <h2 class="font-bold text-foreground flex items-center text-lg sm:text-lg tracking-tight">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <span class="hidden sm:inline">Peta Lokasi Kantor</span>
+                            <span class="sm:hidden">Peta Kantor</span>
+                        </h2>
+                        <span class="inline-flex items-center px-2 sm:px-3 py-1 bg-emerald-50 text-emerald-600 text-sm font-bold rounded-full border border-emerald-100">
+                            {{ $officesWithCoords->count() }} Lokasi
+                        </span>
+                    </div>
+                    <div id="officeMap" class="flex-1 w-full bg-muted"></div>
+                </div>
+
+                <!-- Office List Sidebar -->
+                <div class="bg-white rounded-lg sm:rounded-lg shadow-sm border border-border flex flex-col h-[400px] sm:h-[500px] overflow-hidden hover:shadow-sm transition-shadow duration-300">
+                    <div class="p-4 sm:p-6 border-b border-border bg-muted/50">
+                        <h2 class="font-bold text-foreground mb-3 sm:mb-4 text-lg sm:text-lg">Daftar Kantor</h2>
+                        <!-- Filter Tabs -->
+                        <div class="flex flex-wrap gap-2">
+                            <button @click="filterType = 'all'" :class="filterType === 'all' ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-secondary hover:bg-muted border border-border'" class="px-3 sm:px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200 touch-manipulation btn-press min-h-[44px] flex items-center">
+                                Semua
+                            </button>
+                            <button @click="filterType = 'pusat'" :class="filterType === 'pusat' ? 'bg-amber-500 text-white shadow-md' : 'bg-white text-secondary hover:bg-muted border border-border'" class="px-3 sm:px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200 touch-manipulation btn-press min-h-[44px] flex items-center">
+                                Pusat
+                            </button>
+                            <button @click="filterType = 'cabang'" :class="filterType === 'cabang' ? 'bg-blue-500 text-white shadow-md' : 'bg-white text-secondary hover:bg-muted border border-border'" class="px-3 sm:px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200 touch-manipulation btn-press min-h-[44px] flex items-center">
+                                Cabang
+                            </button>
+                            <button @click="filterType = 'kas'" :class="filterType === 'kas' ? 'bg-secondary text-white shadow-md' : 'bg-white text-secondary hover:bg-muted border border-border'" class="px-3 sm:px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200 touch-manipulation btn-press min-h-[44px] flex items-center">
+                                Kas
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Office List -->
+                    <div class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-3 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                        @foreach($offices as $office)
+                        <div x-show="filterType === 'all' || filterType === '{{ $office->type }}'"
+                             x-transition:enter="transition ease-out duration-300"
+                             x-transition:enter-start="opacity-0 translate-y-4"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             @click="selectOffice({{ $office->id }}, {{ $office->latitude ?? 'null' }}, {{ $office->longitude ?? 'null' }})"
+                             :class="selectedOffice === {{ $office->id }} ? 'ring-2 ring-emerald-600 bg-emerald-50 border-emerald-100' : 'hover:bg-muted border-border'"
+                             class="p-3 sm:p-4 rounded-lg sm:rounded-lg border cursor-pointer transition-all duration-200 group touch-manipulation active:scale-98 min-h-[80px]">
+                            <div class="flex items-start gap-3 sm:gap-4">
+                                @php
+                                    $typeColors = [
+                                        'pusat' => 'bg-amber-500',
+                                        'cabang' => 'bg-blue-500',
+                                        'kas' => 'bg-secondary',
+                                        'kas_keliling' => 'bg-emerald-600'
+                                    ];
+                                @endphp
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 {{ $typeColors[$office->type] ?? 'bg-secondary' }} rounded-lg sm:rounded-lg flex items-center justify-center shrink-0 text-white font-bold text-sm sm:text-base group-hover:scale-110 transition-transform">
+                                    {{ substr($office->type_label, 0, 1) }}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-xs sm:text-sm font-bold text-foreground truncate">{{ $office->name }}</h3>
+                                    <p class="text-sm text-secondary line-clamp-2 mt-1 leading-relaxed">{{ $office->address }}</p>
+                                    @if($office->phone)
+                                    <p class="text-sm text-emerald-600 mt-2 font-medium flex items-center">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                        {{ $office->phone }}
+                                    </p>
+                                    @endif
+                                </div>
+                                @if($office->has_coordinates)
+                                <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-emerald-100 transition-colors" title="Lihat di peta">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Company Info -->
+                <div class="space-y-6 sm:space-y-8">
+                    <div class="bg-white rounded-lg sm:rounded-lg p-6 sm:p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300">
+                        <h3 class="font-bold text-foreground mb-4 sm:mb-6 flex items-center text-lg sm:text-lg">
+                            <span class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            </span>
+                            Kantor Pusat
+                        </h3>
+                        <div class="space-y-4 text-sm">
+                            <p class="text-secondary leading-relaxed font-medium text-base">{!! nl2br(e($companyInfo->address ?? 'Alamat belum tersedia')) !!}</p>
+
+                            <div class="pt-4 border-t border-border space-y-3">
+                                @if($companyInfo->phone)
+                                <div class="flex items-center text-secondary group hover:text-emerald-600 transition-colors cursor-pointer">
+                                    <div class="w-8 h-8 bg-muted rounded-lg flex items-center justify-center mr-3 group-hover:bg-emerald-50 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                    </div>
+                                    <span class="font-medium">{{ $companyInfo->phone }}</span>
+                                </div>
+                                @endif
+                                @if($companyInfo->email)
+                                <div class="flex items-center text-secondary group hover:text-emerald-600 transition-colors cursor-pointer">
+                                    <div class="w-8 h-8 bg-muted rounded-lg flex items-center justify-center mr-3 group-hover:bg-emerald-50 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                    </div>
+                                    <span class="font-medium">{{ $companyInfo->email }}</span>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    @if($companyInfo->facebook || $companyInfo->instagram || $companyInfo->twitter || $companyInfo->youtube)
+                    <div class="bg-white rounded-lg p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300">
+                        <h3 class="font-bold text-foreground mb-6 text-xl">Ikuti Kami</h3>
+                        <div class="flex flex-wrap gap-3">
+                            @if($companyInfo->facebook)
+                            <a href="{{ $companyInfo->facebook }}" target="_blank" class="w-12 h-12 bg-[#1877F2] rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform shadow-blue-500/30">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </a>
+                            @endif
+                            @if($companyInfo->instagram)
+                            <a href="{{ $companyInfo->instagram }}" target="_blank" class="w-12 h-12 bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform shadow-pink-500/30">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                            @endif
+                            @if($companyInfo->youtube)
+                            <a href="{{ $companyInfo->youtube }}" target="_blank" class="w-12 h-12 bg-[#FF0000] rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform shadow-red-500/30">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            </a>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
+                        <div class="mb-4 sm:mb-6">
+                            <h2 class="text-2xl sm:text-2xl font-bold text-foreground mb-2">Kirim Pesan</h2>
+                            <p class="text-sm sm:text-base text-secondary">Isi form di bawah ini dan tim kami akan segera menghubungi Anda dalam waktu 24 jam kerja.</p>
+                        </div>
+                        <livewire:frontend.contact.form />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaflet CSS & JS -->
+    @push('head')
+    @vite('resources/js/map-utils.js')
+    <style>
+        .leaflet-popup-content-wrapper { border-radius: 12px; }
+        .leaflet-popup-content { margin: 12px 16px; }
+        .custom-marker { background: none; border: none; }
+    </style>
+    @endpush
+
+    @push('scripts')
+    <script nonce="{{ $nonce }}">
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('officeMapData', () => ({
+                filterType: 'all',
+                selectedOffice: null,
+                map: null,
+                markers: {},
+                offices: @json($officesJson),
+
+                init() {
+                    this.$nextTick(() => {
+                        this.initMap();
+                    });
+                },
+
+                initMap() {
+                    const points = this.offices.map(o => ({
+                        id: o.id,
+                        name: o.name,
+                        type: o.type_label,
+                        address: o.address,
+                        lat: o.lat,
+                        lng: o.lng,
+                        url: o.directions_url || null
+                    }));
+                    this.mapCtx = window.BPRSMaps?.initSimpleMap?.('officeMap', points, { scrollWheelZoom: false }) || null;
+                },
+
+                selectOffice(id, lat, lng) {
+                    this.selectedOffice = id;
+                    const la = parseFloat(String(lat ?? '').replace(',', '.'));
+                    const lo = parseFloat(String(lng ?? '').replace(',', '.'));
+                    const map = this.mapCtx?.map;
+                    const mk = this.mapCtx?.markersById?.[String(id)];
+                    if (isFinite(la) && isFinite(lo) && map) {
+                        map.setView([la, lo], 15);
+                        if (mk) mk.openPopup();
+                    }
+                }
+            }));
+        });
+    </script>
+    @endpush
+</x-frontend-layout>

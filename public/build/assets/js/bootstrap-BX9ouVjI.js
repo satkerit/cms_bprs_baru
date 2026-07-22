@@ -1,0 +1,1 @@
+import{t as e}from"./vendor-app-RJr0_N7r.js";window.axios=e,window.axios.defaults.headers.common["X-Requested-With"]="XMLHttpRequest";

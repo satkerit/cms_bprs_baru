@@ -1,0 +1,215 @@
+@extends('layouts.admin')
+
+@section('title', 'Composer Update')
+
+@section('content')
+<div class="space-y-6">
+ <x-admin.page-header title="Composer Update" subtitle="Perbarui dependensi Laravel dan paket lainnya">
+ </x-admin.page-header>
+
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+ {{-- Environment Info --}}
+ <x-admin.card>
+ <h3 class="text-xl font-semibold text-zinc-900 mb-4">Informasi Lingkungan</h3>
+ <div class="space-y-3">
+ <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] text-zinc-700">Laravel Version</span>
+ <span class="font-mono text-[13px] font-semibold text-sky-600">{{ $laravelVersion }}</span>
+ </div>
+ <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] text-zinc-700">PHP Version</span>  <span class="font-mono text-[13px] font-semibold text-amber-600">{{ $phpVersion }}</span>
+ </div>
+ <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] text-zinc-700">Composer Version</span>
+ <span class="font-mono text-[13px] font-semibold text-purple-600">{{ $composerVersion }}</span>
+ </div>
+ <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] text-zinc-700">Environment</span>
+ <span class="text-[13px] font-semibold {{ app()->environment('production') ? 'text-red-600' : 'text-yellow-600' }}">{{ ucfirst(app()->environment()) }}</span>
+ </div>
+ </div>
+ </x-admin.card>
+
+ {{-- Run Update --}}
+ <x-admin.card>
+ <h3 class="text-xl font-semibold text-zinc-900 mb-4">Jalankan Composer Update</h3>
+ <p class="text-[13px] text-zinc-500 mb-4">Pastikan untuk membuat cadangan database dan file sebelum melakukan update!</p>
+
+ @if(!$procOpenAvailable)
+ <div class="p-4 bg-red-100 border border-red-200 rounded-xl mb-4">
+ <h4 class="text-red-700 font-semibold mb-2 flex items-center gap-2">
+ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+ </svg>
+ Fungsi proc_open tidak tersedia
+ </h4>
+ <p class="text-[13px] text-red-600 mb-3">
+ Server hosting Anda menonaktifkan fungsi <code class="bg-red-100 px-1 rounded">proc_open</code> yang diperlukan untuk menjalankan Composer secara otomatis.
+ </p>
+ <div class="text-[13px] text-zinc-700 space-y-2">
+ <p><strong>Alternatif:</strong></p>
+ <ol class="list-decimal list-inside space-y-1">
+ <li>Jalankan <code class="bg-zinc-50 px-1 rounded">composer update</code> di komputer lokal Anda</li>
+ <li>Upload folder <code class="bg-zinc-50 px-1 rounded">vendor</code> dan file <code class="bg-zinc-50 px-1 rounded">composer.lock</code> ke server</li>
+ <li>Jalankan cache clear melalui halaman Admin &gt; Settings atau gunakan perintah artisan secara manual</li>
+ </ol>
+ </div>
+ </div>
+ @endif
+
+ @if(!file_exists(base_path('composer.phar')) && $procOpenAvailable)
+ <div class="p-4 bg-amber-100 border border-amber-200 rounded-xl mb-4">
+ <h4 class="text-yellow-800 font-semibold mb-2 flex items-center gap-2">
+ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+ </svg>
+ composer.phar tidak ditemukan
+ </h4>
+ <p class="text-[13px] text-yellow-700 mb-3">
+ Silakan upload file composer.phar ke direktori root project Anda (sama level dengan file artisan).
+ </p>
+ <a href="https://getcomposer.org/download/latest-stable/composer.phar" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 text-yellow-800 rounded-xl text-[13px] font-medium">
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+ </svg>
+ Download composer.phar
+ </a>
+ </div>
+ @endif
+
+ <form id="composerUpdateForm" class="space-y-4">
+ @csrf
+
+ {{-- Confirmation --}}
+ <div class="flex items-start gap-2 p-3 bg-amber-100 border border-amber-200 rounded-xl">
+ <input type="checkbox"
+ id="confirm"
+ name="confirm"
+ class="mt-1 rounded border-amber-300 text-sky-600"
+ required>
+ <label for="confirm" class="text-[13px] text-amber-800">
+ Saya yakin telah membuat cadangan database dan file penting, serta siap untuk melanjutkan update.
+ </label>
+ </div>
+
+ {{-- Submit Button --}}
+ <div class="flex items-center justify-end gap-3">
+ <button type="submit"
+ id="updateBtn"
+ @if(!$procOpenAvailable) disabled @endif
+ class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-xl focus:ring-2 disabled:opacity-50 disabled:">
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+ </svg>
+ Jalankan Composer Update
+ </button>
+ </div>
+ </form>
+ </x-admin.card>
+ </div>
+
+ {{-- Output --}}
+ <x-admin.card id="outputCard" class="hidden">
+ <div class="flex items-center justify-between mb-4">
+ <h3 class="text-xl font-semibold text-zinc-900">Output</h3>
+ <button id="copyBtn" class="text-[13px] text-sky-600 hover:text-sky-700 font-medium flex items-center gap-1">
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+ </svg>
+ Salin Output
+ </button>
+ </div>
+ <div id="outputContainer" class="bg-slate-900 text-slate-100 rounded-xl p-4 font-mono text-[13px] max-h-[400px]">
+ <pre id="outputContent"></pre>
+ </div>
+ </x-admin.card>
+</div>
+
+@push('scripts')
+<script nonce="{{ $nonce }}">
+document.addEventListener('DOMContentLoaded', function() {
+ const form = document.getElementById('composerUpdateForm');
+ const updateBtn = document.getElementById('updateBtn');
+ const outputCard = document.getElementById('outputCard');
+ const outputContent = document.getElementById('outputContent');
+ const copyBtn = document.getElementById('copyBtn');
+ const outputContainer = document.getElementById('outputContainer');
+
+ form.addEventListener('submit', async function(e) {
+ e.preventDefault();
+
+ // Disable button and show loading state
+ updateBtn.disabled = true;
+ updateBtn.innerHTML = `
+ <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+ <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+ </svg>
+ Memproses...
+ `;
+
+ try {
+ const formData = new FormData(form);
+ const response = await fetch('{{ route('admin.composer-update.run') }}', {
+ method: 'POST',
+ headers: {
+ 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+ 'Accept': 'application/json',
+ },
+ body: formData,
+ });
+
+ const data = await response.json();
+
+ outputCard.classList.remove('hidden');
+ outputContent.textContent = data.output || data.message;
+
+ if (data.success) {
+ outputContainer.classList.remove('border-red-500', 'bg-red-900/20');
+ outputContainer.classList.add('border-amber-500', 'bg-amber-900/20');
+ } else {
+ outputContainer.classList.remove('border-amber-500', 'bg-amber-900/20');
+ outputContainer.classList.add('border-red-500', 'bg-red-900/20');
+ }
+
+ // Scroll to bottom
+ outputContainer.scrollTop = outputContainer.scrollHeight;
+
+ } catch (error) {
+ outputCard.classList.remove('hidden');
+ outputContent.textContent = 'Error: ' + error.message;
+ outputContainer.classList.remove('border-amber-500', 'bg-amber-900/20');
+ outputContainer.classList.add('border-red-500', 'bg-red-900/20');
+ } finally {
+ updateBtn.disabled = false;
+ updateBtn.innerHTML = `
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+ </svg>
+ Jalankan Composer Update
+ `;
+ }
+ });
+
+ copyBtn.addEventListener('click', function() {
+ navigator.clipboard.writeText(outputContent.textContent).then(() => {
+ copyBtn.innerHTML = `
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+ </svg>
+ Disalin!
+ `;
+ setTimeout(() => {
+ copyBtn.innerHTML = `
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+ </svg>
+ Salin Output
+ `;
+ }, 2000);
+ });
+ });
+});
+</script>
+@endpush
+@endsection

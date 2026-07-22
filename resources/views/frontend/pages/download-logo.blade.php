@@ -1,0 +1,137 @@
+<x-frontend-layout>
+    <x-slot name="title">Download Logo - {{ $company->name ?? 'BPRS Bangka Belitung' }}</x-slot>
+
+    <!-- Hero -->
+    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4 tracking-tight">Download Logo</h1>
+            <p class="text-base sm:text-lg text-white/80">Unduh logo resmi {{ $company->name ?? 'BPRS Bangka Belitung' }}</p>
+        </div>
+    </section>
+
+    <section class="py-12 sm:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-lg sm:rounded-lg shadow-sm border border-border p-6 sm:p-8">
+                @if($logoAvailable)
+                    <!-- Logo Preview -->
+                    <div class="text-center mb-6 sm:mb-8">
+                        <div class="w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-br from-secondary/10 to-gray-100 rounded-lg sm:rounded-lg mx-auto flex items-center justify-center mb-4 sm:mb-6 p-6 sm:p-8 border border-border">
+                            <img src="{{ \App\Helpers\StorageHelper::url($company->logo) }}" alt="{{ $company->name ?? 'Logo' }}" class="max-w-full max-h-full object-contain">
+                        </div>
+                        <h2 class="text-2xl sm:text-2xl font-bold text-foreground">Logo {{ $company->name ?? 'BPRS Bangka Belitung' }}</h2>
+                        <p class="text-xs sm:text-base text-secondary mt-2">Format tersedia: {{ strtoupper($logoExtension) }}</p>
+                    </div>
+
+                    <!-- Download Buttons -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                        {{-- Download format asli --}}
+                        <a href="{{ route('download-logo.download', $logoExtension) }}"
+                           class="group flex items-center justify-center px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-lg hover:from-emerald-700 hover:to-emerald-800 transition-all duration-300 hover:shadow-emerald-500/30 touch-manipulation active:scale-95 min-h-[48px] text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:animate-bounce shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            <span class="truncate">Download {{ strtoupper($logoExtension) }}</span>
+                            <span class="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full hidden sm:inline">Original</span>
+                        </a>
+
+                        {{-- Download PNG (jika bukan PNG) --}}
+                        @if($logoExtension !== 'png' && in_array($logoExtension, ['jpg', 'jpeg', 'webp']))
+                        <a href="{{ route('download-logo.download', 'png') }}"
+                           class="group flex items-center justify-center px-4 sm:px-6 py-3 sm:py-4 border-2 border-emerald-600 text-emerald-600 rounded-lg hover:bg-emerald-50 transition-all duration-300 touch-manipulation active:scale-95 min-h-[48px] text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:animate-bounce shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            <span class="truncate">Download PNG</span>
+                        </a>
+                        @endif
+
+                        {{-- Download JPG (jika bukan JPG) --}}
+                        @if(!in_array($logoExtension, ['jpg', 'jpeg']) && in_array($logoExtension, ['png', 'webp']))
+                        <a href="{{ route('download-logo.download', 'jpg') }}"
+                           class="group flex items-center justify-center px-4 sm:px-6 py-3 sm:py-4 border-2 border-emerald-600 text-emerald-600 rounded-lg hover:bg-emerald-50 transition-all duration-300 touch-manipulation active:scale-95 min-h-[48px] text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:animate-bounce shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            <span class="truncate">Download JPG</span>
+                        </a>
+                        @endif
+
+                        {{-- Download WebP (jika bukan WebP) --}}
+                        @if($logoExtension !== 'webp' && in_array($logoExtension, ['png', 'jpg', 'jpeg']))
+                        <a href="{{ route('download-logo.download', 'webp') }}"
+                           class="group flex items-center justify-center px-4 sm:px-6 py-3 sm:py-4 border-2 border-emerald-600 text-emerald-600 rounded-lg hover:bg-emerald-50 transition-all duration-300 touch-manipulation active:scale-95 min-h-[48px] text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:animate-bounce shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            <span class="truncate">Download WebP</span>
+                        </a>
+                        @endif
+                    </div>
+
+                @else
+                    <!-- No Logo Available -->
+                    <div class="text-center py-12">
+                        <div class="w-32 h-32 bg-secondary/10 rounded-lg mx-auto flex items-center justify-center mb-6">
+                            <svg class="w-16 h-16 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-semibold text-foreground mb-2">Logo Belum Tersedia</h2>
+                        <p class="text-secondary">Logo perusahaan belum diupload. Silakan hubungi administrator.</p>
+                    </div>
+                @endif
+
+                <!-- Usage Guidelines -->
+                <div class="mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg border border-amber-200">
+                    <div class="flex items-start gap-3 sm:gap-4">
+                        <div class="shrink-0">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Panduan Penggunaan Logo</h3>
+                            <ul class="space-y-2 text-xs sm:text-sm text-secondary">
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-4 h-4 text-amber-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Logo hanya boleh digunakan untuk keperluan yang berkaitan dengan {{ $company->name ?? 'BPRS Bangka Belitung' }}
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-4 h-4 text-amber-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Tidak diperkenankan mengubah warna, proporsi, atau elemen logo
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-4 h-4 text-amber-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Pastikan logo memiliki ruang kosong yang cukup di sekelilingnya
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-4 h-4 text-amber-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Untuk penggunaan komersial, harap hubungi tim marketing kami
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact for More -->
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-secondary">
+                        Butuh format lain atau resolusi lebih tinggi?
+                        <a href="{{ route('contact') }}" class="text-emerald-600 hover:text-emerald-700 font-medium">Hubungi kami</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</x-frontend-layout>
