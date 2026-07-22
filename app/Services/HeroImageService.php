@@ -51,7 +51,7 @@ class HeroImageService
         // Generate setiap ukuran dengan format modern
         foreach ($this->responsiveSizes as $sizeName => $config) {
             // Clone image untuk diresize
-            $resizedImage = $image->clone();
+            $resizedImage = clone $image;
 
             // Step 1: Scale down proporsional agar muat dalam target
             $resizedImage->scaleDown(
@@ -73,7 +73,7 @@ class HeroImageService
                 $avifEncoded = $resizedImage->toAvif($config['quality']);
                 Storage::disk('public')->put($avifPath, $avifEncoded);
                 $uploadedImages[$sizeName]['avif'] = $avifPath;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // AVIF might not be supported, skip silently
             }
 

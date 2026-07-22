@@ -107,7 +107,7 @@ class ImageService
             }
 
             foreach ($namedSizes as $name => $width) {
-                $resized = $image->clone();
+                $resized = clone $image;
                 $resized->scaleDown(width: $width);
 
                 // JPEG
@@ -126,7 +126,7 @@ class ImageService
                         $encoded = $resized->toWebp(quality: $quality);
                         self::disk()->put($webpPath, (string) $encoded);
                         $result['webp'][$name] = $webpPath;
-                    } catch (\Exception $e) {
+                    } catch (\Throwable $e) {
                         Log::warning("WebP generation failed for {$name}: " . $e->getMessage());
                     }
                 }
@@ -138,7 +138,7 @@ class ImageService
                         $encoded = $resized->toAvif(quality: $quality);
                         self::disk()->put($avifPath, (string) $encoded);
                         $result['avif'][$name] = $avifPath;
-                    } catch (\Exception $e) {
+                    } catch (\Throwable $e) {
                         Log::warning("AVIF generation failed for {$name}: " . $e->getMessage());
                     }
                 }
@@ -175,7 +175,7 @@ class ImageService
         $generatedImages = [];
 
         foreach ($sizes as $sizeName => $config) {
-            $resizedImage = $image->clone();
+            $resizedImage = clone $image;
             $resizedImage->cover($config['width'], $config['height']);
 
             $sizeFilename = $sizeName === 'original'
@@ -895,7 +895,7 @@ class ImageService
             $formatFilename = "{$filename}_{$name}.{$extension}";
             $formatPath = "{$directory}/{$formatFilename}";
 
-            $resized = $image->clone();
+            $resized = clone $image;
             $resized->scaleDown(width: $width);
             $encoded = $resized->{$method}(quality: $quality);
 
@@ -955,7 +955,7 @@ class ImageService
             $responsiveFilename = "{$filename}_{$name}.jpg";
             $responsivePath = "{$directory}/{$responsiveFilename}";
 
-            $resized = $image->clone();
+            $resized = clone $image;
             $resized->scaleDown(width: $width);
             $encoded = $resized->toJpeg(quality: $quality, progressive: true);
 

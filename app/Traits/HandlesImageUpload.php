@@ -150,14 +150,14 @@ trait HandlesImageUpload
                             'path' => $fullPath,
                             'options' => $options,
                         ]);
-                    } catch (\Exception $e) {
+                    } catch (\Throwable $e) {
                         Log::warning('Variant generation dispatch failed: ' . $e->getMessage(), [
                             'path' => $fullPath,
                         ]);
                     }
 
                     return $fullPath;
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     // Log error and fall back to normal upload
                     Log::warning('Image optimization failed: ' . $e->getMessage(), [
                         'file_size' => $file->getSize(),
