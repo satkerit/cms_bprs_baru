@@ -81,9 +81,14 @@
                             </div>
                             Keunggulan & Manfaat
                         </h2>
-                        <div class="prose prose-sm sm:prose-base lg:prose-lg prose-amber max-w-none text-muted-foreground">
-                            {!! $product->benefits !!}
-                        </div>
+                        <ul class="space-y-3">
+                            @foreach($product->benefits as $benefit)
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span class="text-muted-foreground">{{ $benefit }}</span>
+                            </li>
+                            @endforeach
+                        </ul>
                     </div>
                     @endif
 
@@ -95,9 +100,14 @@
                             </div>
                             Persyaratan
                         </h2>
-                        <div class="prose prose-sm sm:prose-base lg:prose-lg prose-amber max-w-none text-muted-foreground">
-                            {!! $product->requirements !!}
-                        </div>
+                        <ul class="space-y-3">
+                            @foreach($product->requirements as $requirement)
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-blue-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span class="text-muted-foreground">{{ $requirement }}</span>
+                            </li>
+                            @endforeach
+                        </ul>
                     </div>
                     @endif
                 </div>
