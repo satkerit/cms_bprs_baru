@@ -106,37 +106,25 @@ document.addEventListener("alpine:init", () => {
     window.Alpine.plugin(collapse);
 });
 
-// Prayer Widget Sidebar Controller
+// Prayer Widget Sidebar Controller — Bottom Right
 window.prayerWidgetSidebar = () => ({
     show: true,
     minimized: false,
-    topPosition: 96,
     ready: false,
 
     init() {
         // Defer rendering to improve FCP
         setTimeout(() => {
             this.ready = true;
-            if (window.innerWidth < 1024) {
-                this.minimized = true;
-            }
-            this.calculateTopPosition();
+            this.minimized = window.innerWidth < 1024;
             window.addEventListener(
                 "resize",
                 () => {
-                    this.calculateTopPosition();
                     this.minimized = window.innerWidth < 1024;
                 },
                 { passive: true },
             );
         }, 1500);
-    },
-
-    calculateTopPosition() {
-        const header = document.querySelector("header");
-        if (header) {
-            this.topPosition = header.offsetHeight + 16;
-        }
     },
 });
 

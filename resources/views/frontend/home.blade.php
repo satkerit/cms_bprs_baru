@@ -13,14 +13,14 @@
     @endphp
     @if(!empty($avifFirst['desktop']))
     <link rel="preload" as="image" href="{{ \App\Helpers\StorageHelper::url($avifFirst['desktop']) }}" fetchpriority="high" type="image/avif">
+    @elseif(!empty($webpFirst['desktop']))
+    <link rel="preload" as="image" href="{{ \App\Helpers\StorageHelper::url($webpFirst['desktop']) }}" fetchpriority="high" type="image/webp">
+    @else
+    <link rel="preload" as="image" href="{{ \App\Helpers\StorageHelper::url($compressedFirstImage) }}" fetchpriority="high">
     @endif
     @if(!empty($avifFirst['mobile']))
     <link rel="preload" as="image" href="{{ \App\Helpers\StorageHelper::url($avifFirst['mobile']) }}" media="(max-width: 640px)" type="image/avif">
-    @endif
-    @if(!empty($webpFirst['desktop']))
-    <link rel="preload" as="image" href="{{ \App\Helpers\StorageHelper::url($webpFirst['desktop']) }}" fetchpriority="high" type="image/webp">
-    @endif
-    @if(!empty($webpFirst['mobile']))
+    @elseif(!empty($webpFirst['mobile']))
     <link rel="preload" as="image" href="{{ \App\Helpers\StorageHelper::url($webpFirst['mobile']) }}" media="(max-width: 640px)" type="image/webp">
     @endif
     @endpush

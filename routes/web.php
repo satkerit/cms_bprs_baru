@@ -263,25 +263,24 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
 
     // Composer Update
     Route::get('composer-update', [App\Http\Controllers\Admin\ComposerUpdateController::class, 'index'])->name('composer-update.index');
-    Route::post('composer-update/run', [App\Http\Controllers\Admin\ComposerUpdateController::class, 'runUpdate'])->name('composer-update.run');
+    Route::post('composer-update/run', [App\Http\Controllers\Admin\ComposerUpdateController::class, 'runUpdate'])->name('composer-update.run');    // Cache Management
+                    Route::post('cache/clear', function () {
+                        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+                        \Illuminate\Support\Facades\Artisan::call('view:clear');
+                        \Illuminate\Support\Facades\Artisan::call('route:clear');
+                        \Illuminate\Support\Facades\Artisan::call('config:clear');
+                        \Illuminate\Support\Facades\Artisan::call('responsecache:clear');
 
-    // Cache Management
-    Route::post('cache/clear', function () {
-        \Illuminate\Support\Facades\Artisan::call('cache:clear');
-        \Illuminate\Support\Facades\Artisan::call('view:clear');
-        \Illuminate\Support\Facades\Artisan::call('route:clear');
-        \Illuminate\Support\Facades\Artisan::call('config:clear');
+                        // Clear model caches
+                        \App\Models\SiteSetting::clearCache();
+                        \Illuminate\Support\Facades\Cache::forget('hero_slide_images');
+                        for ($i = 1; $i <= 20; $i++) {
+                            \Illuminate\Support\Facades\Cache::forget(config('cache-keys.hero_slides', 'hero_slides') . "_{$i}");
+                        }
 
-        // Clear model caches
-        \App\Models\SiteSetting::clearCache();
-        \Illuminate\Support\Facades\Cache::forget('hero_slide_images');
-        for ($i = 1; $i <= 20; $i++) {
-            \Illuminate\Support\Facades\Cache::forget(config('cache-keys.hero_slides', 'hero_slides') . "_{$i}");
-        }
-
-        \Illuminate\Support\Facades\Session::flash('success', 'Semua cache berhasil dibersihkan.');
-        return redirect()->back();
-    })->name('cache.clear');
+                        \Illuminate\Support\Facades\Session::flash('success', 'Semua cache berhasil dibersihkan.');
+                        return redirect()->back();
+                    })->name('cache.clear');
 });
 
 // API Routes

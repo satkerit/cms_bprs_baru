@@ -119,21 +119,20 @@
         {{ $slot }}
     </main>
 
-    <!-- Floating Prayer Time Widget -->
+    <!-- Floating Prayer Time Widget — Bottom Right -->
     <div x-data="prayerWidgetSidebar()"
          x-show="ready"
          x-transition:enter="transition ease-out duration-500"
          x-transition:enter-start="opacity-0 translate-x-full"
          x-transition:enter-end="opacity-100 translate-x-0"
          x-cloak
-         class="fixed right-0 z-40 transition-all duration-500"
-         :class="minimized ? 'translate-x-[calc(100%-3rem)]' : 'translate-x-0'"
-         :style="'top: ' + topPosition + 'px'">
+         class="fixed right-4 bottom-4 z-40 transition-all duration-500"
+         :class="minimized ? 'translate-x-[calc(100%-3rem)]' : 'translate-x-0'">
 
         <!-- Toggle Button -->
         <button
             @click="minimized = !minimized"
-            class="absolute left-0 top-4 -translate-x-full bg-emerald-600 text-white p-2.5 rounded-l-xl shadow-lg hover:shadow-xl transition-all duration-300 z-10 hover:-translate-x-[calc(100%+2px)]"
+            class="absolute left-0 bottom-4 -translate-x-full bg-emerald-600 text-white p-2.5 rounded-l-xl shadow-lg hover:shadow-xl transition-all duration-300 z-10 hover:-translate-x-[calc(100%+2px)]"
             :class="minimized ? 'opacity-100' : 'opacity-0 hover:opacity-100'"
             :title="minimized ? 'Tampilkan Jadwal Sholat' : 'Sembunyikan Jadwal Sholat'"
             aria-label="Toggle prayer times widget">
@@ -154,7 +153,7 @@
         </button>
 
         <!-- Widget Container -->
-        <div class="w-80 sm:w-96 overflow-y-auto prayer-widget-container shadow-2xl rounded-l-2xl" style="max-height: inherit;">
+        <div class="w-80 sm:w-96 overflow-y-auto prayer-widget-container shadow-2xl rounded-2xl" style="max-height: 75vh;">
             <x-prayer-time-widget />
         </div>
     </div>
