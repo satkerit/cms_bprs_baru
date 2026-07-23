@@ -412,7 +412,9 @@ function initSwalConfirm() {
         }
     });
 
-    console.log("[SwalConfirm] Global confirmation system initialized");
+    if (import.meta.env?.PROD !== true) {
+        console.log("[SwalConfirm] Global confirmation system initialized");
+    }
 
     // -------------------------------------------------------
     // MUTATION OBSERVER: Deteksi form baru yg ditambahkan secara dinamis

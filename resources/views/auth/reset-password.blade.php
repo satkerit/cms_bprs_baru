@@ -7,9 +7,8 @@
     <title>Atur Ulang Password - {{ config('app.name') }}</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
     <!-- Styles -->
     @vite(['resources/js/app.js', 'resources/css/app.css'])
@@ -18,7 +17,7 @@
 
     <style nonce="{{ $nonce }}">
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
             background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
             background-size: 24px 24px;
@@ -52,7 +51,7 @@
         [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="has-text-dark" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<body class="has-text-dark" style="font-family: 'Inter', sans-serif;">
     @php
         $companyInfo = \App\Models\CompanyInfo::getInfo();
     @endphp

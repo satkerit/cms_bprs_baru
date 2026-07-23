@@ -487,8 +487,9 @@ window.Swal = new Proxy(
 // ===================================================
 // Rupiah Formatting Helper for Alpine/Livewire inputs
 // Prevents regex-in-Alpine-expression issues
+// Guard prevents override of preloaded version.
 // ===================================================
-window.formatRupiah = {
+window.formatRupiah = window.formatRupiah || {
     init(el, wireField) {
         if (window.Livewire) {
             const val = window.Livewire.find(el)?.get?.(wireField);
@@ -508,17 +509,27 @@ window.formatRupiah = {
         const formatted = raw ? Number(raw).toLocaleString("id-ID") : "";
         const pos = el.selectionStart;
         const oldLen = el.value.length;
+
+        // Guard: skip if already formatted — prevents re-entrant loop
+        // caused by el.value = formatted firing another @input event.
+        if (el.value === formatted) return;
+
         el.value = formatted;
-        const newPos = pos + (formatted.length - oldLen);
+        let newPos = pos + (formatted.length - oldLen);
+        if (newPos < 0) newPos = 0;
+        if (newPos > formatted.length) newPos = formatted.length;
         el.setSelectionRange(newPos, newPos);
-        if (window.Livewire)
-            window.Livewire.find(el).set(wireField, raw, false);
+        if (window.Livewire) {
+            const comp = window.Livewire.find(el);
+            if (comp) comp.set(wireField, raw, false);
+        }
     },
     blur(el, wireField) {
-        if (window.Livewire) {
-            const val = window.Livewire.find(el)?.get?.(wireField);
-            el.value = val ? this.fmt(val) : "";
-        }
+        if (!window.Livewire) return;
+        const comp = window.Livewire.find(el);
+        if (!comp) return;
+        const val = comp.get(wireField);
+        el.value = val ? this.fmt(val) : el.value;
     },
 };
 

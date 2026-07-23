@@ -53,12 +53,6 @@
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.bunny.net">
 
-    {{-- Scroll Progress Bar --}}
-    <div x-data="scrollProgress"
-         class="scroll-progress"
-         :style="{ transform: `scaleX(${progress})`, opacity: progress > 0.02 ? 1 : 0 }"
-         style="opacity: 0;"
-         aria-hidden="true"></div>
     @php
         $storageHost = parse_url(\App\Helpers\StorageHelper::url('x'), PHP_URL_HOST);
     @endphp
@@ -97,6 +91,13 @@
     @endenv
 </head>
 <body class="font-sans antialiased bg-background text-foreground selection:bg-emerald-100 selection:text-emerald-600">
+    {{-- Scroll Progress Bar (must be in <body>, not <head>) --}}
+    <div x-data="scrollProgress"
+         class="scroll-progress"
+         :style="{ transform: `scaleX(${progress})`, opacity: progress > 0.02 ? 1 : 0 }"
+         style="opacity: 0;"
+         aria-hidden="true"></div>
+
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white">
         Langsung ke konten utama

@@ -167,6 +167,7 @@ class CacheService
                     if (!class_exists('\App\Models\Auction')) return collect();
                     try {
                         return Auction::published()
+                            ->whereNotIn('status', ['sold', 'cancelled', 'unsold'])
                             ->orderBy('auction_date', 'asc')
                             ->limit($limit)
                             ->get(['id', 'title', 'slug', 'city', 'limit_price', 'auction_date', 'images', 'asset_type', 'status']);

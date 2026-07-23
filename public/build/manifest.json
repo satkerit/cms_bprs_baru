@@ -94,7 +94,7 @@
     "src": "node_modules/summernote/dist/font/summernote.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/css/app-BIYeS12j.css",
+    "file": "assets/css/app-oHtvRZ-q.css",
     "name": "app",
     "names": [
       "app.css"
@@ -143,7 +143,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/js/app-Kjq7PuJT.js",
+    "file": "assets/js/app-BhuxXoSn.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -177,7 +177,7 @@
     ]
   },
   "resources/js/sweetalert-global.js": {
-    "file": "assets/js/sweetalert-global-CrT-LlYm.js",
+    "file": "assets/js/sweetalert-global-BuLkfymQ.js",
     "name": "sweetalert-global",
     "src": "resources/js/sweetalert-global.js",
     "isEntry": true,

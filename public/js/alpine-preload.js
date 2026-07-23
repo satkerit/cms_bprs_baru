@@ -282,3 +282,54 @@ window.prayerTimeWidget = function () {
         },
     };
 };
+
+// =====================================================================
+// RUPIAH FORMATTING HELPER — Used by Livewire financing calculator
+// for real-time currency formatting on input fields via Alpine.
+// x-init="window.formatRupiah.init($el, 'fieldName')" must resolve
+// synchronously when Alpine evaluates the DOM.
+// =====================================================================
+window.formatRupiah = {
+    init(el, wireField) {
+        if (window.Livewire) {
+            var val = window.Livewire.find(el)?.get?.(wireField);
+            if (val) el.value = this.fmt(val);
+        }
+    },
+    fmt(v) {
+        return v
+            ? Number(String(v).replace(/[^0-9]/g, "")).toLocaleString("id-ID")
+            : "";
+    },
+    raw(v) {
+        return String(v).replace(/[^0-9]/g, "");
+    },
+    input(el, wireField) {
+        var raw = this.raw(el.value);
+        var formatted = raw ? Number(raw).toLocaleString("id-ID") : "";
+        var pos = el.selectionStart;
+        var oldLen = el.value.length;
+
+        // Guard: skip if already formatted — prevents re-entrant loop
+        // caused by el.value = formatted firing another @input event.
+        if (el.value === formatted) return;
+
+        el.value = formatted;
+        var newPos = pos + (formatted.length - oldLen);
+        // Clamp to avoid negative/max position
+        if (newPos < 0) newPos = 0;
+        if (newPos > formatted.length) newPos = formatted.length;
+        el.setSelectionRange(newPos, newPos);
+        if (window.Livewire) {
+            var comp = window.Livewire.find(el);
+            if (comp) comp.set(wireField, raw, false);
+        }
+    },
+    blur(el, wireField) {
+        if (!window.Livewire) return;
+        var comp = window.Livewire.find(el);
+        if (!comp) return; // component not found, leave field as-is
+        var val = comp.get(wireField);
+        el.value = val ? this.fmt(val) : el.value; // fallback to current value
+    },
+};

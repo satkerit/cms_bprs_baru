@@ -27,9 +27,9 @@
     <link rel="shortcut icon" href="{{ \App\Helpers\StorageHelper::url($company->favicon) }}" type="image/x-icon">
     @endif
 
-    {{-- Preload critical font --}}
-    <link rel="preload" href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" as="style">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    {{-- Preload critical fonts --}}
+    <link rel="preload" href="https://fonts.bunny.net/css?family=montserrat:400,500,600,700,800|inter:400,500,600,700&display=swap" as="style">
+    <link href="https://fonts.bunny.net/css?family=montserrat:400,500,600,700,800|inter:400,500,600,700&display=swap" rel="stylesheet" />
 
     @vite(['resources/js/sweetalert-global.js', 'resources/js/app.js', 'resources/css/app.css'])
     @livewireStyles(['nonce' => $nonce])
