@@ -257,6 +257,8 @@
             <div class="relative" x-data="{
                 displayValue: '{{ old('downPaymentInput', '') }}',
                 init() {
+                    const raw = $wire.get('downPaymentInput');
+                    if (raw) this.displayValue = Number(raw).toLocaleString('id-ID');
                     this.$watch('$wire.downPaymentInput', value => {
                         if (value) {
                             this.displayValue = this.formatRupiah(value);
