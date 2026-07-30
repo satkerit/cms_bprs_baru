@@ -57,7 +57,7 @@
                     {{-- Main Image with Zoom --}}
                     <div class="relative group">
                         {{-- Skeleton Loader --}}
-                        <div x-show="!loaded" class="w-full aspect-[16/9] sm:aspect-[21/9] product-image-skeleton"></div>
+                        <div x-show="!loaded" class="w-full aspect-[4/3] product-image-skeleton"></div>
 
                         {{-- Image with Hover Zoom --}}
                         <div
@@ -67,7 +67,7 @@
                             @mousemove="handleMouseMove($event)"
                             @mouseleave="zoomActive = false"
                             @mouseenter="zoomActive = true"
-                            style="aspect-ratio: 16/9;"
+                            style="aspect-ratio: 4/3;"
                         >
                             <img
                                 x-ref="mainImage"

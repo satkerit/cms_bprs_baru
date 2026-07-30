@@ -255,7 +255,7 @@
                     <x-admin.image-picker
                         name="image"
                         :value="null"
-                        hint="Format: JPG, PNG, WebP. Maksimal 5MB. Rekomendasi: 1200x675px (16:9). Minimal: 600x338px."
+                        hint="Format: WebP (disarankan) atau JPG. Resolusi: 1200×900px (4:3). Maks 500KB. Ideal: ≤200KB."
                         previewClass="w-full h-44 object-cover rounded-lg"
                     />
 
