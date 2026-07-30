@@ -165,23 +165,28 @@
         var S={min:true,lat:-6.2088,lng:106.8456,loc:'Jakarta, Indonesia',times:[],next:null,cd:{h:'00',m:'00',s:'00'},intvls:[],autoTO:null,autoHideTO:null};
         function toggle(){S.min=!S.min;S.min?w.classList.add('pfw-hide'):(w.style.display='',w.classList.remove('pfw-hide'));t.style.opacity=S.min?'1':'0';ic.innerHTML=S.min?'<path d=\"M15 19l-7-7 7-7\"/>':'<path d=\"M9 5l7 7-7 7\"/>';resetAutoTO();}
         function resetAutoTO(){clearTimeout(S.autoTO);clearTimeout(S.autoHideTO);S.autoTO=setTimeout(function(){if(S.min){toggle();S.autoHideTO=setTimeout(function(){if(!S.min){toggle();}},15000);}},45000);}
-        function loadTimes(){loadEl.style.display='';errEl.style.display='none';timesEl.style.display='none';
-            var d=new Date(),ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+        function loadTimes(){loadEl.style.display='';errEl.style.display='none';timesEl.style.display='none';_ft(0);}
+        function _ft(r){var d=new Date(),ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
             fetch('https://api.aladhan.com/v1/timings/'+ds+'?latitude='+S.lat+'&longitude='+S.lng+'&method=11').then(function(r){return r.json()}).then(function(d){
                 if(d.code!==200||!d.data)throw Error();
-                var timings=d.data.timings,list=[{n:'Subuh',k:'Fajr'},{n:'Dzuhur',k:'Dhuhr'},{n:'Ashar',k:'Asr'},{n:'Maghrib',k:'Maghrib'},{n:'Isya',k:'Isha'}];
-                var now=new Date(),cur=now.getHours()*3600+now.getMinutes()*60+now.getSeconds(),times=[],next=null;
-                for(var i=0;i<list.length;i++){var p=list[i],ts=timings[p.k];if(!ts)continue;var pt=ts.split(':'),sec=parseInt(pt[0])*3600+parseInt(pt[1])*60;
-                times.push({n:p.n,t:pt[0]+':'+pt[1],nx:false});if(!next&&sec>cur){next={n:p.n,t:pt[0]+':'+pt[1],s:sec-cur};times[times.length-1].nx=true;}}
-                S.times=times;S.next=next;loadEl.style.display='none';
-                var html='',icons=['🌅','☀️','🌤️','🌆','🌙'];
-                for(i=0;i<times.length;i++){var x=times[i];html+='<div class=\"pfw-up pfw-entry'+(x.nx?' pfw-next':'')+'\" style=\"animation-delay:'+(.15+i*0.08)+'s;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;margin-bottom:6px;background:'+(x.nx?'rgba(255,255,255,0.2);box-shadow:0 0 0 1px rgba(255,255,255,0.4)':'rgba(255,255,255,0.05)')+'\">'+
-                    '<div style=\"display:flex;align-items:center;gap:10px\"><div style=\"width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;background:'+(x.nx?'rgba(255,255,255,0.3)':'rgba(255,255,255,0.1)')+'\">'+(icons[i]||'')+'</div><span style=\"color:#fff;font-weight:500;font-size:15px\">'+x.n+'</span></div>'+
-                    '<div style=\"text-align:right\"><div style=\"color:#fff;font-weight:700;font-size:15px\">'+x.t+'</div>'+(x.nx?'<div style=\"color:rgba(255,255,255,0.8);font-size:11px\">Selanjutnya</div>':'')+'</div></div>';}
-                timesEl.innerHTML=html;timesEl.style.display='';
-                if(next){nx.style.display='';nxName.textContent=next.n;_.startCD(next.s);}else{nx.style.display='none';}
-            }).catch(function(){loadEl.style.display='none';errEl.style.display='';errMsg.textContent='Gagal memuat jadwal sholat';});
-        }
+                try{localStorage.setItem('pfw_cache',JSON.stringify({lat:S.lat,lng:S.lng,data:d.data}));}catch(e){}
+                _renderTimes(d.data);
+            }).catch(function(){
+                if(r<2){setTimeout(function(){_ft(r+1);},2000*(r+1));return;}
+                try{var c=JSON.parse(localStorage.getItem('pfw_cache'));if(c&&c.data){_renderTimes(c.data);loadEl.style.display='none';return;}}catch(e){}
+                loadEl.style.display='none';errEl.style.display='';errMsg.textContent='Gagal memuat jadwal sholat. Periksa koneksi.';
+            });}
+        function _renderTimes(data){var timings=data.timings,list=[{n:'Subuh',k:'Fajr'},{n:'Dzuhur',k:'Dhuhr'},{n:'Ashar',k:'Asr'},{n:'Maghrib',k:'Maghrib'},{n:'Isya',k:'Isha'}];
+            var now=new Date(),cur=now.getHours()*3600+now.getMinutes()*60+now.getSeconds(),times=[],next=null;
+            for(var i=0;i<list.length;i++){var p=list[i],ts=timings[p.k];if(!ts)continue;var pt=ts.split(':'),sec=parseInt(pt[0])*3600+parseInt(pt[1])*60;
+            times.push({n:p.n,t:pt[0]+':'+pt[1],nx:false});if(!next&&sec>cur){next={n:p.n,t:pt[0]+':'+pt[1],s:sec-cur};times[times.length-1].nx=true;}}
+            S.times=times;S.next=next;
+            var html='',icons=['🌅','☀️','🌤️','🌆','🌙'];
+            for(i=0;i<times.length;i++){var x=times[i];html+='<div class=\"pfw-up pfw-entry'+(x.nx?' pfw-next':'')+'\" style=\"animation-delay:'+(.15+i*0.08)+'s;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;margin-bottom:6px;background:'+(x.nx?'rgba(255,255,255,0.2);box-shadow:0 0 0 1px rgba(255,255,255,0.4)':'rgba(255,255,255,0.05)')+'\">'+
+                '<div style=\"display:flex;align-items:center;gap:10px\"><div style=\"width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;background:'+(x.nx?'rgba(255,255,255,0.3)':'rgba(255,255,255,0.1)')+'\">'+(icons[i]||'')+'</div><span style=\"color:#fff;font-weight:500;font-size:15px\">'+x.n+'</span></div>'+
+                '<div style=\"text-align:right\"><div style=\"color:#fff;font-weight:700;font-size:15px\">'+x.t+'</div>'+(x.nx?'<div style=\"color:rgba(255,255,255,0.8);font-size:11px\">Selanjutnya</div>':'')+'</div></div>';}
+            timesEl.innerHTML=html;timesEl.style.display='';
+            if(next){nx.style.display='';nxName.textContent=next.n;_.startCD(next.s);}else{nx.style.display='none';}}
         t.addEventListener('click',toggle,false);
         document.getElementById('pfw-refresh').addEventListener('click',loadTimes,false);
         document.getElementById('pfw-retry').addEventListener('click',loadTimes,false);
