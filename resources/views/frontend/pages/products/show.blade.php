@@ -74,6 +74,7 @@
                                 src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
                                 alt="{{ $product->image_alt ?? $product->name }}"
                                 class="w-full h-full object-cover"
+                                width="800" height="600"
                                 loading="eager"
                                 @load="onImageLoad()"
                                 :style="zoomActive ? `transform-origin: ${zoomX}% ${zoomY}%; transform: scale(1.8)` : ''"

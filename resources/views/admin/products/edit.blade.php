@@ -292,11 +292,29 @@
 
             {{-- Product Image --}}
             <x-admin.card title="Gambar Produk" subtitle="Upload gambar untuk produk">
+                {{-- Standar Gambar --}}
+                <div class="mb-5 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                    <h4 class="text-sm font-semibold text-blue-800 mb-2 flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Standar Gambar Produk
+                    </h4>
+                    <ul class="text-xs text-blue-700 space-y-1.5 list-disc list-inside">
+                        <li><strong>Rasio:</strong> 4:3 (wajib, toleransi ±0.05)</li>
+                        <li><strong>Resolusi ideal:</strong> 1.200 × 900px</li>
+                        <li><strong>Resolusi minimal:</strong> 800 × 600px</li>
+                        <li><strong>Resolusi maksimal:</strong> 3.840 × 2.880px (4K)</li>
+                        <li><strong>Ukuran file maks:</strong> {{ round(get_upload_max_size('product_image') / 1024) }}MB ({{ get_upload_max_size('product_image') }}KB)</li>
+                        <li><strong>Format:</strong> WebP (disarankan), JPEG, PNG</li>
+                        <li>Gambar yang tidak sesuai standar akan <strong>ditolak</strong> saat disimpan.</li>
+                    </ul>
+                </div>
                 <div class="space-y-4">
                     <x-admin.image-picker
                         name="image"
                         :value="$product->image"
-                        hint="Format: WebP (disarankan) atau JPG. Resolusi: 1200×900px (4:3). Maks 500KB. Ideal: ≤200KB."
+                        hint="Seret atau klik untuk upload. Gambar akan otomatis dioptimalkan ke WebP/AVIF."
                         previewClass="w-full h-44 object-cover rounded-lg"
                     />
 

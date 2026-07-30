@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Product;
 
+use App\Rules\ProductImageRatio;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProductRequest extends FormRequest
@@ -25,7 +26,14 @@ class UpdateProductRequest extends FormRequest
             'features' => 'nullable|array',
             'requirements' => 'nullable|array',
             'benefits' => 'nullable|array',
-            'image' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$imageMaxKb}|dimensions:min_width=600,min_height=338,max_width=7680,max_height=4320",
+            'image' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,webp',
+                "max:{$imageMaxKb}",
+                'dimensions:min_width=800,min_height=600,max_width=3840,max_height=2880',
+                new ProductImageRatio,
+            ],
             'image_alt' => 'nullable|string|max:255',
             'brochure' => "nullable|file|mimes:pdf|max:{$documentMaxKb}",
             'brochure_id' => 'nullable|exists:brochures,id',
@@ -41,7 +49,8 @@ class UpdateProductRequest extends FormRequest
 
         return [
             'image.max' => "Ukuran gambar produk maksimal {$imageMaxMb}MB.",
-            'image.dimensions' => 'Gambar produk minimal 600×338px (16:9) dan maksimal 7680×4320px.',
+            'image.dimensions' => 'Gambar produk minimal 800×600px dan maksimal 3840×2880px (rasio 4:3).',
+            'image.mimes' => 'Gambar produk harus berformat WebP, JPEG, atau PNG.',
             'brochure.max' => "Ukuran brosur maksimal {$documentMaxMb}MB.",
         ];
     }

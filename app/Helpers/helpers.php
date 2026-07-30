@@ -175,7 +175,7 @@ if (!function_exists('get_max_upload_size_kb')) {
                 $val = trim($settings->upload_max_filesize);
                 $last = strtolower($val[strlen($val) - 1]);
                 $val = (int)$val;
-                
+
                 switch ($last) {
                     case 'g':
                         $val *= 1024 * 1024;
@@ -190,13 +190,13 @@ if (!function_exists('get_max_upload_size_kb')) {
                         $val = $val / 1024;
                         break;
                 }
-                
+
                 return max(1, (int)$val);
             }
         } catch (\Exception $e) {
             // Silently fallback to default if settings unavailable
         }
-        
+
         return $default_kb;
     }
 }
@@ -207,7 +207,7 @@ if (!function_exists('get_upload_max_size')) {
      *
      * Supported feature types:
      * - 'image'          → max_image_size_kb (default: 2048 = 2MB)  — Berita, Board Member, Office, Logo, WhyChooseUs
-     * - 'product_image'  → max_product_image_size_kb (default: 5120 = 5MB)
+     * - 'product_image'  → max_product_image_size_kb (default: 2048 = 2MB)
      * - 'document'       → max_document_size_kb (default: 15360 = 15MB) — PDF Laporan & Brosur
      * - 'hero_image'     → max_hero_image_size_kb (default: 5120 = 5MB)
      * - 'auction_image'  → max_auction_image_size_kb (default: 5120 = 5MB)

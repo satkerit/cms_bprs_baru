@@ -180,17 +180,32 @@
 
         {{-- Image Info --}}
         @if($product->image)
+            @php
+                $imagePath = \Illuminate\Support\Facades\Storage::disk('public')->path($product->image);
+                $imageDimensions = file_exists($imagePath) ? @getimagesize($imagePath) : null;
+                $imageSize = file_exists($imagePath) ? filesize($imagePath) : null;
+            @endphp
             <x-admin.card title="Gambar">
                 <div class="space-y-3">
-                    <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}" alt="{{ $product->image_alt ?? $product->name }}" class="w-full rounded-lg object-cover ring-1 ring-slate-200">
+                    <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}" alt="{{ $product->image_alt ?? $product->name }}" class="w-full rounded-lg object-cover ring-1 ring-slate-200" width="800" height="600">
                     @if($product->image_alt)
                         <p class="text-xs text-slate-500">
                             <span class="font-medium">Alt Text:</span> {{ $product->image_alt }}
                         </p>
                     @endif
+                    @if($imageDimensions)
+                        <p class="text-xs text-slate-500">
+                            <span class="font-medium">Dimensi:</span> {{ $imageDimensions[0] }} × {{ $imageDimensions[1] }}px
+                        </p>
+                    @endif
+                    @if($imageSize)
+                        <p class="text-xs text-slate-500">
+                            <span class="font-medium">Ukuran file:</span> {{ format_file_size($imageSize) }}
+                        </p>
+                    @endif
                     <p class="text-xs text-slate-500">
                         <span class="font-medium">Path:</span>
-                        <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">{{ $product->image }}</code>
+                        <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">{{ $product->image }}</code>
                     </p>
                 </div>
             </x-admin.card>

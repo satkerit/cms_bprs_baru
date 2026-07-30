@@ -24,9 +24,9 @@ return new class extends Migration
 
             // ===== Product Images =====
             $table->unsignedInteger('max_product_image_size_kb')
-                ->default(5120)
+                ->default(2048)
                 ->after('max_image_size_kb')
-                ->comment('Batas ukuran gambar produk (KB). Default: 5MB');
+                ->comment('Batas ukuran gambar produk (KB). Default: 2MB');
 
             // ===== Documents (PDF) =====
             // Laporan (Reports) dan Brosur — menggantikan fungsi get_max_upload_size_kb() yang lama

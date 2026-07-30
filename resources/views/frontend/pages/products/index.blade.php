@@ -42,6 +42,7 @@
                                     <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
                                          alt="{{ $product->name }}"
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                         width="800" height="600"
                                          loading="{{ $loop->first ? 'eager' : 'lazy' }}">
                                 @else
                                     <div class="w-full h-full bg-gradient-to-br from-emerald-50 via-emerald-50 to-emerald-50 flex items-center justify-center">

@@ -1,4 +1,4 @@
-﻿@props(['products'])
+@props(['products'])
 
 @php
     $typeConfig = [
@@ -74,6 +74,7 @@
                          src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
                          alt="{{ $product->name }}"
                          class="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-[2deg]"
+                         width="800" height="600"
                          loading="{{ $index < 3 ? 'eager' : 'lazy' }}"
                          decoding="async"
                          fetchpriority="{{ $index < 2 ? 'high' : 'auto' }}"
