@@ -40,21 +40,7 @@ database/drop_conflicting.php
 implementation_plan.md
 task.md
 walkthrough.md
-/.ulpi
-/.claude
-# ============================================
-# IDE & EDITOR
-# ============================================
-/.idea
-/.vscode
-/.vagrant
-/.kiro
-/.qoder
-/.sixth
-/.agents
-/.trae
-/.claude
-/.trae
+
 
 *.zip
 *.7z
