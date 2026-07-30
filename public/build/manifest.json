@@ -94,7 +94,7 @@
     "src": "node_modules/summernote/dist/font/summernote.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/css/app-oHtvRZ-q.css",
+    "file": "assets/css/app-B__6Ocj1.css",
     "name": "app",
     "names": [
       "app.css"
@@ -143,14 +143,13 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/js/app-BhuxXoSn.js",
+    "file": "assets/js/app-DLMKIEDY.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
       "_rolldown-runtime-DdACKOZr.js",
       "_bootstrap-BX9ouVjI.js",
-      "_vendor-alpine-BncWAj4G.js",
       "_preload-helper-CVCbYSQz.js"
     ],
     "dynamicImports": [

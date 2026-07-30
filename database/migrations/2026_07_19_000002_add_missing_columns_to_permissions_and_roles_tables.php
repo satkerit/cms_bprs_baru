@@ -17,8 +17,9 @@ return new class extends Migration
     {
         // Fix permissions table
         if (Schema::hasTable('permissions')) {
-            // Add default value for guard_name so inserts without it don't fail
-            DB::statement("ALTER TABLE `permissions` MODIFY `guard_name` VARCHAR(255) NOT NULL DEFAULT 'web'");
+            if (Schema::hasColumn('permissions', 'guard_name')) {
+                DB::statement("ALTER TABLE `permissions` MODIFY `guard_name` VARCHAR(255) NOT NULL DEFAULT 'web'");
+            }
 
             if (!Schema::hasColumn('permissions', 'display_name')) {
                 Schema::table('permissions', function (Blueprint $table) {
@@ -53,8 +54,9 @@ return new class extends Migration
 
         // Fix roles table
         if (Schema::hasTable('roles')) {
-            // Add default value for guard_name so inserts without it don't fail
-            DB::statement("ALTER TABLE `roles` MODIFY `guard_name` VARCHAR(255) NOT NULL DEFAULT 'web'");
+            if (Schema::hasColumn('roles', 'guard_name')) {
+                DB::statement("ALTER TABLE `roles` MODIFY `guard_name` VARCHAR(255) NOT NULL DEFAULT 'web'");
+            }
 
             if (!Schema::hasColumn('roles', 'display_name')) {
                 Schema::table('roles', function (Blueprint $table) {

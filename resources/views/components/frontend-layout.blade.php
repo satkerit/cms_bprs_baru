@@ -65,7 +65,7 @@
     @endif
 
     {{-- Fonts --}}
-    <link href="https://fonts.bunny.net/css?family=montserrat:400,500,600,700,800|inter:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
     {{-- Vite Assets --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -127,54 +127,9 @@
         {{ $slot }}
     </main>
 
-    <!-- Floating Prayer Time Widget — Bottom Right -->
-    <div x-data="prayerWidgetSidebar()"
-         x-show="ready"
-         x-transition:enter="transition ease-out duration-500"
-         x-transition:enter-start="opacity-0 translate-x-full"
-         x-transition:enter-end="opacity-100 translate-x-0"
-         x-cloak
-         class="fixed right-4 bottom-4 z-40 transition-all duration-500"
-         :class="minimized ? 'translate-x-[calc(100%-3rem)]' : 'translate-x-0'">
-
-        <!-- Toggle Button -->
-        <button
-            @click="minimized = !minimized"
-            class="absolute left-0 bottom-4 -translate-x-full bg-emerald-600 text-white p-2.5 rounded-l-xl shadow-lg hover:shadow-xl transition-all duration-300 z-10 hover:-translate-x-[calc(100%+2px)]"
-            :class="minimized ? 'opacity-100' : 'opacity-0 hover:opacity-100'"
-            :title="minimized ? 'Tampilkan Jadwal Sholat' : 'Sembunyikan Jadwal Sholat'"
-            aria-label="Toggle prayer times widget">
-            <svg class="w-5 h-5 transition-transform duration-300" :class="minimized ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-            </svg>
-        </button>
-
-        <!-- Close Button (Mobile) -->
-        <button
-            @click="show = false; $el.closest('[x-data]').style.display = 'none'"
-            class="lg:hidden absolute right-2 top-2 bg-white/20 hover:bg-white/30 text-white p-1.5 rounded-lg transition-all z-10 backdrop-blur-sm"
-            title="Close"
-            aria-label="Close widget">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-
-        <!-- Widget Container -->
-        <div class="w-80 sm:w-96 overflow-y-auto prayer-widget-container shadow-2xl rounded-2xl" style="max-height: 75vh;">
-            <x-prayer-time-widget />
-        </div>
-    </div>
-
     <!-- Footer -->
     @include('frontend.partials.footer', ['company' => $company])
 
-    {{-- Preload Alpine component functions BEFORE Livewire loads Alpine.
-         Livewire's @livewireScripts loads Alpine synchronously — if the Vite
-         ES module (app.js) hasn't executed yet, window.* won't exist when
-         Alpine evaluates x-data. This regular <script> tag loads synchronously
-         and defines the functions before Alpine initializes. --}}
-    <script src="{{ asset('js/alpine-preload.js') }}" nonce="{{ $nonce }}"></script>
     @livewireScripts(['nonce' => $nonce])
     @vite(['resources/js/pagination-fix.js'])
     @stack('scripts')

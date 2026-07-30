@@ -4,6 +4,8 @@
         <div class="relative">
             <input
                 type="text"
+                id="global-search"
+                name="query"
                 wire:model.live.debounce.300ms="query"
                 @focus="if(query.length >= 2) open = true"
                 placeholder="Cari berita, produk, lelang..."

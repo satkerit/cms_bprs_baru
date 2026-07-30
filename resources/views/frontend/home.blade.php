@@ -1,4 +1,4 @@
-<x-frontend-layout>
+﻿<x-frontend-layout>
     <x-slot:title>Beranda - BPRS Bangka Belitung</x-slot:title>
     <x-slot:metaDescription>BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya di Bangka Belitung. Menyediakan produk simpanan syariah, pembiayaan syariah, deposito syariah, dan kas keliling untuk masyarakat.</x-slot:metaDescription>
     <x-slot:metaKeywords>BPRS Bangka Belitung, Bank Syariah, Simpanan Syariah, Pembiayaan Syariah, Deposito Syariah, Kas Keliling, BPR Syariah, Bangka, Belitung</x-slot:metaKeywords>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3 px-4 trust-badge fade-in-section">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 text-blue-600 shrink-0 group hover:scale-110 hover:rotate-3 transition-all duration-300">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 text-amber-600 shrink-0 group hover:scale-110 hover:rotate-3 transition-all duration-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                     </div>
                     <div>

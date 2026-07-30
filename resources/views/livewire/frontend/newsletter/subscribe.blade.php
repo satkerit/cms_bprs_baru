@@ -4,6 +4,8 @@
             <div class="flex-1 relative">
                 <input
                     type="email"
+                    id="newsletter-email"
+                    name="email"
                     wire:model.live="email"
                     placeholder="Masukkan email Anda"
                     class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 @error('email') border-red-500 focus:ring-red-500 @enderror"

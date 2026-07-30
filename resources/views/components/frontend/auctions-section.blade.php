@@ -1,4 +1,4 @@
-@props(['auctions'])
+﻿@props(['auctions'])
 
 <!-- Auctions Section -->
 @if($auctions->count() > 0)
@@ -25,7 +25,7 @@
             @foreach($auctions as $index => $auction)
             @php
                 $delay = $index * 100;
-                $statusStyle = $auction->status === 'published' ? ['bg' => 'bg-blue-500', 'text' => 'Dipublikasi'] :
+                $statusStyle = $auction->status === 'published' ? ['bg' => 'bg-emerald-600', 'text' => 'Dipublikasi'] :
                     ($auction->status === 'registration_open' ? ['bg' => 'bg-emerald-600', 'text' => 'Dibuka'] :
                     ($auction->status === 'auction_scheduled' ? ['bg' => 'bg-emerald-500', 'text' => 'Terjadwal'] :
                     ['bg' => 'bg-secondary/30', 'text' => $auction->status_label]));

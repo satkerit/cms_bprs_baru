@@ -1,4 +1,4 @@
-@props(['whyChooseUsSettings', 'whyChooseUs'])
+﻿@props(['whyChooseUsSettings', 'whyChooseUs'])
 
 <!-- Why Choose Us Section -->
 @if($whyChooseUsSettings?->is_active)
@@ -12,7 +12,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
-            <!-- ─── LEFT: Feature Cards (Grid) ─── -->
+            <!-- â”€â”€â”€ LEFT: Feature Cards (Grid) â”€â”€â”€ -->
             <div class="order-2 lg:order-1">
                 <div class="grid sm:grid-cols-2 gap-4">
                     @forelse($whyChooseUs as $index => $item)
@@ -20,13 +20,9 @@
                         $delay = $index * 100;
                         $colorMap = [
                             'bg-emerald-50' => ['card' => 'border-emerald-200 hover:border-emerald-300', 'accent' => 'bg-emerald-600', 'icon' => 'text-emerald-600', 'ring' => 'ring-emerald-500/20'],
-                            'bg-blue-100' => ['card' => 'border-blue-200 hover:border-blue-300', 'accent' => 'bg-blue-500', 'icon' => 'text-blue-600', 'ring' => 'ring-blue-500/20'],
-                            'bg-amber-100' => ['card' => 'border-amber-200 hover:border-amber-300', 'accent' => 'bg-amber-500', 'icon' => 'text-amber-600', 'ring' => 'ring-amber-500/20'],
-                            'bg-purple-100' => ['card' => 'border-purple-200 hover:border-purple-300', 'accent' => 'bg-purple-500', 'icon' => 'text-purple-600', 'ring' => 'ring-purple-500/20'],
-                            'bg-rose-100' => ['card' => 'border-rose-200 hover:border-rose-300', 'accent' => 'bg-rose-500', 'icon' => 'text-rose-600', 'ring' => 'ring-rose-500/20'],
                             'bg-emerald-100' => ['card' => 'border-emerald-200 hover:border-emerald-300', 'accent' => 'bg-emerald-600', 'icon' => 'text-emerald-600', 'ring' => 'ring-emerald-500/20'],
-                            'bg-cyan-100' => ['card' => 'border-cyan-200 hover:border-cyan-300', 'accent' => 'bg-cyan-500', 'icon' => 'text-cyan-600', 'ring' => 'ring-cyan-500/20'],
-                            'bg-indigo-100' => ['card' => 'border-indigo-200 hover:border-indigo-300', 'accent' => 'bg-indigo-500', 'icon' => 'text-indigo-600', 'ring' => 'ring-indigo-500/20'],
+                            'bg-amber-50' => ['card' => 'border-amber-200 hover:border-amber-300', 'accent' => 'bg-amber-500', 'icon' => 'text-amber-600', 'ring' => 'ring-amber-500/20'],
+                            'bg-amber-100' => ['card' => 'border-amber-200 hover:border-amber-300', 'accent' => 'bg-amber-500', 'icon' => 'text-amber-600', 'ring' => 'ring-amber-500/20'],
                         ];
                         $bgClass = $item->bg_class ?? 'bg-emerald-50';
                         $colors = $colorMap[$bgClass] ?? $colorMap['bg-emerald-50'];
@@ -59,9 +55,9 @@
                     @php
                         $defaults = [
                             ['title' => 'Sesuai Prinsip Syariah', 'desc' => 'Seluruh produk dan layanan telah disetujui oleh Dewan Pengawas Syariah', 'bg' => 'bg-emerald-50', 'color' => 'text-emerald-600'],
-                            ['title' => 'Aman & Terpercaya', 'desc' => 'Diawasi oleh OJK dan dijamin oleh LPS untuk keamanan dana Anda', 'bg' => 'bg-blue-100', 'color' => 'text-blue-600'],
+                            ['title' => 'Aman & Terpercaya', 'desc' => 'Diawasi oleh OJK dan dijamin oleh LPS untuk keamanan dana Anda', 'bg' => 'bg-emerald-100', 'color' => 'text-emerald-600'],
                             ['title' => 'Proses Cepat & Mudah', 'desc' => 'Layanan yang efisien dengan proses transparan dan mudah dipahami', 'bg' => 'bg-amber-100', 'color' => 'text-amber-600'],
-                            ['title' => 'Pelayanan Profesional', 'desc' => 'Tim kami berdedikasi memberikan pelayanan terbaik bagi nasabah', 'bg' => 'bg-purple-100', 'color' => 'text-purple-600'],
+                            ['title' => 'Pelayanan Profesional', 'desc' => 'Tim kami berdedikasi memberikan pelayanan terbaik bagi nasabah', 'bg' => 'bg-amber-50', 'color' => 'text-amber-600'],
                         ];
                     @endphp
                     @foreach($defaults as $i => $d)
@@ -82,7 +78,7 @@
                 </div>
             </div>
 
-            <!-- ─── RIGHT: Header + Image ─── -->
+            <!-- â”€â”€â”€ RIGHT: Header + Image â”€â”€â”€ -->
             <div class="order-1 lg:order-2 fade-in-section" x-intersect="$el.classList.add('is-visible')">
                 <!-- Section Label -->
                 <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold bg-emerald-50 text-emerald-700 mb-4 shadow-sm">

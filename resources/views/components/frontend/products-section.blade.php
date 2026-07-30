@@ -1,15 +1,15 @@
-@props(['products'])
+﻿@props(['products'])
 
 @php
     $typeConfig = [
         'simpanan_syariah' => [
             'label' => 'Simpanan',
-            'gradient' => 'from-blue-600 to-cyan-500',
-            'overlay' => 'from-blue-900/80 via-blue-800/40 to-transparent',
-            'hoverOverlay' => 'from-blue-600/90 via-blue-500/60 to-transparent',
+            'gradient' => 'from-amber-500 to-amber-600',
+            'overlay' => 'from-amber-900/80 via-amber-800/40 to-transparent',
+            'hoverOverlay' => 'from-amber-600/90 via-amber-500/60 to-transparent',
             'icon' => 'M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z',
-            'accentColor' => 'blue',
-            'lightBg' => 'bg-blue-50',
+            'accentColor' => 'amber',
+            'lightBg' => 'bg-amber-50',
         ],
         'pembiayaan_syariah' => [
             'label' => 'Pembiayaan',

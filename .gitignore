@@ -15,10 +15,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/obsidian-vault
-/docs
-/tests
-
+# (tests, docs, docker, design-system sengaja tidak di-ignore — harus di-commit)
 # ============================================
 # STORAGE (content only, keep .gitkeep)
 # ============================================
@@ -56,6 +53,8 @@ walkthrough.md
 /.sixth
 /.agents
 /.trae
+/.CLAUDE
+/.TRAE
 
 *.zip
 *.7z
