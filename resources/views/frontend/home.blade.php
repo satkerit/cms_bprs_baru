@@ -405,9 +405,12 @@
         ch=document.getElementById('pfw-ch'), cm=document.getElementById('pfw-cm'), cs=document.getElementById('pfw-cs'),
         loadEl=document.getElementById('pfw-load'), errEl=document.getElementById('pfw-err'), errMsg=document.getElementById('pfw-err-msg'),
         timesEl=document.getElementById('pfw-times');
-    var S={min:true,lat:-6.2088,lng:106.8456,loc:'Jakarta, Indonesia',times:[],next:null,cd:{h:'00',m:'00',s:'00'},intvls:[],autoTO:null,autoHideTO:null};
-    function toggle(){S.min=!S.min;S.min?w.classList.add('pfw-hide'):(w.style.display='',w.classList.remove('pfw-hide'));t.style.opacity=S.min?'1':'0';ic.innerHTML=S.min?'<path d=\"M15 19l-7-7 7-7\"/>':'<path d=\"M9 5l7 7-7 7\"/>';resetAutoTO();}
-    function resetAutoTO(){clearTimeout(S.autoTO);clearTimeout(S.autoHideTO);S.autoTO=setTimeout(function(){if(S.min){toggle();S.autoHideTO=setTimeout(function(){if(!S.min){toggle();}},15000);}},45000);}
+    var S={min:true,lat:-6.2088,lng:106.8456,loc:'Jakarta, Indonesia',times:[],next:null,cd:{h:'00',m:'00',s:'00'},intvls:[],hideTO:null};
+    function toggle(){S.min=!S.min;S.min?w.classList.add('pfw-hide'):(w.style.display='',w.classList.remove('pfw-hide'));t.style.opacity=S.min?'1':'0';ic.innerHTML=S.min?'<path d=\"M15 19l-7-7 7-7\"/>':'<path d=\"M9 5l7 7-7 7\"/>';cancelHide();}
+    function cancelHide(){clearTimeout(S.hideTO);}
+    function scheduleHide(delay){cancelHide();if(!S.min){S.hideTO=setTimeout(function(){if(!S.min){toggle();}},delay||2500);}}
+    w.addEventListener('mouseenter',function(){cancelHide();if(S.min){toggle();}},false);
+    w.addEventListener('mouseleave',function(){scheduleHide(2500);},false);
     function loadTimes(){loadEl.style.display='';errEl.style.display='none';timesEl.style.display='none';_ft(0);}
     function _ft(r){var d=new Date(),ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
         fetch('https://api.aladhan.com/v1/timings/'+ds+'?latitude='+S.lat+'&longitude='+S.lng+'&method=11').then(function(r){return r.json()}).then(function(d){
@@ -447,7 +450,7 @@
         fetch('https://nominatim.openstreetmap.org/reverse?lat='+S.lat+'&lon='+S.lng+'&format=json').then(function(r){return r.json()}).then(function(d){
             if(d.address){var c=d.address.city||d.address.town||d.address.village||d.address.county;if(c){S.loc=c+', '+(d.address.state||'Indonesia');loc.textContent=S.loc;}}
         }).catch(function(){});loadTimes();},function(){loadTimes();},{timeout:10000,maximumAge:300000,enableHighAccuracy:false});}else{loadTimes();}
-    resetAutoTO();
+    cancelHide();
 })();
 </script>
 @endpush
