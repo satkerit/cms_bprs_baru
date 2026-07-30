@@ -31,7 +31,9 @@ class HeroSlide extends Model
         'transition_duration',
         'show_title',
         'show_subtitle',
-        'show_button'
+        'show_button',
+        'focal_x',
+        'focal_y'
     ];
 
     protected $casts = [
@@ -40,7 +42,9 @@ class HeroSlide extends Model
         'transition_duration' => 'integer',
         'show_title' => 'boolean',
         'show_subtitle' => 'boolean',
-        'show_button' => 'boolean'
+        'show_button' => 'boolean',
+        'focal_x' => 'decimal:2',
+        'focal_y' => 'decimal:2'
     ];
 
     /**

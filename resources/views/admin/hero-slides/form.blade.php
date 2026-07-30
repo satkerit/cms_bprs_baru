@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', isset($heroSlide) ? 'Edit Slide' : 'Tambah Slide')
 
@@ -54,6 +54,57 @@
                         previewClass="w-full h-48 object-cover"
                     />
                     @error('image')<p class="text-[13px] text-red-600 font-medium">{{ $message }}</p>@enderror
+
+                    {{-- Focal Point Selector --}}
+                    @if($heroSlide && $heroSlide->image)
+                    <x-admin.card title="Titik Fokus (Focal Point)">
+                        <div class="space-y-3">
+                            <p class="text-[12px] text-zinc-500">Klik pada gambar untuk menentukan titik fokus. Titik ini akan dijaga agar tetap terlihat di semua ukuran layar.</p>
+                            <div class="relative inline-block" id="focal-preview">
+                                <img src="{{ \App\Helpers\StorageHelper::url($heroSlide->image) }}"
+                                     alt="Preview"
+                                     class="max-w-full h-64 object-cover cursor-crosshair border border-zinc-200 rounded-lg"
+                                     id="focal-img"
+                                     loading="lazy">
+                                <div class="absolute pointer-events-none transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-emerald-500 rounded-full opacity-0 transition-opacity"
+                                     id="focal-crosshair"
+                                     style="top: {{ ($heroSlide->focal_y ?? 0.5) * 100 }}%; left: {{ ($heroSlide->focal_x ?? 0.5) * 100 }}%;">
+                                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px bg-emerald-500"></div>
+                                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-full bg-emerald-500"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 pt-2">
+                                <x-admin.input
+                                    type="number"
+                                    name="focal_x"
+                                    label="X (Kanan %)"
+                                    :value="old('focal_x', $heroSlide->focal_x ?? 0.5)"
+                                    min="0"
+                                    max="1"
+                                    step="0.01"
+                                    id="focal_x_input"
+                                    hint="0 = kiri, 1 = kanan"
+                                />
+                                <x-admin.input
+                                    type="number"
+                                    name="focal_y"
+                                    label="Y (Bawah %)"
+                                    :value="old('focal_y', $heroSlide->focal_y ?? 0.5)"
+                                    min="0"
+                                    max="1"
+                                    step="0.01"
+                                    id="focal_y_input"
+                                    hint="0 = atas, 1 = bawah"
+                                />
+                            </div>
+                            <button type="button"
+                                    class="text-xs text-emerald-600 hover:underline"
+                                    onclick="document.getElementById('focal_x_input').value=0.5; document.getElementById('focal_y_input').value=0.5; updateCrosshair();">
+                                Reset ke tengah
+                            </button>
+                        </div>
+                    </x-admin.card>
+                    @endif
                 </div>
             </x-admin.card>
         </div>
@@ -113,3 +164,39 @@
     </div>
 </form>
 @endsection
+
+@push('scripts')
+<script nonce="{{ $nonce }}">
+(function() {
+    const img = document.getElementById('focal-img');
+    const crosshair = document.getElementById('focal-crosshair');
+    const xInput = document.getElementById('focal_x_input');
+    const yInput = document.getElementById('focal_y_input');
+    if (!img || !crosshair || !xInput || !yInput) return;
+
+    function updateCrosshair() {
+        const x = Math.max(0, Math.min(1, parseFloat(xInput.value) || 0.5));
+        const y = Math.max(0, Math.min(1, parseFloat(yInput.value) || 0.5));
+        crosshair.style.left = (x * 100) + '%';
+        crosshair.style.top = (y * 100) + '%';
+        crosshair.style.opacity = '1';
+    }
+
+    function handleImgClick(e) {
+        const rect = img.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        xInput.value = x.toFixed(2);
+        yInput.value = y.toFixed(2);
+        updateCrosshair();
+    }
+
+    img.addEventListener('click', handleImgClick);
+    xInput.addEventListener('input', updateCrosshair);
+    yInput.addEventListener('input', updateCrosshair);
+
+    // Initial
+    updateCrosshair();
+})();
+</script>
+@endpush
