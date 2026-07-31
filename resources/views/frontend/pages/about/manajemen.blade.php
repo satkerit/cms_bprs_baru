@@ -180,7 +180,7 @@
                     x-transition:leave="ease-in duration-200"
                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    class="relative transform rounded-3xl bg-card text-left transition-all sm:my-8 sm:w-full sm:max-w-4xl border border-border max-h-[92vh] overflow-y-auto shadow-2xl"
+                    class="relative transform rounded-3xl bg-card text-left transition-all sm:my-8 sm:w-full sm:max-w-4xl border border-border max-h-[92vh] overflow-hidden shadow-2xl flex flex-col"
                     @click.stop
                 >
                     {{-- Header dengan gradient --}}
@@ -222,6 +222,7 @@
                         </div>
                     </div>
 
+                    <div class="overflow-y-auto flex-1">
                     <div class="bg-card px-6 pb-6 pt-4 sm:px-8 sm:pb-8">
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                             {{-- Kolom kiri: Biografi --}}
@@ -283,6 +284,7 @@
                             Tutup
                         </button>
                     </div>
+                    </div>{{-- end overflow-y-auto --}}
                 </div>
             </div>
         </div>
