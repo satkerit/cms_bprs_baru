@@ -3,20 +3,37 @@
 /**
  * artisan-clear.php
  * Laravel cache clearer untuk production (akses via browser)
- *
- * PENTING: Hapus atau proteksi file ini setelah digunakan
- * URL: https://yourdomain.com/artisan-clear.php?token=YOUR_SECRET_TOKEN
+ * URL: https://yourdomain.com/dev/clear.php?token=YOUR_SECRET_TOKEN
  */
 
 define('LARAVEL_START', microtime(true));
 
 // ============================================
+// Parse .env manual (sebelum Laravel bootstrap)
+// ============================================
+$envFile = __DIR__ . '/.env';
+if (file_exists($envFile)) {
+    foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        $line = trim($line);
+        if ($line === '' || str_starts_with($line, '#')) continue;
+        if (!str_contains($line, '=')) continue;
+        [$key, $val] = explode('=', $line, 2);
+        $key = trim($key);
+        $val = trim($val, " \t\n\r\0\x0B\"'");
+        if (!array_key_exists($key, $_ENV)) {
+            $_ENV[$key] = $val;
+            putenv("$key=$val");
+        }
+    }
+}
+
+// ============================================
 // SECURITY — Token protection
 // ============================================
-$secret = env_val('SECRET_CACHE_TOKEN', 'change-this-secret-token');
+$secret = $_ENV['SECRET_CACHE_TOKEN'] ?? 'change-this-secret-token';
 $token  = $_GET['token'] ?? '';
 
-if (!hash_equals($secret, $token)) {
+if ($secret === 'change-this-secret-token' || !hash_equals($secret, $token)) {
     http_response_code(403);
     die('403 Forbidden');
 }
@@ -34,25 +51,35 @@ $kernel->bootstrap();
 // Run all clear commands
 // ============================================
 $commands = [
-    'config:clear'   => 'Configuration cache',
-    'cache:clear'    => 'Application cache',
-    'route:clear'    => 'Route cache',
-    'view:clear'     => 'View cache',
-    'event:clear'    => 'Event cache',
+    'config:clear'         => 'Configuration cache',
+    'cache:clear'          => 'Application cache',
+    'route:clear'          => 'Route cache',
+    'view:clear'           => 'View cache',
+    'event:clear'          => 'Event cache',
     'schedule:clear-mutex' => 'Scheduled task mutexes',
 ];
 
 $results = [];
 foreach ($commands as $command => $label) {
     try {
-        $exitCode = Artisan::call($command);
-        $results[] = ['label' => $label, 'command' => $command, 'status' => $exitCode === 0 ? 'ok' : 'warn', 'output' => trim(Artisan::output())];
+        $exitCode  = Artisan::call($command);
+        $results[] = [
+            'label'   => $label,
+            'command' => $command,
+            'status'  => $exitCode === 0 ? 'ok' : 'warn',
+            'output'  => trim(Artisan::output()),
+        ];
     } catch (Throwable $e) {
-        $results[] = ['label' => $label, 'command' => $command, 'status' => 'error', 'output' => $e->getMessage()];
+        $results[] = [
+            'label'   => $label,
+            'command' => $command,
+            'status'  => 'error',
+            'output'  => $e->getMessage(),
+        ];
     }
 }
 
-// Opcache reset (jika tersedia)
+// OPcache reset
 $opcache = false;
 if (function_exists('opcache_reset')) {
     opcache_reset();
@@ -60,15 +87,6 @@ if (function_exists('opcache_reset')) {
 }
 
 $elapsed = round((microtime(true) - LARAVEL_START) * 1000, 2);
-
-// ============================================
-// Helper
-// ============================================
-function env_val(string $key, string $default): string
-{
-    $val = getenv($key);
-    return ($val !== false && $val !== '') ? $val : $default;
-}
 
 ?>
 <!DOCTYPE html>
@@ -123,7 +141,7 @@ function env_val(string $key, string $default): string
             align-items: center;
             justify-content: space-between;
             padding: 0.6rem 0;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid #334155;
             gap: 0.5rem;
         }
 
