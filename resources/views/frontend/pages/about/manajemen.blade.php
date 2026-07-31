@@ -200,7 +200,7 @@
                     </div>
 
                     {{-- Foto + nama di luar header agar tidak terpotong --}}
-                    <div class="bg-card px-6 pt-4 sm:px-8 flex items-end gap-5">
+                    <div class="bg-card px-6 pt-4 sm:px-8 flex items-end gap-5 flex-shrink-0">
                         <div class="flex-shrink-0 -mt-16 sm:-mt-20">
                             <template x-if="member && member.photo">
                                 <img :src="member.photo_url || '/storage/' + member.photo" :alt="member.name"
@@ -222,7 +222,7 @@
                         </div>
                     </div>
 
-                    <div class="overflow-y-auto flex-1">
+                    <div class="overflow-y-auto flex-1 min-h-0">
                     <div class="bg-card px-6 pb-6 pt-4 sm:px-8 sm:pb-8">
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                             {{-- Kolom kiri: Biografi --}}
