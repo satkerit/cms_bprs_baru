@@ -5,18 +5,25 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/pail
 /vendor
+/auth.json
+
+# ============================================
+# ENVIRONMENT & SECRETS — NEVER COMMIT
+# ============================================
 .env
-.env.backup
-.env.production
-.env.local
+.env.*
+!.env.example
+
+# ============================================
+# BOOTSTRAP & PHP CACHE
+# ============================================
+/bootstrap/cache/*.tmp
+/.phpunit.cache
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/obsidian-vault*
-# (tests, docs, docker, design-system sengaja tidak di-ignore — harus di-commit)
+.phpactor.json
+
 # ============================================
 # STORAGE (content only, keep .gitkeep)
 # ============================================
@@ -28,35 +35,54 @@ yarn-error.log
 !storage/**/.gitkeep
 
 # ============================================
-# DATABASE DUMPS (jangan commit .sql)
+# LOGS
+# ============================================
+*.log
+npm-debug.log
+yarn-error.log
+
+# ============================================
+# DATABASE
 # ============================================
 *.sql
 *.sql.gz
-database/drop_conflicting.php
+/database/database.sqlite
 
 # ============================================
-# AI / TOOL CACHE
+# BUILD / COMPILED ASSETS
 # ============================================
-/graphify-out
-implementation_plan.md
-task.md
-walkthrough.md
-
-
 *.zip
 *.7z
+
+# ============================================
+# IDE & EDITOR
+# ============================================
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
 
 # ============================================
 # OS FILES
 # ============================================
 .DS_Store
+Desktop.ini
 Thumbs.db
+._*
+.Spotlight-V100
+.Trashes
 NUL
 
-
-# SKILL #
 # ============================================
-/.ulpi
+# HOMESTEAD (legacy)
+# ============================================
+Homestead.json
+Homestead.yaml
+
+# ============================================
+# PROJECT-SPECIFIC
+# ============================================
 /obsidian-vault*
-/docker/*
-/docs/*
+/graphify-out
+/.ulpi
