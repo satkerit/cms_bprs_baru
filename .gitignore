@@ -1,7 +1,7 @@
 # ============================================
 # LARAVEL / FRAMEWORK
 # ============================================
-/public/storage
+
 /node_modules
 /storage/*.key
 /storage/pail
@@ -32,6 +32,11 @@
 /storage/framework/views/*
 /storage/logs/*
 !storage/**/.gitkeep
+
+# ============================================
+# PUBLIC STORAGE SYMLINK (created by storage:link)
+# ============================================
+/public/storage
 
 # ============================================
 # LOGS
