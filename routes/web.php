@@ -288,15 +288,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     // Hard Refresh: config:cache + view:cache untuk production
     Route::post('cache/hard-refresh', function () {
         try {
-            // Clear response cache dulu (Spatie) agar tidak ada URL http:// yang tersimpan
+            // HAPUS semua cache — TIDAK menulis cache baru via web.
+            // Menulis cache (config:cache/route:cache) via web di shared hosting
+            // sering gagal karena bootstrap/cache tidak writable -> file korup -> error 500.
             \Illuminate\Support\Facades\Artisan::call('responsecache:clear');
             \Illuminate\Support\Facades\Artisan::call('cache:clear');
             \Illuminate\Support\Facades\Artisan::call('view:clear');
-            \Illuminate\Support\Facades\Artisan::call('config:cache');
-            \Illuminate\Support\Facades\Artisan::call('route:cache');
-            \Illuminate\Support\Facades\Artisan::call('event:cache');
+            \Illuminate\Support\Facades\Artisan::call('config:clear');
+            \Illuminate\Support\Facades\Artisan::call('route:clear');
+            \Illuminate\Support\Facades\Artisan::call('event:clear');
+            \Illuminate\Support\Facades\Artisan::call('clear-compiled');
             \App\Models\SiteSetting::clearCache();
-            \Illuminate\Support\Facades\Session::flash('success', 'Hard refresh berhasil. Response cache, config, route, dan event sudah di-rebuild.');
+            \Illuminate\Support\Facades\Session::flash('success', 'Hard refresh berhasil. Semua cache dihapus. Config/route/event akan dibaca langsung dari source.');
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Session::flash('error', 'Hard refresh gagal: ' . $e->getMessage());
         }
