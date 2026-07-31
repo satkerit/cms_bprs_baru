@@ -36,7 +36,7 @@
 # ============================================
 # PUBLIC STORAGE SYMLINK (created by storage:link)
 # ============================================
-/public/storage
+/public/storage/*
 
 # ============================================
 # LOGS
