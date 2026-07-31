@@ -15,7 +15,7 @@
 // Path relatif: public_html/dev/ → ../../cms_baru
 // Atau ganti dengan path absolut jika perlu, contoh:
 // $rootPath = '/home/username/cms_baru';
-$rootPath = realpath(__DIR__ . '/../../cms_baru');
+$rootPath = realpath(__DIR__ . '/../../app');
 
 if (!$rootPath || !file_exists($rootPath . '/artisan-clear.php')) {
     http_response_code(500);
