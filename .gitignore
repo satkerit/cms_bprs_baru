@@ -1,6 +1,7 @@
 # ============================================
 # LARAVEL / FRAMEWORK
 # ============================================
+/public/storage
 /node_modules
 /storage/*.key
 /storage/pail
