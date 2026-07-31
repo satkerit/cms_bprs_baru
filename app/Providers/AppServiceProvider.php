@@ -48,6 +48,11 @@ class AppServiceProvider extends ServiceProvider
             Model::preventLazyLoading();
         }
 
+        // Force HTTPS in production
+        if ($this->app->isProduction()) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         $this->loadSmtpSettings();
         $this->applySecuritySettings();
         $this->registerBladeDirectives();
