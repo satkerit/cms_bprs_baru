@@ -13,7 +13,7 @@ define('LARAVEL_START', microtime(true));
 // ============================================
 // SECURITY — Token protection
 // ============================================
-$secret = env_val('CACHE_CLEAR_TOKEN', 'change-this-secret-token');
+$secret = env_val('SECRET_CACHE_TOKEN', 'change-this-secret-token');
 $token  = $_GET['token'] ?? '';
 
 if (!hash_equals($secret, $token)) {
