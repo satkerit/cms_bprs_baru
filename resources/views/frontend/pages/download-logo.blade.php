@@ -2,7 +2,7 @@
     <x-slot name="title">Download Logo - {{ $company->name ?? 'BPRS Bangka Belitung' }}</x-slot>
 
     <!-- Hero -->
-    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
         </div>

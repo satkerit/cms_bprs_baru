@@ -7,7 +7,7 @@
     @endphp
 
     {{-- ═══ HERO — Ethereal Glass ═══ --}}
-    <section class="relative pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
             <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
@@ -180,57 +180,74 @@
                     x-transition:leave="ease-in duration-200"
                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    class="relative transform rounded-2xl bg-card text-left transition-all sm:my-8 sm:w-full sm:max-w-3xl border border-border max-h-[90vh] overflow-y-auto"
+                    class="relative transform rounded-3xl bg-card text-left transition-all sm:my-8 sm:w-full sm:max-w-4xl border border-border max-h-[92vh] overflow-y-auto shadow-2xl"
                     @click.stop
                 >
-                    <div class="absolute right-3 top-3 sm:right-4 sm:top-4 z-10">
-                        <button
-                            @click="open = false"
-                            type="button"
-                            class="rounded-full bg-card/80 p-2 text-muted-foreground hover:bg-muted focus:outline-none transition-all duration-200 touch-manipulation active:scale-95"
-                        >
-                            <span class="sr-only">Tutup</span>
-                            <svg class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+                    {{-- Header dengan gradient --}}
+                    <div class="relative h-36 sm:h-44 overflow-hidden rounded-t-3xl bg-gradient-to-br from-emerald-700 via-emerald-600 to-emerald-800 flex-shrink-0">
+                        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+
+                        {{-- Close button --}}
+                        <div class="absolute right-4 top-4 z-10">
+                            <button @click="open = false" type="button"
+                                class="rounded-full bg-white/20 backdrop-blur-sm p-2 text-white hover:bg-white/30 focus:outline-none transition-all duration-200 touch-manipulation active:scale-95">
+                                <span class="sr-only">Tutup</span>
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="bg-card px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
-                            <div class="shrink-0 mx-auto sm:mx-0">
-                                <template x-if="member && member.photo">
-                                    <img :src="member.photo_url || '/storage/' + member.photo" :alt="member.name" class="w-40 h-52 sm:w-48 sm:h-64 object-cover object-top rounded-xl">
-                                </template>
-                                <template x-if="!member || !member.photo">
-                                    <div class="w-40 h-52 sm:w-48 sm:h-64 bg-muted dark:bg-slate-800 rounded-xl flex items-center justify-center">
-                                        <svg class="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                        </svg>
-                                    </div>
-                                </template>
-                            </div>
+                    {{-- Foto + nama di luar header agar tidak terpotong --}}
+                    <div class="bg-card px-6 pt-4 sm:px-8 flex items-end gap-5">
+                        <div class="flex-shrink-0 -mt-16 sm:-mt-20">
+                            <template x-if="member && member.photo">
+                                <img :src="member.photo_url || '/storage/' + member.photo" :alt="member.name"
+                                     class="w-28 h-36 sm:w-32 sm:h-44 object-cover object-top rounded-2xl ring-4 ring-card shadow-2xl">
+                            </template>
+                            <template x-if="!member || !member.photo">
+                                <div class="w-28 h-36 sm:w-32 sm:h-44 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl ring-4 ring-card shadow-2xl flex items-center justify-center">
+                                    <svg class="w-12 h-12 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="pb-3">
+                            <h3 class="text-xl sm:text-2xl font-bold text-foreground leading-tight" x-text="member?.name"></h3>
+                            <span class="inline-flex mt-1.5 items-center px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300">
+                                <span x-text="member?.position"></span>
+                            </span>
+                        </div>
+                    </div>
 
-                            <div class="flex-1 mt-2 sm:mt-0 text-left">
-                                <h3 class="text-lg sm:text-2xl font-bold text-foreground leading-tight" x-text="member?.name"></h3>
-                                <p class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm sm:text-lg mb-4 sm:mb-6" x-text="member?.position"></p>
-
-                                <div class="prose prose-sm prose-accent max-w-none text-muted-foreground">
+                    <div class="bg-card px-6 pb-6 pt-4 sm:px-8 sm:pb-8">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            {{-- Kolom kiri: Biografi --}}
+                            <div class="sm:col-span-2">
+                                <div class="prose prose-sm prose-emerald max-w-none text-muted-foreground">
                                     <template x-if="member && member.biography">
-                                        <p x-html="member.biography.replace(/\n/g, '<br>')" class="whitespace-pre-line leading-relaxed text-xs sm:text-base"></p>
+                                        <p x-html="member.biography.replace(/\n/g, '<br>')" class="whitespace-pre-line leading-relaxed text-sm sm:text-base"></p>
+                                    </template>
+                                    <template x-if="!member || !member.biography">
+                                        <p class="text-sm text-muted-foreground italic">Biografi belum tersedia.</p>
                                     </template>
                                 </div>
+                            </div>
 
+                            {{-- Kolom kanan: Pendidikan & Pengalaman --}}
+                            <div class="sm:col-span-1 space-y-4">
                                 <template x-if="member && member.education && member.education.length > 0">
-                                    <div class="mt-6 sm:mt-8 bg-muted/50 dark:bg-slate-800/50 rounded-xl p-4 sm:p-5 border border-border dark:border-slate-700">
-                                        <h4 class="font-bold text-foreground mb-2 sm:mb-3 flex items-center text-xs sm:text-base">
-                                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-emerald-600 dark:text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg>
-                                            Riwayat Pendidikan
+                                    <div class="bg-muted/50 dark:bg-slate-800/50 rounded-xl p-4 border border-border dark:border-slate-700">
+                                        <h4 class="font-bold text-foreground mb-3 flex items-center text-sm">
+                                            <svg class="w-4 h-4 mr-2 text-emerald-600 dark:text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg>
+                                            Pendidikan
                                         </h4>
-                                        <ul class="space-y-1.5 sm:space-y-2">
+                                        <ul class="space-y-2">
                                             <template x-for="edu in member.education" :key="edu">
-                                                <li class="flex items-start text-xs sm:text-sm text-muted-foreground">
-                                                    <span class="mr-2 mt-1.5 w-1.5 h-1.5 bg-emerald-600 dark:bg-emerald-400 rounded-full shrink-0"></span>
+                                                <li class="flex items-start text-sm text-muted-foreground">
+                                                    <span class="mr-2 mt-2 w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span>
                                                     <span x-text="edu"></span>
                                                 </li>
                                             </template>
@@ -239,15 +256,15 @@
                                 </template>
 
                                 <template x-if="member && member.experience && member.experience.length > 0">
-                                    <div class="mt-3 sm:mt-4 bg-muted/50 dark:bg-slate-800/50 rounded-xl p-4 sm:p-5 border border-border dark:border-slate-700">
-                                        <h4 class="font-bold text-foreground mb-2 sm:mb-3 flex items-center text-xs sm:text-base">
-                                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-emerald-600 dark:text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                            Pengalaman Kerja
+                                    <div class="bg-muted/50 dark:bg-slate-800/50 rounded-xl p-4 border border-border dark:border-slate-700">
+                                        <h4 class="font-bold text-foreground mb-3 flex items-center text-sm">
+                                            <svg class="w-4 h-4 mr-2 text-emerald-600 dark:text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                            Pengalaman
                                         </h4>
-                                        <ul class="space-y-1.5 sm:space-y-2">
+                                        <ul class="space-y-2">
                                             <template x-for="exp in member.experience" :key="exp">
-                                                <li class="flex items-start text-xs sm:text-sm text-muted-foreground">
-                                                    <span class="mr-2 mt-1.5 w-1.5 h-1.5 bg-emerald-600 dark:bg-emerald-400 rounded-full shrink-0"></span>
+                                                <li class="flex items-start text-sm text-muted-foreground">
+                                                    <span class="mr-2 mt-2 w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span>
                                                     <span x-text="exp"></span>
                                                 </li>
                                             </template>
@@ -257,12 +274,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-muted/50 dark:bg-slate-800/50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 border-t border-border dark:border-slate-700 rounded-b-xl">
-                        <button
-                            type="button"
-                            class="inline-flex w-full justify-center min-h-[48px] rounded-xl bg-card px-3 py-2 text-xs font-semibold text-foreground ring-1 ring-inset ring-gray-300 hover:bg-muted/50 sm:mt-0 sm:w-auto transition-colors touch-manipulation active:scale-95"
-                            @click="open = false"
-                        >
+
+                    {{-- Footer --}}
+                    <div class="px-6 py-4 sm:px-8 border-t border-border dark:border-slate-700 flex justify-end rounded-b-3xl bg-muted/30 dark:bg-slate-800/30">
+                        <button type="button"
+                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-card text-sm font-semibold text-foreground ring-1 ring-inset ring-border hover:bg-muted/50 transition-colors touch-manipulation active:scale-95"
+                            @click="open = false">
                             Tutup
                         </button>
                     </div>

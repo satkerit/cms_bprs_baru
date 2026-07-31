@@ -12,7 +12,7 @@
     @endpush
 
     {{-- ═══ HIGH-END v2: HERO — Ethereal Glass ═══ --}}
-    <section class="relative pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
             <div class="absolute top-10 left-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>

@@ -2,7 +2,7 @@
     <x-slot:title>Karir - {{ config('app.name') }}</x-slot:title>
 
     <!-- Hero Section -->
-    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 lg:pb-24 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-12 sm:pb-16 md:pb-20 lg:pb-24 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>

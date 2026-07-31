@@ -2,7 +2,7 @@
     <x-slot name="title">Pengaduan Nasabah - {{ $companyInfo->name ?? 'BPR Syariah' }}</x-slot>
 
     {{-- ═══ HERO ═══ --}}
-    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-20 sm:pb-24 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-20 sm:pb-24 overflow-hidden">
         {{-- Background --}}
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>

@@ -17,25 +17,108 @@
     @endphp
 
     {{-- ═══ HERO ═══ --}}
-    <section class="relative pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20 md:pb-28 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-20 sm:pb-24 md:pb-32 overflow-hidden">
+        {{-- Background --}}
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
-            <div class="absolute top-20 right-0 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+            <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-300/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-amber-300/10 rounded-full blur-3xl translate-y-1/3"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-up" x-intersect="$el.classList.add('is-visible')">
-            @if($logo)
-                <div class="mb-6 flex justify-center">
-                    <img src="{{ $logo }}" alt="{{ $companyName }}" class="h-20 sm:h-24 object-contain rounded-xl shadow-lg bg-white/80 backdrop-blur-sm p-3">
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+                {{-- Kiri: Teks --}}
+                <div class="reveal-up" x-intersect="$el.classList.add('is-visible')">
+                    <span class="eyebrow-badge mb-5 inline-flex bg-white/20 text-white border-white/25">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        Tentang Kami
+                    </span>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-5">
+                        Profil<br>
+                        <span class="text-emerald-300">Perusahaan</span>
+                    </h1>
+
+                    <p class="text-white/80 text-base sm:text-lg leading-relaxed mb-8 w-full">
+                        {{ $companyName }} — bank pembiayaan rakyat syariah yang berkomitmen menghadirkan layanan keuangan syariah terbaik, transparan, dan amanah untuk masyarakat Bangka Belitung.
+                    </p>
+
+                    {{-- Stats row --}}
+                    <div class="grid grid-cols-3 gap-4 sm:gap-6">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-4 text-center border border-white/15">
+                            <div class="text-2xl sm:text-3xl font-bold text-white">{{ date('Y') - (int)$establishedYear }}+</div>
+                            <div class="text-xs text-white/70 mt-1 leading-tight">Tahun<br>Beroperasi</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-4 text-center border border-white/15">
+                            <div class="text-2xl sm:text-3xl font-bold text-emerald-300">OJK</div>
+                            <div class="text-xs text-white/70 mt-1 leading-tight">Terdaftar &amp;<br>Diawasi</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-4 text-center border border-white/15">
+                            <div class="text-2xl sm:text-3xl font-bold text-amber-300">LPS</div>
+                            <div class="text-xs text-white/70 mt-1 leading-tight">Dijamin<br>Pemerintah</div>
+                        </div>
+                    </div>
                 </div>
-            @endif
-            <span class="eyebrow-badge mb-4 inline-flex">Tentang {{ $companyName }}</span>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight max-w-3xl mx-auto">
-                Profil Perusahaan
-            </h1>
-            <p class="text-emerald-50/80 text-base sm:text-lg mt-4 w-full leading-relaxed">
-                {{ $companyName }} — mitra keuangan syariah terpercaya untuk masyarakat Bangka Belitung.
-            </p>
+
+                {{-- Kanan: Card info --}}
+                <div class="reveal-up" x-intersect="$el.classList.add('is-visible')" style="animation-delay:.15s">
+                    <div class="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-6 sm:p-8 space-y-5">
+                        {{-- Logo --}}
+                        @if($logo)
+                            <div class="flex justify-center">
+                                <img src="{{ $logo }}" alt="{{ $companyName }}"
+                                     class="h-16 sm:h-20 object-contain rounded-xl bg-white/90 px-4 py-2 shadow-lg">
+                            </div>
+                        @else
+                            <div class="flex justify-center">
+                                <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        @endif
+
+                        <h2 class="text-white font-bold text-lg sm:text-xl text-center leading-snug">{{ $companyName }}</h2>
+
+                        <div class="space-y-3 pt-2 border-t border-white/15">
+                            @if($info?->address)
+                            <div class="flex items-start gap-3 text-sm text-white/80">
+                                <svg class="w-4 h-4 mt-0.5 text-emerald-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span>{{ $info->address }}</span>
+                            </div>
+                            @endif
+                            @if($info?->phone)
+                            <div class="flex items-center gap-3 text-sm text-white/80">
+                                <svg class="w-4 h-4 text-emerald-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                <span>{{ $info->phone }}</span>
+                            </div>
+                            @endif
+                            @if($info?->email)
+                            <div class="flex items-center gap-3 text-sm text-white/80">
+                                <svg class="w-4 h-4 text-emerald-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <span>{{ $info->email }}</span>
+                            </div>
+                            @endif
+                            @if($info?->website)
+                            <div class="flex items-center gap-3 text-sm text-white/80">
+                                <svg class="w-4 h-4 text-emerald-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/></svg>
+                                <span>{{ $info->website }}</span>
+                            </div>
+                            @endif
+                        </div>
+
+                        @if($establishedYear)
+                        <div class="flex items-center justify-center gap-2 text-xs text-white/60 pt-2 border-t border-white/15">
+                            <svg class="w-3.5 h-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            Berdiri sejak {{ $establishedYear }}
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 

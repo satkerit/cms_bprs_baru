@@ -28,8 +28,8 @@
     @endif
 
     {{-- ═══ HERO SLIDER ═══ --}}
-    {{-- pt-24 sm:pt-28 lg:pt-32 = memberi ruang untuk floating island navbar --}}
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-2">
+    {{-- pt = memberi ruang untuk floating island navbar --}}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-20 pb-8 sm:pb-12">
         <x-frontend.hero-slider :hero-slides="$heroSlides" :hero-slide-images="$heroSlideImages ?? []" :hero-slider-delay="$heroSliderDelay ?? 5000" />
     </div>
 
