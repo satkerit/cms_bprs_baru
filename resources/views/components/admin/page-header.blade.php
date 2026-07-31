@@ -17,15 +17,14 @@
                 <div class="w-1 h-8 rounded-full bg-gradient-to-b {{ $gradientClass }} shrink-0"></div>
                 <div>
                     <div class="flex items-center gap-2.5">
-                        <h1 class="text-xl font-bold text-slate-900 tracking-tight">
+                        <h1 class="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
                             {{ $title }}
                         </h1>
                         @if($badge)
                             <span class="admin-badge-emerald">{{ $badge }}</span>
                         @endif
-                    </div>
-                    @if($subtitle)
-                        <p class="mt-0.5 text-[13px] text-slate-500 flex items-center gap-1.5">
+                    </div>                        @if($subtitle)
+                        <p class="mt-0.5 text-[13px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>

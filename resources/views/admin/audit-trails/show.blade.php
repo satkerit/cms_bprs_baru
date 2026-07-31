@@ -21,29 +21,29 @@
  <!-- Basic Info -->
  <x-admin.card title="Informasi Aktivitas">
  <div class="space-y-4">
- <div class="flex items-center justify-between py-3 border-b border-zinc-100">
- <span class="text-[11px] text-zinc-500">Aksi</span>
+ <div class="flex items-center justify-between py-3 border-b dark:border-slate-800 border-zinc-100">
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Aksi</span>
  <span class="inline-flex items-center px-3 py-1 rounded-xl text-[11px] font-medium {{ $auditTrail->action_badge }}">
  {{ ucfirst(str_replace('_', ' ', $auditTrail->action)) }}
  </span>
  </div>
- <div class="flex items-start justify-between py-3 border-b border-zinc-100">
- <span class="text-[11px] text-zinc-500">Deskripsi</span>
- <span class="text-[13px] text-zinc-900 text-right max-w-md">{{ $auditTrail->description }}</span>
+ <div class="flex items-start justify-between py-3 border-b dark:border-slate-800 border-zinc-100">
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Deskripsi</span>
+ <span class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900 text-right max-w-md">{{ $auditTrail->description }}</span>
  </div>
  @if($auditTrail->model_type)
- <div class="flex items-center justify-between py-3 border-b border-zinc-100">
- <span class="text-[11px] text-zinc-500">Model</span>
- <span class="text-[13px] text-zinc-900 font-mono">{{ class_basename($auditTrail->model_type) }} #{{ $auditTrail->model_id }}</span>
+ <div class="flex items-center justify-between py-3 border-b dark:border-slate-800 border-zinc-100">
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Model</span>
+ <span class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900 font-mono">{{ class_basename($auditTrail->model_type) }} #{{ $auditTrail->model_id }}</span>
  </div>
  @endif
- <div class="flex items-center justify-between py-3 border-b border-zinc-100">
- <span class="text-[11px] text-zinc-500">Waktu</span>
- <span class="text-[13px] text-zinc-900">{{ $auditTrail->created_at->format('d F Y, H:i:s') }}</span>
+ <div class="flex items-center justify-between py-3 border-b dark:border-slate-800 border-zinc-100">
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Waktu</span>
+ <span class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auditTrail->created_at->format('d F Y, H:i:s') }}</span>
  </div>
  <div class="flex items-center justify-between py-3">
- <span class="text-[11px] text-zinc-500">Waktu Relatif</span>
- <span class="text-[13px] text-zinc-900">{{ $auditTrail->created_at->diffForHumans() }}</span>
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Waktu Relatif</span>
+ <span class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auditTrail->created_at->diffForHumans() }}</span>
  </div>
  </div>
  </x-admin.card>
@@ -154,17 +154,17 @@
  {{ strtoupper(substr($auditTrail->user_name ?? 'S', 0, 1)) }}
  </div>
  <div class="ml-3">
- <p class="font-semibold text-zinc-900">{{ $auditTrail->user_name ?? 'System' }}</p>
+ <p class="font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auditTrail->user_name ?? 'System' }}</p>
  @if($auditTrail->user)
- <p class="text-[11px] text-zinc-500">{{ $auditTrail->user->email }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $auditTrail->user->email }}</p>
  @endif
  </div>
  </div>
  @if($auditTrail->user)
- <div class="pt-4 border-t border-zinc-100">
+ <div class="pt-4 border-t dark:border-slate-800 border-zinc-100">
  <div class="flex items-center justify-between text-[11px]">
- <span class="text-zinc-500">Role</span>
- <span class="font-medium text-zinc-900">{{ $auditTrail->user->roleModel?->display_name ?? 'N/A' }}</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Role</span>
+ <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auditTrail->user->roleModel?->display_name ?? 'N/A' }}</span>
  </div>
  </div>
  @endif
@@ -174,23 +174,23 @@
  <x-admin.card title="Informasi Request">
  <div class="space-y-3">
  <div class="flex items-center justify-between text-[11px]">
- <span class="text-zinc-500">IP Address</span>
- <span class="font-mono text-zinc-900">{{ $auditTrail->ip_address ?? '-' }}</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">IP Address</span>
+ <span class="font-mono dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auditTrail->ip_address ?? '-' }}</span>
  </div>
  <div class="flex items-center justify-between text-[11px]">
- <span class="text-zinc-500">Method</span>
- <span class="font-mono text-zinc-900">{{ $auditTrail->method ?? '-' }}</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Method</span>
+ <span class="font-mono dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auditTrail->method ?? '-' }}</span>
  </div>
  @if($auditTrail->url)
- <div class="pt-3 border-t border-zinc-100">
- <span class="text-[11px] text-zinc-500 block mb-1">URL</span>
- <span class="text-[13px] font-mono text-zinc-700">{{ $auditTrail->url }}</span>
+ <div class="pt-3 border-t dark:border-slate-800 border-zinc-100">
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 block mb-1">URL</span>
+ <span class="text-[13px] font-mono dark:text-slate-300 dark:text-slate-300 text-zinc-700">{{ $auditTrail->url }}</span>
  </div>
  @endif
  @if($auditTrail->user_agent)
- <div class="pt-3 border-t border-zinc-100">
- <span class="text-[11px] text-zinc-500 block mb-1">User Agent</span>
- <span class="text-[13px] text-zinc-700">{{ Str::limit($auditTrail->user_agent, 100) }}</span>
+ <div class="pt-3 border-t dark:border-slate-800 border-zinc-100">
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 block mb-1">User Agent</span>
+ <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">{{ Str::limit($auditTrail->user_agent, 100) }}</span>
  </div>
  @endif
  </div>

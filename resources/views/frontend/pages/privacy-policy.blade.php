@@ -127,9 +127,9 @@
     @endphp
 
     <!-- Hero -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden">
+    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
@@ -139,7 +139,7 @@
                 Kebijakan Privasi
             </span>
             <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 animate-slide-up delay-100 tracking-tight">Kebijakan Privasi</h1>
-            <p class="text-sm sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto animate-slide-up delay-200 px-4">
+            <p class="text-sm sm:text-lg md:text-xl text-white/80 w-full animate-slide-up delay-200 px-4">
                 Komitmen {{ $companyInfo->name ?? 'BPRS Bangka Belitung' }} dalam melindungi data pribadi dan privasi Nasabah sesuai prinsip syariah dan peraturan perundang-undangan.
             </p>
             <div class="mt-6 animate-slide-up delay-300">
@@ -258,7 +258,7 @@
                         </div>
                         @endif
                     </div>
-                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-emerald-600 rounded-xl font-semibold text-sm hover:bg-emerald-50 transition-all btn-press hover:shadow-lg">
+                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl font-semibold text-sm hover:bg-emerald-50 dark:hover:bg-slate-700 transition-all btn-press hover:shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                         Hubungi Kami
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>

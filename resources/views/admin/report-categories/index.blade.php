@@ -15,10 +15,10 @@
  {{-- Header --}}
  <div class="flex items-center justify-between mb-6">
  <div>
- <h1 class="text-3xl font-bold text-zinc-900">Kategori Laporan</h1>
- <p class="mt-1 text-[11px] text-zinc-500">Kelola deskripsi dan pengaturan halaman laporan</p>
+ <h1 class="text-3xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900">Kategori Laporan</h1>
+ <p class="mt-1 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Kelola deskripsi dan pengaturan halaman laporan</p>
  </div>
- <a href="{{ route('admin.site-settings.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium text-zinc-500 bg-white border border-border rounded-xl">
+ <a href="{{ route('admin.site-settings.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500 bg-white border border-border rounded-xl">
  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
  </svg>
@@ -59,11 +59,11 @@
  </svg>
  </div>
  <div>
- <h3 class="text-base font-semibold text-zinc-900">{{ $category->name }}</h3>
- <p class="text-[11px] text-zinc-500 mt-0.5">Slug: {{ $category->slug }}</p>
+ <h3 class="text-base font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $category->name }}</h3>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-0.5">Slug: {{ $category->slug }}</p>
  </div>
  </div>
- <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[11px] font-medium {{ $category->is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-zinc-50 text-zinc-500' }}">
+ <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[11px] font-medium {{ $category->is_active ? 'bg-emerald-100 text-emerald-800' : 'dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-400 dark:text-slate-400 text-zinc-500' }}">
  {{ $category->is_active ? 'Aktif' : 'Nonaktif' }}
  </span>
  </div>
@@ -72,21 +72,21 @@
  {{-- Card Body --}}
  <div class="px-6 py-4 space-y-3">
  <div>
- <label class="text-[11px] font-semibold text-zinc-500 tracking-wider">Judul Halaman</label>
- <p class="text-[13px] text-zinc-900 mt-1">{{ $category->title }}</p>
+ <label class="text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 tracking-wider">Judul Halaman</label>
+ <p class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900 mt-1">{{ $category->title }}</p>
  </div>
  <div>
- <label class="text-[11px] font-semibold text-zinc-500 tracking-wider">Subjudul</label>
- <p class="text-[13px] text-zinc-900 mt-1">{{ $category->subtitle ?? '-' }}</p>
+ <label class="text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 tracking-wider">Subjudul</label>
+ <p class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900 mt-1">{{ $category->subtitle ?? '-' }}</p>
  </div>
  <div>
- <label class="text-[11px] font-semibold text-zinc-500 tracking-wider">Deskripsi</label>
- <p class="text-[13px] text-zinc-500 mt-1 line-clamp-2">{{ Str::limit(strip_tags($category->description), 120) ?: '-' }}</p>
+ <label class="text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 tracking-wider">Deskripsi</label>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1 line-clamp-2">{{ Str::limit(strip_tags($category->description), 120) ?: '-' }}</p>
  </div>
  </div>
 
  {{-- Card Footer --}}
- <div class="px-6 py-4 bg-zinc-50 border-t">
+ <div class="px-6 py-4 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 border-t">
  <a href="{{ route('admin.report-categories.edit', $category) }}"
  class="inline-flex items-center justify-center w-full px-4 py-2 text-[11px] font-medium text-white bg-gradient-to-r from-emerald-600 to-emerald-600 rounded-xl hover: hover:shadow-emerald-600/20 duration-200">
  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

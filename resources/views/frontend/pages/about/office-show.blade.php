@@ -2,9 +2,9 @@
     <x-slot name="title">{{ $office->name }} - Lokasi Kantor</x-slot>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 overflow-hidden">
+    <section class="relative pt-6 sm:pt-8 md:pt-10 pb-20 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.03&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
@@ -19,7 +19,7 @@
                 <span class="text-white/60 truncate shrink min-w-0">{{ $office->name }}</span>
             </nav>
 
-            <div class="text-center max-w-4xl mx-auto">
+            <div class="text-center mx-auto">
                 <div class="flex items-center justify-center gap-3 mb-6" x-intersect="$el.classList.add('animate-slide-up')">
                     <div class="inline-flex items-center gap-2 px-4 py-2 bg-card/10 backdrop-blur-sm rounded-full text-white/90 text-xs font-medium ring-1 ring-white/20">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@
                 <div class="lg:col-span-2 space-y-8">
                     <!-- Photo -->
                     @if($office->photo)
-                    <div class="bg-card rounded-lg shadow-gray-200/50 overflow-hidden border border-border group">
+                    <div class="bg-card dark:bg-slate-800 rounded-lg shadow-gray-200/50 dark:shadow-none overflow-hidden border border-border dark:border-slate-700 group">
                         <div class="relative overflow-hidden aspect-video">
                             <img src="{{ \App\Helpers\StorageHelper::url($office->photo) }}" alt="{{ $office->name }}" class="w-full h-auto max-h-[500px] object-cover transform group-hover:scale-105 transition-transform duration-700" loading="eager" fetchpriority="high">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60"></div>
@@ -57,7 +57,7 @@
 
                     <!-- Map -->
                     @if($office->has_coordinates)
-                    <div class="bg-card rounded-lg shadow-gray-200/50 border border-border overflow-hidden">
+                    <div class="bg-card dark:bg-slate-800 rounded-lg shadow-gray-200/50 dark:shadow-none border border-border dark:border-slate-700 overflow-hidden">
                         <div class="px-6 py-5 border-b border-border bg-muted/50/50 flex items-center justify-between">
                             <h2 class="text-lg font-semibold font-bold text-foreground flex items-center gap-3">
                                 <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600">
@@ -103,7 +103,7 @@
 
                     <!-- Description -->
                     @if($office->description)
-                    <div class="bg-card rounded-lg shadow-gray-200/50 border border-border overflow-hidden">
+                    <div class="bg-card dark:bg-slate-800 rounded-lg shadow-gray-200/50 dark:shadow-none border border-border dark:border-slate-700 overflow-hidden">
                         <div class="px-6 py-5 border-b border-border bg-muted/50/50">
                             <h2 class="text-lg font-semibold font-bold text-foreground flex items-center gap-3">
                                 <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
@@ -124,7 +124,7 @@
 
                     <!-- Operational Hours -->
                     @if($office->operational_hours && count($office->operational_hours) > 0)
-                    <div class="bg-card rounded-lg shadow-gray-200/50 border border-border overflow-hidden">
+                    <div class="bg-card dark:bg-slate-800 rounded-lg shadow-gray-200/50 dark:shadow-none border border-border dark:border-slate-700 overflow-hidden">
                         <div class="px-6 py-5 border-b border-border bg-muted/50/50">
                             <h2 class="text-lg font-semibold font-bold text-foreground flex items-center gap-3">
                                 <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center text-amber-500">

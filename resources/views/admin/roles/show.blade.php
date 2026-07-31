@@ -19,17 +19,17 @@
         <x-admin.card title="Informasi Role">
             <div class="space-y-4">
                 <div>
-                    <p class="text-[11px] text-zinc-500 uppercase tracking-wider mb-1">Nama Role</p>
-                    <p class="font-mono text-[13px] text-zinc-900">{{ $role->name }}</p>
+                    <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-wider mb-1">Nama Role</p>
+                    <p class="font-mono text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $role->name }}</p>
                 </div>
                 <div>
-                    <p class="text-[11px] text-zinc-500 uppercase tracking-wider mb-1">Nama Tampilan</p>
-                    <p class="font-medium text-zinc-900">{{ $role->display_name }}</p>
+                    <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-wider mb-1">Nama Tampilan</p>
+                    <p class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $role->display_name }}</p>
                 </div>
                 @if($role->description)
                 <div>
-                    <p class="text-[11px] text-zinc-500 uppercase tracking-wider mb-1">Deskripsi</p>
-                    <p class="text-[13px] text-zinc-700">{{ $role->description }}</p>
+                    <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-wider mb-1">Deskripsi</p>
+                    <p class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">{{ $role->description }}</p>
                 </div>
                 @endif
                 <div class="flex items-center gap-2 pt-2">
@@ -47,13 +47,13 @@
 
         <x-admin.card title="Statistik">
             <div class="grid grid-cols-2 gap-4">
-                <div class="text-center p-4 border border-zinc-200 rounded-xl">
-                    <p class="text-2xl font-semibold text-zinc-900 tabular-nums">{{ $role->users->count() }}</p>
-                    <p class="text-[11px] text-zinc-500 uppercase tracking-wider mt-1">Pengguna</p>
+                <div class="text-center p-4 border dark:border-slate-700 border-zinc-200 rounded-xl">
+                    <p class="text-2xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 tabular-nums">{{ $role->users->count() }}</p>
+                    <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-wider mt-1">Pengguna</p>
                 </div>
-                <div class="text-center p-4 border border-zinc-200 rounded-xl">
-                    <p class="text-2xl font-semibold text-zinc-900 tabular-nums">{{ $role->permissions->count() }}</p>
-                    <p class="text-[11px] text-zinc-500 uppercase tracking-wider mt-1">Permission</p>
+                <div class="text-center p-4 border dark:border-slate-700 border-zinc-200 rounded-xl">
+                    <p class="text-2xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 tabular-nums">{{ $role->permissions->count() }}</p>
+                    <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-wider mt-1">Permission</p>
                 </div>
             </div>
         </x-admin.card>
@@ -62,18 +62,18 @@
         <x-admin.card title="Pengguna dengan Role Ini">
             <div class="space-y-2 max-h-64 overflow-y-auto pr-2">
                 @foreach($role->users->take(10) as $user)
-                <div class="flex items-center gap-3 p-2 border border-transparent hover:border-zinc-200 hover:bg-zinc-50 rounded-xl transition-colors">
-                    <div class="w-8 h-8 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center flex-shrink-0">
-                        <span class="text-zinc-600 font-semibold text-[11px]">{{ strtoupper(substr($user->name, 0, 2)) }}</span>
+                <div class="flex items-center gap-3 p-2 border border-transparent hover:dark:border-slate-700 border-zinc-200 hover:dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl transition-colors">
+                    <div class="w-8 h-8 rounded-full dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 border dark:border-slate-700 border-zinc-200 flex items-center justify-center flex-shrink-0">
+                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 font-semibold text-[11px]">{{ strtoupper(substr($user->name, 0, 2)) }}</span>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-[13px] font-medium text-zinc-900 truncate">{{ $user->name }}</p>
-                        <p class="text-[11px] text-zinc-500 truncate">{{ $user->email }}</p>
+                        <p class="text-[13px] font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 truncate">{{ $user->name }}</p>
+                        <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 truncate">{{ $user->email }}</p>
                     </div>
                 </div>
                 @endforeach
                 @if($role->users->count() > 10)
-                <p class="text-[11px] text-zinc-500 text-center pt-2">dan {{ $role->users->count() - 10 }} pengguna lainnya...</p>
+                <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 text-center pt-2">dan {{ $role->users->count() - 10 }} pengguna lainnya...</p>
                 @endif
             </div>
         </x-admin.card>
@@ -90,16 +90,16 @@
             @if($groupedPermissions->count() > 0)
             <div class="space-y-4">
                 @foreach($groupedPermissions as $group => $permissions)
-                <div class="border border-zinc-200 rounded-xl overflow-hidden">
-                    <div class="bg-zinc-50/50 px-4 py-3 flex items-center justify-between border-b border-zinc-200">
-                        <span class="font-medium text-zinc-900">{{ $permissionGroups[$group] ?? ucfirst($group) }}</span>
-                        <span class="text-[11px] text-zinc-500 tabular-nums">{{ $permissions->count() }} permission</span>
+                <div class="border dark:border-slate-700 border-zinc-200 rounded-xl overflow-hidden">
+                    <div class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/50 px-4 py-3 flex items-center justify-between border-b dark:border-slate-700 border-zinc-200">
+                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $permissionGroups[$group] ?? ucfirst($group) }}</span>
+                        <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 tabular-nums">{{ $permissions->count() }} permission</span>
                     </div>
                     <div class="p-4">
                         <div class="flex flex-wrap gap-2">
                             @foreach($permissions as $permission)
-                            <span class="inline-flex items-center px-3 py-1 rounded-xl text-[11px] font-medium bg-zinc-100 text-zinc-800 border border-zinc-200">
-                                <svg class="w-3 h-3 mr-1 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <span class="inline-flex items-center px-3 py-1 rounded-xl text-[11px] font-medium dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 text-zinc-800 border dark:border-slate-700 border-zinc-200">
+                                <svg class="w-3 h-3 mr-1 dark:text-slate-400 dark:text-slate-400 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 {{ $permission->display_name }}
@@ -111,7 +111,7 @@
                 @endforeach
             </div>
             @else
-            <div class="text-center py-8 text-zinc-500">
+            <div class="text-center py-8 dark:text-slate-400 dark:text-slate-400 text-zinc-500">
                 <svg class="w-12 h-12 mx-auto text-zinc-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                 </svg>

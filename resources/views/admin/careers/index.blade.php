@@ -12,7 +12,7 @@
 </x-admin.page-header>
 
 <x-admin.card :noPadding="true">
- <div class="p-4 border-b border-zinc-200">
+ <div class="p-4 border-b dark:border-slate-700 border-zinc-200">
  <form method="GET" class="flex flex-col sm:flex-row gap-3">
  <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari lowongan..."
  class="w-full sm:flex-1 sm:min-w-[200px] rounded-xl border-zinc-300 text-[11px]">
@@ -32,7 +32,7 @@
  </select>
  <x-admin.button type="submit" variant="secondary">Filter</x-admin.button>
  @if(request('search') || request('type') || request('status'))
- <a href="{{ route('admin.careers.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium text-zinc-700 bg-white rounded-xl">
+ <a href="{{ route('admin.careers.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 bg-white rounded-xl">
  Reset
  </a>
  @endif
@@ -43,10 +43,10 @@
  {{-- Mobile Card View --}}
  <div class="block md:hidden p-4 space-y-4">
  @forelse($careers as $career)
- <div class="bg-white border border-zinc-200 rounded-xl p-4">
+ <div class="bg-white border dark:border-slate-700 border-zinc-200 rounded-xl p-4">
  <div class="mb-3">
- <p class="font-semibold text-zinc-900">{{ $career->title }}</p>
- <p class="text-[13px] text-zinc-500">{{ $career->department ?? '-' }} • {{ $career->location ?? '-' }}</p>
+ <p class="font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $career->title }}</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $career->department ?? '-' }} • {{ $career->location ?? '-' }}</p>
  </div>
  <div class="flex flex-wrap items-center gap-2 mb-3">
  <x-admin.badge variant="info">{{ $career->employment_type_label }}</x-admin.badge>
@@ -58,10 +58,10 @@
  <x-admin.badge variant="warning">Nonaktif</x-admin.badge>
  @endif
  @if($career->deadline)
- <span class="text-[13px] text-zinc-500">Deadline: {{ $career->deadline->format('d M Y') }}</span>
+ <span class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Deadline: {{ $career->deadline->format('d M Y') }}</span>
  @endif
  </div>
- <div class="flex items-center gap-2 pt-3 border-t border-zinc-200">
+ <div class="flex items-center gap-2 pt-3 border-t dark:border-slate-700 border-zinc-200">
  <a href="{{ route('admin.careers.edit', $career) }}" class="flex-1 text-center py-2 text-[11px] font-medium text-sky-600 rounded-xl">
  Edit
  </a>
@@ -71,7 +71,7 @@
  </div>
  </div>
  @empty
- <div class="text-center py-8 text-zinc-500">Belum ada lowongan karir.</div>
+ <div class="text-center py-8 dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ada lowongan karir.</div>
  @endforelse
  </div>
 
@@ -82,17 +82,17 @@
  <tr>
  <td class="px-4 py-3">
  <div class="min-w-0">
- <p class="font-medium text-zinc-900">{{ $career->title }}</p>
- <p class="text-[13px] text-zinc-500">{{ $career->department ?? '-' }}</p>
+ <p class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $career->title }}</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $career->department ?? '-' }}</p>
  </div>
  </td>
  <td class="px-4 py-3">
  <x-admin.badge variant="info">{{ $career->employment_type_label }}</x-admin.badge>
  </td>
- <td class="px-4 py-3 text-[13px] text-zinc-500">
+ <td class="px-4 py-3 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
  {{ $career->location ?? '-' }}
  </td>
- <td class="px-4 py-3 text-[13px] text-zinc-500">
+ <td class="px-4 py-3 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
  {{ $career->deadline?->format('d M Y') ?? '-' }}
  </td>
  <td class="px-4 py-3">
@@ -106,12 +106,12 @@
  </td>
  <td class="px-4 py-3">
  <div class="flex items-center gap-1">
- <a href="{{ route('admin.careers.edit', $career) }}" class="p-1.5 text-zinc-500 rounded-xl">
+ <a href="{{ route('admin.careers.edit', $career) }}" class="p-1.5 dark:text-slate-400 dark:text-slate-400 text-zinc-500 rounded-xl">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
  </svg>
  </a>
- <button type="button" data-open-modal="deleteCareer{{ $career->id }}" class="p-1.5 text-zinc-500 rounded-xl hover:text-red-600">
+ <button type="button" data-open-modal="deleteCareer{{ $career->id }}" class="p-1.5 dark:text-slate-400 dark:text-slate-400 text-zinc-500 rounded-xl hover:text-red-600">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
  </svg>
@@ -121,7 +121,7 @@
  </tr>
  @empty
  <tr>
- <td colspan="6" class="px-4 py-8 text-center text-zinc-500">Belum ada lowongan karir.</td>
+ <td colspan="6" class="px-4 py-8 text-center dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ada lowongan karir.</td>
  </tr>
  @endforelse
  </x-admin.table>

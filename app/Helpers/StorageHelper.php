@@ -20,6 +20,11 @@ class StorageHelper
             return '';
         }
         
+        // Reject paths with invalid characters (e.g. U+FFFD replacement char)
+        if (preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F\xEF\xBF\xBD]/', $path)) {
+            return '';
+        }
+        
         // Remove leading slash if present
         $path = ltrim($path, '/');
         

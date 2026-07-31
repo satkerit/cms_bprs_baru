@@ -226,39 +226,81 @@ window.formatRupiah = window.formatRupiah || {
     },
 };
 
+// ============================================
+// HIGH-END v2: Lazy load Leaflet (map-utils.js)
+// Only loads on pages with map containers
+// ============================================
+const lazyLoadMaps = () => {
+    if (document.querySelector('[data-map-init]')) {
+        import('./map-utils.js').then(() => {
+            document.querySelectorAll('[data-map-init]').forEach(el => {
+                try {
+                    const points = JSON.parse(el.dataset.points || '[]');
+                    const opts = JSON.parse(el.dataset.options || '{}');
+                    if (window.BPRSMaps?.initSimpleMap) {
+                        window.BPRSMaps.initSimpleMap(el, points, opts);
+                    }
+                } catch(e) {
+                    console.warn('Map init failed:', e);
+                }
+            });
+        }).catch(() => {
+            // Silently fail — map is non-critical
+        });
+    }
+};
+
+// ============================================
 // Progressive Image Loading with blur-up effect
+// Optimized: uses IntersectionObserver for offscreen images
+// ============================================
 const initProgressiveImages = () => {
-    // Native lazy loading is supported, but we add blur-up effect
-    const images = document.querySelectorAll('img[loading="lazy"]');
+    // Use native lazy loading + blur-up for progressive loading
+    const images = document.querySelectorAll('img[loading="lazy"], .img-progressive');
 
-    images.forEach((img) => {
-        // Skip if already loaded
-        if (img.complete && img.naturalHeight !== 0) {
-            img.classList.add("loaded");
-            return;
-        }
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const img = entry.target;
 
-        // Add loading class
-        img.classList.add("img-loading");
+                if (img.complete && img.naturalHeight !== 0) {
+                    img.classList.add("loaded");
+                    img.setAttribute('data-loaded', 'true');
+                } else {
+                    img.addEventListener("load", () => {
+                        img.classList.add("loaded");
+                        img.setAttribute('data-loaded', 'true');
+                    }, { once: true });
+                    // Force re-check if already loaded but event missed
+                    if (img.complete) {
+                        img.classList.add("loaded");
+                        img.setAttribute('data-loaded', 'true');
+                    }
+                }
 
-        img.addEventListener(
-            "load",
-            () => {
-                img.classList.remove("img-loading");
+                imageObserver.unobserve(img);
+            });
+        }, {
+            rootMargin: '200px 0px', // Start loading 200px before viewport
+            threshold: 0.01
+        });
+
+        images.forEach((img) => imageObserver.observe(img));
+    } else {
+        // Fallback for older browsers
+        images.forEach((img) => {
+            if (img.complete && img.naturalHeight !== 0) {
                 img.classList.add("loaded");
-            },
-            { once: true },
-        );
-
-        img.addEventListener(
-            "error",
-            () => {
-                img.classList.remove("img-loading");
-                img.classList.add("img-error");
-            },
-            { once: true },
-        );
-    });
+                img.setAttribute('data-loaded', 'true');
+                return;
+            }
+            img.addEventListener("load", () => {
+                img.classList.add("loaded");
+                img.setAttribute('data-loaded', 'true');
+            }, { once: true });
+        });
+    }
 };
 
 // Optimized Intersection Observer for scroll animations
@@ -374,8 +416,14 @@ if (document.readyState === "loading") {
 }
 
 function init() {
+    // HIGH-END v2: Optimized init sequence
+    // 1. Critical: Progressive images (priority)
     initProgressiveImages();
-    // Defer non-critical animations — let browser breathe first
+
+    // 2. Lazy load Leaflet maps if needed
+    lazyLoadMaps();
+
+    // 3. Defer non-critical — let browser breathe first
     if (window.requestIdleCallback) {
         requestIdleCallback(() => initScrollAnimations(), { timeout: 2000 });
         requestIdleCallback(() => initStaggeredAnimations(), { timeout: 3000 });

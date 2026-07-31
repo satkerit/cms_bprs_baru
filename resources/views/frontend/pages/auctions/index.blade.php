@@ -15,9 +15,9 @@
     @endpush
 
     <!-- Hero Section -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
+    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.03&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
@@ -39,7 +39,7 @@
 
                 <!-- Search Form -->
                 <div class="max-w-5xl mx-auto px-4">
-                    <form method="GET" class="bg-white/95 backdrop-blur-md rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 border border-emerald-100 shadow-lg shadow-emerald-500/10">
+                    <form method="GET" class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 border border-emerald-100 dark:border-emerald-900/50 shadow-lg shadow-emerald-500/10">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                             <div class="space-y-1.5 sm:space-y-2 text-left">
                                 <label class="block text-xs sm:text-sm font-bold tracking-tight text-foreground">Cari Agunan</label>
@@ -97,11 +97,11 @@
                 <!-- Main Content -->
                 <div class="{{ $hasSidebar ? 'lg:w-3/4' : 'w-full' }}">
                     <!-- Advanced Filters -->
-                    <div class="bg-white rounded-lg shadow-sm p-6 md:p-8 mb-8 border border-border">
+                    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 md:p-8 mb-8 border border-border">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-xl font-bold text-foreground flex items-center gap-3">
-                                <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <h3 class="text-xl font-bold text-foreground dark:text-slate-100 flex items-center gap-3">
+                                <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
                                     </svg>
                                 </span>
@@ -186,7 +186,7 @@
                     <!-- Auction Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
                         @forelse($auctions as $auction)
-                            <div class="bg-white rounded-xl border border-border shadow-sm overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl group" data-intersect>
+                            <div class="bg-white dark:bg-slate-900 rounded-xl border border-border shadow-sm overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl group" data-intersect>
                                 <!-- Image -->
                                 <div class="relative aspect-[4/3] overflow-hidden">
                                     @if($auction->main_image)
@@ -337,7 +337,7 @@
                             </div>
                         @empty
                             <div class="col-span-full">
-                                <div class="text-center py-16 bg-white rounded-lg">
+                                <div class="text-center py-16 bg-white dark:bg-slate-900 rounded-lg">
                                     <div class="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
                                         <svg class="w-12 h-12 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -359,7 +359,7 @@
                     <!-- Pagination -->
                     @if($auctions->hasPages())
                         <div class="mt-12">
-                            <div class="bg-white rounded-lg p-6">
+                            <div class="bg-white dark:bg-slate-900 rounded-lg p-6">
                                 {{ $auctions->links() }}
                             </div>
                         </div>
@@ -371,10 +371,10 @@
                 <div class="lg:w-1/4 space-y-8">
                     <!-- Featured Auctions -->
                     @if($featuredCount > 0)
-                        <div class="bg-white rounded-lg p-6 border border-border">
-                            <h3 class="text-xl font-bold text-foreground mb-6 flex items-center gap-3">
-                                <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-white dark:bg-slate-900 rounded-lg p-6 border border-border">
+                            <h3 class="text-xl font-bold text-foreground dark:text-slate-100 mb-6 flex items-center gap-3">
+                                <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.54 1.118l-3.976-2.888a1 1 0 00-1.175 0l-3.976 2.888c-.784.57-1.838-.197-1.539-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
                                     </svg>
                                 </span>
@@ -430,10 +430,10 @@
 
                     <!-- Upcoming Auctions -->
                     @if($upcomingCount > 0)
-                        <div class="bg-white rounded-lg p-6 border border-border">
-                            <h3 class="text-xl font-bold text-foreground mb-6 flex items-center gap-3">
-                                <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-white dark:bg-slate-900 rounded-lg p-6 border border-border">
+                            <h3 class="text-xl font-bold text-foreground dark:text-slate-100 mb-6 flex items-center gap-3">
+                                <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                 </span>

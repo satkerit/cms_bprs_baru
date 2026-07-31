@@ -31,11 +31,11 @@
                 <div class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="title" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="title" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Judul Lelang <span class="text-red-500">*</span>
                             </label>
                             <input type="text" name="title" id="title" value="{{ old('title') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('title') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('title') border-red-500 @enderror"
                                    required placeholder="Contoh: Rumah Mewah 2 Lantai di Pangkalpinang">
                             @error('title')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -43,11 +43,11 @@
                         </div>
 
                         <div>
-                            <label for="auction_number" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="auction_number" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Nomor Lelang <span class="text-red-500">*</span>
                             </label>
                             <input type="text" name="auction_number" id="auction_number" value="{{ old('auction_number') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_number') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_number') border-red-500 @enderror"
                                    required placeholder="Contoh: LA-2026-001">
                             @error('auction_number')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -57,10 +57,10 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="asset_type" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="asset_type" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Jenis Aset <span class="text-red-500">*</span>
                             </label>
-                            <select name="asset_type" id="asset_type" class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('asset_type') border-red-500 @enderror" required>
+                            <select name="asset_type" id="asset_type" class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('asset_type') border-red-500 @enderror" required>
                                 <option value="">Pilih Jenis Aset</option>
                                 @foreach(\App\Enums\AssetType::cases() as $assetType)
                                     <option value="{{ $assetType->value }}" {{ old('asset_type') === $assetType->value ? 'selected' : '' }}>
@@ -74,9 +74,9 @@
                         </div>
 
                         <div>
-                            <label for="city" class="block text-[13px] font-semibold text-zinc-700 mb-2">Kota</label>
+                            <label for="city" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kota</label>
                             <input type="text" name="city" id="city" value="{{ old('city') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('city') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('city') border-red-500 @enderror"
                                    placeholder="Contoh: Pangkalpinang">
                             @error('city')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -85,9 +85,9 @@
                     </div>
 
                     <div>
-                        <label for="description" class="block text-[13px] font-semibold text-zinc-700 mb-2">Deskripsi</label>
+                        <label for="description" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Deskripsi</label>
                         <textarea name="description" id="description" rows="4"
-                                  class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('description') border-red-500 @enderror"
+                                  class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('description') border-red-500 @enderror"
                                   placeholder="Deskripsi detail tentang aset yang dilelang...">{{ old('description') }}</textarea>
                         @error('description')
                             <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -100,12 +100,12 @@
             <x-admin.card title="Informasi Objek" subtitle="Detail spesifikasi objek lelang">
                 <div class="space-y-5">
                     {{-- Certificate Information --}}
-                    <div class="bg-zinc-50 p-4 rounded-xl border border-zinc-200">
-                        <h4 class="text-[13px] font-semibold text-zinc-900 mb-3">Informasi Sertifikat</h4>
+                    <div class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-4 rounded-xl border dark:border-slate-700 border-zinc-200">
+                        <h4 class="text-[13px] font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-3">Informasi Sertifikat</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="certificate_type" class="block text-[13px] font-semibold text-zinc-700 mb-2">Jenis Sertifikat</label>
-                                <select name="certificate_type" id="certificate_type" class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('certificate_type') border-red-500 @enderror">
+                                <label for="certificate_type" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Jenis Sertifikat</label>
+                                <select name="certificate_type" id="certificate_type" class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('certificate_type') border-red-500 @enderror">
                                     <option value="">Pilih Jenis Sertifikat</option>
                                     @foreach(\App\Enums\CertificateType::cases() as $certType)
                                         <option value="{{ $certType->value }}" {{ old('certificate_type') === $certType->value ? 'selected' : '' }}>
@@ -119,9 +119,9 @@
                             </div>
 
                             <div>
-                                <label for="certificate_number" class="block text-[13px] font-semibold text-zinc-700 mb-2">Nomor Sertifikat</label>
+                                <label for="certificate_number" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Nomor Sertifikat</label>
                                 <input type="text" name="certificate_number" id="certificate_number" value="{{ old('certificate_number') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('certificate_number') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('certificate_number') border-red-500 @enderror"
                                        placeholder="Contoh: 12345/2023">
                                 @error('certificate_number')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -131,13 +131,13 @@
                     </div>
 
                     {{-- Property Details --}}
-                    <div class="bg-zinc-50 p-4 rounded-xl border border-zinc-200">
-                        <h4 class="text-[13px] font-semibold text-zinc-900 mb-3">Detail Properti</h4>
+                    <div class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-4 rounded-xl border dark:border-slate-700 border-zinc-200">
+                        <h4 class="text-[13px] font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-3">Detail Properti</h4>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label for="land_area" class="block text-[13px] font-semibold text-zinc-700 mb-2">Luas Tanah (mÂ²)</label>
+                                <label for="land_area" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Luas Tanah (mÂ²)</label>
                                 <input type="number" name="land_area" id="land_area" value="{{ old('land_area') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('land_area') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('land_area') border-red-500 @enderror"
                                        step="0.01" placeholder="120">
                                 @error('land_area')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -145,9 +145,9 @@
                             </div>
 
                             <div>
-                                <label for="building_area" class="block text-[13px] font-semibold text-zinc-700 mb-2">Luas Bangunan (mÂ²)</label>
+                                <label for="building_area" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Luas Bangunan (mÂ²)</label>
                                 <input type="number" name="building_area" id="building_area" value="{{ old('building_area') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('building_area') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('building_area') border-red-500 @enderror"
                                        step="0.01" placeholder="80">
                                 @error('building_area')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -155,9 +155,9 @@
                             </div>
 
                             <div>
-                                <label for="year_built" class="block text-[13px] font-semibold text-zinc-700 mb-2">Tahun Dibangun</label>
+                                <label for="year_built" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tahun Dibangun</label>
                                 <input type="number" name="year_built" id="year_built" value="{{ old('year_built') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('year_built') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('year_built') border-red-500 @enderror"
                                        min="1900" max="{{ date('Y') }}" placeholder="2020">
                                 @error('year_built')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -167,9 +167,9 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
                             <div>
-                                <label for="floors" class="block text-[13px] font-semibold text-zinc-700 mb-2">Jumlah Lantai</label>
+                                <label for="floors" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Jumlah Lantai</label>
                                 <input type="number" name="floors" id="floors" value="{{ old('floors') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('floors') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('floors') border-red-500 @enderror"
                                        min="1" placeholder="2">
                                 @error('floors')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -177,9 +177,9 @@
                             </div>
 
                             <div>
-                                <label for="bedrooms" class="block text-[13px] font-semibold text-zinc-700 mb-2">Kamar Tidur</label>
+                                <label for="bedrooms" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kamar Tidur</label>
                                 <input type="number" name="bedrooms" id="bedrooms" value="{{ old('bedrooms') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bedrooms') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bedrooms') border-red-500 @enderror"
                                        min="0" placeholder="3">
                                 @error('bedrooms')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -187,9 +187,9 @@
                             </div>
 
                             <div>
-                                <label for="bathrooms" class="block text-[13px] font-semibold text-zinc-700 mb-2">Kamar Mandi</label>
+                                <label for="bathrooms" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kamar Mandi</label>
                                 <input type="number" name="bathrooms" id="bathrooms" value="{{ old('bathrooms') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bathrooms') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bathrooms') border-red-500 @enderror"
                                        min="0" placeholder="2">
                                 @error('bathrooms')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -197,9 +197,9 @@
                             </div>
 
                             <div>
-                                <label for="parking_spaces" class="block text-[13px] font-semibold text-zinc-700 mb-2">Tempat Parkir</label>
+                                <label for="parking_spaces" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tempat Parkir</label>
                                 <input type="number" name="parking_spaces" id="parking_spaces" value="{{ old('parking_spaces') }}"
-                                       class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('parking_spaces') border-red-500 @enderror"
+                                       class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('parking_spaces') border-red-500 @enderror"
                                        min="0" placeholder="1">
                                 @error('parking_spaces')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -208,8 +208,8 @@
                         </div>
 
                         <div class="mt-4">
-                            <label for="building_condition" class="block text-[13px] font-semibold text-zinc-700 mb-2">Kondisi Bangunan</label>
-                            <select name="building_condition" id="building_condition" class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('building_condition') border-red-500 @enderror">
+                            <label for="building_condition" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kondisi Bangunan</label>
+                            <select name="building_condition" id="building_condition" class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('building_condition') border-red-500 @enderror">
                                 <option value="">Pilih Kondisi Bangunan</option>
                                 <option value="sangat_baik" {{ old('building_condition') === 'sangat_baik' ? 'selected' : '' }}>Sangat Baik</option>
                                 <option value="baik" {{ old('building_condition') === 'baik' ? 'selected' : '' }}>Baik</option>
@@ -228,9 +228,9 @@
                         <h4 class="text-[13px] font-semibold text-purple-900 mb-3">Fasilitas & Akses</h4>
                         <div class="space-y-4">
                             <div>
-                                <label for="facilities" class="block text-[13px] font-semibold text-zinc-700 mb-2">Fasilitas</label>
+                                <label for="facilities" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Fasilitas</label>
                                 <textarea name="facilities" id="facilities" rows="3"
-                                          class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('facilities') border-red-500 @enderror"
+                                          class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('facilities') border-red-500 @enderror"
                                           placeholder="Contoh: Listrik PLN, Air PDAM, Telepon, Internet, Taman, Pagar, dll">{{ old('facilities') }}</textarea>
                                 @error('facilities')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -238,9 +238,9 @@
                             </div>
 
                             <div>
-                                <label for="nearby_facilities" class="block text-[13px] font-semibold text-zinc-700 mb-2">Fasilitas Sekitar</label>
+                                <label for="nearby_facilities" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Fasilitas Sekitar</label>
                                 <textarea name="nearby_facilities" id="nearby_facilities" rows="3"
-                                          class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('nearby_facilities') border-red-500 @enderror"
+                                          class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('nearby_facilities') border-red-500 @enderror"
                                           placeholder="Contoh: Sekolah, Rumah Sakit, Mall, Pasar, Masjid, dll">{{ old('nearby_facilities') }}</textarea>
                                 @error('nearby_facilities')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -248,9 +248,9 @@
                             </div>
 
                             <div>
-                                <label for="transportation_access" class="block text-[13px] font-semibold text-zinc-700 mb-2">Akses Transportasi</label>
+                                <label for="transportation_access" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Akses Transportasi</label>
                                 <textarea name="transportation_access" id="transportation_access" rows="2"
-                                          class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('transportation_access') border-red-500 @enderror"
+                                          class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('transportation_access') border-red-500 @enderror"
                                           placeholder="Contoh: 5 menit ke jalan raya, 10 menit ke terminal, dll">{{ old('transportation_access') }}</textarea>
                                 @error('transportation_access')
                                     <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -265,11 +265,11 @@
             <x-admin.card title="Informasi Alamat" subtitle="Lokasi aset yang dilelang">
                 <div class="space-y-5">
                     <div>
-                        <label for="address" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                        <label for="address" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                             Alamat Lengkap <span class="text-red-500">*</span>
                         </label>
                         <textarea name="address" id="address" rows="3"
-                                  class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('address') border-red-500 @enderror"
+                                  class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('address') border-red-500 @enderror"
                                   required placeholder="Alamat lengkap aset...">{{ old('address') }}</textarea>
                         @error('address')
                             <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -278,27 +278,27 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label for="village" class="block text-[13px] font-semibold text-zinc-700 mb-2">Kelurahan/Desa</label>
+                            <label for="village" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kelurahan/Desa</label>
                             <input type="text" name="village" id="village" value="{{ old('village') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('village') border-red-500 @enderror">
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('village') border-red-500 @enderror">
                             @error('village')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="district" class="block text-[13px] font-semibold text-zinc-700 mb-2">Kecamatan</label>
+                            <label for="district" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kecamatan</label>
                             <input type="text" name="district" id="district" value="{{ old('district') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('district') border-red-500 @enderror">
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('district') border-red-500 @enderror">
                             @error('district')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="province" class="block text-[13px] font-semibold text-zinc-700 mb-2">Provinsi</label>
+                            <label for="province" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Provinsi</label>
                             <input type="text" name="province" id="province" value="{{ old('province') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('province') border-red-500 @enderror">
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('province') border-red-500 @enderror">
                             @error('province')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
                             @enderror
@@ -312,9 +312,9 @@
                 <div class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="creditor_name" class="block text-[13px] font-semibold text-zinc-700 mb-2">Nama Kreditur</label>
+                            <label for="creditor_name" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Nama Kreditur</label>
                             <input type="text" name="creditor_name" id="creditor_name" value="{{ old('creditor_name') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('creditor_name') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('creditor_name') border-red-500 @enderror"
                                    placeholder="Contoh: PT. Bank Central Asia Tbk">
                             @error('creditor_name')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -322,11 +322,11 @@
                         </div>
 
                         <div>
-                            <label for="debt_amount" class="block text-[13px] font-semibold text-zinc-700 mb-2">Jumlah Hutang</label>
+                            <label for="debt_amount" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Jumlah Hutang</label>
                             <div class="relative">
-                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 font-medium">Rp</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-slate-400 dark:text-slate-400 text-zinc-500 font-medium">Rp</span>
                                 <input type="number" name="debt_amount" id="debt_amount" value="{{ old('debt_amount') }}"
-                                       class="w-full pl-12 pr-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('debt_amount') border-red-500 @enderror"
+                                       class="w-full pl-12 pr-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('debt_amount') border-red-500 @enderror"
                                        placeholder="500000000">
                             </div>
                             @error('debt_amount')
@@ -336,9 +336,9 @@
                     </div>
 
                     <div>
-                        <label for="legal_basis" class="block text-[13px] font-semibold text-zinc-700 mb-2">Dasar Hukum</label>
+                        <label for="legal_basis" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Dasar Hukum</label>
                         <textarea name="legal_basis" id="legal_basis" rows="3"
-                                  class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('legal_basis') border-red-500 @enderror"
+                                  class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('legal_basis') border-red-500 @enderror"
                                   placeholder="Dasar hukum pelaksanaan lelang...">{{ old('legal_basis') }}</textarea>
                         @error('legal_basis')
                             <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -347,9 +347,9 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="court_decision" class="block text-[13px] font-semibold text-zinc-700 mb-2">Nomor Putusan Pengadilan</label>
+                            <label for="court_decision" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Nomor Putusan Pengadilan</label>
                             <input type="text" name="court_decision" id="court_decision" value="{{ old('court_decision') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('court_decision') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('court_decision') border-red-500 @enderror"
                                    placeholder="Contoh: 123/Pdt.G/2023/PN Pgp">
                             @error('court_decision')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -357,9 +357,9 @@
                         </div>
 
                         <div>
-                            <label for="court_decision_date" class="block text-[13px] font-semibold text-zinc-700 mb-2">Tanggal Putusan</label>
+                            <label for="court_decision_date" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tanggal Putusan</label>
                             <input type="date" name="court_decision_date" id="court_decision_date" value="{{ old('court_decision_date') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('court_decision_date') border-red-500 @enderror">
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('court_decision_date') border-red-500 @enderror">
                             @error('court_decision_date')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
                             @enderror
@@ -367,9 +367,9 @@
                     </div>
 
                     <div>
-                        <label for="encumbrance_details" class="block text-[13px] font-semibold text-zinc-700 mb-2">Hak Tanggungan</label>
+                        <label for="encumbrance_details" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Hak Tanggungan</label>
                         <textarea name="encumbrance_details" id="encumbrance_details" rows="3"
-                                  class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('encumbrance_details') border-red-500 @enderror"
+                                  class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('encumbrance_details') border-red-500 @enderror"
                                   placeholder="Detail hak tanggungan...">{{ old('encumbrance_details') }}</textarea>
                         @error('encumbrance_details')
                             <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -383,13 +383,13 @@
                 <div class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="limit_price" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="limit_price" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Harga Limit
                             </label>
                             <div class="relative">
-                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 font-medium">Rp</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-slate-400 dark:text-slate-400 text-zinc-500 font-medium">Rp</span>
                                 <input type="number" name="limit_price" id="limit_price" value="{{ old('limit_price') }}"
-                                       class="w-full pl-12 pr-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('limit_price') border-red-500 @enderror"
+                                       class="w-full pl-12 pr-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('limit_price') border-red-500 @enderror"
                                        placeholder="850000000">
                             </div>
                             @error('limit_price')
@@ -398,11 +398,11 @@
                         </div>
 
                         <div>
-                            <label for="estimated_price" class="block text-[13px] font-semibold text-zinc-700 mb-2">Harga Taksiran</label>
+                            <label for="estimated_price" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Harga Taksiran</label>
                             <div class="relative">
-                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 font-medium">Rp</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-slate-400 dark:text-slate-400 text-zinc-500 font-medium">Rp</span>
                                 <input type="number" name="estimated_price" id="estimated_price" value="{{ old('estimated_price') }}"
-                                       class="w-full pl-12 pr-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('estimated_price') border-red-500 @enderror"
+                                       class="w-full pl-12 pr-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('estimated_price') border-red-500 @enderror"
                                        placeholder="1000000000">
                             </div>
                             @error('estimated_price')
@@ -413,11 +413,11 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="deposit_amount" class="block text-[13px] font-semibold text-zinc-700 mb-2">Uang Jaminan</label>
+                            <label for="deposit_amount" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Uang Jaminan</label>
                             <div class="relative">
-                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 font-medium">Rp</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-slate-400 dark:text-slate-400 text-zinc-500 font-medium">Rp</span>
                                 <input type="number" name="deposit_amount" id="deposit_amount" value="{{ old('deposit_amount') }}"
-                                       class="w-full pl-12 pr-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('deposit_amount') border-red-500 @enderror"
+                                       class="w-full pl-12 pr-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('deposit_amount') border-red-500 @enderror"
                                        placeholder="170000000">
                             </div>
                             @error('deposit_amount')
@@ -426,9 +426,9 @@
                         </div>
 
                         <div>
-                            <label for="deposit_percentage" class="block text-[13px] font-semibold text-zinc-700 mb-2">Persentase Jaminan (%)</label>
+                            <label for="deposit_percentage" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Persentase Jaminan (%)</label>
                             <input type="number" name="deposit_percentage" id="deposit_percentage" value="{{ old('deposit_percentage', 20) }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('deposit_percentage') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('deposit_percentage') border-red-500 @enderror"
                                    min="0" max="100" step="0.01" placeholder="20">
                             @error('deposit_percentage')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -443,9 +443,9 @@
                 <div class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="bank_name" class="block text-[13px] font-semibold text-zinc-700 mb-2">Nama Bank</label>
+                            <label for="bank_name" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Nama Bank</label>
                             <input type="text" name="bank_name" id="bank_name" value="{{ old('bank_name') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bank_name') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bank_name') border-red-500 @enderror"
                                    placeholder="Contoh: Bank Mandiri">
                             @error('bank_name')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -453,9 +453,9 @@
                         </div>
 
                         <div>
-                            <label for="bank_branch" class="block text-[13px] font-semibold text-zinc-700 mb-2">Cabang</label>
+                            <label for="bank_branch" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Cabang</label>
                             <input type="text" name="bank_branch" id="bank_branch" value="{{ old('bank_branch') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bank_branch') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('bank_branch') border-red-500 @enderror"
                                    placeholder="Contoh: KCU Jakarta Sudirman">
                             @error('bank_branch')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -465,9 +465,9 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="account_number" class="block text-[13px] font-semibold text-zinc-700 mb-2">Nomor Rekening</label>
+                            <label for="account_number" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Nomor Rekening</label>
                             <input type="text" name="account_number" id="account_number" value="{{ old('account_number') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('account_number') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('account_number') border-red-500 @enderror"
                                    placeholder="Contoh: 123-456-7890">
                             @error('account_number')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -475,9 +475,9 @@
                         </div>
 
                         <div>
-                            <label for="account_holder" class="block text-[13px] font-semibold text-zinc-700 mb-2">Atas Nama</label>
+                            <label for="account_holder" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Atas Nama</label>
                             <input type="text" name="account_holder" id="account_holder" value="{{ old('account_holder') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('account_holder') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('account_holder') border-red-500 @enderror"
                                    placeholder="Contoh: PT. Balai Lelang">
                             @error('account_holder')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -492,21 +492,21 @@
                 <div class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="auction_date" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="auction_date" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Tanggal & Waktu Lelang
                             </label>
                             <input type="datetime-local" name="auction_date" id="auction_date" value="{{ old('auction_date') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_date') border-red-500 @enderror">
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_date') border-red-500 @enderror">
                             @error('auction_date')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="auction_type" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="auction_type" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Jenis Lelang <span class="text-red-500">*</span>
                             </label>
-                            <select name="auction_type" id="auction_type" class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_type') border-red-500 @enderror" required>
+                            <select name="auction_type" id="auction_type" class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_type') border-red-500 @enderror" required>
                                 <option value="">Pilih Jenis Lelang</option>
                                 @foreach(\App\Enums\AuctionType::cases() as $aType)
                                     <option value="{{ $aType->value }}" {{ old('auction_type') === $aType->value ? 'selected' : '' }}>
@@ -521,11 +521,11 @@
                     </div>
 
                     <div>
-                        <label for="auction_location" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                        <label for="auction_location" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                             Lokasi Lelang <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="auction_location" id="auction_location" value="{{ old('auction_location') }}"
-                               class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_location') border-red-500 @enderror"
+                               class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('auction_location') border-red-500 @enderror"
                                required placeholder="Contoh: Kantor BPRS Bangka Belitung">
                         @error('auction_location')
                             <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -539,22 +539,22 @@
                 <div class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="viewing_start" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="viewing_start" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Mulai Viewing
                             </label>
                             <input type="datetime-local" name="viewing_start" id="viewing_start" value="{{ old('viewing_start') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_start') border-red-500 @enderror">
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_start') border-red-500 @enderror">
                             @error('viewing_start')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="viewing_end" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                            <label for="viewing_end" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                 Akhir Viewing
                             </label>
                             <input type="datetime-local" name="viewing_end" id="viewing_end" value="{{ old('viewing_end') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_end') border-red-500 @enderror">
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_end') border-red-500 @enderror">
                             @error('viewing_end')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
                             @enderror
@@ -562,9 +562,9 @@
                     </div>
 
                     <div>
-                        <label for="viewing_schedule" class="block text-[13px] font-semibold text-zinc-700 mb-2">Jadwal Lengkap</label>
+                        <label for="viewing_schedule" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Jadwal Lengkap</label>
                         <textarea name="viewing_schedule" id="viewing_schedule" rows="3"
-                                  class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('viewing_schedule') border-red-500 @enderror"
+                                  class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors resize-none @error('viewing_schedule') border-red-500 @enderror"
                                   placeholder="Contoh: Senin - Jumat, Pukul 09.00 - 15.00 WIB">{{ old('viewing_schedule') }}</textarea>
                         @error('viewing_schedule')
                             <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -573,9 +573,9 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="viewing_contact" class="block text-[13px] font-semibold text-zinc-700 mb-2">Kontak Viewing</label>
+                            <label for="viewing_contact" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kontak Viewing</label>
                             <input type="text" name="viewing_contact" id="viewing_contact" value="{{ old('viewing_contact') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_contact') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_contact') border-red-500 @enderror"
                                    placeholder="Nama dan No. HP petugas">
                             @error('viewing_contact')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -583,9 +583,9 @@
                         </div>
 
                         <div>
-                            <label for="viewing_notes" class="block text-[13px] font-semibold text-zinc-700 mb-2">Catatan Tambahan</label>
+                            <label for="viewing_notes" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Catatan Tambahan</label>
                             <input type="text" name="viewing_notes" id="viewing_notes" value="{{ old('viewing_notes') }}"
-                                   class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_notes') border-red-500 @enderror"
+                                   class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('viewing_notes') border-red-500 @enderror"
                                    placeholder="Catatan khusus untuk viewing">
                             @error('viewing_notes')
                                 <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -601,25 +601,25 @@
                     contacts: @js(old('contacts', [['name' => '', 'phone' => '']]))
                 }" class="space-y-5">
                     <template x-for="(contact, index) in contacts" :key="index">
-                        <div class="p-4 border border-zinc-200 rounded-xl bg-zinc-50 relative">
+                        <div class="p-4 border dark:border-slate-700 border-zinc-200 rounded-xl dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 relative">
                             <button type="button" @click="contacts.splice(index, 1)" x-show="contacts.length > 1" class="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             </button>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label :for="'contact_name_' + index" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                                    <label :for="'contact_name_' + index" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                         Kontak Person
                                     </label>
                                     <input type="text" :name="'contacts[' + index + '][name]'" :id="'contact_name_' + index" x-model="contact.name"
-                                           class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors"
+                                           class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors"
                                            placeholder="Nama lengkap kontak person">
                                 </div>
                                 <div>
-                                    <label :for="'contact_phone_' + index" class="block text-[13px] font-semibold text-zinc-700 mb-2">
+                                    <label :for="'contact_phone_' + index" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
                                         Telepon Kontak
                                     </label>
                                     <input type="text" :name="'contacts[' + index + '][phone]'" :id="'contact_phone_' + index" x-model="contact.phone"
-                                           class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors"
+                                           class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors"
                                            placeholder="Contoh: 0717-123456">
                                 </div>
                             </div>
@@ -634,9 +634,9 @@
                     </button>
 
                     <div>
-                        <label for="contact_email" class="block text-[13px] font-semibold text-zinc-700 mb-2">Email Kontak (Opsional)</label>
+                        <label for="contact_email" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Email Kontak (Opsional)</label>
                         <input type="email" name="contact_email" id="contact_email" value="{{ old('contact_email') }}"
-                               class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('contact_email') border-red-500 @enderror"
+                               class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors @error('contact_email') border-red-500 @enderror"
                                placeholder="email@example.com">
                         @error('contact_email')
                             <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
@@ -652,8 +652,8 @@
             <x-admin.card title="Status & Publikasi" subtitle="Pengaturan status lelang">
                 <div class="space-y-4">
                     <div>
-                        <label for="status" class="block text-[13px] font-semibold text-zinc-700 mb-2">Status</label>
-                        <select name="status" id="status" class="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors">
+                        <label for="status" class="block text-[13px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Status</label>
+                        <select name="status" id="status" class="w-full px-4 py-2.5 border dark:border-slate-700 border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors">
                             @foreach(\App\Enums\AuctionStatus::cases() as $status)
                                 <option value="{{ $status->value }}" {{ old('status', 'upcoming') === $status->value ? 'selected' : '' }}>
                                     {{ $status->label() }}
@@ -665,15 +665,15 @@
                     <div class="flex items-center">
                         <input type="checkbox" name="is_featured" id="is_featured" value="1"
                                {{ old('is_featured') ? 'checked' : '' }}
-                               class="rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
-                        <label for="is_featured" class="ml-2 text-[13px] text-zinc-700">Jadikan Unggulan</label>
+                               class="rounded dark:border-slate-600 border-zinc-300 text-blue-600 focus:ring-blue-500">
+                        <label for="is_featured" class="ml-2 text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Jadikan Unggulan</label>
                     </div>
 
                     <div class="flex items-center">
                         <input type="checkbox" name="is_urgent" id="is_urgent" value="1"
                                {{ old('is_urgent') ? 'checked' : '' }}
-                               class="rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
-                        <label for="is_urgent" class="ml-2 text-[13px] text-zinc-700">Mendesak</label>
+                               class="rounded dark:border-slate-600 border-zinc-300 text-blue-600 focus:ring-blue-500">
+                        <label for="is_urgent" class="ml-2 text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Mendesak</label>
                     </div>
                 </div>
             </x-admin.card>
@@ -683,13 +683,13 @@
                 <div>
                     <div class="relative">
                         <input type="file" name="images[]" id="images" accept="image/*" multiple class="hidden" data-action="preview-images" required>
-                        <label for="images" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-zinc-300 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-amber-50 transition-all">
+                        <label for="images" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed dark:border-slate-600 border-zinc-300 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-amber-50 transition-all">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg class="w-8 h-8 mb-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-8 h-8 mb-2 dark:text-slate-500 dark:text-slate-500 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                 </svg>
-                                <p class="text-[11px] text-zinc-500 font-medium">Upload Gambar</p>
-                                <p class="text-[11px] text-zinc-400">PNG, JPG, WEBP (Max 5MB per file)</p>
+                                <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 font-medium">Upload Gambar</p>
+                                <p class="text-[11px] dark:text-slate-500 dark:text-slate-500 text-zinc-400">PNG, JPG, WEBP (Max 5MB per file)</p>
                                 <p class="text-[13px] text-red-500 font-medium mt-1">Minimal 3 gambar wajib</p>
                             </div>
                         </label>

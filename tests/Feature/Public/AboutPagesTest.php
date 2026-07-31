@@ -18,36 +18,47 @@ class AboutPagesTest extends TestCase
     }
 
     /**
-     * Test komisaris page returns 200 status code.
+     * Test the combined Manajemen page returns 200 status code.
      * Requirements: 2.2
      */
-    public function test_komisaris_page_returns_successful_response(): void
+    public function test_manajemen_page_returns_successful_response(): void
+    {
+        $response = $this->withoutSecurityMiddleware()->get('/tentang-kami/manajemen');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Old Dewan Komisaris URL redirects (301) to the combined Manajemen page.
+     */
+    public function test_old_komisaris_url_redirects_to_manajemen(): void
     {
         $response = $this->withoutSecurityMiddleware()->get('/tentang-kami/dewan-komisaris');
 
-        $response->assertStatus(200);
+        $response->assertStatus(301);
+        $this->assertStringEndsWith('/tentang-kami/manajemen', $response->headers->get('Location'));
     }
 
     /**
-     * Test direksi page returns 200 status code.
-     * Requirements: 2.2
+     * Old Dewan Direksi URL redirects (301) to the combined Manajemen page.
      */
-    public function test_direksi_page_returns_successful_response(): void
+    public function test_old_direksi_url_redirects_to_manajemen(): void
     {
         $response = $this->withoutSecurityMiddleware()->get('/tentang-kami/dewan-direksi');
 
-        $response->assertStatus(200);
+        $response->assertStatus(301);
+        $this->assertStringEndsWith('/tentang-kami/manajemen', $response->headers->get('Location'));
     }
 
     /**
-     * Test pengawas-syariah page returns 200 status code.
-     * Requirements: 2.2
+     * Old Dewan Pengawas Syariah URL redirects (301) to the combined Manajemen page.
      */
-    public function test_pengawas_syariah_page_returns_successful_response(): void
+    public function test_old_pengawas_syariah_url_redirects_to_manajemen(): void
     {
-        $response = $this->withoutSecurityMiddleware()->get('/tentang-kami/dewan-pengawas-syariah');
+        $response = $this->withoutSecurityMiddleware()->get('/tentang-kami/pengawas-syariah');
 
-        $response->assertStatus(200);
+        $response->assertStatus(301);
+        $this->assertStringEndsWith('/tentang-kami/manajemen', $response->headers->get('Location'));
     }
 
     /**
@@ -67,7 +78,7 @@ class AboutPagesTest extends TestCase
      */
     public function test_offices_page_returns_successful_response(): void
     {
-        $response = $this->withoutSecurityMiddleware()->get('/tentang-kami/kantor');
+        $response = $this->withoutSecurityMiddleware()->get('/tentang-kami/kantor-cabang');
 
         $response->assertStatus(200);
     }

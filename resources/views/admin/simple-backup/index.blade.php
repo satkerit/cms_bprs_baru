@@ -51,10 +51,10 @@
  <div class="overflow-x-auto">
  <table class="w-full border-collapse">
  <thead>
- <tr class="border-b border-zinc-200/70 bg-zinc-50/80">
- <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">File</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Size</th>
- <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Created</th>
+ <tr class="border-b dark:border-slate-700 border-zinc-200/70 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/80">
+ <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">File</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Size</th>
+ <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Created</th>
  </tr>
  </thead>
  <tbody class="divide-y divide-zinc-100/80">

@@ -59,11 +59,11 @@
                     @if($heroSlide && $heroSlide->image)
                     <x-admin.card title="Titik Fokus (Focal Point)">
                         <div class="space-y-3">
-                            <p class="text-[12px] text-zinc-500">Klik pada gambar untuk menentukan titik fokus. Titik ini akan dijaga agar tetap terlihat di semua ukuran layar.</p>
+                            <p class="text-[12px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Klik pada gambar untuk menentukan titik fokus. Titik ini akan dijaga agar tetap terlihat di semua ukuran layar.</p>
                             <div class="relative inline-block" id="focal-preview">
                                 <img src="{{ \App\Helpers\StorageHelper::url($heroSlide->image) }}"
                                      alt="Preview"
-                                     class="max-w-full h-64 object-cover cursor-crosshair border border-zinc-200 rounded-lg"
+                                     class="max-w-full h-64 object-cover cursor-crosshair border dark:border-slate-700 border-zinc-200 rounded-lg"
                                      id="focal-img"
                                      loading="lazy">
                                 <div class="absolute pointer-events-none transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-emerald-500 rounded-full opacity-0 transition-opacity"
@@ -116,13 +116,13 @@
                         <input type="checkbox" name="is_active" id="is_active" value="1"
                             {{ old('is_active', $heroSlide->is_active ?? true) ? 'checked' : '' }}
                             class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
-                        <label for="is_active" class="text-[13px] text-zinc-700 font-medium">Aktif</label>
+                        <label for="is_active" class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700 font-medium">Aktif</label>
                     </div>
 
                     <x-admin.input type="number" name="order_position" label="Urutan" :value="old('order_position', $heroSlide->order_position ?? 0)" min="0"/>
 
                     <div>
-                        <label class="block text-[13px] font-medium text-zinc-700 mb-2">Tipe Transisi</label>
+                        <label class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tipe Transisi</label>
                         <select name="transition_type" class="w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-[13px] focus:border-emerald-500 focus:ring-emerald-500">
                             @foreach($transitionTypes as $key => $label)
                             <option value="{{ $key }}" {{ old('transition_type', $heroSlide->transition_type ?? 'slide') == $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -140,19 +140,19 @@
                         <input type="checkbox" name="show_title" id="show_title" value="1"
                             {{ old('show_title', $heroSlide->show_title ?? true) ? 'checked' : '' }}
                             class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
-                        <label for="show_title" class="text-[13px] text-zinc-700 font-medium">Tampilkan Judul</label>
+                        <label for="show_title" class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700 font-medium">Tampilkan Judul</label>
                     </div>
                     <div class="flex items-center gap-2">
                         <input type="checkbox" name="show_subtitle" id="show_subtitle" value="1"
                             {{ old('show_subtitle', $heroSlide->show_subtitle ?? true) ? 'checked' : '' }}
                             class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
-                        <label for="show_subtitle" class="text-[13px] text-zinc-700 font-medium">Tampilkan Subtitle</label>
+                        <label for="show_subtitle" class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700 font-medium">Tampilkan Subtitle</label>
                     </div>
                     <div class="flex items-center gap-2">
                         <input type="checkbox" name="show_button" id="show_button" value="1"
                             {{ old('show_button', $heroSlide->show_button ?? true) ? 'checked' : '' }}
                             class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
-                        <label for="show_button" class="text-[13px] text-zinc-700 font-medium">Tampilkan Tombol</label>
+                        <label for="show_button" class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700 font-medium">Tampilkan Tombol</label>
                     </div>
                 </div>
             </x-admin.card>

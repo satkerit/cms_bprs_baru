@@ -17,12 +17,15 @@ class Form extends Component
 {
     use WithFileUploads;
 
+    public $is_anonymous = false;
     public $name = '';
     public $email = '';
     public $phone = '';
     public $account_number = '';
+    public $identity_number = '';
     public $category = '';
     public $subcategory = '';
+    public $type = '';
     public $subject = '';
     public $description = '';
     public $branch_office = '';
@@ -32,7 +35,7 @@ class Form extends Component
 
     public $ticketNumber = null;
     public $submitted = false;
-    public $offices = [];
+    public array $offices = [];
 
     protected function rules()
     {
@@ -43,8 +46,7 @@ class Form extends Component
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
-            'category' => 'required|in:service,product,transaction,facility,staff,other',
-            'subcategory' => 'required_if:category,product|nullable|in:tabungan,pembiayaan',
+            'type' => 'required|in:product,service,billing,technical,suggestion,other',
             'subject' => 'required|string|max:255',
             'description' => 'required|string|min:20|max:3000',
             'attachments.*' => "nullable|file|max:{$maxFileKb}|mimes:pdf,doc,docx,jpg,jpeg,png",
@@ -57,8 +59,7 @@ class Form extends Component
         'email.required' => 'Email wajib diisi',
         'email.email' => 'Format email tidak valid',
         'phone.required' => 'Nomor telepon wajib diisi',
-        'category.required' => 'Pilih kategori pengaduan',
-        'subcategory.required_if' => 'Pilih sub kategori produk',
+        'type.required' => 'Pilih kategori laporan',
         'subject.required' => 'Subjek pengaduan wajib diisi',
         'description.required' => 'Deskripsi pengaduan wajib diisi',
         'description.min' => 'Deskripsi minimal 20 karakter',
@@ -68,7 +69,7 @@ class Form extends Component
 
     public function mount()
     {
-        $this->offices = Office::where('is_active', true)->orderBy('name')->get(['id', 'name', 'type']);
+        $this->offices = Office::where('is_active', true)->orderBy('name')->get(['id', 'name', 'type'])->toArray();
     }
 
     public function submit()
@@ -88,8 +89,8 @@ class Form extends Component
             'email' => $this->email,
             'phone' => $this->phone,
             'account_number' => $this->account_number ?: null,
-            'category' => $this->category,
-            'subcategory' => $this->category === 'product' ? $this->subcategory : null,
+            'category' => $this->type,
+            'subcategory' => $this->type === 'product' ? $this->subcategory : null,
             'subject' => $this->subject,
             'description' => $this->description,
             'branch_office' => $this->branch_office ?: null,
@@ -128,6 +129,7 @@ class Form extends Component
 
     public function render()
     {
-        return view('livewire.frontend.customer-complaint.form');
+        $branchOffices = array_column($this->offices, 'name');
+        return view('livewire.frontend.customer-complaint.form', compact('branchOffices'));
     }
 }

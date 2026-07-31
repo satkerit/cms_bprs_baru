@@ -11,12 +11,12 @@
  <!-- Header -->
  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
  <div>
- <h2 class="text-5xl font-bold text-zinc-900 tracking-tight">Why Choose Us</h2>
- <p class="text-zinc-500 mt-1">Kelola poin-poin keunggulan perusahaan Anda.</p>
+ <h2 class="text-5xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900 tracking-tight">Why Choose Us</h2>
+ <p class="dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">Kelola poin-poin keunggulan perusahaan Anda.</p>
  </div>
  <div class="flex flex-wrap gap-3">
  <a href="{{ route('admin.why-choose-us.settings') }}"
- class="inline-flex items-center px-4 py-2.5 bg-white border border-zinc-200 rounded-xl font-semibold text-zinc-500">
+ class="inline-flex items-center px-4 py-2.5 bg-white border dark:border-slate-700 border-zinc-200 rounded-xl font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500">
  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
@@ -59,7 +59,7 @@
  <div
  class="flex gap-1 opacity-0 group-hover:opacity-100 max-md:opacity-100 transition-all duration-300 group-hover:translate-x-0">
  <a href="{{ route('admin.why-choose-us.edit', $item->id) }}"
- class="p-2 text-zinc-500 hover:text-sky-600 hover:bg-sky-50 rounded-xl transition-all"
+ class="p-2 dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:text-sky-600 hover:bg-sky-50 rounded-xl transition-all"
  title="Edit">
  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -68,7 +68,7 @@
  </svg>
  </a>
  <button type="button" data-open-modal="deleteItem{{ $item->id }}"
- class="p-2 text-zinc-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+ class="p-2 dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
  title="Hapus">
  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -80,35 +80,35 @@
  </div>
 
  <div class="flex-1">
- <h3 class="text-4xl font-bold text-zinc-900 mb-2">
+ <h3 class="text-4xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-2">
  {{ $item->title }}</h3>
- <p class="text-zinc-500 text-[13px] leading-relaxed mb-4">{{ $item->description }}</p>
+ <p class="dark:text-slate-400 dark:text-slate-400 text-zinc-500 text-[13px] leading-relaxed mb-4">{{ $item->description }}</p>
  </div>
 
  <div class="flex items-center justify-between pt-4 border-t mt-4">
  <span
- class="text-[11px] font-semibold px-2.5 py-1 rounded-xl bg-zinc-50 text-zinc-500 border">
+ class="text-[11px] font-semibold px-2.5 py-1 rounded-xl dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-400 dark:text-slate-400 text-zinc-500 border">
  Urutan: {{ $item->sort_order }}
  </span>
  <span
- class="text-[11px] font-semibold px-2.5 py-1 rounded-xl {{ $item->is_active ? 'bg-emerald-100 text-emerald-700 border border-emerald-100' : 'bg-zinc-50 text-zinc-500 border' }}">
+ class="text-[11px] font-semibold px-2.5 py-1 rounded-xl {{ $item->is_active ? 'bg-emerald-100 text-emerald-700 border border-emerald-100' : 'dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-400 dark:text-slate-400 text-zinc-500 border' }}">
  {{ $item->is_active ? 'Aktif' : 'Tidak Aktif' }}
  </span>
  </div>
  </div>
  @empty
- <div  class="col-span-full py-20 text-center bg-white rounded-xl border-2 border-dashed border-zinc-200 hover:border-emerald-200">
+ <div  class="col-span-full py-20 text-center bg-white rounded-xl border-2 border-dashed dark:border-slate-700 border-zinc-200 hover:border-emerald-200">
  <div
- class="w-20 h-20 bg-zinc-50 rounded-full flex items-center justify-center mb-6 -transform duration-300">
- <svg class="w-10 h-10 text-zinc-500" fill="none"
+ class="w-20 h-20 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-full flex items-center justify-center mb-6 -transform duration-300">
+ <svg class="w-10 h-10 dark:text-slate-400 dark:text-slate-400 text-zinc-500" fill="none"
  stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
  </path>
  </svg>
  </div>
- <h3 class="text-3xl font-bold text-zinc-900">Belum ada item</h3>
- <p class="text-zinc-500 text-[13px] mt-2 max-w-sm">Mulai dengan menambahkan poin keunggulan perusahaan Anda
+ <h3 class="text-3xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900">Belum ada item</h3>
+ <p class="dark:text-slate-400 dark:text-slate-400 text-zinc-500 text-[13px] mt-2 max-w-sm">Mulai dengan menambahkan poin keunggulan perusahaan Anda
  untuk ditampilkan di halaman depan.</p>
  <div class="mt-8">
  <a href="{{ route('admin.why-choose-us.create') }}"

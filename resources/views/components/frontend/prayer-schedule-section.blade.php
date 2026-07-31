@@ -1,7 +1,7 @@
 <section class="relative py-16 lg:py-20 overflow-hidden" x-data="prayerSectionWidget()">
     <!-- Background -->
     <div class="absolute inset-0 hero-gradient"></div>
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.04\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+    <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
 
     <!-- Decorative round blurs -->
     <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
@@ -20,8 +20,8 @@
             <h2 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">
                 Waktu {{ $title ?? 'Sholat' }}
             </h2>
-            <p class="text-white/80 max-w-2xl mx-auto">
-                Jadwal sholat untuk wilayah <span class="font-semibold text-white" x-text="location">Jakarta</span> dan sekitarnya
+            <p class="text-white/80 mx-auto">
+                Jadwal sholat untuk wilayah Bangka Belitung. Tetaplah dekat dengan Allah dalam setiap langkah dan aktivitas Anda.
             </p>
         </div>
 

@@ -76,9 +76,12 @@ Route::middleware(['web', 'throttle:120,1'])->group(function () {
     // About Pages
     Route::prefix('tentang-kami')->name('about.')->group(function () {
         Route::get('/perusahaan', [App\Http\Controllers\AboutController::class, 'company'])->name('company');
-        Route::get('/dewan-komisaris', [App\Http\Controllers\AboutController::class, 'komisaris'])->name('komisaris');
-        Route::get('/dewan-direksi', [App\Http\Controllers\AboutController::class, 'direksi'])->name('direksi');
-        Route::get('/pengawas-syariah', [App\Http\Controllers\AboutController::class, 'pengawasSyariah'])->name('pengawas-syariah');
+        // Halaman Manajemen — gabungan Dewan Komisaris, Direksi & Dewan Pengawas Syariah
+        Route::get('/manajemen', [App\Http\Controllers\AboutController::class, 'manajemen'])->name('manajemen');
+        // Halaman lama dialihkan (301) ke halaman Manajemen tunggal
+        Route::redirect('/dewan-komisaris', '/tentang-kami/manajemen', 301)->name('komisaris');
+        Route::redirect('/dewan-direksi', '/tentang-kami/manajemen', 301)->name('direksi');
+        Route::redirect('/pengawas-syariah', '/tentang-kami/manajemen', 301)->name('pengawas-syariah');
         Route::get('/struktur-organisasi', [App\Http\Controllers\AboutController::class, 'struktur'])->name('struktur');
         Route::get('/kantor-cabang', [App\Http\Controllers\AboutController::class, 'offices'])->name('offices');
         Route::get('/kantor-cabang/{office:slug}', [App\Http\Controllers\AboutController::class, 'officeShow'])->name('offices.show');

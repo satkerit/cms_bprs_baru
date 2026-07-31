@@ -20,7 +20,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <x-admin.input name="name" label="Nama Kantor" :value="old('name', $office->name ?? '')" required :error="$errors->first('name')"/>
  <div>
- <label class="block text-xs font-medium text-zinc-700 mb-1">Tipe Kantor <span class="text-red-600">*</span></label>
+ <label class="block text-xs font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Tipe Kantor <span class="text-red-600">*</span></label>
  <select name="type" class="block w-full rounded-sm border-zinc-300 text-xs">
  <option value="pusat" {{ old('type', $office->type ?? '') == 'pusat' ? 'selected' : '' }}>Kantor Pusat</option>
  <option value="cabang" {{ old('type', $office->type ?? '') == 'cabang' ? 'selected' : '' }}>Kantor Cabang</option>
@@ -31,12 +31,12 @@
  </div>
 
  <div>
- <label class="block text-xs font-medium text-zinc-700 mb-1">Alamat <span class="text-red-600">*</span></label>
+ <label class="block text-xs font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Alamat <span class="text-red-600">*</span></label>
  <textarea name="address" rows="2" class="block w-full rounded-sm border-zinc-300 text-xs" required>{{ old('address', $office->address ?? '') }}</textarea>
  </div>
 
  <div>
- <label class="block text-xs font-medium text-zinc-700 mb-1">Deskripsi</label>
+ <label class="block text-xs font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Deskripsi</label>
  <textarea name="description" rows="3" class="block w-full rounded-sm border-zinc-300 text-xs">{{ old('description', $office->description ?? '') }}</textarea>
  </div>
 
@@ -52,25 +52,25 @@
  <div class="space-y-4">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label for="latitude_input" class="block text-xs font-medium text-zinc-700 mb-1">Latitude</label>
+ <label for="latitude_input" class="block text-xs font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Latitude</label>
  <input type="number" name="latitude" id="latitude_input" x-model="mapLat" @input="updateMap()"
  step="any" placeholder="-2.123456"
  class="block w-full rounded-sm border-zinc-300 text-xs">
- <p class="text-xs text-zinc-500 mt-1">Contoh: -2.131629</p>
+ <p class="text-xs dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">Contoh: -2.131629</p>
  </div>
  <div>
- <label for="longitude_input" class="block text-xs font-medium text-zinc-700 mb-1">Longitude</label>
+ <label for="longitude_input" class="block text-xs font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Longitude</label>
  <input type="number" name="longitude" id="longitude_input" x-model="mapLng" @input="updateMap()"
  step="any" placeholder="106.123456"
  class="block w-full rounded-sm border-zinc-300 text-xs">
- <p class="text-xs text-zinc-500 mt-1">Contoh: 106.116504</p>
+ <p class="text-xs dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">Contoh: 106.116504</p>
  </div>
  </div>
 
  <!-- Map Preview -->
  <div x-show="hasCoordinates" x-transition class="space-y-3">
- <label class="block text-xs font-medium text-zinc-700">Preview Lokasi</label>
- <div class="rounded-sm border border-zinc-200 bg-zinc-50" style="height: 300px;">
+ <label class="block text-xs font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700">Preview Lokasi</label>
+ <div class="rounded-sm border dark:border-slate-700 border-zinc-200 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50" style="height: 300px;">
  <iframe
  x-ref="mapFrame"
  :src="mapUrl"
@@ -90,20 +90,20 @@
  </svg>
  Buka di Google Maps
  </a>
- <span class="text-zinc-400">|</span>
- <span class="text-zinc-500" x-text="'Koordinat: ' + mapLat + ', ' + mapLng"></span>
+ <span class="dark:text-slate-500 dark:text-slate-500 text-zinc-400">|</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500" x-text="'Koordinat: ' + mapLat + ', ' + mapLng"></span>
  </div>
  </div>
 
  <!-- Help text when no coordinates -->
  <div x-show="!hasCoordinates" class="p-4 bg-gray-50 rounded-sm border border-dashed border-zinc-300">
  <div class="flex items-start gap-3">
- <svg class="w-5 h-5 text-zinc-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <svg class="w-5 h-5 dark:text-slate-500 dark:text-slate-500 text-zinc-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
  </svg>
  <div>
- <p class="text-xs font-medium text-zinc-700">Cara mendapatkan koordinat:</p>
- <ol class="text-xs text-zinc-500 mt-1 list-decimal list-inside space-y-1">
+ <p class="text-xs font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700">Cara mendapatkan koordinat:</p>
+ <ol class="text-xs dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1 list-decimal list-inside space-y-1">
  <li>Buka <a href="https://www.google.com/maps" target="_blank" class="text-sky-600 hover:underline">Google Maps</a></li>
  <li>Cari lokasi kantor</li>
  <li>Klik kanan pada lokasi</li>
@@ -124,7 +124,7 @@
  <input type="checkbox" name="is_active" id="is_active" value="1"
  {{ old('is_active', $office->is_active ?? true) ? 'checked' : '' }}
  class="rounded border-zinc-300 text-sky-600">
- <label for="is_active" class="text-xs text-zinc-700">Kantor Aktif</label>
+ <label for="is_active" class="text-xs dark:text-slate-300 dark:text-slate-300 text-zinc-700">Kantor Aktif</label>
  </div>
  </x-admin.card>
 

@@ -6,7 +6,7 @@
 <x-admin.page-header title="Kas Keliling" subtitle="Kelola jadwal kas keliling">
  <x-slot:actions>
  <div class="flex items-center gap-3">
- <button id="exportBtn" class="inline-flex items-center px-4 py-2 text-[11px] font-medium text-zinc-700 bg-white rounded-lg">
+ <button id="exportBtn" class="inline-flex items-center px-4 py-2 text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 bg-white rounded-lg">
  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
  </svg>
@@ -32,7 +32,7 @@
 @endif
 
 <x-admin.card :noPadding="true">
- <div class="p-4 border-b border-zinc-200">
+ <div class="p-4 border-b dark:border-slate-700 border-zinc-200">
  <form method="GET" class="flex flex-col sm:flex-row gap-3">
  <input type="text" name="search" value="{{ request('search') }}"
  placeholder="Cari lokasi, PIC, fasilitas..."
@@ -51,7 +51,7 @@
  </select>
  <x-admin.button type="submit" variant="secondary">Filter</x-admin.button>
  @if(request('search') || request('date_from') || request('date_to') || request('status'))
- <a href="{{ route('admin.kas-keliling.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium text-zinc-700 bg-white border border-zinc-200 rounded-xl hover:bg-zinc-50 transition-colors">
+ <a href="{{ route('admin.kas-keliling.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 bg-white border dark:border-slate-700 border-zinc-200 rounded-xl hover:dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 transition-colors">
  Reset
  </a>
  @endif
@@ -85,7 +85,7 @@
  {{-- Mobile Card View --}}
  <div class="block md:hidden p-4">
  @forelse($schedules as $schedule)
- <div class="bg-white border border-zinc-200 rounded-xl p-4">
+ <div class="bg-white border dark:border-slate-700 border-zinc-200 rounded-xl p-4">
  <div class="flex items-start gap-3 mb-3">
  <div class="w-12 h-12 rounded-lg bg-sky-100 flex items-center justify-center shrink-0">
  <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,8 +94,8 @@
  </svg>
  </div>
  <div class="flex-1 min-w-0">
- <p class="font-semibold text-zinc-900">{{ $schedule->location }}</p>
- <p class="text-[13px] text-zinc-500">{{ $schedule->schedule_date->format('d M Y') }} - {{ $schedule->day_name }}</p>
+ <p class="font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $schedule->location }}</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $schedule->schedule_date->format('d M Y') }} - {{ $schedule->day_name }}</p>
  </div>
  </div>
  <div class="flex flex-wrap items-center gap-2 mb-3">
@@ -107,14 +107,14 @@
  @endif
  </div>
  @if($schedule->pic_name)
- <div class="text-[13px] text-zinc-700 mb-3">
+ <div class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-3">
  <p class="font-medium">PIC: {{ $schedule->pic_name }}</p>
  @if($schedule->pic_phone)
  <p class="text-[13px]">{{ $schedule->pic_phone }}</p>
  @endif
  </div>
  @endif
- <div class="flex items-center gap-2 pt-3 border-t border-zinc-200">
+ <div class="flex items-center gap-2 pt-3 border-t dark:border-slate-700 border-zinc-200">
  <a href="{{ route('admin.kas-keliling.edit', $schedule) }}" class="flex-1 text-center py-2 text-[11px] font-medium text-sky-600 border border-sky-200 hover:border-sky-400 rounded-xl transition-colors">
  Edit
  </a>
@@ -124,7 +124,7 @@
  </div>
  </div>
  @empty
- <div class="text-center py-8 text-zinc-500">Belum ada jadwal kas keliling.</div>
+ <div class="text-center py-8 dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ada jadwal kas keliling.</div>
  @endforelse
  </div>
 
@@ -139,15 +139,15 @@
  </td>
  <td class="px-4 py-3">
  <div>
- <p class="font-medium text-zinc-900">{{ $schedule->schedule_date->format('d M Y') }}</p>
- <p class="text-[13px] text-zinc-500">{{ $schedule->day_name }}</p>
+ <p class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $schedule->schedule_date->format('d M Y') }}</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $schedule->day_name }}</p>
  </div>
  </td>
  <td class="px-4 py-3">
  <div>
- <p class="font-medium text-zinc-900">{{ $schedule->location }}</p>
+ <p class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $schedule->location }}</p>
  @if($schedule->facility)
- <p class="text-[13px] text-zinc-500">{{ Str::limit($schedule->facility, 50) }}</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ Str::limit($schedule->facility, 50) }}</p>
  @endif
  </div>
  </td>
@@ -157,13 +157,13 @@
  <td class="px-4 py-3">
  @if($schedule->pic_name)
  <div>
- <p class="font-medium text-zinc-900">{{ $schedule->pic_name }}</p>
+ <p class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $schedule->pic_name }}</p>
  @if($schedule->pic_phone)
- <p class="text-[13px] text-zinc-500">{{ $schedule->pic_phone }}</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $schedule->pic_phone }}</p>
  @endif
  </div>
  @else
- <span class="text-zinc-400">-</span>
+ <span class="dark:text-slate-500 dark:text-slate-500 text-zinc-400">-</span>
  @endif
  </td>
  <td class="px-4 py-3">
@@ -175,12 +175,12 @@
  </td>
  <td class="px-4 py-3">
  <div class="flex items-center gap-1">
- <a href="{{ route('admin.kas-keliling.edit', $schedule) }}" class="p-1.5 text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 rounded-lg transition-colors">
+ <a href="{{ route('admin.kas-keliling.edit', $schedule) }}" class="p-1.5 dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 rounded-lg transition-colors">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
  </svg>
  </a>
- <button type="button" data-open-modal="deleteSchedule{{ $schedule->id }}" class="p-1.5 text-zinc-500 hover:text-red-600 rounded-lg transition-colors" title="Hapus">
+ <button type="button" data-open-modal="deleteSchedule{{ $schedule->id }}" class="p-1.5 dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:text-red-600 rounded-lg transition-colors" title="Hapus">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
  </svg>
@@ -190,7 +190,7 @@
  </tr>
  @empty
  <tr>
- <td colspan="7" class="px-4 py-8 text-center text-zinc-500">Belum ada jadwal kas keliling.</td>
+ <td colspan="7" class="px-4 py-8 text-center dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ada jadwal kas keliling.</td>
  </tr>
  @endforelse
  </x-admin.table>

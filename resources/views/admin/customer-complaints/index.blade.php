@@ -18,7 +18,7 @@
 
 <!-- Stats Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
- <div class="bg-white rounded-xl p-4 border border-zinc-200/60">
+ <div class="bg-white rounded-xl p-4 border dark:border-slate-700 border-zinc-200/60">
  <div class="flex items-center">
  <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mr-4">
  <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -26,12 +26,12 @@
  </svg>
  </div>
  <div>
- <p class="text-5xl font-bold text-zinc-900">{{ $stats['pending'] }}</p>
- <p class="text-[11px] text-zinc-500">Menunggu</p>
+ <p class="text-5xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $stats['pending'] }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Menunggu</p>
  </div>
  </div>
  </div>
- <div class="bg-white rounded-xl p-4 border border-zinc-200/60">
+ <div class="bg-white rounded-xl p-4 border dark:border-slate-700 border-zinc-200/60">
  <div class="flex items-center">
  <div class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center mr-4">
  <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,12 +39,12 @@
  </svg>
  </div>
  <div>
- <p class="text-5xl font-bold text-zinc-900">{{ $stats['in_progress'] }}</p>
- <p class="text-[11px] text-zinc-500">Diproses</p>
+ <p class="text-5xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $stats['in_progress'] }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Diproses</p>
  </div>
  </div>
  </div>
- <div class="bg-white rounded-xl p-4 border border-zinc-200/60">
+ <div class="bg-white rounded-xl p-4 border dark:border-slate-700 border-zinc-200/60">
  <div class="flex items-center">
  <div class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center mr-4">
  <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,28 +52,28 @@
  </svg>
  </div>
  <div>
- <p class="text-5xl font-bold text-zinc-900">{{ $stats['resolved'] }}</p>
- <p class="text-[11px] text-zinc-500">Selesai</p>
+ <p class="text-5xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $stats['resolved'] }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Selesai</p>
  </div>
  </div>
  </div>
 </div>
 
 <x-admin.card :noPadding="true">
- <div class="p-4 border-b border-zinc-200/60">
+ <div class="p-4 border-b dark:border-slate-700 border-zinc-200/60">
  <form method="GET" class="flex flex-col gap-3">
  <div class="flex flex-col sm:flex-row gap-3">
  <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari tiket/nama/subjek..."
- class="w-full sm:flex-1 sm:min-w-[200px] rounded-xl border-zinc-300 text-[13px]">
+ class="w-full sm:flex-1 sm:min-w-[200px] rounded-xl dark:border-slate-600 border-zinc-300 text-[13px]">
  <div class="flex flex-wrap gap-3">
- <select name="status" class="flex-1 sm:flex-none rounded-xl border-zinc-300 text-[13px]">
+ <select name="status" class="flex-1 sm:flex-none rounded-xl dark:border-slate-600 border-zinc-300 text-[13px]">
  <option value="">Semua Status</option>
  <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu</option>
  <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>Diproses</option>
  <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Selesai</option>
  <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Ditutup</option>
  </select>
- <select name="category" class="flex-1 sm:flex-none rounded-xl border-zinc-300 text-[13px]">
+ <select name="category" class="flex-1 sm:flex-none rounded-xl dark:border-slate-600 border-zinc-300 text-[13px]">
  <option value="">Semua Kategori</option>
  <option value="service" {{ request('category') == 'service' ? 'selected' : '' }}>Pelayanan</option>
  <option value="product" {{ request('category') == 'product' ? 'selected' : '' }}>Produk</option>
@@ -82,7 +82,7 @@
  <option value="staff" {{ request('category') == 'staff' ? 'selected' : '' }}>Petugas</option>
  <option value="other" {{ request('category') == 'other' ? 'selected' : '' }}>Lainnya</option>
  </select>
- <select name="priority" class="flex-1 sm:flex-none rounded-xl border-zinc-300 text-[13px]">
+ <select name="priority" class="flex-1 sm:flex-none rounded-xl dark:border-slate-600 border-zinc-300 text-[13px]">
  <option value="">Semua Prioritas</option>
  <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>Tinggi</option>
  <option value="medium" {{ request('priority') == 'medium' ? 'selected' : '' }}>Sedang</option>
@@ -90,20 +90,20 @@
  </select>
  <x-admin.button type="submit" variant="secondary">Filter</x-admin.button>
  @if(request('search') || request('status') || request('category') || request('priority'))
- <a href="{{ route('admin.customer-complaints.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium text-zinc-700 bg-white rounded-xl">
+ <a href="{{ route('admin.customer-complaints.index') }}" class="inline-flex items-center px-4 py-2 text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 bg-white rounded-xl">
  Reset
  </a>
  @endif
  </div>
  {{-- Filter Tanggal --}}
  <div class="flex flex-wrap items-center gap-3 pt-1">
- <span class="text-[11px] text-zinc-500 font-medium">Periode:</span>
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 font-medium">Periode:</span>
  <input type="date" name="date_from" value="{{ request('date_from') }}"
- class="rounded-xl border-zinc-300 text-[13px]"
+ class="rounded-xl dark:border-slate-600 border-zinc-300 text-[13px]"
  placeholder="Dari tanggal">
- <span class="text-[11px] text-zinc-400">s/d</span>
+ <span class="text-[11px] dark:text-slate-500 dark:text-slate-500 text-zinc-400">s/d</span>
  <input type="date" name="date_to" value="{{ request('date_to') }}"
- class="rounded-xl border-zinc-300 text-[13px]"
+ class="rounded-xl dark:border-slate-600 border-zinc-300 text-[13px]"
  placeholder="Sampai tanggal">
  @if(request('date_from') || request('date_to'))
  <span class="text-[11px] text-emerald-600 font-medium">● Filter tanggal aktif</span>
@@ -115,12 +115,12 @@
  {{-- Mobile Card View --}}
  <div class="block md:hidden p-4 space-y-4">
  @forelse($complaints as $complaint)
- <div class="bg-white border border-zinc-200/60 rounded-xl p-4">
+ <div class="bg-white border dark:border-slate-700 border-zinc-200/60 rounded-xl p-4">
  <div class="mb-3">
  <div class="flex items-start justify-between gap-2 mb-2">
  <div>
- <p class="font-semibold text-zinc-900">{{ $complaint->ticket_number }}</p>
- <p class="text-[11px] text-zinc-500 line-clamp-2">{{ $complaint->subject }}</p>
+ <p class="font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $complaint->ticket_number }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 line-clamp-2">{{ $complaint->subject }}</p>
  </div>
  @switch($complaint->status)
  @case('pending')
@@ -138,8 +138,8 @@
  @endswitch
  </div>
  <div class="text-[13px]">
- <p class="text-zinc-900">{{ $complaint->name }}</p>
- <p class="text-[11px] text-zinc-500">{{ $complaint->email }}</p>
+ <p class="dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $complaint->name }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $complaint->email }}</p>
  </div>
  </div>
  <div class="flex flex-wrap items-center gap-2 mb-3">
@@ -150,9 +150,9 @@
  @if($complaint->priority === 'high')
  <x-admin.badge variant="danger">Prioritas Tinggi</x-admin.badge>
  @endif
- <span class="text-[11px] text-zinc-500">{{ $complaint->created_at->format('d M Y') }}</span>
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $complaint->created_at->format('d M Y') }}</span>
  </div>
- <div class="flex items-center gap-2 pt-3 border-t border-zinc-200/60">
+ <div class="flex items-center gap-2 pt-3 border-t dark:border-slate-700 border-zinc-200/60">
  <a href="{{ route('admin.customer-complaints.show', $complaint) }}" class="flex-1 text-center py-2 text-[11px] font-medium text-sky-600 rounded-xl">
  Lihat Detail
  </a>
@@ -162,7 +162,7 @@
  </div>
  </div>
  @empty
- <div class="text-center py-8 text-zinc-500">Belum ada pengaduan nasabah.</div>
+ <div class="text-center py-8 dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ada pengaduan nasabah.</div>
  @endforelse
  </div>
 
@@ -173,14 +173,14 @@
  <tr>
  <td class="px-4 py-3">
  <div class="min-w-0">
- <p class="font-medium text-zinc-900">{{ $complaint->ticket_number }}</p>
- <p class="text-[11px] text-zinc-500 max-w-[200px]">{{ Str::limit($complaint->subject, 40) }}</p>
+ <p class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $complaint->ticket_number }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 max-w-[200px]">{{ Str::limit($complaint->subject, 40) }}</p>
  </div>
  </td>
  <td class="px-4 py-3 text-[13px]">
  <div class="min-w-0">
- <p class="text-zinc-900">{{ $complaint->name }}</p>
- <p class="text-[11px] text-zinc-500">{{ $complaint->phone }}</p>
+ <p class="dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $complaint->name }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $complaint->phone }}</p>
  </div>
  </td>
  <td class="px-4 py-3">
@@ -220,16 +220,16 @@
  @break
  @endswitch
  </td>
- <td class="px-4 py-3 text-[11px] text-zinc-500">{{ $complaint->created_at->format('d M Y') }}</td>
+ <td class="px-4 py-3 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $complaint->created_at->format('d M Y') }}</td>
  <td class="px-4 py-3">
  <div class="flex items-center gap-1">
- <a href="{{ route('admin.customer-complaints.show', $complaint) }}" class="p-1.5 text-zinc-500 rounded-xl">
+ <a href="{{ route('admin.customer-complaints.show', $complaint) }}" class="p-1.5 dark:text-slate-400 dark:text-slate-400 text-zinc-500 rounded-xl">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
  </svg>
  </a>
- <button type="button" data-open-modal="deleteComplaint{{ $complaint->id }}" class="p-1.5 text-zinc-500 rounded-xl hover:text-red-600">
+ <button type="button" data-open-modal="deleteComplaint{{ $complaint->id }}" class="p-1.5 dark:text-slate-400 dark:text-slate-400 text-zinc-500 rounded-xl hover:text-red-600">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
  </svg>
@@ -238,7 +238,7 @@
  </td>
  </tr>
  @empty
- <tr><td colspan="7" class="px-4 py-8 text-center text-zinc-500">Belum ada pengaduan nasabah.</td></tr>
+ <tr><td colspan="7" class="px-4 py-8 text-center dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ada pengaduan nasabah.</td></tr>
  @endforelse
  </x-admin.table>
  </div>

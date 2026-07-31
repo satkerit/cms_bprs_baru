@@ -11,8 +11,8 @@
             <div class="flex items-center gap-3">
                 <div class="w-1 h-8 rounded-full bg-gradient-to-b from-emerald-500 to-emerald-600 shrink-0"></div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-slate-900">Dashboard</h1>
-                    <p class="text-slate-500 text-[13px] mt-0.5">
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Dashboard</h1>
+                    <p class="text-slate-500 dark:text-slate-400 text-[13px] mt-0.5">
                         {{ now()->locale('id')->isoFormat('dddd, D MMMM Y') }}
                     </p>
                 </div>
@@ -37,8 +37,7 @@
            class="stat-card-emerald group hover:-translate-y-0.5 no-underline block">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-emerald-600/70 uppercase tracking-wider mb-1">Total Berita</p>
-                    <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900">{{ $newsCount }}</p>
+                    <p class="text-[11px] font-semibold text-emerald-600/70 uppercase tracking-wider mb-1">Total Berita</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $newsCount }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-emerald-100/80 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -56,8 +55,7 @@
            class="stat-card-sky group hover:-translate-y-0.5 no-underline block">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-sky-600/70 uppercase tracking-wider mb-1">Total Produk</p>
-                    <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900">{{ $productCount }}</p>
+                    <p class="text-[11px] font-semibold text-sky-600/70 uppercase tracking-wider mb-1">Total Produk</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $productCount }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-sky-100/80 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -75,8 +73,7 @@
            class="stat-card-gold group hover:-translate-y-0.5 no-underline block">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-amber-600/70 uppercase tracking-wider mb-1">Lelang Aktif</p>
-                    <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900">{{ $upcomingAuctions }}</p>
+                    <p class="text-[11px] font-semibold text-amber-600/70 uppercase tracking-wider mb-1">Lelang Aktif</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $upcomingAuctions }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-amber-100/80 flex items-center justify-center text-amber-600 group-hover:bg-amber-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -91,11 +88,10 @@
         </a>
 
         <a href="{{ route('admin.complaints.index') }}"
-           class="stat-card group hover:-translate-y-0.5 no-underline block bg-gradient-to-br from-red-50 to-white border-red-200/50 hover:shadow-lg hover:shadow-red-500/5">
+           class="stat-card group hover:-translate-y-0.5 no-underline block bg-gradient-to-br from-red-50 dark:from-red-950/40 to-white dark:to-slate-900 border-red-200/50 dark:border-red-900/50 hover:shadow-lg hover:shadow-red-500/5">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-red-600/70 uppercase tracking-wider mb-1">Aduan Baru</p>
-                    <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900">{{ $pendingComplaints }}</p>
+                    <p class="text-[11px] font-semibold text-red-600/70 uppercase tracking-wider mb-1">Aduan Baru</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $pendingComplaints }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-red-100/80 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -120,11 +116,11 @@
     {{-- ═══ VISITOR STATISTICS CHART ═══ --}}
     <div class="card">
         <div class="card-header flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="admin-accent-strip"></div>
-                <div>
-                    <h2 class="text-[15px] font-semibold text-slate-900 tracking-tight">Statistik Pengunjung</h2>
-                    <p class="text-[12px] text-slate-400">7 hari terakhir</p>
+                <div class="flex items-center gap-2.5">
+                    <div class="admin-accent-strip"></div>
+                    <div>
+                        <h2 class="text-[15px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight">Statistik Pengunjung</h2>
+                        <p class="text-[12px] text-slate-400 dark:text-slate-500">7 hari terakhir</p>
                 </div>
             </div>
             <a href="{{ route('admin.visitor-stats.index') }}" class="btn-outline h-8 text-xs">
@@ -138,23 +134,23 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
                 <div class="stat-card-emerald">
                     <p class="text-[10px] font-semibold text-emerald-600 mb-1 uppercase tracking-wider">Hari Ini</p>
-                    <p class="text-lg font-bold text-slate-900 tabular-nums">{{ number_format($visitorStats['todayVisits']) }}</p>
-                    <p class="text-[10px] text-slate-400">kunjungan</p>
+                    <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['todayVisits']) }}</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500">kunjungan</p>
                 </div>
                 <div class="stat-card-sky">
                     <p class="text-[10px] font-semibold text-sky-600 mb-1 uppercase tracking-wider">Unik Hari Ini</p>
-                    <p class="text-lg font-bold text-slate-900 tabular-nums">{{ number_format($visitorStats['todayUnique']) }}</p>
-                    <p class="text-[10px] text-slate-400">pengunjung</p>
+                    <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['todayUnique']) }}</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500">pengunjung</p>
                 </div>
                 <div class="stat-card-emerald">
                     <p class="text-[10px] font-semibold text-emerald-600 mb-1 uppercase tracking-wider">7 Hari</p>
-                    <p class="text-lg font-bold text-slate-900 tabular-nums">{{ number_format($visitorStats['weekTotal']) }}</p>
-                    <p class="text-[10px] text-slate-400">kunjungan</p>
+                    <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['weekTotal']) }}</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500">kunjungan</p>
                 </div>
                 <div class="stat-card-violet">
                     <p class="text-[10px] font-semibold text-violet-600 mb-1 uppercase tracking-wider">Unik 7 Hari</p>
-                    <p class="text-lg font-bold text-slate-900 tabular-nums">{{ number_format($visitorStats['weekUnique']) }}</p>
-                    <p class="text-[10px] text-slate-400">pengunjung</p>
+                    <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['weekUnique']) }}</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500">pengunjung</p>
                 </div>
             </div>
 
@@ -172,11 +168,10 @@
             <div class="card-header flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <div class="admin-accent-strip"></div>
-                    <h3 class="text-[15px] font-semibold text-slate-900 tracking-tight">Berita Terbaru</h3>
+                    <h3 class="text-[15px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight">Berita Terbaru</h3>
                 </div>
                 <a href="{{ route('admin.news.index') }}" class="text-[12px] font-medium text-emerald-600 hover:text-emerald-700 transition-colors">Lihat Semua</a>
-            </div>
-            <div class="divide-y divide-slate-100">
+            </div>                        <div class="divide-y divide-slate-100 dark:divide-slate-800">
                 @forelse($recentNews as $news)
                     <div class="px-6 py-4 flex items-center gap-3 hover:bg-slate-50/50 transition-colors duration-150 group">
                         @if($news->featured_image && \Illuminate\Support\Facades\Storage::disk('public')->exists($news->featured_image))
@@ -184,17 +179,16 @@
                                  alt="{{ $news->title }}"
                                  class="w-12 h-10 rounded-xl object-cover border border-slate-200 flex-shrink-0 group-hover:shadow-md transition-shadow"
                                  data-fallback="news-thumbnail">
-                        @else
-                            <div class="w-12 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0">
+                        @else                                <div class="w-12 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
                                 <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
                             </div>
                         @endif
                         <div class="flex-1 min-w-0">
-                            <a href="{{ route('admin.news.edit', $news) }}" class="text-[13px] font-medium text-slate-900 hover:text-emerald-600 truncate block transition-colors no-underline">{{ $news->title }}</a>
+                            <a href="{{ route('admin.news.edit', $news) }}" class="text-[13px] font-medium text-slate-900 dark:text-slate-200 hover:text-emerald-600 truncate block transition-colors no-underline">{{ $news->title }}</a>
                             <div class="flex items-center gap-2 mt-0.5">
-                                <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                                <span class="text-[11px] text-slate-400 dark:text-slate-500 flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                     {{ $news->created_at->diffForHumans() }}
                                 </span>
@@ -225,8 +219,7 @@
                     <h3 class="text-[15px] font-semibold text-slate-900 tracking-tight">Pengaduan Terbaru</h3>
                 </div>
                 <a href="{{ route('admin.complaints.index') }}" class="text-[12px] font-medium text-emerald-600 hover:text-emerald-700 transition-colors">Lihat Semua</a>
-            </div>
-            <div class="divide-y divide-slate-100">
+            </div>                        <div class="divide-y divide-slate-100 dark:divide-slate-800">
                 @forelse($recentComplaints as $complaint)
                     <a href="{{ route('admin.complaints.show', $complaint) }}" class="block px-6 py-4 no-underline text-inherit hover:bg-slate-50/50 transition-colors duration-150 group">
                         <div class="flex items-center gap-3">
@@ -329,7 +322,59 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    new Chart(ctx, {
+
+    function isDark() {
+        return document.documentElement.classList.contains('dark');
+    }
+
+    function getChartColors() {
+        const dark = isDark();
+        return {
+            gridColor: dark ? 'rgba(51, 65, 85, 0.5)' : 'rgba(226, 232, 240, 0.6)',
+            tickColor: dark ? '#94a3b8' : '#64748b',
+            legendColor: dark ? '#cbd5e1' : '#334155',
+        };
+    }
+
+    function getChartOptions() {
+        const c = getChartColors();
+        return {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { intersect: false, mode: 'index' },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        font: { size: 12, weight: '500' },
+                        color: c.legendColor,
+                    }
+                },
+                tooltip: {
+                    backgroundColor: isDark() ? '#1e293b' : '#18181b',
+                    titleFont: { size: 13, weight: '600' },
+                    bodyFont: { size: 12 },
+                    padding: 12,
+                    cornerRadius: 10,
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { size: 11 }, color: c.tickColor }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: { color: c.gridColor },
+                    ticks: { font: { size: 11 }, color: c.tickColor, stepSize: 1, padding: 8 }
+                }
+            }
+        };
+    }
+
+    const chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: @js($visitorStats['labels']),
@@ -365,33 +410,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             ]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { intersect: false, mode: 'index' },
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: { usePointStyle: true, padding: 20, font: { size: 12, weight: '500' } }
-                },
-                tooltip: {
-                    backgroundColor: '#18181b',
-                    titleFont: { size: 13, weight: '600' },
-                    bodyFont: { size: 12 },
-                    padding: 12,
-                    cornerRadius: 10,
-                }
-            },
-            scales: {
-                x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#64748b' } },
-                y: {
-                    beginAtZero: true,
-                    grid: { color: 'rgba(226, 232, 240, 0.6)' },
-                    ticks: { font: { size: 11 }, color: '#64748b', stepSize: 1, padding: 8 }
-                }
-            }
-        }
+        options: getChartOptions()
     });
+
+    // Watch for dark mode toggle — update chart reactively
+    const observer = new MutationObserver(function() {
+        chart.options = getChartOptions();
+        chart.update();
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 });
 </script>
 @endpush

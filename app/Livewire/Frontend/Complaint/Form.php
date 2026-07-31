@@ -70,7 +70,7 @@ class Form extends Component
     public function submit()
     {
         // Add conditional validation for non-anonymous
-        $rules = $this->rules;
+        $rules = $this->rules();
         if (!$this->is_anonymous) {
             $rules['name'] = 'required|string|max:255';
             $rules['email'] = 'required|email|max:255';

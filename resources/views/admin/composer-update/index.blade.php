@@ -10,21 +10,21 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  {{-- Environment Info --}}
  <x-admin.card>
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">Informasi Lingkungan</h3>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">Informasi Lingkungan</h3>
  <div class="space-y-3">
- <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
- <span class="text-[11px] text-zinc-700">Laravel Version</span>
+ <div class="flex items-center justify-between p-3 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Laravel Version</span>
  <span class="font-mono text-[13px] font-semibold text-sky-600">{{ $laravelVersion }}</span>
  </div>
- <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
- <span class="text-[11px] text-zinc-700">PHP Version</span>  <span class="font-mono text-[13px] font-semibold text-amber-600">{{ $phpVersion }}</span>
+ <div class="flex items-center justify-between p-3 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">PHP Version</span>  <span class="font-mono text-[13px] font-semibold text-amber-600">{{ $phpVersion }}</span>
  </div>
- <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
- <span class="text-[11px] text-zinc-700">Composer Version</span>
+ <div class="flex items-center justify-between p-3 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Composer Version</span>
  <span class="font-mono text-[13px] font-semibold text-purple-600">{{ $composerVersion }}</span>
  </div>
- <div class="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
- <span class="text-[11px] text-zinc-700">Environment</span>
+ <div class="flex items-center justify-between p-3 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl">
+ <span class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Environment</span>
  <span class="text-[13px] font-semibold {{ app()->environment('production') ? 'text-red-600' : 'text-yellow-600' }}">{{ ucfirst(app()->environment()) }}</span>
  </div>
  </div>
@@ -32,8 +32,8 @@
 
  {{-- Run Update --}}
  <x-admin.card>
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">Jalankan Composer Update</h3>
- <p class="text-[13px] text-zinc-500 mb-4">Pastikan untuk membuat cadangan database dan file sebelum melakukan update!</p>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">Jalankan Composer Update</h3>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mb-4">Pastikan untuk membuat cadangan database dan file sebelum melakukan update!</p>
 
  @if(!$procOpenAvailable)
  <div class="p-4 bg-red-100 border border-red-200 rounded-xl mb-4">
@@ -46,11 +46,11 @@
  <p class="text-[13px] text-red-600 mb-3">
  Server hosting Anda menonaktifkan fungsi <code class="bg-red-100 px-1 rounded">proc_open</code> yang diperlukan untuk menjalankan Composer secara otomatis.
  </p>
- <div class="text-[13px] text-zinc-700 space-y-2">
+ <div class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700 space-y-2">
  <p><strong>Alternatif:</strong></p>
  <ol class="list-decimal list-inside space-y-1">
- <li>Jalankan <code class="bg-zinc-50 px-1 rounded">composer update</code> di komputer lokal Anda</li>
- <li>Upload folder <code class="bg-zinc-50 px-1 rounded">vendor</code> dan file <code class="bg-zinc-50 px-1 rounded">composer.lock</code> ke server</li>
+ <li>Jalankan <code class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 px-1 rounded">composer update</code> di komputer lokal Anda</li>
+ <li>Upload folder <code class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 px-1 rounded">vendor</code> dan file <code class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 px-1 rounded">composer.lock</code> ke server</li>
  <li>Jalankan cache clear melalui halaman Admin &gt; Settings atau gunakan perintah artisan secara manual</li>
  </ol>
  </div>
@@ -111,7 +111,7 @@
  {{-- Output --}}
  <x-admin.card id="outputCard" class="hidden">
  <div class="flex items-center justify-between mb-4">
- <h3 class="text-xl font-semibold text-zinc-900">Output</h3>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">Output</h3>
  <button id="copyBtn" class="text-[13px] text-sky-600 hover:text-sky-700 font-medium flex items-center gap-1">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>

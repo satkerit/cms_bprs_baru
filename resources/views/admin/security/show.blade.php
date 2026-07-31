@@ -7,14 +7,14 @@
  {{-- Header --}}
  <div class="flex items-center gap-4">
  <a href="{{ route('admin.security-monitor.index') }}"
- class="p-2 text-zinc-500 bg-white rounded-xl border">
+ class="p-2 dark:text-slate-400 dark:text-slate-400 text-zinc-500 bg-white rounded-xl border">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
  </svg>
  </a>
  <div>
- <h1 class="text-3xl font-bold text-zinc-900">Detail Ancaman #{{ $securityLog->id }}</h1>
- <p class="text-[13px] text-zinc-500">
+ <h1 class="text-3xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900">Detail Ancaman #{{ $securityLog->id }}</h1>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
  {{ $securityLog->created_at->format('d F Y, H:i:s') }}
  </p>
  </div>
@@ -27,8 +27,8 @@
  <div class="bg-white rounded-xl border p-6">
  <div class="flex items-start justify-between">
  <div>
- <span class="text-[11px] text-zinc-500">Tipe Ancaman</span>
- <h2 class="text-2xl font-bold text-zinc-900 mt-1">
+ <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Tipe Ancaman</span>
+ <h2 class="text-2xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mt-1">
  {{ $securityLog->getThreatInfo()['label'] }}
  </h2>
  </div>
@@ -51,18 +51,18 @@
 
  {{-- Request Details --}}
  <div class="bg-white rounded-xl border p-6">
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">Detail Request</h3>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">Detail Request</h3>
  <dl class="space-y-4">
  <div>
- <dt class="text-[11px] font-medium text-zinc-500">Method & URL</dt>
- <dd class="mt-1 text-[13px] text-zinc-900 font-mono bg-zinc-50 p-3 rounded-xl">
+ <dt class="text-[11px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500">Method & URL</dt>
+ <dd class="mt-1 text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900 font-mono dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
  <span class="inline-block px-2 py-0.5 bg-sky-100 text-sky-700 rounded mr-2">{{ $securityLog->request_method }}</span>
  {{ $securityLog->request_url }}
  </dd>
  </div>
  <div>
- <dt class="text-[11px] font-medium text-zinc-500">User Agent</dt>
- <dd class="mt-1 text-[13px] text-zinc-900 font-mono bg-zinc-50 p-3 rounded-xl">
+ <dt class="text-[11px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500">User Agent</dt>
+ <dd class="mt-1 text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900 font-mono dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
  {{ $securityLog->user_agent ?? '-' }}
  </dd>
  </div>
@@ -72,7 +72,7 @@
  {{-- Matched Pattern --}}
  @if($securityLog->matched_pattern)
  <div class="bg-white rounded-xl border p-6">
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">Pola yang Terdeteksi</h3>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">Pola yang Terdeteksi</h3>
  <div class="bg-amber-100 border border-amber-200 rounded-xl p-4">
  <code class="text-[13px] text-yellow-800">{{ $securityLog->matched_pattern }}</code>
  </div>
@@ -82,7 +82,7 @@
  {{-- Raw Input --}}
  @if($securityLog->raw_input)
  <div class="bg-white rounded-xl border p-6">
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">Input yang Mencurigakan</h3>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">Input yang Mencurigakan</h3>
  <div class="bg-red-100 border border-red-200 rounded-xl p-4">
  <pre class="text-[13px] text-red-600">{{ $securityLog->raw_input }}</pre>
  </div>
@@ -92,9 +92,9 @@
  {{-- Payload --}}
  @if($securityLog->payload)
  <div class="bg-white rounded-xl border p-6">
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">Request Payload</h3>
- <div class="bg-zinc-50 rounded-xl p-4">
- <pre class="text-[13px] text-zinc-900">{{ json_encode($securityLog->payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">Request Payload</h3>
+ <div class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl p-4">
+ <pre class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ json_encode($securityLog->payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre>
  </div>
  </div>
  @endif
@@ -104,22 +104,22 @@
  <div class="space-y-6">
  {{-- IP Info --}}
  <div class="bg-white rounded-xl border p-6">
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">Informasi IP</h3>
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">Informasi IP</h3>
  <dl class="space-y-3">
  <div>
- <dt class="text-[11px] font-medium text-zinc-500">IP Address</dt>
- <dd class="mt-1 font-mono text-zinc-900">{{ $securityLog->ip_address }}</dd>
+ <dt class="text-[11px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500">IP Address</dt>
+ <dd class="mt-1 font-mono dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $securityLog->ip_address }}</dd>
  </div>
  @if($securityLog->country_code)
  <div>
- <dt class="text-[11px] font-medium text-zinc-500">Negara</dt>
- <dd class="mt-1 text-zinc-900">{{ $securityLog->country_code }}</dd>
+ <dt class="text-[11px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500">Negara</dt>
+ <dd class="mt-1 dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $securityLog->country_code }}</dd>
  </div>
  @endif
  @if($securityLog->user)
  <div>
- <dt class="text-[11px] font-medium text-zinc-500">User</dt>
- <dd class="mt-1 text-zinc-900">{{ $securityLog->user->name }}</dd>
+ <dt class="text-[11px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500">User</dt>
+ <dd class="mt-1 dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $securityLog->user->name }}</dd>
  </div>
  @endif
  </dl>
@@ -142,21 +142,21 @@
  {{-- Related Threats --}}
  @if($relatedThreats->count() > 0)
  <div class="bg-white rounded-xl border p-6">
- <h3 class="text-xl font-semibold text-zinc-900 mb-4">
+ <h3 class="text-xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-4">
  Ancaman Lain dari IP Ini
- <span class="text-[11px] font-normal text-zinc-500">({{ \Illuminate\Support\Facades\Cache::remember('sec_log_ip_' . $securityLog->ip_address, 300, fn() => \App\Models\SecurityLog::where('ip_address', $securityLog->ip_address)->count()) }} total)</span>
+ <span class="text-[11px] font-normal dark:text-slate-400 dark:text-slate-400 text-zinc-500">({{ \Illuminate\Support\Facades\Cache::remember('sec_log_ip_' . $securityLog->ip_address, 300, fn() => \App\Models\SecurityLog::where('ip_address', $securityLog->ip_address)->count()) }} total)</span>
  </h3>
  <div class="space-y-2">
  @foreach($relatedThreats as $related)
  <a href="{{ route('admin.security-monitor.show', $related) }}"
- class="block p-3 bg-zinc-50 rounded-xl">
+ class="block p-3 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl">
  <div class="flex items-center justify-between">
- <span class="text-[13px] text-zinc-900">{{ $related->getThreatInfo()['label'] }}</span>
+ <span class="text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $related->getThreatInfo()['label'] }}</span>
  <span class="px-2 py-0.5 text-[11px] rounded-lg {{ $related->getThreatBadgeClass() }}">
  {{ \App\Models\SecurityLog::THREAT_LEVELS[$related->threat_level]['label'] ?? $related->threat_level }}
  </span>
  </div>
- <p class="text-[11px] text-zinc-500 mt-1">
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">
  {{ $related->created_at->diffForHumans() }}
  </p>
  </a>

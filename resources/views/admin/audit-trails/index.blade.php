@@ -19,13 +19,13 @@
 
 <x-admin.card :noPadding="true">
  <!-- Filters -->
- <div class="p-5 border-b border-zinc-100 bg-zinc-50/50">
+ <div class="p-5 border-b dark:border-slate-800 border-zinc-100 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/50">
  <form method="GET" class="space-y-4">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:grid-cols-2 lg:grid-cols-4 gap-4">
  <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari deskripsi, user, IP..."
- class="w-full rounded-xl border-0 py-2.5 px-4 text-zinc-900 bg-white">
+ class="w-full rounded-xl border-0 py-2.5 px-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 bg-white">
 
- <select name="action" class="rounded-xl border-0 py-2.5 px-4 text-zinc-900 bg-white">
+ <select name="action" class="rounded-xl border-0 py-2.5 px-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 bg-white">
  <option value="">Semua Aksi</option>
  @foreach($actions as $action)
  <option value="{{ $action }}" {{ request('action') == $action ? 'selected' : '' }}>
@@ -34,7 +34,7 @@
  @endforeach
  </select>
 
- <select name="user_id" class="rounded-xl border-0 py-2.5 px-4 text-zinc-900 bg-white">
+ <select name="user_id" class="rounded-xl border-0 py-2.5 px-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 bg-white">
  <option value="">Semua User</option>
  @foreach($users as $user)
  <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
@@ -43,7 +43,7 @@
  @endforeach
  </select>
 
- <select name="model_type" class="rounded-xl border-0 py-2.5 px-4 text-zinc-900 bg-white">
+ <select name="model_type" class="rounded-xl border-0 py-2.5 px-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 bg-white">
  <option value="">Semua Model</option>
  @foreach($modelTypes as $type)
  <option value="{{ $type }}" {{ request('model_type') == $type ? 'selected' : '' }}>
@@ -54,19 +54,19 @@
  </div>
  <div class="is-flex flex-wrap items-center gap-4">
  <div class="is-flex items-center gap-2">
- <label class="text-[11px] text-zinc-700">Dari:</label>
+ <label class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Dari:</label>
  <input type="date" name="date_from" value="{{ request('date_from') }}"
- class="rounded-xl border-0 py-2 px-3 text-zinc-900 bg-white">
+ class="rounded-xl border-0 py-2 px-3 dark:text-slate-100 dark:text-slate-100 text-zinc-900 bg-white">
  </div>
  <div class="is-flex items-center gap-2">
- <label class="text-[11px] text-zinc-700">Sampai:</label>
+ <label class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Sampai:</label>
  <input type="date" name="date_to" value="{{ request('date_to') }}"
- class="rounded-xl border-0 py-2 px-3 text-zinc-900 bg-white">
+ class="rounded-xl border-0 py-2 px-3 dark:text-slate-100 dark:text-slate-100 text-zinc-900 bg-white">
  </div>
  <div class="is-flex gap-2">
  <x-admin.button type="submit" variant="secondary">Filter</x-admin.button>
  @if(request()->hasAny(['search', 'action', 'user_id', 'model_type', 'date_from', 'date_to']))
- <a href="{{ route('admin.audit-trails.index') }}" class="inline-flex items-center px-4 py-2 bg-zinc-50 text-zinc-700 rounded-xl text-[11px] font-semibold">
+ <a href="{{ route('admin.audit-trails.index') }}" class="inline-flex items-center px-4 py-2 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 dark:text-slate-300 text-zinc-700 rounded-xl text-[11px] font-semibold">
  Reset
  </a>
  @endif
@@ -79,13 +79,13 @@
  <div class="overflow-x-auto">
  <table class="w-full border-collapse">
  <thead>
- <tr class="border-b border-zinc-200/70 bg-zinc-50/80">
- <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Waktu</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">User</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Aksi</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Deskripsi</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">IP Address</th>
- <th class="pl-4 pr-5 py-3.5 text-center text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Detail</th>
+ <tr class="border-b dark:border-slate-700 border-zinc-200/70 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/80">
+ <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Waktu</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">User</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Aksi</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Deskripsi</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">IP Address</th>
+ <th class="pl-4 pr-5 py-3.5 text-center text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Detail</th>
  </tr>
  </thead>
  <tbody class="divide-y divide-zinc-100/80">
@@ -164,7 +164,7 @@
 <!-- Clear Modal -->
 <div id="clearModal" class="hidden" aria-modal="true">
  <div class="is-flex items-center justify-center px-4 pt-4 pb-20 text-center sm:p-0">
- <div class="fixed bg-zinc-500 bg-opacity-75" data-action="close-modal" data-modal="clearModal"></div>
+ <div class="fixed dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-500 bg-opacity-75" data-action="close-modal" data-modal="clearModal"></div>
  <div class="bg-white rounded-xl text-left transform sm:my-8 sm:max-w-lg sm:w-full">
  <form action="{{ route('admin.audit-trails.clear') }}" method="POST">
  @csrf
@@ -176,12 +176,12 @@
  </svg>
  </div>
  <div class="ml-4">
- <h3 class="text-3xl font-semibold text-zinc-900">Bersihkan Log Lama</h3>
- <p class="mt-2 text-[13px] text-zinc-500">
+ <h3 class="text-3xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">Bersihkan Log Lama</h3>
+ <p class="mt-2 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
  Hapus log aktivitas yang lebih lama dari jumlah hari yang ditentukan. Tindakan ini tidak dapat dibatalkan.
  </p>
  <div class="mt-4">
- <label class="block text-[11px] font-medium text-zinc-700 mb-1">Hapus log lebih dari:</label>
+ <label class="block text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Hapus log lebih dari:</label>
  <select name="days" class="w-full rounded-xl border-zinc-300 text-[13px]">
  <option value="30">30 hari</option>
  <option value="60">60 hari</option>
@@ -193,8 +193,8 @@
  </div>
  </div>
  </div>
- <div class="bg-zinc-50 px-6 py-4 flex justify-end gap-3">
- <button type="button" data-action="close-modal" data-modal="clearModal" class="px-4 py-2 bg-white border border-zinc-300 rounded-xl text-[11px] font-medium text-zinc-700 hover:bg-zinc-50">
+ <div class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 px-6 py-4 flex justify-end gap-3">
+ <button type="button" data-action="close-modal" data-modal="clearModal" class="px-4 py-2 bg-white border border-zinc-300 rounded-xl text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50">
  Batal
  </button>
  <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-xl text-[11px] font-medium">

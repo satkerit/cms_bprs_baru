@@ -50,26 +50,34 @@
     @endif
 
     {{-- Performance Optimizations --}}
+    {{-- DNS Prefetch & Preconnect for critical origins --}}
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.bunny.net">
+    <link rel="preconnect" href="https://analytics.ahrefs.com" crossorigin>
+    <link rel="dns-prefetch" href="https://analytics.ahrefs.com">
 
     @php
         $storageHost = parse_url(\App\Helpers\StorageHelper::url('x'), PHP_URL_HOST);
     @endphp
     @if($storageHost && !str_contains($storageHost, 'localhost'))
     <link rel="preconnect" href="https://{{ $storageHost }}" crossorigin>
+    <link rel="dns-prefetch" href="https://{{ $storageHost }}">
     @endif
 
     @if(isset($company) && $company?->logo)
     <link rel="preload" as="image" href="{{ \App\Helpers\StorageHelper::url($company->logo) }}" fetchpriority="high">
     @endif
 
-    {{-- Fonts --}}
-    <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,500,600,700&display=swap" rel="stylesheet" />
+    @php $nonce = request()->attributes->get('csp_nonce', ''); @endphp
+
+    {{-- Set navbar height immediately — prevents content-from-jumping on scroll --}}
+    <style nonce="{{ $nonce }}">:root { --navbar-height: 88px; }</style>
+
+    {{-- Fonts with display=swap for performance --}}
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
     {{-- Vite Assets --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @php $nonce = request()->attributes->get('csp_nonce', ''); @endphp
     @livewireStyles(['nonce' => $nonce])
 
     @stack('head')
@@ -105,9 +113,50 @@
 
     <!-- Header / Navbar -->
     <header class="fixed w-full top-0 z-50 transition-all duration-300"
-            x-data="{ scrolled: false }"
+            x-data="{
+                scrolled: false,
+                _rafId: null,
+                _resizeTimer: null,
+
+                init() {
+                    this.updateNavbarHeight();
+
+                    // Debounced resize — only runs 150ms after the user stops resizing.
+                    // Stored reference so destroy() can remove it cleanly.
+                    this._onResize = () => {
+                        clearTimeout(this._resizeTimer);
+                        this._resizeTimer = setTimeout(() => this.updateNavbarHeight(), 150);
+                    };
+                    window.addEventListener('resize', this._onResize);
+                },
+
+                destroy() {
+                    cancelAnimationFrame(this._rafId);
+                    clearTimeout(this._resizeTimer);
+                    if (this._onResize) {
+                        window.removeEventListener('resize', this._onResize);
+                    }
+                },
+
+                // Throttled via requestAnimationFrame — skips frames the browser can't paint
+                onScroll() {
+                    this.scrolled = window.scrollY > 20;
+                    if (!this._rafId) {
+                        this._rafId = requestAnimationFrame(() => {
+                            this.updateNavbarHeight();
+                            this._rafId = null;
+                        });
+                    }
+                },
+
+                updateNavbarHeight() {
+                    const w = window.innerWidth;
+                    const h = this.scrolled ? 64 : (w >= 1024 ? 80 : 72);
+                    document.documentElement.style.setProperty('--navbar-height', h + 'px');
+                }
+            }"
             :class="scrolled ? 'bg-white/70 backdrop-blur-md shadow-md border-b border-white/20' : 'bg-transparent'"
-            @scroll.window="scrolled = window.scrollY > 20">
+            @scroll.window="onScroll()">
         @include('frontend.partials.navbar', ['company' => $company])
     </header>
 

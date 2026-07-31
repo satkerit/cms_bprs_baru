@@ -32,38 +32,32 @@
                         @if(isset($avifImages['mobile']))
                         <source media="(max-width: 640px)"
                                 srcset="{{ \App\Helpers\StorageHelper::url($avifImages['mobile']) }}"
-                                type="image/avif"
-                                style="object-position: {{ $objectPosition }};">
+                                type="image/avif">
                         @endif
                         @if(isset($avifImages['tablet']))
                         <source media="(max-width: 1024px)"
                                 srcset="{{ \App\Helpers\StorageHelper::url($avifImages['tablet']) }}"
-                                type="image/avif"
-                                style="object-position: {{ $objectPosition }};">
+                                type="image/avif">
                         @endif
                         @if(isset($avifImages['desktop']))
                         <source media="(min-width: 1025px)"
                                 srcset="{{ \App\Helpers\StorageHelper::url($avifImages['desktop']) }}"
-                                type="image/avif"
-                                style="object-position: {{ $objectPosition }};">
+                                type="image/avif">
                         @endif
                         @if(isset($webpImages['mobile']))
                         <source media="(max-width: 640px)"
                                 srcset="{{ \App\Helpers\StorageHelper::url($webpImages['mobile']) }}"
-                                type="image/webp"
-                                style="object-position: {{ $objectPosition }};">
+                                type="image/webp">
                         @endif
                         @if(isset($webpImages['tablet']))
                         <source media="(max-width: 1024px)"
                                 srcset="{{ \App\Helpers\StorageHelper::url($webpImages['tablet']) }}"
-                                type="image/webp"
-                                style="object-position: {{ $objectPosition }};">
+                                type="image/webp">
                         @endif
                         @if(isset($webpImages['desktop']))
                         <source media="(min-width: 1025px)"
                                 srcset="{{ \App\Helpers\StorageHelper::url($webpImages['desktop']) }}"
-                                type="image/webp"
-                                style="object-position: {{ $objectPosition }};">
+                                type="image/webp">
                         @endif
                         <img src="{{ \App\Helpers\StorageHelper::url($compressedImage) }}"
                              alt=""

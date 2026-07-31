@@ -9,9 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('kas_keliling_schedules', function (Blueprint $table) {
-            $table->string('pic_name')->nullable()->after('notes');
-            $table->string('pic_phone')->nullable()->after('pic_name');
-            $table->text('facility')->nullable()->after('location');
+            if (!Schema::hasColumn('kas_keliling_schedules', 'pic_name')) {
+                $table->string('pic_name')->nullable()->after('notes');
+            }
+            if (!Schema::hasColumn('kas_keliling_schedules', 'pic_phone')) {
+                $table->string('pic_phone')->nullable()->after('pic_name');
+            }
+            if (!Schema::hasColumn('kas_keliling_schedules', 'facility')) {
+                $table->text('facility')->nullable()->after('location');
+            }
         });
     }
 

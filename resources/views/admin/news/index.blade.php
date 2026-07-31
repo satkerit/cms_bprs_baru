@@ -31,26 +31,26 @@
                     <div class="flex items-center gap-4">
                         @if($item->featured_image)
                             <img src="{{ Storage::url($item->featured_image) }}" alt=""
-                                 class="w-12 h-12 rounded-xl object-cover bg-zinc-100 ring-1 ring-zinc-200/60 flex-shrink-0
+                                 class="w-12 h-12 rounded-xl object-cover dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 ring-1 ring-zinc-200/60 flex-shrink-0
                                         group-hover:ring-emerald-300/60 transition-all duration-300"
                                  loading="lazy">
                         @else
-                            <div class="w-12 h-12 rounded-xl bg-zinc-100 ring-1 ring-zinc-200/60 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <div class="w-12 h-12 rounded-xl dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 ring-1 ring-zinc-200/60 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 dark:text-slate-500 dark:text-slate-500 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
                             </div>
                         @endif
                         <div class="min-w-0">
-                            <div class="font-semibold text-zinc-900 truncate max-w-[300px]">{{ $item->title }}</div>
-                            <div class="text-[13px] text-zinc-500 truncate mt-0.5">{{ Str::limit($item->excerpt, 60) }}</div>
+                            <div class="font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 truncate max-w-[300px]">{{ $item->title }}</div>
+                            <div class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 truncate mt-0.5">{{ Str::limit($item->excerpt, 60) }}</div>
                         </div>
                     </div>
                 </td>
                 <td class="px-6 py-4">
                     <x-admin.badge variant="info">{{ $item->category }}</x-admin.badge>
                 </td>
-                <td class="px-6 py-4 text-[13px] text-zinc-900 font-medium">
+                <td class="px-6 py-4 text-[13px] dark:text-slate-100 dark:text-slate-100 text-zinc-900 font-medium">
                     {{ $item->author }}
                 </td>
                 <td class="px-6 py-4">
@@ -60,7 +60,7 @@
                         <x-admin.badge variant="secondary">Draft</x-admin.badge>
                     @endif
                 </td>
-                <td class="px-6 py-4 text-[13px] text-zinc-500">
+                <td class="px-6 py-4 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
                     {{ $item->published_at ? $item->published_at->format('d M Y') : '-' }}
                 </td>
                 <td class="px-6 py-4">

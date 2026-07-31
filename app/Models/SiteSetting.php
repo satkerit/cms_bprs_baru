@@ -76,18 +76,16 @@ class SiteSetting extends Model
             // Tentang Kami (semua sub-menu)
             'about' => ['name' => 'Tentang Kami (Semua)', 'route' => 'about.*', 'pattern' => 'tentang-kami/*'],
             'about_company' => ['name' => 'Profil Perusahaan', 'route' => 'about.company', 'pattern' => 'tentang-kami/perusahaan'],
-            'about_komisaris' => ['name' => 'Dewan Komisaris', 'route' => 'about.komisaris', 'pattern' => 'tentang-kami/dewan-komisaris'],
-            'about_direksi' => ['name' => 'Dewan Direksi', 'route' => 'about.direksi', 'pattern' => 'tentang-kami/dewan-direksi'],
-            'about_dps' => ['name' => 'Dewan Pengawas Syariah', 'route' => 'about.pengawas-syariah', 'pattern' => 'tentang-kami/dewan-pengawas-syariah'],
+            'about_manajemen' => ['name' => 'Manajemen (Dewan & Direksi)', 'route' => 'about.manajemen', 'pattern' => 'tentang-kami/manajemen'],
             'about_struktur' => ['name' => 'Struktur Organisasi', 'route' => 'about.struktur', 'pattern' => 'tentang-kami/struktur-organisasi'],
-            'about_offices' => ['name' => 'Kantor', 'route' => 'about.offices', 'pattern' => 'tentang-kami/kantor'],
+            'about_offices' => ['name' => 'Kantor', 'route' => 'about.offices', 'pattern' => 'tentang-kami/kantor-cabang'],
 
             // Produk & Layanan (semua sub-menu)
-            'products' => ['name' => 'Produk & Layanan (Semua)', 'route' => 'products.*', 'pattern' => 'produk-layanan/*'],
-            'products_simpanan' => ['name' => 'Simpanan Syariah', 'route' => 'products.simpanan-syariah', 'pattern' => 'produk-layanan/simpanan-syariah'],
-            'products_pembiayaan' => ['name' => 'Pembiayaan Syariah', 'route' => 'products.pembiayaan-syariah', 'pattern' => 'produk-layanan/pembiayaan-syariah'],
-            'products_deposito' => ['name' => 'Deposito Syariah', 'route' => 'products.deposito-syariah', 'pattern' => 'produk-layanan/deposito-syariah'],
-            'products_kas_keliling' => ['name' => 'Kas Keliling', 'route' => 'products.kas-keliling', 'pattern' => 'produk-layanan/kas-keliling'],
+            'products' => ['name' => 'Produk & Layanan (Semua)', 'route' => 'products.*', 'pattern' => 'produk/*'],
+            'products_simpanan' => ['name' => 'Simpanan Syariah', 'route' => 'products.simpanan-syariah', 'pattern' => 'produk/simpanan-syariah'],
+            'products_pembiayaan' => ['name' => 'Pembiayaan Syariah', 'route' => 'products.pembiayaan-syariah', 'pattern' => 'produk/pembiayaan-syariah'],
+            'products_deposito' => ['name' => 'Deposito Syariah', 'route' => 'products.deposito-syariah', 'pattern' => 'produk/deposito-syariah'],
+            'products_kas_keliling' => ['name' => 'Kas Keliling', 'route' => 'products.kas-keliling', 'pattern' => 'produk/kas-keliling'],
 
             // Lelang
             'auctions' => ['name' => 'Lelang', 'route' => 'auctions.*', 'pattern' => 'lelang/*'],

@@ -27,13 +27,13 @@
  <div class="overflow-x-auto">
  <table class="w-full border-collapse">
  <thead>
- <tr class="border-b border-zinc-200/70 bg-zinc-50/80">
- <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Tanggal</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Hari</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Waktu</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Lokasi</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Status</th>
- <th class="pl-4 pr-5 py-3.5 text-right text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Aksi</th>
+ <tr class="border-b dark:border-slate-700 border-zinc-200/70 dark:bg-slate-800/50 bg-zinc-50/80">
+ <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Tanggal</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Hari</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Waktu</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Lokasi</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Status</th>
+ <th class="pl-4 pr-5 py-3.5 text-right text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Aksi</th>
  </tr>
  </thead>
  <tbody class="divide-y divide-zinc-100/80">
@@ -88,7 +88,7 @@
  </div>
 
  @if($schedules->hasPages())
- <div class="px-5 py-4 border-t border-zinc-100/80">
+ <div class="px-5 py-4 border-t dark:border-slate-800 border-zinc-100/80">
  {{ $schedules->links() }}
  </div>
  @endif
@@ -105,7 +105,7 @@
  <div x-show="open" @click="open = false" class="fixed bg-black"></div>
  
  <div x-show="open" class="bg-white rounded-2xl container max-w-5xl w-full p-8">
- <h3 class="text-3xl font-bold text-zinc-900 mb-6">Tambah Jadwal</h3>
+ <h3 class="text-3xl font-bold dark:text-slate-100 text-zinc-900 mb-6">Tambah Jadwal</h3>
  
  <form action="{{ route('admin.kas-keliling.schedules.store', $kasKeliling) }}" method="POST" class="space-y-4">
  @csrf
@@ -115,7 +115,7 @@
  <x-admin.input type="date" name="schedule_date" label="Tanggal" required />
  </div>
  <div>
- <label class="block text-[11px] font-semibold text-zinc-700 mb-2">Hari</label>
+ <label class="block text-[11px] font-semibold dark:text-slate-300 text-zinc-700 mb-2">Hari</label>
  <select name="day_name" class="w-full rounded-xl border-zinc-300">
  <option value="">Pilih Hari</option>
  <option value="Senin">Senin</option>
@@ -137,7 +137,7 @@
  <x-admin.input name="location" label="Lokasi" required placeholder="Contoh: Pasar Pagi" />
  
  <div>
- <label class="block text-[11px] font-semibold text-zinc-700 mb-2">Rute Perjalanan (Opsional)</label>
+ <label class="block text-[11px] font-semibold dark:text-slate-300 text-zinc-700 mb-2">Rute Perjalanan (Opsional)</label>
  <div x-data="{ routes: [''] }">
  <template x-for="(route, index) in routes" :key="index">
  <div class="flex gap-2 mb-2">
@@ -159,7 +159,7 @@
  </div>
  
  <div>
- <label class="block text-[11px] font-semibold text-zinc-700 mb-2">Layanan yang Ditawarkan (Opsional)</label>
+ <label class="block text-[11px] font-semibold dark:text-slate-300 text-zinc-700 mb-2">Layanan yang Ditawarkan (Opsional)</label>
  <div x-data="{ services: [''] }">
  <template x-for="(service, index) in services" :key="index">
  <div class="flex gap-2 mb-2">
@@ -181,19 +181,19 @@
  </div>
  
  <div>
- <label class="block text-[11px] font-semibold text-zinc-700 mb-2">Catatan</label>
+ <label class="block text-[11px] font-semibold dark:text-slate-300 text-zinc-700 mb-2">Catatan</label>
  <textarea name="notes" rows="3" class="w-full rounded-xl border-zinc-300" placeholder="Catatan tambahan (opsional)"></textarea>
  </div>
  
  <div class="flex items-center">
  <input type="checkbox" name="is_active" id="is_active_add" value="1" checked
  class="rounded border-zinc-300 text-sky-600">
- <label for="is_active_add" class="ml-2 text-[13px] text-zinc-700">Aktif</label>
+ <label for="is_active_add" class="ml-2 text-[13px] dark:text-slate-300 text-zinc-700">Aktif</label>
  </div>
  
  <div class="flex gap-3 pt-4">
  <x-admin.button type="submit">Simpan</x-admin.button>
- <button type="button" @click="open = false" class="px-4 py-2 bg-zinc-50 text-zinc-700 rounded-xl font-medium">
+ <button type="button" @click="open = false" class="px-4 py-2 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 text-zinc-700 rounded-xl font-medium">
  Batal
  </button>
  </div>

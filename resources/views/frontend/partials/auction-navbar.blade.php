@@ -12,7 +12,7 @@
     searchOpen: false
 }"
 @scroll.window="scrolled = window.scrollY > 20"
-:class="scrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg shadow-black/5' : 'bg-transparent'"
+:class="scrolled ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg shadow-lg shadow-black/5 dark:shadow-slate-900/50' : 'bg-transparent'"
 class="transition-all duration-300 relative z-40">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
@@ -29,10 +29,10 @@ class="transition-all duration-300 relative z-40">
                         </div>
                     @endif
                     <div class="hidden sm:block">
-                        <div class="text-xl font-bold text-slate-800">
+                        <div class="text-xl font-bold text-slate-800 dark:text-slate-100">
                             Lelang Agunan
                         </div>
-                        <div class="text-xs text-slate-600 font-medium">
+                        <div class="text-xs text-slate-600 dark:text-slate-400 font-medium">
                             {{ $company->name ?? 'BPRS Bangka Belitung' }}
                         </div>
                     </div>
@@ -44,7 +44,7 @@ class="transition-all duration-300 relative z-40">
                 <!-- Main Navigation -->
                 <div class="flex items-center gap-6">
                     <a href="{{ route('auctions.index') }}"
-                       class="flex items-center gap-2 px-4 py-2 rounded-xl font-medium {{ $currentRoute === 'auctions.index' ? 'bg-orange-50 text-orange-700' : 'text-slate-700 hover:text-orange-600' }}">
+                       class="flex items-center gap-2 px-4 py-2 rounded-xl font-medium {{ $currentRoute === 'auctions.index' ? 'bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400' : 'text-slate-700 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                         </svg>
@@ -52,7 +52,7 @@ class="transition-all duration-300 relative z-40">
                     </a>
 
                     <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                        <button class="flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-slate-700 hover:text-orange-600">
+                        <button class="flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-slate-700 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2h0l3.586-3.586a1 1 0 011.414 0L16 8a2 2 0 012 2v1"/>
                             </svg>
@@ -66,8 +66,8 @@ class="transition-all duration-300 relative z-40">
                              x-transition:enter="transition ease-out duration-200"
                              x-transition:enter-start="opacity-0 scale-95"
                              x-transition:enter-end="opacity-100 scale-100"
-                             class="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
-                            <a href="{{ route('auctions.index', ['asset_type' => 'rumah']) }}" class="flex items-center px-4 py-3 text-slate-800 hover:bg-slate-50">
+                             class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-50">
+                            <a href="{{ route('auctions.index', ['asset_type' => 'rumah']) }}" class="flex items-center px-4 py-3 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800">
                                 <span class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
                                     <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -103,7 +103,7 @@ class="transition-all duration-300 relative z-40">
                     </div>
 
                     <a href="{{ route('home') }}"
-                       class="flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-slate-700 hover:text-orange-600">
+                       class="flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-slate-700 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-400">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
@@ -113,7 +113,8 @@ class="transition-all duration-300 relative z-40">
 
                 <!-- Search Button -->
                 <button @click="searchOpen = !searchOpen"
-                        class="p-2 text-slate-500 hover:text-slate-700 rounded-xl hover:bg-slate-100">
+                        class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+                        aria-label="Cari lelang">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
@@ -126,16 +127,18 @@ class="transition-all duration-300 relative z-40">
                 </a>
             </div>
 
-            <!-- Mobile menu button -->
+            <!-- Mobile menu buttons -->
             <div class="lg:hidden flex items-center gap-2">
                 <button @click="searchOpen = !searchOpen"
-                        class="p-2 text-slate-500 rounded-xl hover:bg-slate-100">
+                        class="min-h-[44px] min-w-[44px] p-2 text-slate-500 rounded-xl hover:bg-slate-100 flex items-center justify-center"
+                        aria-label="Cari lelang">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </button>
                 <button @click="mobileOpen = !mobileOpen"
-                        class="p-2 text-slate-500 rounded-xl hover:bg-slate-100">
+                        class="min-h-[44px] min-w-[44px] p-2 text-slate-500 rounded-xl hover:bg-slate-100 flex items-center justify-center"
+                        aria-label="Buka menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         <path x-show="mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -149,16 +152,16 @@ class="transition-all duration-300 relative z-40">
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 -translate-y-4"
              x-transition:enter-end="opacity-100 translate-y-0"
-             class="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200 p-4 z-40">
+             class="absolute top-full left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700 p-4 z-40">
             <form method="GET" action="{{ route('auctions.index') }}" class="max-w-2xl mx-auto">
                 <div class="relative">
                     <input type="text"
                            name="search"
                            id="auction-search"
                            placeholder="Cari lelang agunan..."
-                           class="w-full py-4 pl-12 pr-36 border border-slate-300 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                           class="w-full py-4 pl-12 pr-36 border border-slate-300 dark:border-slate-600 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-slate-800 text-foreground dark:text-slate-100"
                            value="{{ request('search') }}">
-                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                     <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 rounded-xl font-semibold bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600">
@@ -173,19 +176,17 @@ class="transition-all duration-300 relative z-40">
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 -translate-y-4"
              x-transition:enter-end="opacity-100 translate-y-0"
-             class="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200 z-40">
+             class="absolute top-full left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700 z-40">
             <div class="p-4 pb-6">
                 <a href="{{ route('auctions.index') }}"
                    @click="mobileOpen = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium {{ $currentRoute === 'auctions.index' ? 'bg-orange-50 text-orange-700' : 'text-slate-700' }}">
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium {{ $currentRoute === 'auctions.index' ? 'bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400' : 'text-slate-700 dark:text-slate-300' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                     <span>Semua Lelang</span>
-                </a>
-
-                <div class="border-t border-slate-200 pt-4 mt-2">
-                    <p class="text-xs font-semibold text-slate-700 mb-3 px-4">Kategori Agunan</p>
+                </a>                    <div class="border-t border-slate-200 dark:border-slate-700 pt-4 mt-2">
+                        <p class="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3 px-4">Kategori Agunan</p>
                     <div>
                         <a href="{{ route('auctions.index', ['asset_type' => 'rumah']) }}"
                            @click="mobileOpen = false"
@@ -214,10 +215,10 @@ class="transition-all duration-300 relative z-40">
                     </div>
                 </div>
 
-                <div class="border-t border-slate-200 pt-4 mt-2">
+                <div class="border-t border-slate-200 dark:border-slate-700 pt-4 mt-2">
                     <a href="{{ route('home') }}"
                        @click="mobileOpen = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-800">
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-800 dark:text-slate-200">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>

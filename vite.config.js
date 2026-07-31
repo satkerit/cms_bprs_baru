@@ -21,18 +21,22 @@ export default defineConfig({
         }),
     ],
     build: {
-        // Optimize chunk splitting
+        // Optimize chunk splitting — HIGH-END v2: granular vendor chunks
         rollupOptions: {
             output: {
                 manualChunks: (id) => {
                     if (id.includes("node_modules")) {
-                        if (id.includes("alpinejs")) {
+                        // Alpine.js — used on every page
+                        if (id.includes("alpinejs") || id.includes("@alpinejs")) {
                             return "vendor-alpine";
                         }
 
+                        // SweetAlert2 — lazy loaded only when needed
                         if (id.includes("sweetalert")) {
                             return "vendor-sweetalert";
                         }
+
+                        // Admin-only: jQuery, Summernote, Leaflet
                         if (
                             id.includes("jquery") ||
                             id.includes("summernote") ||
@@ -40,9 +44,13 @@ export default defineConfig({
                         ) {
                             return "vendor-admin";
                         }
+
+                        // Axios — used on most pages
                         if (id.includes("axios")) {
                             return "vendor-app";
                         }
+
+                        // Everything else
                         return "vendor-shared";
                     }
                 },

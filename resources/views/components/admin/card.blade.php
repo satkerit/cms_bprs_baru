@@ -21,27 +21,27 @@
 
     $paddingClass = $compact ? 'p-5' : 'p-6';
 
-    $baseClass = 'bg-white rounded-2xl border border-slate-200/60 shadow-sm transition-all duration-300';
+    $baseClass = 'bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm dark:shadow-slate-900/50 transition-all duration-300';
     if ($hover) {
-        $baseClass .= ' hover:shadow-lg hover:shadow-emerald-500/5 hover:border-emerald-200/70 hover:-translate-y-0.5';
+        $baseClass .= ' hover:shadow-lg hover:shadow-emerald-500/5 hover:border-emerald-200/70 dark:hover:border-emerald-800/50 hover:-translate-y-0.5';
     }
     if ($glass) {
-        $baseClass .= ' bg-white/70 backdrop-blur-xl';
+        $baseClass .= ' bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl';
     }
 @endphp
 
 <div {{ $attributes->merge(['class' => $baseClass]) }}>
     @if($title)
-        <div class="{{ $noPadding ? 'px-6 py-5' : $paddingClass }} border-b border-slate-100/80">
+        <div class="{{ $noPadding ? 'px-6 py-5' : $paddingClass }} border-b border-slate-100/80 dark:border-slate-800/80">
             <div class="flex items-center justify-between gap-4">
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center gap-3">
                         {{-- Accent gradient bar --}}
                         <div class="w-0.5 h-5 rounded-full bg-gradient-to-b {{ $accentClass }} shrink-0"></div>
                         <div>
-                            <h3 class="text-[15px] font-semibold text-slate-900 leading-snug">{{ $title }}</h3>
+                            <h3 class="text-[15px] font-semibold text-slate-900 dark:text-slate-100 leading-snug">{{ $title }}</h3>
                             @if($subtitle)
-                                <p class="mt-0.5 text-[13px] text-slate-500 leading-snug">{{ $subtitle }}</p>
+                                <p class="mt-0.5 text-[13px] text-slate-500 dark:text-slate-400 leading-snug">{{ $subtitle }}</p>
                             @endif
                         </div>
                     </div>
@@ -62,7 +62,7 @@
 
     {{-- Footer --}}
     @if($footer)
-        <div class="px-6 py-4 border-t border-slate-100/80 bg-slate-50/50 rounded-b-2xl">
+        <div class="px-6 py-4 border-t border-slate-100/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-800/30 rounded-b-2xl">
             {{ $footer }}
         </div>
     @endif

@@ -48,9 +48,6 @@ class HomeController extends Controller
             'heroSlideImages' => $heroSlideImages,
             'heroSliderDelay' => $settings->hero_slider_delay ?? 5000,
             'firstHeroImage' => $firstHeroImage,
-            'products' => app(CacheService::class)->getHomeProducts(6),
-            'news' => app(CacheService::class)->getHomeNews(3),
-            'auctions' => app(CacheService::class)->getHomeAuctions(3),
             'whyChooseUs' => app(CacheService::class)->getWhyChooseUs(),
             'whyChooseUsSettings' => app(CacheService::class)->getWhyChooseUsSettings(),
         ]);

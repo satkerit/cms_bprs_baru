@@ -54,7 +54,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[13px] font-medium text-zinc-700 mb-1">Deskripsi</label>
+                        <label class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Deskripsi</label>
                         <textarea
                             name="description"
                             rows="3"
@@ -68,7 +68,7 @@
                         <input type="checkbox" name="is_active" id="is_active" value="1"
                                {{ old('is_active', $role->is_active ?? true) ? 'checked' : '' }}
                                class="rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
-                        <label for="is_active" class="text-[13px] text-zinc-700">Role Aktif</label>
+                        <label for="is_active" class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Role Aktif</label>
                     </div>
 
                     @if(isset($role) && $role->is_system)
@@ -90,11 +90,11 @@
             <x-admin.card title="Hak Akses (Permissions)" subtitle="Pilih permission yang diberikan untuk role ini">
                 <div class="space-y-6" x-data="permissionManager()">
                     {{-- Quick Actions --}}
-                    <div class="flex flex-wrap gap-2 pb-4 border-b border-zinc-200">
-                        <button type="button" @click="selectAll()" class="px-3 py-1.5 text-[11px] font-medium text-amber-700 bg-amber-50 hover:bg-zinc-100 rounded-xl border border-amber-200 transition-colors">
+                    <div class="flex flex-wrap gap-2 pb-4 border-b dark:border-slate-700 border-zinc-200">
+                        <button type="button" @click="selectAll()" class="px-3 py-1.5 text-[11px] font-medium text-amber-700 bg-amber-50 hover:dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 rounded-xl border border-amber-200 transition-colors">
                             Pilih Semua
                         </button>
-                        <button type="button" @click="deselectAll()" class="px-3 py-1.5 text-[11px] font-medium text-zinc-700 bg-zinc-50 hover:bg-zinc-100 rounded-xl border border-zinc-200 transition-colors">
+                        <button type="button" @click="deselectAll()" class="px-3 py-1.5 text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 hover:dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 rounded-xl border dark:border-slate-700 border-zinc-200 transition-colors">
                             Hapus Semua
                         </button>
                     </div>
@@ -102,8 +102,8 @@
                     {{-- Permission Groups --}}
                     @if($permissions->isNotEmpty())
                         @foreach($permissions as $group => $groupPermissions)
-                            <div class="border border-zinc-200 rounded-xl overflow-hidden">
-                                <div class="bg-zinc-50/50 px-4 py-3 flex items-center justify-between border-b border-zinc-200">
+                            <div class="border dark:border-slate-700 border-zinc-200 rounded-xl overflow-hidden">
+                                <div class="dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/50 px-4 py-3 flex items-center justify-between border-b dark:border-slate-700 border-zinc-200">
                                     <div class="flex items-center gap-3">
                                         <input
                                             type="checkbox"
@@ -111,13 +111,13 @@
                                             @click="toggleGroup('{{ $group }}')"
                                             :checked="isGroupChecked('{{ $group }}')"
                                             :indeterminate="isGroupIndeterminate('{{ $group }}')"
-                                            class="rounded-xl border-zinc-300 text-zinc-900 focus:ring-zinc-500"
+                                            class="rounded-xl border-zinc-300 dark:text-slate-100 dark:text-slate-100 text-zinc-900 focus:ring-zinc-500"
                                         >
-                                        <label for="group_{{ $group }}" class="font-medium text-zinc-900">
+                                        <label for="group_{{ $group }}" class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">
                                             {{ $permissionGroups[$group] ?? ucfirst($group) }}
                                         </label>
                                     </div>
-                                    <span class="text-[11px] text-zinc-500 tabular-nums" x-text="getGroupCount('{{ $group }}')"></span>
+                                    <span class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 tabular-nums" x-text="getGroupCount('{{ $group }}')"></span>
                                 </div>
                                 <div class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     @foreach($groupPermissions as $permission)
@@ -129,21 +129,21 @@
                                                 data-group="{{ $group }}"
                                                 {{ in_array($permission->id, old('permissions', $rolePermissions ?? [])) ? 'checked' : '' }}
                                                 @change="updateGroupState('{{ $group }}')"
-                                                class="permission-checkbox rounded-xl border-zinc-300 text-zinc-900 focus:ring-zinc-500"
+                                                class="permission-checkbox rounded-xl border-zinc-300 dark:text-slate-100 dark:text-slate-100 text-zinc-900 focus:ring-zinc-500"
                                             >
-                                            <span class="text-[13px] text-zinc-700 group-hover:text-zinc-900">{{ $permission->display_name }}</span>
+                                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-700 group-hover:dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $permission->display_name }}</span>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
                         @endforeach
                     @else
-                        <div class="text-center py-12 text-zinc-500">
+                        <div class="text-center py-12 dark:text-slate-400 dark:text-slate-400 text-zinc-500">
                             Tidak ada permission yang tersedia.
                         </div>
                     @endif
 
-                    <div class="pt-4 border-t border-zinc-200">
+                    <div class="pt-4 border-t dark:border-slate-700 border-zinc-200">
                         <x-admin.button type="submit">
                             {{ isset($role) ? 'Simpan Perubahan' : 'Tambah Role' }}
                         </x-admin.button>

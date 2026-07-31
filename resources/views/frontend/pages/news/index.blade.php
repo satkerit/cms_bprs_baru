@@ -1,151 +1,170 @@
 <x-frontend-layout>
     <x-slot:title>Berita & Artikel - {{ config('app.name') }}</x-slot:title>
 
-    <!-- Hero Section -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 overflow-hidden">
+    {{-- ═══ HIGH-END v2: HERO — Ethereal Glass ═══ --}}
+    <section class="relative pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20 md:pb-28 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.04\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+            <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span class="inline-flex items-center px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-emerald-700 text-xs font-semibold border border-white/20 mb-4">
-                <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-up">
+            <span class="eyebrow-badge mb-5 inline-flex bg-white/20 text-white border-white/20">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                 Informasi Terkini
             </span>
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 leading-tight tracking-tight">Berita & Artikel</h1>
-            <p class="text-sm sm:text-lg text-emerald-700">Dapatkan wawasan terbaru seputar ekonomi syariah dan kegiatan BPRS Bangka Belitung.</p>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">Berita & Artikel</h1>
+            <p class="text-base sm:text-lg md:text-xl text-white/80 w-full px-4 leading-relaxed">
+                Dapatkan wawasan terbaru seputar ekonomi syariah dan kegiatan BPRS Bangka Belitung.
+            </p>
+        </div>                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-muted/30 dark:from-slate-900/30 to-transparent"></div>
+    </section>
+
+    {{-- ═══ SEARCH & FILTER — Premium Glass Card ═══ --}}
+    <section class="py-16 lg:py-20 -mt-10 sm:-mt-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <div class="double-bezel">
+                    <div class="double-bezel-inner p-4 sm:p-6 lg:p-8">
+                        <form method="GET" class="flex flex-col gap-4 sm:gap-5">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                                <div class="sm:col-span-2">
+                                    <div class="relative">
+                                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari berita..." class="w-full pl-12 pr-4 py-3 rounded-full border border-border bg-white dark:bg-slate-800/90 text-foreground text-sm placeholder:text-secondary dark:placeholder:text-slate-500 hover:border-emerald-200 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200">
+                                    </div>
+                                </div>
+                                <div>
+                                    <select name="category" class="w-full px-4 py-3 rounded-full border border-border bg-white dark:bg-slate-800/90 text-foreground text-sm hover:border-emerald-200 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200 appearance-none">
+                                        <option value="">Semua Kategori</option>
+                                        @foreach($categories as $cat)
+                                        <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex justify-center sm:justify-end">
+                                <button type="submit" class="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-500/15 hover:bg-emerald-700 hover:shadow-emerald-500/25 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] text-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                    <span>Cari</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        @if(request('search') || request('category'))
+                        <div class="flex flex-wrap items-center gap-2 pt-4 mt-4 border-t border-border/50 dark:border-slate-700/50">
+                            <span class="text-xs text-secondary dark:text-slate-400 font-medium">Filter aktif:</span>
+                            @if(request('search'))
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted dark:bg-slate-800 text-foreground text-xs font-medium border border-border dark:border-slate-700">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                "{{ request('search') }}"
+                                <a href="{{ route('news.index', request()->except('search')) }}" class="hover:text-foreground ml-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></a>
+                            </span>
+                            @endif
+                            @if(request('category'))
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted dark:bg-slate-800 text-foreground text-xs font-medium border border-border dark:border-slate-700">
+                                {{ request('category') }}
+                                <a href="{{ route('news.index', request()->except('category')) }}" class="hover:text-foreground ml-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></a>
+                            </span>
+                            @endif
+                            <a href="{{ route('news.index') }}" class="text-xs text-secondary dark:text-slate-400 hover:text-emerald-600 font-medium transition-colors ml-1">Reset</a>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <section class="py-12 md:py-16 bg-muted relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Search & Filter Card -->
-            <div class="mb-8 sm:mb-10 bg-white rounded-2xl border border-border p-4 sm:p-6 relative -mt-20 sm:-mt-24 z-10 shadow-sm">
-                <form method="GET" class="flex flex-col gap-3 sm:gap-4">
-                    <div class="flex-1">
-                        <label class="form-label">Pencarian</label>
-                        <div class="relative">
-                            <svg class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari berita..." class="form-input pl-10 sm:pl-12">
-                        </div>
-                    </div>
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <div class="flex-1">
-                            <label class="form-label">Kategori</label>
-                            <select name="category" class="form-select">
-                                <option value="">Semua Kategori</option>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="flex items-end">
-                            <button type="submit" class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition-all duration-200 btn-press">
-                                Cari
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                @if(request('search') || request('category'))
-                <div class="flex flex-wrap items-center gap-2 pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-border">
-                    <span class="text-xs text-secondary font-medium">Filter aktif:</span>
-                    @if(request('search'))
-                        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-muted text-foreground text-xs font-medium rounded-lg border border-border">
-                            "{{ request('search') }}"
-                            <a href="{{ route('news.index', request()->except('search')) }}" class="hover:text-foreground"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></a>
-                        </span>
-                    @endif
-                    @if(request('category'))
-                        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-muted text-foreground text-xs font-medium rounded-lg border border-border">
-                            {{ request('category') }}
-                            <a href="{{ route('news.index', request()->except('category')) }}" class="hover:text-foreground"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></a>
-                        </span>
-                    @endif
-                    <a href="{{ route('news.index') }}" class="text-xs text-secondary hover:text-emerald-600 font-medium transition-colors">
-                        Reset Filter
-                    </a>
-                </div>
-                @endif
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    {{-- ═══ NEWS GRID — Double-Bezel Cards ═══ --}}
+    <section class="pb-20 lg:pb-28 bg-muted/30 dark:bg-slate-950/50 relative">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <div class="absolute top-20 left-0 w-64 h-64 bg-emerald-50 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-20 right-0 w-64 h-64 bg-emerald-50 rounded-full blur-[100px]"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+                 x-intersect="$el.querySelectorAll('.news-card').forEach((el, i) => { setTimeout(() => el.classList.add('is-visible'), i * 100) })">
                 @forelse($news as $index => $item)
-                <article class="group bg-white rounded-2xl overflow-hidden border border-border hover:border-emerald-100 card-hover flex flex-col h-full">
-                    <!-- Image -->
-                    <div class="relative h-48 sm:h-56 md:h-60 overflow-hidden bg-muted" style="aspect-ratio: 16/9">
-                        @if($item->featured_image)
-                        <x-optimized-image
-                            :src="\App\Helpers\StorageHelper::url($item->featured_image)"
-                            :alt="$item->title"
-                            :priority="$index < 3"
-                            :lazy="$index >= 3"
-                            class="w-full h-full"
-                            aspect-ratio="16/9" />
-                        @else
-                        <div class="w-full h-full bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center">
-                            <svg class="w-16 h-16 text-emerald-600/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
+                <article class="news-card reveal-up" style="transition-delay: {{ $index * 60 }}ms">
+                    <a href="{{ route('news.show', $item->slug) }}" class="block group no-underline">
+                        <div class="double-bezel">
+                            <div class="double-bezel-inner">
+                                {{-- Image Area --}}
+                                <div class="relative overflow-hidden" style="border-radius: var(--radius-double-inner) var(--radius-double-inner) 0 0;">
+                                    @if($item->featured_image)
+                                    <div class="aspect-[16/9] bg-muted dark:bg-slate-800">
+                                        <x-optimized-image
+                                            :src="\App\Helpers\StorageHelper::url($item->featured_image)"
+                                            :alt="$item->title"
+                                            :priority="$index < 3"
+                                            :lazy="$index >= 3"
+                                            class="w-full h-full transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                                            aspect-ratio="16/9" />
+                                    </div>
+                                    @else
+                                    <div class="aspect-[16/9] bg-gradient-to-br from-emerald-50 dark:from-emerald-900/30 to-emerald-100/50 dark:to-emerald-900/10 flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    </div>
+                                    @endif
+                                    @if($item->category)
+                                    <div class="absolute top-3 left-3 z-10">
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-emerald-700 dark:text-emerald-400 border border-white/50 dark:border-slate-700/50 shadow-sm">
+                                            {{ $item->category }}
+                                        </span>
+                                    </div>
+                                    @endif
+                                </div>
+
+                                {{-- Content --}}
+                                <div class="p-5 sm:p-6">
+                                    <div class="flex items-center gap-2 text-xs text-secondary dark:text-slate-400 mb-2">
+                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        <time datetime="{{ $item->published_at->toISOString() }}">{{ $item->published_at->translatedFormat('d F Y') }}</time>
+                                    </div>
+
+                                    <h3 class="text-base sm:text-lg font-bold text-foreground mb-2 line-clamp-2 group-hover:text-emerald-600 transition-colors duration-300 leading-snug">
+                                        {{ $item->title }}
+                                    </h3>
+
+                                    <p class="text-secondary dark:text-slate-400 text-sm mb-4 line-clamp-3 leading-relaxed">{{ $item->excerpt }}</p>
+
+                                    {{-- Button-in-Button CTA --}}
+                                    <div class="pt-3 border-t border-border/50 dark:border-slate-700/50">
+                                        <div class="inline-flex items-center gap-1.5 text-emerald-600 font-semibold text-sm group-hover:gap-2.5 transition-all duration-300">
+                                            <span>Baca Selengkapnya</span>
+                                            <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105">
+                                                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        @endif
-                        @if($item->category)
-                        <span class="absolute top-4 left-4 px-2.5 py-1 text-xs font-semibold text-white bg-emerald-600 rounded-lg shadow-sm">
-                            {{ $item->category }}
-                        </span>
-                        @endif
-                    </div>
-
-                    <div class="p-5 sm:p-6 flex flex-col flex-grow">
-                        <div class="flex items-center gap-2 text-xs text-secondary mb-2">
-                            <svg class="w-3.5 h-3.5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            <time datetime="{{ $item->published_at->toISOString() }}">{{ $item->published_at->translatedFormat('d F Y') }}</time>
-                        </div>
-
-                        <h3 class="text-base sm:text-lg font-bold text-foreground mb-2 line-clamp-2 group-hover:text-emerald-600 transition-colors leading-snug">
-                            <a href="{{ route('news.show', $item->slug) }}">
-                                {{ $item->title }}
-                            </a>
-                        </h3>
-
-                        <p class="text-secondary text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">{{ $item->excerpt }}</p>
-
-                        <div class="pt-3 sm:pt-4 border-t border-border">
-                            <a href="{{ route('news.show', $item->slug) }}"
-                               class="inline-flex items-center gap-1.5 text-emerald-600 font-semibold text-sm hover:text-emerald-600 transition-colors group/link">
-                                Baca Selengkapnya
-                                <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 </article>
                 @empty
-                <div class="col-span-full">
-                    <div class="text-center py-16 bg-white rounded-2xl border border-border px-4">
-                        <div class="w-20 h-20 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-10 h-10 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-                            </svg>
-                            
+                <div class="col-span-full reveal-up" x-intersect="$el.classList.add('is-visible')">
+                    <div class="double-bezel">
+                        <div class="double-bezel-inner py-16 px-6 text-center">
+                            <div class="w-16 h-16 rounded-full bg-muted dark:bg-slate-800 flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-foreground mb-2">Tidak Ada Berita</h3>
+                            <p class="text-sm text-secondary dark:text-slate-400 w-full mb-6">Belum ada berita yang sesuai dengan kriteria pencarian Anda.</p>
+                            <a href="{{ route('news.index') }}" class="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-500/15 hover:bg-emerald-700 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] text-sm">
+                                Reset Pencarian
+                            </a>
                         </div>
-                        <h3 class="text-xl font-bold text-foreground mb-2">Tidak Ada Berita</h3>
-                        <p class="text-sm text-secondary mx-auto mb-6">Belum ada berita yang sesuai dengan kriteria pencarian Anda.</p>
-                        <a href="{{ route('news.index') }}" class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition-colors shadow-sm btn-press">
-                            Reset Pencarian
-                        </a>
                     </div>
                 </div>
                 @endforelse
             </div>
 
             @if($news->hasPages())
-            <div class="mt-10 flex justify-center">
+            <div class="mt-12 flex justify-center reveal-up" x-intersect="$el.classList.add('is-visible')">
                 {{ $news->appends(request()->query())->links('pagination.custom') }}
             </div>
             @endif

@@ -186,7 +186,7 @@
  Hapus Blokir Kadaluarsa
  </button>
  </div>                <div class="overflow-x-auto">                        <table class="w-full">
-                        <thead class="bg-zinc-50/80">
+                        <thead class="dark:bg-slate-800/50 bg-zinc-50/80">
                             <tr>
                                 <th class="px-4 py-3.5 text-left text-[11px] font-semibold text-zinc-600 uppercase tracking-wider">
                                     IP Address</th>
@@ -204,9 +204,9 @@
                             @foreach($blockedIps as $blocked)
                             <tr class="table-row-hover">
                                 <td class="table-cell-text">
-                                    <code class="text-[13px] font-mono text-zinc-900">{{ $blocked->ip_address }}</code>
+                                    <code class="text-[13px] font-mono dark:text-slate-100 text-zinc-900">{{ $blocked->ip_address }}</code>
                                 </td>
-                                <td class="table-cell-text text-zinc-500">
+                                <td class="table-cell-text dark:text-slate-400 text-zinc-500">
                                     {{ $blocked->reason }}
                                 </td>
                                 <td class="table-cell-text">
@@ -216,7 +216,7 @@
                                     <span class="px-2.5 py-1 text-[11px] font-medium bg-amber-50 text-amber-700 rounded-lg">Sementara</span>
                                     @endif
                                 </td>
-                                <td class="table-cell-text text-zinc-500">
+                                <td class="table-cell-text dark:text-slate-400 text-zinc-500">
                                     {{ $blocked->is_permanent ? 'Selamanya' : ($blocked->blocked_until ? $blocked->blocked_until->diffForHumans() : '-') }}
                                 </td>
                                 <td class="table-cell-text">
@@ -240,7 +240,7 @@
  <div class="p-6 border-b">
  <h3 class="text-3xl font-semibold text-gray-900">Log Ancaman Terbaru</h3>
  </div>            <div class="overflow-x-auto">                    <table class="w-full">
-                    <thead class="bg-zinc-50/80">
+                    <thead class="dark:bg-slate-800/50 bg-zinc-50/80">
                         <tr>
                             <th class="px-4 py-3.5 text-left text-[11px] font-semibold text-zinc-600 uppercase tracking-wider">
                                 Waktu</th>
@@ -261,28 +261,28 @@
                     <tbody class="divide-y divide-zinc-100/80">
                         @forelse($threats as $threat)
                         <tr class="table-row-hover">
-                            <td class="table-cell-text text-zinc-500">
+                            <td class="table-cell-text dark:text-slate-400 text-zinc-500">
                                 {{ $threat->created_at->format('d/m/Y H:i:s') }}
                             </td>
                             <td class="table-cell-text">
-                                <code class="text-[13px] font-mono text-zinc-900">{{ $threat->ip_address }}</code>
+                                <code class="text-[13px] font-mono dark:text-slate-100 text-zinc-900">{{ $threat->ip_address }}</code>
                             </td>
                             <td class="table-cell-text">
-                                <span class="font-medium text-zinc-900">{{ $threat->getThreatInfo()['label'] }}</span>
+                                <span class="font-medium dark:text-slate-100 text-zinc-900">{{ $threat->getThreatInfo()['label'] }}</span>
                             </td>
                             <td class="table-cell-text">
                                 <span class="inline-flex items-center px-2.5 py-1 text-[11px] font-medium rounded-lg {{ $threat->getThreatBadgeClass() }}">
                                     {{ \App\Models\SecurityLog::THREAT_LEVELS[$threat->threat_level]['label'] ?? $threat->threat_level }}
                                 </span>
                             </td>
-                            <td class="table-cell-text text-zinc-500" title="{{ $threat->request_url }}">
+                            <td class="table-cell-text dark:text-slate-400 text-zinc-500" title="{{ $threat->request_url }}">
                                 {{ Str::limit($threat->request_url, 50) }}
                             </td>
                             <td class="table-cell-text">
                                 @if($threat->was_blocked)
                                 <span class="inline-flex items-center px-2.5 py-1 text-[11px] font-medium bg-red-50 text-red-700 rounded-lg">Diblokir</span>
                                 @else
-                                <span class="inline-flex items-center px-2.5 py-1 text-[11px] font-medium bg-zinc-50 text-zinc-500 rounded-lg">Tercatat</span>
+                                <span class="inline-flex items-center px-2.5 py-1 text-[11px] font-medium dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-400 text-zinc-500 rounded-lg">Tercatat</span>
                                 @endif
                             </td>
                             <td class="table-cell-text">
@@ -304,8 +304,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <p class="font-medium text-zinc-900">Sistem Aman!</p>
-                                        <p class="text-[13px] text-zinc-500 mt-1">Tidak ada ancaman yang terdeteksi.</p>
+                                        <p class="font-medium dark:text-slate-100 text-zinc-900">Sistem Aman!</p>
+                                        <p class="text-[13px] dark:text-slate-400 text-zinc-500 mt-1">Tidak ada ancaman yang terdeteksi.</p>
                                     </div>
                                 </div>
                             </td>

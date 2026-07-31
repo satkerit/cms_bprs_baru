@@ -37,28 +37,28 @@
  <tr >
  <td class="px-6 py-4">
  <div>
- <p class="font-semibold text-zinc-900">{{ $config->name }}</p>
- <p class="text-[11px] text-zinc-500">{{ $config->type }}</p>
+ <p class="font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $config->name }}</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $config->type }}</p>
  </div>
  </td>
  <td class="px-6 py-4">
  <span class="font-semibold text-sky-600">{{ number_format($config->margin_rate * 100, 2) }}%</span>
- <p class="text-[11px] text-zinc-500">per tahun</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">per tahun</p>
  </td>
  <td class="px-6 py-4">
  <div class="text-[11px]">
- <p class="text-zinc-700">Min: <span class="font-medium text-zinc-900">Rp {{ number_format($config->min_principal, 0, ',', '.') }}</span></p>
- <p class="text-zinc-700">Max: <span class="font-medium text-zinc-900">Rp {{ number_format($config->max_principal, 0, ',', '.') }}</span></p>
+ <p class="dark:text-slate-300 dark:text-slate-300 text-zinc-700">Min: <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($config->min_principal, 0, ',', '.') }}</span></p>
+ <p class="dark:text-slate-300 dark:text-slate-300 text-zinc-700">Max: <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($config->max_principal, 0, ',', '.') }}</span></p>
  </div>
  </td>
  <td class="px-6 py-4">
  @if($config->dp_enabled)
  <x-admin.badge variant="info">Aktif</x-admin.badge>
- <p class="text-[11px] text-zinc-500 mt-1">
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">
  {{ $config->dp_min_percentage ?? 0 }}% - {{ $config->dp_max_percentage ?? 100 }}%
  </p>
  @else
- <span class="text-zinc-400 text-[11px]">-</span>
+ <span class="dark:text-slate-500 dark:text-slate-500 text-zinc-400 text-[11px]">-</span>
  @endif
  </td>
  <td class="px-6 py-4">
@@ -70,12 +70,12 @@
  </td>
  <td class="px-6 py-4">
  <div class="flex items-center gap-1">
- <a href="{{ route('admin.financing-config.edit', $config) }}" class="p-2 text-zinc-400 rounded-xl inline-flex" title="Edit">
+ <a href="{{ route('admin.financing-config.edit', $config) }}" class="p-2 dark:text-slate-500 dark:text-slate-500 text-zinc-400 rounded-xl inline-flex" title="Edit">
  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
  </svg>
  </a>
- <button type="button" data-open-modal="deleteConfig{{ $config->id }}" class="p-2 text-zinc-400 rounded-xl inline-flex hover:text-red-600" title="Hapus">
+ <button type="button" data-open-modal="deleteConfig{{ $config->id }}" class="p-2 dark:text-slate-500 dark:text-slate-500 text-zinc-400 rounded-xl inline-flex hover:text-red-600" title="Hapus">
  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
  </svg>
@@ -91,8 +91,8 @@
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
  </svg>
  </div>
- <p class="text-zinc-500 font-medium">Belum ada konfigurasi pembiayaan</p>
- <p class="text-[11px] text-zinc-400 mt-1">Jalankan seeder untuk menambahkan konfigurasi default</p>
+ <p class="dark:text-slate-400 dark:text-slate-400 text-zinc-500 font-medium">Belum ada konfigurasi pembiayaan</p>
+ <p class="text-[11px] dark:text-slate-500 dark:text-slate-500 text-zinc-400 mt-1">Jalankan seeder untuk menambahkan konfigurasi default</p>
  </td>
  </tr>
  @endforelse
@@ -102,12 +102,12 @@
  {{-- Mobile Card View --}}
  <div class="p-4 space-y-4">
  @forelse($configs as $config)
- <div class="bg-white border border-zinc-200 rounded-xl">
+ <div class="bg-white border dark:border-slate-700 border-zinc-200 rounded-xl">
  <div class="p-4">
  <div class="flex items-start justify-between mb-3">
  <div>
- <h3 class="font-bold text-zinc-900">{{ $config->name }}</h3>
- <p class="text-[11px] text-zinc-500">{{ $config->type }}</p>
+ <h3 class="font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $config->name }}</h3>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $config->type }}</p>
  </div>
  @if($config->is_active)
  <x-admin.badge variant="success">Aktif</x-admin.badge>
@@ -118,32 +118,32 @@
 
  <div class="space-y-2 mb-4 text-[11px]">
  <div class="flex items-center justify-between">
- <span class="text-zinc-500">Margin Rate:</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Margin Rate:</span>
  <span class="font-semibold text-sky-600">{{ number_format($config->margin_rate * 100, 2) }}% / tahun</span>
  </div>
  <div class="flex items-center justify-between">
- <span class="text-zinc-500">Plafon Min:</span>
- <span class="font-medium text-zinc-900">Rp {{ number_format($config->min_principal, 0, ',', '.') }}</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Plafon Min:</span>
+ <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($config->min_principal, 0, ',', '.') }}</span>
  </div>
  <div class="flex items-center justify-between">
- <span class="text-zinc-500">Plafon Max:</span>
- <span class="font-medium text-zinc-900">Rp {{ number_format($config->max_principal, 0, ',', '.') }}</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Plafon Max:</span>
+ <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($config->max_principal, 0, ',', '.') }}</span>
  </div>
  <div class="flex items-center justify-between">
- <span class="text-zinc-500">Down Payment:</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Down Payment:</span>
  @if($config->dp_enabled)
  <span class="font-medium text-sky-600">{{ $config->dp_min_percentage ?? 0 }}% - {{ $config->dp_max_percentage ?? 100 }}%</span>
  @else
- <span class="text-zinc-400">Tidak aktif</span>
+ <span class="dark:text-slate-500 dark:text-slate-500 text-zinc-400">Tidak aktif</span>
  @endif
  </div>
  </div>
 
  <div class="mb-4">
- <p class="text-[11px] text-zinc-500 mb-2">Tenor Tersedia:</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mb-2">Tenor Tersedia:</p>
  <div class="flex flex-wrap gap-1">
  @foreach($config->available_tenors as $tenor)
- <span class="inline-flex px-2 py-0.5 bg-zinc-50 text-zinc-700 text-[11px] font-medium rounded-xl">
+ <span class="inline-flex px-2 py-0.5 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 dark:text-slate-300 text-zinc-700 text-[11px] font-medium rounded-xl">
  {{ $tenor }} bln
  </span>
  @endforeach
@@ -171,8 +171,8 @@
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
  </svg>
  </div>
- <h3 class="text-3xl font-semibold text-zinc-900 mb-1">Belum Ada Konfigurasi</h3>
- <p class="text-zinc-500">Jalankan seeder untuk menambahkan konfigurasi default</p>
+ <h3 class="text-3xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-1">Belum Ada Konfigurasi</h3>
+ <p class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Jalankan seeder untuk menambahkan konfigurasi default</p>
  </div>
  @endforelse
  </div>

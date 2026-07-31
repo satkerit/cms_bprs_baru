@@ -217,13 +217,13 @@
 <x-admin.card title="Pengunjung Terbaru" :noPadding="true">
  <div >    <table class="w-full border-collapse">
  <thead>
- <tr class="border-b border-zinc-200/70 bg-zinc-50/80">
- <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Waktu</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">IP</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Lokasi</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Perangkat</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Browser</th>
- <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.05em]">Halaman</th>
+ <tr class="border-b dark:border-slate-700 border-zinc-200/70 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/80">
+ <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Waktu</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">IP</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Lokasi</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Perangkat</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Browser</th>
+ <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Halaman</th>
  </tr>
  </thead>
  <tbody class="divide-y divide-zinc-100/80">
@@ -241,7 +241,7 @@
  <div class="table-cell-secondary">{{ $visitor->country ?? '-' }}</div>
  </td>
  <td class="px-5 py-3.5">
- <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[11px] font-medium {{ $visitor->device_type == 'mobile' ? 'bg-sky-100 text-sky-700' : ($visitor->device_type == 'tablet' ? 'bg-purple-100 text-purple-700' : 'bg-zinc-100 text-zinc-600') }}">
+ <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[11px] font-medium {{ $visitor->device_type == 'mobile' ? 'bg-sky-100 text-sky-700' : ($visitor->device_type == 'tablet' ? 'bg-purple-100 text-purple-700' : 'dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 dark:text-slate-300 dark:text-slate-300 text-zinc-600') }}">
  {{ ucfirst($visitor->device_type ?? 'Unknown') }}
  </span>
  </td>

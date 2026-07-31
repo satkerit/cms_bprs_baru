@@ -2,9 +2,9 @@
     <x-slot:title>{{ $title }} - {{ config('app.name') }}</x-slot:title>
 
     <!-- Hero Section -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden">
+    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.03&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
@@ -42,7 +42,7 @@
                         <select id="year-filter"
                                 x-model="year"
                                 @change="year ? window.location = '{{ route('reports.tata-kelola') }}?year=' + year : window.location = '{{ route('reports.tata-kelola') }}'"
-                                class="px-3 py-2 text-sm bg-white border border-border rounded-lg focus:ring-2 focus:ring-{{ $color }}-500/20 focus:border-{{ $color }}-500 outline-none transition-colors cursor-pointer">
+                                class="px-3 py-2 text-sm bg-white dark:bg-slate-900 dark:border-slate-700 border border-border rounded-lg focus:ring-2 focus:ring-{{ $color }}-500/20 focus:border-{{ $color }}-500 outline-none transition-colors cursor-pointer dark:text-slate-200">
                             <option value="">Semua Tahun</option>
                             @foreach($years as $y)
                                 <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
@@ -135,7 +135,7 @@
                                     Preview
                                 </a>
                                 <a href="{{ route('reports.download', $report) }}"
-                                   class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-white {{ $c['btn_outline'] }} text-xs font-semibold rounded-lg border transition-colors btn-press">
+                                   class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-white dark:bg-slate-800 {{ $c['btn_outline'] }} text-xs font-semibold rounded-lg border transition-colors btn-press">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                     Download
                                 </a>
@@ -159,7 +159,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-foreground mb-2">Belum Ada Laporan</h3>
-                    <p class="text-muted-foreground text-sm max-w-md mx-auto">Laporan {{ strtolower($title) }} belum tersedia. Silakan cek kembali nanti atau pilih kategori laporan lainnya.</p>
+                    <p class="text-muted-foreground text-sm w-full">Laporan {{ strtolower($title) }} belum tersedia. Silakan cek kembali nanti atau pilih kategori laporan lainnya.</p>
                     <a href="{{ route('reports.index') }}" class="inline-flex items-center gap-1.5 mt-6 px-4 py-2.5 {{ $c['btn'] }} text-white text-sm font-semibold rounded-lg transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                         Kembali ke Semua Laporan

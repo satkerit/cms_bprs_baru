@@ -12,6 +12,7 @@ class TicketSearch extends Component
     public string $type = 'customer'; // 'customer' or 'whistleblowing'
     public ?array $result = null;
     public bool $searched = false;
+    public bool $loading = false;
     public ?string $error = null;
 
     public function mount(string $type = 'customer')
@@ -79,6 +80,14 @@ class TicketSearch extends Component
 
     public function render()
     {
-        return view('livewire.frontend.ticket-search');
+        $statuses = [
+            'pending'     => 'Menunggu',
+            'in_review'   => 'Ditinjau',
+            'in_progress' => 'Diproses',
+            'resolved'    => 'Selesai',
+            'closed'      => 'Ditutup',
+        ];
+
+        return view('livewire.frontend.ticket-search', compact('statuses'));
     }
 }

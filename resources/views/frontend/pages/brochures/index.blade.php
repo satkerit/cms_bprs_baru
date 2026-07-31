@@ -2,9 +2,9 @@
     <x-slot name="title">Brosur Pembiayaan Syariah - BPRS Bangka Belitung</x-slot>
 
     <!-- Hero Section -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden">
+    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-3xl font-bold sm:text-4xl font-bold text-white mb-3 sm:mb-4 tracking-tight">Brosur Pembiayaan Syariah</h1>
@@ -202,7 +202,7 @@
                         </div>
                     </div>
                     <div class="bg-muted/50 px-6 py-4">
-                        <div class="relative w-full h-[600px] bg-card rounded-lg overflow-hidden">
+                        <div class="relative w-full h-[70vh] min-h-[400px] max-h-[80vh] bg-card rounded-lg overflow-hidden">
                             <div x-show="isLoading" class="absolute inset-0 flex items-center justify-center bg-card z-10">
                                 <div class="flex flex-col items-center justify-center">
                                     <svg class="animate-spin w-8 h-8 text-emerald-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -11,9 +11,9 @@
     @endpush
 
     <!-- Hero / Banner -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden">
+    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.03&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
@@ -57,7 +57,7 @@
                         $allImages = collect((array)($auction->images ?? []));
                         $mainImage = $auction->main_image;
                     @endphp
-                    <div class="bg-white rounded-lg sm:rounded-lg shadow-sm overflow-hidden border border-border" x-data="{ activeImage: 0 }">
+                    <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg shadow-sm overflow-hidden border border-border" x-data="{ activeImage: 0 }">
                         <div class="relative bg-muted aspect-[16/9] flex items-center justify-center overflow-hidden">
                             @if($mainImage)
                                 <img src="{{ \App\Helpers\StorageHelper::url($mainImage) }}" alt="{{ $auction->title }}" class="w-full h-full object-contain p-4 transition-opacity duration-500" x-show="activeImage === 0">
@@ -100,10 +100,10 @@
                     </div>
 
                     <!-- Description -->
-                    <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
-                        <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
-                            <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
+                        <h2 class="text-xl sm:text-2xl font-bold text-foreground dark:text-slate-100 mb-4 sm:mb-6 flex items-center gap-3">
+                            <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </span>
                             Deskripsi Agunan
                         </h2>
@@ -113,10 +113,10 @@
                     </div>
 
                     <!-- Location -->
-                    <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
-                        <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
-                            <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
+                        <h2 class="text-xl sm:text-2xl font-bold text-foreground dark:text-slate-100 mb-4 sm:mb-6 flex items-center gap-3">
+                            <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             </span>
                             Lokasi
                         </h2>
@@ -131,10 +131,10 @@
                         $docs = collect((array)($auction->documents ?? []));
                     @endphp
                     @if($docs->isNotEmpty())
-                    <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
-                        <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
-                            <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
+                        <h2 class="text-xl sm:text-2xl font-bold text-foreground dark:text-slate-100 mb-4 sm:mb-6 flex items-center gap-3">
+                            <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </span>
                             Dokumen
                         </h2>
@@ -166,10 +166,10 @@
 
                     <!-- Related Auctions -->
                     @if($relatedAuctions->isNotEmpty())
-                    <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
-                        <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
-                            <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
+                        <h2 class="text-xl sm:text-2xl font-bold text-foreground dark:text-slate-100 mb-4 sm:mb-6 flex items-center gap-3">
+                            <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             </span>
                             Lelang Terkait
                         </h2>
@@ -201,10 +201,10 @@
 
                     <!-- Organizer Auctions -->
                     @if($organizerAuctions->isNotEmpty())
-                    <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
-                        <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-3">
-                            <span class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border">
+                        <h2 class="text-xl sm:text-2xl font-bold text-foreground dark:text-slate-100 mb-4 sm:mb-6 flex items-center gap-3">
+                            <span class="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                             </span>
                             Lelang Lainnya dari {{ $auction->organizer_name ?? 'Penyelenggara' }}
                         </h2>
@@ -239,7 +239,7 @@
                 <!-- Sidebar -->
                 <div class="space-y-6 lg:space-y-8">
                     <!-- Price Card -->
-                    <div class="bg-white rounded-lg sm:rounded-lg p-6 sm:p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300 sticky top-24">
+                    <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-6 sm:p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300 sticky top-24">
                         <div class="text-sm text-secondary mb-2 font-medium">Harga Limit</div>
                         <div class="text-3xl sm:text-4xl font-black bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent mb-6">{{ $auction->formatted_limit_price }}</div>
 

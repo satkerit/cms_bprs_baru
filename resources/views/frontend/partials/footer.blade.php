@@ -2,20 +2,20 @@
     $company = $company ?? \App\Models\CompanyInfo::getInfo();
 @endphp
 
-<footer class="bg-gradient-to-br from-blue-900 via-indigo-900 to-blue-950 text-white relative overflow-hidden">
+<footer class="bg-gradient-to-br from-emerald-950 via-emerald-900 to-[#022c22] text-white relative overflow-hidden">
     {{-- ─── Decorative Background Elements ─── --}}
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
         {{-- Subtle grid pattern overlay --}}
         <div class="absolute inset-0 opacity-[0.03]" style="background-image: url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");"></div>
 
         {{-- Floating gradient orbs --}}
-        <div class="absolute -top-20 -left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-float" style="animation-delay: 0s; animation-duration: 8s;"></div>
-        <div class="absolute top-1/3 -right-16 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s; animation-duration: 10s;"></div>
-        <div class="absolute -bottom-32 left-1/4 w-96 h-96 bg-blue-400/8 rounded-full blur-3xl animate-float" style="animation-delay: 4s; animation-duration: 12s;"></div>
+        <div class="absolute -top-20 -left-20 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl animate-float" style="animation-delay: 0s; animation-duration: 8s;"></div>
+        <div class="absolute top-1/3 -right-16 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s; animation-duration: 10s;"></div>
+        <div class="absolute -bottom-32 left-1/4 w-96 h-96 bg-emerald-300/8 rounded-full blur-3xl animate-float" style="animation-delay: 4s; animation-duration: 12s;"></div>
     </div>
 
     {{-- ─── Elegant Top Border ─── --}}
-    <div class="relative h-1.5 w-full bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 opacity-90"></div>
+    <div class="relative h-1.5 w-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 opacity-90"></div>
 
     {{-- ─── MAIN FOOTER CONTENT ─── --}}
     <div class="relative z-10 pt-20 pb-16">
@@ -30,25 +30,25 @@
                                  alt="{{ $company->name }}"
                                  class="h-12 w-auto max-w-[180px] object-contain transition-all duration-300 group-hover:scale-105">
                             @else
-                            <div class="w-11 h-11 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 transition-transform duration-300 group-hover:scale-110">
+                            <div class="w-11 h-11 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-110">
                                 <span class="text-white font-heading font-bold text-lg">B</span>
                             </div>
                             @endif
                         </a>
                     </div>
 
-                    <p class="text-white/80 leading-relaxed text-sm mb-6">
+                    <p class="text-white/80 dark:text-slate-300 leading-relaxed text-sm mb-6">
                         {{ $company->footer_description ?? $company->short_description ?? 'Melayani dengan prinsip syariah untuk kesejahteraan masyarakat Negeri Serumpun Sebalai. Terpercaya, amanah, dan profesional.' }}
                     </p>
 
                     {{-- Regulatory Info ── --}}
                     <div class="space-y-2 mb-6">
                         @if($company->ojk_tagline)
-                            <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                                <svg class="w-3.5 h-3.5 text-blue-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                                <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                                 </svg>
-                                <span class="text-sm text-blue-300 font-medium">{{ $company->ojk_tagline }}</span>
+                                <span class="text-sm text-emerald-300 font-medium">{{ $company->ojk_tagline }}</span>
                             </div>
                         @endif
                         @if($company->lps_tagline)
@@ -63,7 +63,7 @@
 
                     {{-- Badges ── --}}
                     <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/15 text-blue-400 rounded-full text-xs font-semibold border border-blue-500/30 transition-all duration-300 hover:bg-blue-500/25 hover:border-blue-500/50">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/15 text-emerald-400 rounded-full text-xs font-semibold border border-emerald-500/30 transition-all duration-300 hover:bg-emerald-500/25 hover:border-emerald-500/50">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                             Terdaftar OJK
                         </span>
@@ -75,7 +75,7 @@
 
                     {{-- Social Media with refined hover --}}
                     <div>
-                        <h4 class="text-sm font-heading font-bold text-white/80 mb-4 tracking-wide uppercase">
+                        <h4 class="text-sm font-heading font-bold text-white/80 dark:text-slate-300 mb-4 tracking-wide uppercase">
                             Ikuti Kami
                         </h4>
                         <div class="flex gap-2.5">
@@ -95,8 +95,8 @@
                                    class="group relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-white/5 border border-white/10 hover:-translate-y-1"
                                    aria-label="{{ ucfirst($name) }}">
                                     {{-- Glow on hover --}}
-                                    <div class="absolute inset-0 rounded-xl bg-blue-600/0 group-hover:bg-blue-100 transition-all duration-300"></div>
-                                    <svg class="relative w-4 h-4 text-white/70 group-hover:text-blue-300 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                                    <div class="absolute inset-0 rounded-xl bg-emerald-600/0 group-hover:bg-emerald-500/20 transition-all duration-300"></div>
+                                    <svg class="relative w-4 h-4 text-white/70 group-hover:text-emerald-300 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="{{ $link['path'] }}"/>
                                     </svg>
                                 </a>
@@ -109,7 +109,7 @@
                 {{-- ═══ COLUMN 2: Quick Links ═══ --}}
                 <div class="fade-in-section" x-intersect="$el.classList.add('is-visible')" style="transition-delay: 100ms;">
                     <h4 class="text-base font-heading font-bold text-white mb-6 tracking-tight flex items-center gap-2">
-                        <span class="w-1 h-5 bg-blue-500 rounded-full inline-block"></span>
+                        <span class="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
                         Navigasi Cepat
                     </h4>
                     <ul class="space-y-2.5">
@@ -127,8 +127,8 @@
                         @foreach($quickLinks as $link)
                         <li>
                             <a href="{{ route($link['route']) }}"
-                               class="group flex items-center gap-2.5 text-white/80 hover:text-blue-300 transition-all duration-200 text-sm">
-                                <span class="w-1.5 h-1.5 rounded-full bg-white/50 group-hover:bg-blue-400 transition-all duration-200"></span>
+                               class="group flex items-center gap-2.5 text-white/80 hover:text-emerald-300 transition-all duration-200 text-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white/50 group-hover:bg-emerald-400 transition-all duration-200"></span>
                                 <span>{{ $link['label'] }}</span>
                             </a>
                         </li>
@@ -139,15 +139,15 @@
                 {{-- ═══ COLUMN 3: Contact Info ═══ --}}
                 <div class="fade-in-section" x-intersect="$el.classList.add('is-visible')" style="transition-delay: 200ms;">
                     <h4 class="text-base font-heading font-bold text-white mb-6 tracking-tight flex items-center gap-2">
-                        <span class="w-1 h-5 bg-blue-500 rounded-full inline-block"></span>
+                        <span class="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
                         Hubungi Kami
                     </h4>
 
                     <div class="space-y-4">
                         @if($company->address)
-                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-blue-400/30 transition-all duration-300">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-all duration-300">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-emerald-400/30 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-all duration-300">
+                                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             </div>
                             <div class="min-w-0">
                                 <p class="text-[11px] text-white/60 font-medium uppercase tracking-wider mb-0.5">Alamat</p>
@@ -157,13 +157,13 @@
                         @endif
 
                         @if($company->phone)
-                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-blue-400/30 transition-all duration-300">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-all duration-300">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-emerald-400/30 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-all duration-300">
+                                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                             </div>
                             <div class="min-w-0">
                                 <p class="text-[11px] text-white/60 font-medium uppercase tracking-wider mb-0.5">Telepon</p>
-                                <a href="tel:{{ $company->phone }}" class="text-sm text-white/80 font-semibold hover:text-blue-300 transition-colors">{{ $company->phone }}</a>
+                                <a href="tel:{{ $company->phone }}" class="text-sm text-white/80 font-semibold hover:text-emerald-300 transition-colors">{{ $company->phone }}</a>
                             </div>
                         </div>
                         @endif
@@ -171,21 +171,21 @@
 
 
                         @if($company->email)
-                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-blue-400/30 transition-all duration-300">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-all duration-300">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-emerald-400/30 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-all duration-300">
+                                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                             </div>
                             <div class="min-w-0">
                                 <p class="text-[11px] text-white/60 font-medium uppercase tracking-wider mb-0.5">Email</p>
-                                <a href="mailto:{{ $company->email }}" class="text-sm text-white/80 font-semibold hover:text-blue-300 transition-colors">{{ $company->email }}</a>
+                                <a href="mailto:{{ $company->email }}" class="text-sm text-white/80 font-semibold hover:text-emerald-300 transition-colors">{{ $company->email }}</a>
                             </div>
                         </div>
                         @endif
 
                         @if($company->fax)
-                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-blue-400/30 transition-all duration-300">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-all duration-300">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-emerald-400/30 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-all duration-300">
+                                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                             </div>
                             <div class="min-w-0">
                                 <p class="text-[11px] text-white/60 font-medium uppercase tracking-wider mb-0.5">Fax</p>
@@ -213,14 +213,14 @@
                     <span class="text-white/50">Bank Pembiayaan Rakyat Syariah terpercaya.</span>
                 </p>
                 <div class="flex items-center gap-4 text-xs">
-                    <a href="{{ route('privacy-policy') }}" class="text-white/60 hover:text-blue-300 transition-colors duration-200 relative group">
+                    <a href="{{ route('privacy-policy') }}" class="text-white/60 hover:text-emerald-300 transition-colors duration-200 relative group">
                         Kebijakan Privasi
-                        <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                        <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-emerald-400 group-hover:w-full transition-all duration-300"></span>
                     </a>
                     <span class="text-white/40">•</span>
-                    <a href="#" class="text-white/60 hover:text-blue-300 transition-colors duration-200 relative group">
+                    <a href="#" class="text-white/60 hover:text-emerald-300 transition-colors duration-200 relative group">
                         Syarat & Ketentuan
-                        <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                        <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-emerald-400 group-hover:w-full transition-all duration-300"></span>
                     </a>
                     <span class="text-white/40">•</span>
                     <span class="text-white/50">v{{ config('app.version', '1.0') }}</span>

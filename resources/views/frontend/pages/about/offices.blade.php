@@ -2,9 +2,9 @@
     <x-slot name="title">Kantor Kami - BPRS Bangka Belitung</x-slot>
 
     <!-- Hero -->
-    <section class="relative py-20 md:py-24 overflow-hidden">
+    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
@@ -22,7 +22,7 @@
 
     <section class="py-16 -mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-lg border border-border overflow-hidden mb-8 shadow-sm">
+            <div class="bg-white dark:bg-slate-900 rounded-lg border border-border overflow-hidden mb-8 shadow-sm">
                 <div class="px-6 py-5 border-b border-border bg-muted/50/50 flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-foreground flex items-center gap-3">
                         <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600">
@@ -35,8 +35,21 @@
                     </h2>
                     <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-full uppercase tracking-wide">OpenStreetMap</span>
                 </div>
+                @php
+                    $mapPoints = $offices->filter(fn($o) => $o->has_coordinates)->map(fn($o) => [
+                        'n' => $o->name,
+                        'a' => $o->address,
+                        't' => $o->type_label,
+                        'la' => $o->latitude,
+                        'lo' => $o->longitude
+                    ])->values();
+                @endphp
                 <div class="relative">
-                    <div id="officesMap" class="w-full h-[420px]"></div>
+                    <div id="officesMap"
+                         class="w-full h-[300px] sm:h-[420px]"
+                         data-map-init
+                         data-points='@json($mapPoints)'
+                         data-options='{"scrollWheelZoom": false}'></div>
                 </div>
             </div>
             <!-- Filter -->
@@ -152,13 +165,11 @@
         </div>
     </section>
 
-    @push('head')
-    @vite('resources/js/map-utils.js')
+    {{-- Leaflet CSS & JS — lazy loaded via app.js dynamic import --}}
     <style>
         #officesMap .leaflet-popup-content-wrapper{border-radius:14px}
         #officesMap .leaflet-popup-content{margin:10px 14px}
     </style>
-    @endpush
 
     @push('scripts')
     <script nonce="{{ $nonce }}">

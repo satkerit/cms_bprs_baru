@@ -67,9 +67,9 @@
     @endphp
 
     <!-- Hero -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden">
+    <section class="relative pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
             <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
@@ -79,7 +79,7 @@
                 Whistleblowing System
             </span>
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 animate-slide-up delay-100 tracking-tight">Whistleblowing System</h1>
-            <p class="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto animate-slide-up delay-200 px-4">
+            <p class="text-base sm:text-lg md:text-xl text-white/80 w-full animate-slide-up delay-200 px-4">
                 Sarana pelaporan pelanggaran yang independen, rahasia, dan terpercaya. Bersama menjaga integritas perusahaan.
             </p>
         </div>
@@ -91,7 +91,7 @@
             <!-- Info Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
                 @foreach($channels as $channel)
-                <a href="{{ $channel->link }}" class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 shadow-sm border border-border hover:border-emerald-100 transition-all duration-300 group card-hover touch-manipulation">
+                <a href="{{ $channel->link }}" class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 shadow-sm border border-border hover:border-emerald-100 dark:hover:border-emerald-800 transition-all duration-300 group card-hover touch-manipulation">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br {{ $channel->color }} rounded-lg flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform shadow-lg {{ $channel->shadow }} shrink-0">
                         @if($channel->icon === 'email')
                         <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -114,7 +114,7 @@
             </div>
 
             <!-- Protection Guarantees -->
-            <div class="bg-white rounded-lg sm:rounded-lg p-6 sm:p-8 shadow-sm border border-border mb-8 sm:mb-12" x-intersect="$el.classList.add('animate-slide-up')">
+            <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-6 sm:p-8 shadow-sm border border-border mb-8 sm:mb-12" x-intersect="$el.classList.add('animate-slide-up')">
                 <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-emerald-500/30 shrink-0">
                         <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
@@ -149,14 +149,14 @@
 
             <!-- Ticket Search -->
             <div class="mb-8 sm:mb-12">
-                <div class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border" x-intersect="$el.classList.add('animate-slide-up')">
+                <div class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border" x-intersect="$el.classList.add('animate-slide-up')">
                     <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shrink-0 shadow-emerald-500/30">
                             <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         </div>
                         <div>
-                            <h2 class="text-xl sm:text-xl font-bold text-foreground">Lacak Laporan</h2>
-                            <p class="text-secondary text-xs sm:text-sm">Masukkan nomor tiket untuk melihat status laporan Anda</p>
+                            <h2 class="text-xl sm:text-xl font-bold text-foreground dark:text-slate-100">Lacak Laporan</h2>
+                            <p class="text-secondary dark:text-slate-400 text-xs sm:text-sm">Masukkan nomor tiket untuk melihat status laporan Anda</p>
                         </div>
                     </div>
                     <livewire:frontend.ticket-search type="whistleblower" />
@@ -164,17 +164,17 @@
             </div>
 
             <!-- Report Form -->
-            <div id="form" class="bg-white rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border" x-intersect="$el.classList.add('animate-slide-up')">
+            <div id="form" class="bg-white dark:bg-slate-900 rounded-lg sm:rounded-lg p-4 sm:p-6 md:p-8 shadow-sm border border-border" x-intersect="$el.classList.add('animate-slide-up')">
                 <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-emerald-500/30 shrink-0">
                         <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-foreground">Form Laporan Online</h2>
-                        <p class="text-secondary text-sm sm:text-base">Laporkan dugaan pelanggaran secara anonim (identitas dirahasiakan)</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-foreground dark:text-slate-100">Form Laporan Online</h2>
+                        <p class="text-secondary dark:text-slate-400 text-sm sm:text-base">Laporkan dugaan pelanggaran secara anonim (identitas dirahasiakan)</p>
                     </div>
                 </div>
-                @livewire('frontend.whistleblowing.form')
+                <livewire:frontend.complaint.form />
             </div>
         </div>
     </section>

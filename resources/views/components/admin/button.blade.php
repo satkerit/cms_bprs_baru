@@ -13,10 +13,10 @@
         'default' => 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:from-emerald-700 hover:to-emerald-600 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 active:shadow-emerald-600/20',
         'primary' => 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:from-emerald-700 hover:to-emerald-600 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 active:shadow-emerald-600/20',
         'gold' => 'bg-gradient-to-r from-amber-600 to-amber-500 text-white hover:from-amber-700 hover:to-amber-600 shadow-lg shadow-amber-600/25 hover:shadow-amber-600/35',
-        'secondary' => 'bg-slate-100 text-slate-700 hover:bg-slate-200/80 border border-slate-200/60 hover:border-slate-300 shadow-sm',
+        'secondary' => 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-slate-700 border border-slate-200/60 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm',
         'destructive' => 'bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-700 hover:to-red-600 shadow-lg shadow-red-600/25 hover:shadow-red-600/35',
-        'outline' => 'border border-slate-200 text-slate-700 bg-white/80 hover:bg-slate-50 hover:border-slate-300 shadow-sm backdrop-blur-sm',
-        'ghost' => 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
+        'outline' => 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm backdrop-blur-sm',
+        'ghost' => 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800',
         'link' => 'text-amber-600 hover:text-amber-700 underline-offset-2 hover:underline',
     ];
 

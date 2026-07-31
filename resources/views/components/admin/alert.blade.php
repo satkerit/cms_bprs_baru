@@ -7,24 +7,24 @@
 @php
     $config = [
         'success' => [
-            'container' => 'bg-emerald-50 border-emerald-200/70 text-emerald-800',
+            'container' => 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/70 dark:border-emerald-800/50 text-emerald-800 dark:text-emerald-300',
             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
-            'iconBg' => 'bg-emerald-100 text-emerald-600',
+            'iconBg' => 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400',
         ],
         'error' => [
-            'container' => 'bg-red-50 border-red-200/70 text-red-800',
+            'container' => 'bg-red-50 dark:bg-red-950/40 border-red-200/70 dark:border-red-800/50 text-red-800 dark:text-red-300',
             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
-            'iconBg' => 'bg-red-100 text-red-600',
+            'iconBg' => 'bg-red-100 dark:bg-red-900/60 text-red-600 dark:text-red-400',
         ],
         'warning' => [
-            'container' => 'bg-amber-50 border-amber-200/70 text-amber-800',
+            'container' => 'bg-amber-50 dark:bg-amber-950/40 border-amber-200/70 dark:border-amber-800/50 text-amber-800 dark:text-amber-300',
             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>',
-            'iconBg' => 'bg-amber-100 text-amber-600',
+            'iconBg' => 'bg-amber-100 dark:bg-amber-900/60 text-amber-600 dark:text-amber-400',
         ],
         'info' => [
-            'container' => 'bg-sky-50 border-sky-200/70 text-sky-800',
+            'container' => 'bg-sky-50 dark:bg-sky-950/40 border-sky-200/70 dark:border-sky-800/50 text-sky-800 dark:text-sky-300',
             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
-            'iconBg' => 'bg-sky-100 text-sky-600',
+            'iconBg' => 'bg-sky-100 dark:bg-sky-900/60 text-sky-600 dark:text-sky-400',
         ],
     ];
 

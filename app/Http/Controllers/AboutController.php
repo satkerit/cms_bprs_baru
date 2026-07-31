@@ -16,30 +16,16 @@ class AboutController extends Controller
         ]);
     }
 
-    public function komisaris()
+    /**
+     * Halaman Manajemen — menggabungkan Dewan Komisaris, Dewan Direksi,
+     * dan Dewan Pengawas Syariah dalam satu tampilan struktur organisasi.
+     */
+    public function manajemen()
     {
-        return view('frontend.pages.about.board-members', [
-            'members' => app(CacheService::class)->getBoardMembers('komisaris'),
-            'title' => 'Dewan Komisaris',
-            'subtitle' => 'Dewan Komisaris BPR Syariah',
-        ]);
-    }
-
-    public function direksi()
-    {
-        return view('frontend.pages.about.board-members', [
-            'members' => app(CacheService::class)->getBoardMembers('direksi'),
-            'title' => 'Dewan Direksi',
-            'subtitle' => 'Dewan Direksi BPR Syariah',
-        ]);
-    }
-
-    public function pengawasSyariah()
-    {
-        return view('frontend.pages.about.board-members', [
-            'members' => app(CacheService::class)->getBoardMembers('pengawas_syariah'),
-            'title' => 'Dewan Pengawas Syariah',
-            'subtitle' => 'Dewan Pengawas Syariah BPR Syariah',
+        return view('frontend.pages.about.manajemen', [
+            'komisaris' => app(CacheService::class)->getBoardMembers('komisaris'),
+            'direksi' => app(CacheService::class)->getBoardMembers('direksi'),
+            'pengawasSyariah' => app(CacheService::class)->getBoardMembers('pengawas_syariah'),
         ]);
     }
 

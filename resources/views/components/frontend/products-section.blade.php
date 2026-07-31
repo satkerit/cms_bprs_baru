@@ -41,7 +41,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
         <div class="text-center mb-12 lg:mb-14 fade-in-section" x-intersect="$el.classList.add('is-visible')">
-            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold bg-emerald-50 dark:bg-emerald-100 text-emerald-700 dark:text-emerald-400 mb-4 shadow-sm">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold bg-emerald-50 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 mb-4 shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                 </svg>
@@ -63,7 +63,7 @@
                 $delay = $index * 100;
             @endphp
             <a href="{{ route('products.show', $product->slug) }}"
-               class="group relative block bg-white dark:bg-muted rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
+               class="group relative block bg-white dark:bg-slate-900 rounded-2xl border border-border dark:border-slate-700 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-slate-900/50 transition-all duration-500"
                style="animation-delay: {{ $delay }}ms"
                x-intersect="$el.classList.add('animate-slide-up')">
 

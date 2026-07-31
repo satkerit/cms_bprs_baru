@@ -40,7 +40,7 @@
  <x-admin.card title="Informasi Dasar" subtitle="Data utama perusahaan">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label for="name" class="block text-[13px] font-medium text-zinc-700 mb-2">Nama Perusahaan *</label>
+ <label for="name" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Nama Perusahaan *</label>
  <input type="text" name="name" id="name"
  value="{{ old('name', $company->name) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
@@ -48,14 +48,14 @@
  </div>
 
  <div>
- <label for="tagline" class="block text-[13px] font-medium text-zinc-700 mb-2">Tagline</label>
+ <label for="tagline" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tagline</label>
  <input type="text" name="tagline" id="tagline"
  value="{{ old('tagline', $company->tagline) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="established_year" class="block text-[13px] font-medium text-zinc-700 mb-2">Tahun Berdiri</label>
+ <label for="established_year" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tahun Berdiri</label>
  <input type="number" name="established_year" id="established_year"
  value="{{ old('established_year', $company->established_year) }}"
  min="1900" max="{{ date('Y') }}"
@@ -63,7 +63,7 @@
  </div>
 
  <div class="md:col-span-2">
- <label for="description" class="block text-[13px] font-medium text-zinc-700 mb-2">Deskripsi Perusahaan</label>
+ <label for="description" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Deskripsi Perusahaan</label>
  <textarea name="description" id="description" rows="4"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('description', $company->description) }}</textarea>
  </div>
@@ -74,62 +74,62 @@
  <x-admin.card title="Informasi Kontak" subtitle="Data kontak dan alamat perusahaan">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div class="md:col-span-2">
- <label for="address" class="block text-[13px] font-medium text-zinc-700 mb-2">Alamat</label>
+ <label for="address" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Alamat</label>
  <textarea name="address" id="address" rows="3"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('address', $company->address) }}</textarea>
  </div>
 
  <div>
- <label for="phone" class="block text-[13px] font-medium text-zinc-700 mb-2">Telepon</label>
+ <label for="phone" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Telepon</label>
  <input type="text" name="phone" id="phone"
  value="{{ old('phone', $company->phone) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="fax" class="block text-[13px] font-medium text-zinc-700 mb-2">Fax</label>
+ <label for="fax" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Fax</label>
  <input type="text" name="fax" id="fax"
  value="{{ old('fax', $company->fax) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="whatsapp" class="block text-[13px] font-medium text-zinc-700 mb-2">WhatsApp</label>
+ <label for="whatsapp" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">WhatsApp</label>
  <input type="text" name="whatsapp" id="whatsapp"
  value="{{ old('whatsapp', $company->whatsapp) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="website" class="block text-[13px] font-medium text-zinc-700 mb-2">Website</label>
+ <label for="website" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Website</label>
  <input type="url" name="website" id="website"
  value="{{ old('website', $company->website) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="email" class="block text-[13px] font-medium text-zinc-700 mb-2">Email Utama</label>
+ <label for="email" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Email Utama</label>
  <input type="email" name="email" id="email"
  value="{{ old('email', $company->email) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="email_contact" class="block text-[13px] font-medium text-zinc-700 mb-2">Email Kontak</label>
+ <label for="email_contact" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Email Kontak</label>
  <input type="email" name="email_contact" id="email_contact"
  value="{{ old('email_contact', $company->email_contact) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="email_complaint" class="block text-[13px] font-medium text-zinc-700 mb-2">Email Pengaduan</label>
+ <label for="email_complaint" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Email Pengaduan</label>
  <input type="email" name="email_complaint" id="email_complaint"
  value="{{ old('email_complaint', $company->email_complaint) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="email_whistleblowing" class="block text-[13px] font-medium text-zinc-700 mb-2">Email Whistleblowing</label>
+ <label for="email_whistleblowing" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Email Whistleblowing</label>
  <input type="email" name="email_whistleblowing" id="email_whistleblowing"
  value="{{ old('email_whistleblowing', $company->email_whistleblowing) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
@@ -142,7 +142,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <!-- Logo -->
  <div>
- <label class="block text-[13px] font-medium text-zinc-700 mb-2">Logo Utama</label>
+ <label class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Logo Utama</label>
  <x-file-upload
  name="logo"
  :current="$company->logo_url"
@@ -153,7 +153,7 @@
 
  <!-- Logo Footer -->
  <div>
- <label class="block text-[13px] font-medium text-zinc-700 mb-2">Logo Footer</label>
+ <label class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Logo Footer</label>
  <x-file-upload
  name="logo_footer"
  :current="$company->logo_footer_url"
@@ -166,23 +166,23 @@
  <input type="checkbox" name="logo_footer_remove_bg" value="1"
  {{ old('logo_footer_remove_bg', $company->logo_footer_remove_bg) ? 'checked' : '' }}
  class="rounded border-zinc-300 text-blue-600 focus:border-blue-500 focus:ring-blue-500">
- <span class="ml-2 text-[13px] text-zinc-600">Remove Background</span>
+ <span class="ml-2 text-[13px] dark:text-slate-300 text-zinc-600">Remove Background</span>
  </label>
 
  <div x-data="{ value: {{ old('logo_footer_opacity', $company->logo_footer_opacity ?? 100) }} }">
- <label for="logo_footer_opacity" class="block text-[13px] text-zinc-600 mb-1">Opacity (%)</label>
+ <label for="logo_footer_opacity" class="block text-[13px] dark:text-slate-300 text-zinc-600 mb-1">Opacity (%)</label>
  <input type="range" name="logo_footer_opacity" id="logo_footer_opacity"
  min="0" max="100"
  x-model="value"
- class="w-full h-2 bg-zinc-200 rounded-xl appearance-none cursor-pointer">
- <span x-text="value + '%'" class="text-[13px] text-zinc-500"></span>
+ class="w-full h-2 dark:bg-slate-700 bg-zinc-200 rounded-xl appearance-none cursor-pointer">
+ <span x-text="value + '%'" class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500"></span>
  </div>
  </div>
  </div>
 
  <!-- Favicon -->
  <div>
- <label class="block text-[13px] font-medium text-zinc-700 mb-2">Favicon</label>
+ <label class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Favicon</label>
  <x-file-upload
  name="favicon"
  :current="$company->favicon_url"
@@ -193,7 +193,7 @@
 
  <!-- Profile Image -->
  <div>
- <label class="block text-[13px] font-medium text-zinc-700 mb-2">Gambar Profil</label>
+ <label class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Gambar Profil</label>
  <x-file-upload
  name="profile_image"
  :current="$company->profile_image_url"
@@ -204,7 +204,7 @@
 
  <!-- Organization Structure -->
  <div class="md:col-span-2">
- <label class="block text-[13px] font-medium text-zinc-700 mb-2">Struktur Organisasi</label>
+ <label class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Struktur Organisasi</label>
  <x-file-upload
  name="organization_structure"
  :current="$company->organization_structure_url"
@@ -219,19 +219,19 @@
  <x-admin.card title="Profil Perusahaan" subtitle="Visi, misi, dan sejarah perusahaan">
  <div class="space-y-6">
  <div>
- <label for="vision" class="block text-[13px] font-medium text-zinc-700 mb-2">Visi</label>
+ <label for="vision" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Visi</label>
  <textarea name="vision" id="vision" rows="3"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('vision', $company->vision) }}</textarea>
  </div>
 
  <div>
- <label for="mission" class="block text-[13px] font-medium text-zinc-700 mb-2">Misi</label>
+ <label for="mission" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Misi</label>
  <textarea name="mission" id="mission" rows="4"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('mission', $company->mission) }}</textarea>
  </div>
 
  <div>
- <label for="history" class="block text-[13px] font-medium text-zinc-700 mb-2">Sejarah</label>
+ <label for="history" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Sejarah</label>
  <textarea name="history" id="history" rows="5"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('history', $company->history) }}</textarea>
  </div>
@@ -242,21 +242,21 @@
  <x-admin.card title="Statistik" subtitle="Data statistik perusahaan">
  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
  <div>
- <label for="stat_years_experience" class="block text-[13px] font-medium text-zinc-700 mb-2">Tahun Pengalaman</label>
+ <label for="stat_years_experience" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tahun Pengalaman</label>
  <input type="number" name="stat_years_experience" id="stat_years_experience"
  value="{{ old('stat_years_experience', $company->stat_years_experience) }}"
  min="0" class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="stat_branch_offices" class="block text-[13px] font-medium text-zinc-700 mb-2">Kantor Cabang</label>
+ <label for="stat_branch_offices" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kantor Cabang</label>
  <input type="number" name="stat_branch_offices" id="stat_branch_offices"
  value="{{ old('stat_branch_offices', $company->stat_branch_offices) }}"
  min="0" class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="stat_total_assets" class="block text-[13px] font-medium text-zinc-700 mb-2">Total Aset</label>
+ <label for="stat_total_assets" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Total Aset</label>
  <input type="text" name="stat_total_assets" id="stat_total_assets"
  value="{{ old('stat_total_assets', $company->stat_total_assets) }}"
  placeholder="contoh: 150 Miliar"
@@ -264,21 +264,21 @@
  </div>
 
  <div>
- <label for="stat_cash_offices" class="block text-[13px] font-medium text-zinc-700 mb-2">Kantor Kas</label>
+ <label for="stat_cash_offices" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kantor Kas</label>
  <input type="number" name="stat_cash_offices" id="stat_cash_offices"
  value="{{ old('stat_cash_offices', $company->stat_cash_offices) }}"
  min="0" class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="stat_mobile_cash_offices" class="block text-[13px] font-medium text-zinc-700 mb-2">Kas Keliling</label>
+ <label for="stat_mobile_cash_offices" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Kas Keliling</label>
  <input type="number" name="stat_mobile_cash_offices" id="stat_mobile_cash_offices"
  value="{{ old('stat_mobile_cash_offices', $company->stat_mobile_cash_offices) }}"
  min="0" class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="legacy_visitor_count" class="block text-[13px] font-medium text-zinc-700 mb-2">Jumlah Pengunjung Legacy</label>
+ <label for="legacy_visitor_count" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Jumlah Pengunjung Legacy</label>
  <input type="number" name="legacy_visitor_count" id="legacy_visitor_count"
  value="{{ old('legacy_visitor_count', $company->legacy_visitor_count) }}"
  min="0" class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
@@ -290,42 +290,42 @@
  <x-admin.card title="Media Sosial" subtitle="Link media sosial perusahaan">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label for="facebook" class="block text-[13px] font-medium text-zinc-700 mb-2">Facebook</label>
+ <label for="facebook" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Facebook</label>
  <input type="url" name="facebook" id="facebook"
  value="{{ old('facebook', $company->facebook) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="instagram" class="block text-[13px] font-medium text-zinc-700 mb-2">Instagram</label>
+ <label for="instagram" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Instagram</label>
  <input type="url" name="instagram" id="instagram"
  value="{{ old('instagram', $company->instagram) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="twitter" class="block text-[13px] font-medium text-zinc-700 mb-2">Twitter</label>
+ <label for="twitter" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Twitter</label>
  <input type="url" name="twitter" id="twitter"
  value="{{ old('twitter', $company->twitter) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="youtube" class="block text-[13px] font-medium text-zinc-700 mb-2">YouTube</label>
+ <label for="youtube" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">YouTube</label>
  <input type="url" name="youtube" id="youtube"
  value="{{ old('youtube', $company->youtube) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="linkedin" class="block text-[13px] font-medium text-zinc-700 mb-2">LinkedIn</label>
+ <label for="linkedin" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">LinkedIn</label>
  <input type="url" name="linkedin" id="linkedin"
  value="{{ old('linkedin', $company->linkedin) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="tiktok" class="block text-[13px] font-medium text-zinc-700 mb-2">TikTok</label>
+ <label for="tiktok" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">TikTok</label>
  <input type="url" name="tiktok" id="tiktok"
  value="{{ old('tiktok', $company->tiktok) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
@@ -337,27 +337,27 @@
  <x-admin.card title="Informasi Regulasi" subtitle="Data regulasi dan lisensi">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label for="ojk_license" class="block text-[13px] font-medium text-zinc-700 mb-2">Nomor Izin OJK</label>
+ <label for="ojk_license" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Nomor Izin OJK</label>
  <input type="text" name="ojk_license" id="ojk_license"
  value="{{ old('ojk_license', $company->ojk_license) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="lps_guarantee_amount" class="block text-[13px] font-medium text-zinc-700 mb-2">Jumlah Jaminan LPS</label>
+ <label for="lps_guarantee_amount" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Jumlah Jaminan LPS</label>
  <input type="text" name="lps_guarantee_amount" id="lps_guarantee_amount"
  value="{{ old('lps_guarantee_amount', $company->lps_guarantee_amount) }}"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
  </div>
 
  <div>
- <label for="ojk_tagline" class="block text-[13px] font-medium text-zinc-700 mb-2">Tagline OJK</label>
+ <label for="ojk_tagline" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tagline OJK</label>
  <textarea name="ojk_tagline" id="ojk_tagline" rows="2"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('ojk_tagline', $company->ojk_tagline) }}</textarea>
  </div>
 
  <div>
- <label for="lps_tagline" class="block text-[13px] font-medium text-zinc-700 mb-2">Tagline LPS</label>
+ <label for="lps_tagline" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Tagline LPS</label>
  <textarea name="lps_tagline" id="lps_tagline" rows="2"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('lps_tagline', $company->lps_tagline) }}</textarea>
  </div>
@@ -368,19 +368,19 @@
  <x-admin.card title="SEO & Footer" subtitle="Pengaturan SEO dan footer website">
  <div class="space-y-6">
  <div>
- <label for="footer_description" class="block text-[13px] font-medium text-zinc-700 mb-2">Deskripsi Footer</label>
+ <label for="footer_description" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Deskripsi Footer</label>
  <textarea name="footer_description" id="footer_description" rows="3"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('footer_description', $company->footer_description) }}</textarea>
  </div>
 
  <div>
- <label for="meta_description" class="block text-[13px] font-medium text-zinc-700 mb-2">Meta Description</label>
+ <label for="meta_description" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Meta Description</label>
  <textarea name="meta_description" id="meta_description" rows="2"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('meta_description', $company->meta_description) }}</textarea>
  </div>
 
  <div>
- <label for="meta_keywords" class="block text-[13px] font-medium text-zinc-700 mb-2">Meta Keywords</label>
+ <label for="meta_keywords" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Meta Keywords</label>
  <textarea name="meta_keywords" id="meta_keywords" rows="2"
  placeholder="Pisahkan dengan koma"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('meta_keywords', $company->meta_keywords) }}</textarea>

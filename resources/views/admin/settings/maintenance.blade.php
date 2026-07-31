@@ -52,7 +52,7 @@
  @php
  $groupedPages = [
  'Utama' => ['home'],
- 'Tentang Kami' => ['about', 'about_company', 'about_komisaris', 'about_direksi', 'about_dps', 'about_struktur', 'about_offices'],
+ 'Tentang Kami' => ['about', 'about_company', 'about_manajemen', 'about_struktur', 'about_offices'],
  'Produk & Layanan' => ['products', 'products_simpanan', 'products_pembiayaan', 'products_deposito', 'products_kas_keliling'],
  'Informasi' => ['auctions', 'news', 'careers'],
  'Laporan' => ['reports', 'reports_keuangan', 'reports_tata_kelola', 'reports_tahunan', 'reports_berkelanjutan'],

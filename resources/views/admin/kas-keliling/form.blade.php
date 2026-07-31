@@ -2,7 +2,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <!-- Tanggal -->
  <div>
- <label for="schedule_date" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="schedule_date" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Tanggal Jadwal <span class="text-red-600">*</span>
  </label>
  <input type="date" name="schedule_date" id="schedule_date" 
@@ -13,13 +13,13 @@
  @error('schedule_date')
  <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
  @else
- <p class="mt-1.5 text-[13px] text-zinc-500">Tanggal tidak boleh kurang dari hari ini</p>
+ <p class="mt-1.5 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Tanggal tidak boleh kurang dari hari ini</p>
  @enderror
  </div>
 
  <!-- Lokasi -->
  <div>
- <label for="location" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="location" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Lokasi/Tujuan <span class="text-red-600">*</span>
  </label>
  <input type="text" name="location" id="location" 
@@ -46,7 +46,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <!-- Jam Mulai -->
  <div>
- <label for="start_time" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="start_time" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Jam Mulai <span class="text-red-600">*</span>
  </label>
  <input type="time" name="start_time" id="start_time" 
@@ -60,7 +60,7 @@
 
  <!-- Jam Selesai -->
  <div>
- <label for="end_time" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="end_time" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Jam Selesai <span class="text-red-600">*</span>
  </label>
  <input type="time" name="end_time" id="end_time" 
@@ -70,34 +70,34 @@
  @error('end_time')
  <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
  @enderror
- <div id="time-duration" class="mt-1.5 text-[13px] text-zinc-500 hidden"></div>
+ <div id="time-duration" class="mt-1.5 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 hidden"></div>
  </div>
  </div>
 
  <!-- Fasilitas -->
  <div>
- <label for="facility" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="facility" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Fasilitas yang Tersedia
  </label>
  <div class="mb-2">
  <div class="flex flex-wrap gap-2">
- <button type="button" class="facility-tag px-3 py-1 text-[13px] bg-zinc-50 text-zinc-700 rounded-lg" data-facility="Setoran Tabungan">
+ <button type="button" class="facility-tag px-3 py-1 text-[13px] dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 dark:text-slate-300 text-zinc-700 rounded-lg" data-facility="Setoran Tabungan">
  Setoran Tabungan
  </button>
- <button type="button" class="facility-tag px-3 py-1 text-[13px] bg-zinc-50 text-zinc-700 rounded-lg" data-facility="Pembayaran Angsuran">
+ <button type="button" class="facility-tag px-3 py-1 text-[13px] dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 dark:text-slate-300 text-zinc-700 rounded-lg" data-facility="Pembayaran Angsuran">
  Pembayaran Angsuran
  </button>
- <button type="button" class="facility-tag px-3 py-1 text-[13px] bg-zinc-50 text-zinc-700 rounded-lg" data-facility="Penarikan Tunai">
+ <button type="button" class="facility-tag px-3 py-1 text-[13px] dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 dark:text-slate-300 text-zinc-700 rounded-lg" data-facility="Penarikan Tunai">
  Penarikan Tunai
  </button>
- <button type="button" class="facility-tag px-3 py-1 text-[13px] bg-zinc-50 text-zinc-700 rounded-lg" data-facility="Pembukaan Rekening">
+ <button type="button" class="facility-tag px-3 py-1 text-[13px] dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 dark:text-slate-300 text-zinc-700 rounded-lg" data-facility="Pembukaan Rekening">
  Pembukaan Rekening
  </button>
- <button type="button" class="facility-tag px-3 py-1 text-[13px] bg-zinc-50 text-zinc-700 rounded-lg" data-facility="Transfer">
+ <button type="button" class="facility-tag px-3 py-1 text-[13px] dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 dark:text-slate-300 text-zinc-700 rounded-lg" data-facility="Transfer">
  Transfer
  </button>
  </div>
- <p class="text-[13px] text-zinc-500 mt-1">Klik untuk menambahkan ke daftar fasilitas</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">Klik untuk menambahkan ke daftar fasilitas</p>
  </div>
  <textarea name="facility" id="facility" rows="3" 
  class="w-full px-4 py-2.5 border border-zinc-300 rounded-xl focus:ring-2 resize-none @error('facility') border-red-500 @enderror" 
@@ -105,14 +105,14 @@
  @error('facility')
  <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
  @else
- <p class="mt-1.5 text-[13px] text-zinc-500">Pisahkan dengan koma (,) untuk multiple fasilitas</p>
+ <p class="mt-1.5 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Pisahkan dengan koma (,) untuk multiple fasilitas</p>
  @enderror
  </div>
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <!-- Nama PIC -->
  <div>
- <label for="pic_name" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="pic_name" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Nama PIC (Person In Charge)
  </label>
  <input type="text" name="pic_name" id="pic_name" 
@@ -126,7 +126,7 @@
 
  <!-- Nomor PIC -->
  <div>
- <label for="pic_phone" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="pic_phone" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Nomor Telepon PIC
  </label>
  <input type="text" name="pic_phone" id="pic_phone" 
@@ -138,14 +138,14 @@
  @error('pic_phone')
  <p class="mt-1.5 text-[13px] text-red-600">{{ $message }}</p>
  @else
- <p class="mt-1.5 text-[13px] text-zinc-500">Format: 08xx-xxxx-xxxx atau +62xxx-xxxx-xxxx</p>
+ <p class="mt-1.5 text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Format: 08xx-xxxx-xxxx atau +62xxx-xxxx-xxxx</p>
  @enderror
  </div>
  </div>
 
  <!-- Catatan -->
  <div>
- <label for="notes" class="block text-[11px] font-semibold text-zinc-700 mb-2">
+ <label for="notes" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">
  Catatan Tambahan
  </label>
  <textarea name="notes" id="notes" rows="3" 
@@ -161,7 +161,7 @@
  <input type="checkbox" name="is_active" id="is_active" value="1" 
  {{ old('is_active', isset($kasKeliling) ? $kasKeliling->is_active : true) ? 'checked' : '' }}
  class="rounded border-zinc-300 text-sky-600">
- <label for="is_active" class="ml-2 text-[11px] text-zinc-700">Aktif</label>
+ <label for="is_active" class="ml-2 text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Aktif</label>
  </div>
 
  <!-- Buttons -->

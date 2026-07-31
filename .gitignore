@@ -15,6 +15,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/obsidian-vault*
 # (tests, docs, docker, design-system sengaja tidak di-ignore — harus di-commit)
 # ============================================
 # STORAGE (content only, keep .gitkeep)
@@ -51,3 +52,11 @@ walkthrough.md
 .DS_Store
 Thumbs.db
 NUL
+
+
+# SKILL #
+# ============================================
+/.ulpi
+/obsidian-vault*
+/docker/*
+/docs/*

@@ -1,119 +1,179 @@
 <x-frontend-layout>
-    <x-slot name="title">Produk & Layanan - BPRS Bangka Belitung</x-slot>
-    <x-slot name="meta_description">Produk pembiayaan syariah, simpanan, dan layanan perbankan dari BPRS Bangka Belitung yang sesuai dengan prinsip syariah.</x-slot>
+    <x-slot name="title">{{ $title ?? 'Produk & Layanan' }} - BPRS Bangka Belitung</x-slot>
+    <x-slot name="meta_description">{{ $subtitle ?? 'Produk pembiayaan syariah, simpanan, dan layanan perbankan dari BPRS Bangka Belitung.' }}</x-slot>
 
-    <!-- Hero -->
-    <section class="relative pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 overflow-hidden">
+    {{-- ═══ HIGH-END v2: HERO — Ethereal Glass ═══ --}}
+    <section class="relative pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20 md:pb-28 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.03&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+            <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight">Produk & Layanan</h1>
-            <p class="text-sm sm:text-lg md:text-xl text-white/80 mx-auto px-4">Solusi perbankan syariah yang sesuai dengan kebutuhan Anda.</p>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-up">
+            @if(isset($title))
+            <span class="eyebrow-badge mb-5 inline-flex bg-white/20 text-white border-white/20">{{ $title }}</span>
+            @endif
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">
+                {{ $title ?? 'Produk & Layanan' }}
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl text-white/80 w-full px-4 leading-relaxed">
+                {{ $subtitle ?? 'Solusi perbankan syariah yang sesuai dengan kebutuhan Anda.' }}
+            </p>
         </div>
+        {{-- Decorative bottom wave --}}
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-muted/50 dark:from-slate-900/50 to-transparent"></div>
     </section>
 
-    <!-- Products Section -->
-    <section class="py-12 sm:py-16 md:py-20 bg-muted/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            @if($categories->count() > 0)
-                <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 px-4" x-data="{ activeCategory: '{{ request('category', 'all') }}' }">
-                    <a href="{{ route('products.index') }}"
-                       @click="activeCategory = 'all'"
-                       class="px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg sm:rounded-lg transition-all duration-300 {{ !request('category') ? 'bg-emerald-600 text-white shadow-emerald-500/30 ring-2 ring-emerald-600 ring-offset-2' : 'bg-card text-muted-foreground hover:bg-muted hover:text-emerald-600 border border-border' }}">
-                        Semua
-                    </a>
-                    @foreach($categories as $category)
-                        <a href="{{ route('products.index', ['category' => $category->slug]) }}"
-                           @click="activeCategory = '{{ $category->slug }}'"
-                           class="px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg sm:rounded-lg transition-all duration-300 btn-press {{ request('category') == $category->slug ? 'bg-emerald-600 text-white shadow-emerald-500/30 ring-2 ring-emerald-600 ring-offset-2' : 'bg-card text-muted-foreground hover:bg-muted hover:text-emerald-600 border border-border' }}">
-                            {{ $category->name }}
-                        </a>
-                    @endforeach
-                </div>
+    {{-- ═══ HIGH-END v2: PRODUCTS GRID — Soft Structuralism + Double-Bezel ═══ --}}
+    <section class="py-20 lg:py-28 bg-muted/30 dark:bg-slate-950/50 relative">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <div class="absolute top-20 left-0 w-64 h-64 bg-emerald-50 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-20 right-0 w-64 h-64 bg-emerald-50 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {{-- Category Filter Pills --}}
+            @if(isset($categories) && $categories->count() > 0)
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12 lg:mb-16 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <a href="{{ request()->url() }}"
+                   class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] {{ !request('category') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20' : 'bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm text-foreground hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 border border-border' }}">
+                    Semua
+                </a>
+                @foreach($categories as $category)
+                <a href="{{ request()->url() . '?category=' . $category->slug }}"
+                   class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] {{ request('category') == $category->slug ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20' : 'bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm text-foreground hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 border border-border' }}">
+                    {{ $category->name }}
+                </a>
+                @endforeach
+            </div>
             @endif
 
             @if($products->count() > 0)
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                    @foreach($products as $product)
-                        <div class="group bg-card rounded-lg sm:rounded-lg shadow-gray-200/50 border border-border card-hover overflow-hidden flex flex-col h-full touch-manipulation">
-                            <div class="relative h-44 sm:h-52 md:h-56 overflow-hidden bg-muted aspect-[4/3]">
-                                @if($product->image)
-                                    <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
-                                         alt="{{ $product->name }}"
-                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                         width="800" height="600"
-                                         loading="{{ $loop->first ? 'eager' : 'lazy' }}">
-                                @else
-                                    <div class="w-full h-full bg-gradient-to-br from-emerald-50 via-emerald-50 to-emerald-50 flex items-center justify-center">
-                                        <svg class="w-20 h-20 text-emerald-600 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                        </svg>
+            {{-- Asymmetrical Bento Grid — HIGH-END v2 --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+                 x-intersect="$el.querySelectorAll('.product-card').forEach((el, i) => { setTimeout(() => el.classList.add('is-visible'), i * 100) })">
+                @foreach($products as $index => $product)
+                @php
+                    $isFeatured = $index === 0;
+                    $spanClass = $isFeatured ? 'lg:col-span-2 lg:row-span-1' : '';
+                @endphp
+                <div class="product-card reveal-up {{ $spanClass }}" style="transition-delay: {{ $index * 60 }}ms">
+                    {{-- Double-Bezel Card --}}
+                    <a href="{{ route('products.show', $product->slug) }}" class="block group no-underline">
+                        <div class="double-bezel">
+                            <div class="double-bezel-inner">
+                                {{-- Image Area --}}
+                                <div class="relative overflow-hidden" style="border-radius: var(--radius-double-inner) var(--radius-double-inner) 0 0;">
+                                    <div class="aspect-[4/3] bg-muted">
+                                        @if($product->image)
+                                        <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
+                                             alt="{{ $product->name }}"
+                                             class="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                                             width="800" height="600"
+                                             loading="{{ $index < 3 ? 'eager' : 'lazy' }}"
+                                             decoding="async">
+                                        @else
+                                        <div class="w-full h-full bg-gradient-to-br from-emerald-50 dark:from-emerald-900/30 to-emerald-100/50 dark:to-emerald-900/10 flex items-center justify-center">
+                                            <svg class="w-16 h-16 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                            </svg>
+                                        </div>
+                                        @endif
                                     </div>
-                                @endif
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                <div class="absolute top-3 left-3 sm:top-4 sm:left-4">
+
+                                    {{-- Type Badge --}}
                                     @if($product->type)
-                                        <span class="px-2.5 py-1 sm:px-3 text-xs sm:text-sm font-bold rounded-full bg-white/90 backdrop-blur-sm text-emerald-600 border border-white/50 shadow-sm">
+                                    <div class="absolute top-3 left-3 z-10">
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-emerald-700 dark:text-emerald-400 border border-white/50 dark:border-slate-700/50 shadow-sm">
                                             @switch($product->type)
-                                                @case('simpanan_syariah') Simpanan @break
-                                                @case('pembiayaan_syariah') Pembiayaan @break
-                                                @case('deposito_syariah') Deposito @break
+                                                @case('simpanan_syariah')
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                                    Simpanan @break
+                                                @case('pembiayaan_syariah')
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                    Pembiayaan @break
+                                                @case('deposito_syariah')
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                    Deposito @break
                                                 @default {{ ucwords(str_replace('_', ' ', $product->type)) }}
                                             @endswitch
                                         </span>
+                                    </div>
                                     @endif
+
+                                    {{-- Hover overlay --}}
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                 </div>
-                            </div>
 
-                            <div class="p-4 sm:p-5 md:p-6 flex flex-col flex-1">
-                            <h3 class="text-base sm:text-lg md:text-xl font-bold text-foreground mb-2 group-hover:text-emerald-600 transition-colors leading-snug">
-                                <a href="{{ route('products.show', $product->slug) }}" class="touch-manipulation">
-                                    {{ $product->name }}
-                                </a>
-                            </h3>
+                                {{-- Content Area --}}
+                                <div class="p-5 sm:p-6">
+                                    <h3 class="text-lg sm:text-xl font-bold text-foreground group-hover:text-emerald-600 transition-colors duration-300 leading-tight mb-2">
+                                        {{ $product->name }}
+                                    </h3>
 
-                                @if($product->short_description)
-                                    <p class="text-sm sm:text-base text-muted-foreground mb-4 line-clamp-2 leading-relaxed flex-1">{{ $product->short_description }}</p>
-                                @endif
+                                    @if($product->short_description)
+                                    <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed line-clamp-2 mb-4">
+                                        {{ $product->short_description }}
+                                    </p>
+                                    @endif
 
-                                <div class="pt-3 sm:pt-4 border-t border-border flex items-center justify-between">
-                                    <a href="{{ route('products.show', $product->slug) }}" class="inline-flex items-center gap-1.5 sm:gap-2 text-emerald-600 font-bold text-sm sm:text-base group/link hover:text-emerald-700 min-h-[44px] sm:min-h-0 -my-2 sm:my-0 touch-manipulation btn-press">
-                                        Selengkapnya
-                                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/link:translate-x-1 transition-transform shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                        </svg>
-                                    </a>
+                                    {{-- Button-in-Button CTA --}}
+                                    <div class="flex items-center gap-1.5 text-emerald-600 font-semibold text-sm group-hover:gap-2.5 transition-all duration-300">
+                                        <span>Selengkapnya</span>                                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                            </svg>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </a>
                 </div>
+                @endforeach
+            </div>
             @else
-                <div class="text-center py-16 sm:py-20 bg-card rounded-lg border border-border">
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                        <svg class="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                        </svg>
+            {{-- Empty State --}}
+            <div class="text-center py-20 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <div class="double-bezel inline-flex">
+                    <div class="double-bezel-inner px-10 py-8">
+                        <div class="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-foreground mb-2">Belum Ada Produk</h3>
+                        <p class="text-sm text-secondary">Produk untuk kategori ini belum tersedia. Silakan cek kategori lain.</p>
                     </div>
-                    <h3 class="text-base sm:text-lg font-bold text-foreground mb-2">Belum Ada Produk</h3>
-                    <p class="text-sm sm:text-base text-muted-foreground">Produk untuk kategori ini belum tersedia. Silakan cek kategori lain.</p>
                 </div>
+            </div>
             @endif
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-14 sm:py-18 md:py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-2xl font-bold sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Butuh Informasi Lebih Lanjut?</h2>                            <p class="text-sm sm:text-lg text-muted-foreground mb-6 sm:mb-8">Konsultasikan kebutuhan perbankan syariah Anda dengan tim marketing kami.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                <a href="{{ route('about.offices') }}" class="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-lg sm:rounded-lg hover:shadow-md hover:shadow-emerald-500/30 transition-all duration-300 min-h-[48px] touch-manipulation btn-press">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Kunjungi Kantor
+    {{-- ═══ HIGH-END v2: CTA — Ethereal Glass ═══ --}}
+    <section class="py-24 lg:py-32 bg-white dark:bg-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/30 to-transparent pointer-events-none"></div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-up" x-intersect="$el.classList.add('is-visible')">
+            <span class="eyebrow-badge mb-5 inline-flex">Butuh Bantuan?</span>
+            <h2 class="text-4xl sm:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight leading-tight">
+                Konsultasi <span class="text-emerald-600">Gratis</span>
+            </h2>
+            <p class="text-lg text-secondary mb-10 leading-relaxed mx-auto">
+                Konsultasikan kebutuhan perbankan syariah Anda dengan tim marketing kami. Kami siap membantu.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{{ route('about.offices') }}"
+                   class="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]">
+                    <span>Kunjungi Kantor</span>
+                    <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white/20 text-white transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </span>
                 </a>
-                <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-emerald-600 text-emerald-600 font-bold rounded-lg sm:rounded-lg hover:bg-emerald-50 transition-all duration-300 min-h-[48px] touch-manipulation btn-press">
-                    Hubungi Kami
+                <a href="{{ route('contact') }}"
+                   class="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full border-2 border-emerald-200 text-emerald-700 font-bold hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span>Hubungi Kami</span>
                 </a>
             </div>
         </div>

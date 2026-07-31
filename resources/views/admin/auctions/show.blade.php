@@ -7,7 +7,7 @@
         <nav class="flex mb-6" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('admin.auctions.index') }}" class="inline-flex items-center text-[13px] font-medium text-zinc-700 hover:text-orange-600">
+                    <a href="{{ route('admin.auctions.index') }}" class="inline-flex items-center text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:text-orange-600">
                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                         </svg>
@@ -16,10 +16,10 @@
                 </li>
                 <li>
                     <div class="flex items-center">
-                        <svg class="w-6 h-6 text-zinc-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 dark:text-slate-500 dark:text-slate-500 text-zinc-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="ml-1 text-[13px] font-medium text-zinc-500 md:ml-2">Detail Lelang</span>
+                        <span class="ml-1 text-[13px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500 md:ml-2">Detail Lelang</span>
                     </div>
                 </li>
             </ol>
@@ -58,10 +58,10 @@
                 <div class="admin-auction-card p-6">
                     <div class="flex items-start justify-between mb-4">
                         <div class="flex-1">
-                            <h1 class="text-3xl font-bold text-zinc-900 mb-2">{{ $auction->title }}</h1>
-                            <p class="text-lg text-zinc-600 mb-4">{{ $auction->auction_number }}</p>
+                            <h1 class="text-3xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-2">{{ $auction->title }}</h1>
+                            <p class="text-lg dark:text-slate-300 dark:text-slate-300 text-zinc-600 mb-4">{{ $auction->auction_number }}</p>
                             @if($auction->description)
-                                <p class="text-zinc-700 leading-relaxed">{{ $auction->description }}</p>
+                                <p class="dark:text-slate-300 dark:text-slate-300 text-zinc-700 leading-relaxed">{{ $auction->description }}</p>
                             @endif
                         </div>
                         <div class="flex flex-col space-y-2 ml-4">
@@ -129,34 +129,34 @@
                         Informasi Cepat
                     </h3>
                     <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2 border-b border-zinc-100">
-                            <span class="text-[13px] text-zinc-600">Jenis Aset:</span>
-                            <span class="font-medium text-zinc-900">{{ $auction->asset_type_label }}</span>
+                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
+                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jenis Aset:</span>
+                            <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->asset_type_label }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-zinc-100">
-                            <span class="text-[13px] text-zinc-600">Harga Limit:</span>
+                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
+                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Harga Limit:</span>
                             <span class="font-bold text-amber-600 text-lg">{{ $auction->formatted_limit_price }}</span>
                         </div>
                         @if($auction->estimated_price)
-                            <div class="flex justify-between items-center py-2 border-b border-zinc-100">
-                                <span class="text-[13px] text-zinc-600">Nilai Taksiran:</span>
-                                <span class="font-medium text-zinc-900">{{ $auction->formatted_estimated_price }}</span>
+                            <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
+                                <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Nilai Taksiran:</span>
+                                <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->formatted_estimated_price }}</span>
                             </div>
                         @endif
-                        <div class="flex justify-between items-center py-2 border-b border-zinc-100">
-                            <span class="text-[13px] text-zinc-600">Tanggal Lelang:</span>
+                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
+                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tanggal Lelang:</span>
                             <div class="text-right">
                                 @if($auction->auction_date)
-                                    <div class="font-medium text-zinc-900">{{ $auction->auction_date->format('d F Y') }}</div>
-                                    <div class="text-[13px] text-zinc-500">{{ $auction->auction_date->format('H:i') }} WIB</div>
+                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->auction_date->format('d F Y') }}</div>
+                                    <div class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $auction->auction_date->format('H:i') }} WIB</div>
                                 @else
-                                    <span class="text-zinc-500">Belum ditentukan</span>
+                                    <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ditentukan</span>
                                 @endif
                             </div>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-zinc-100">
-                            <span class="text-[13px] text-zinc-600">Lokasi Lelang:</span>
-                            <span class="font-medium text-zinc-900 text-right">{{ $auction->auction_location }}</span>
+                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
+                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Lokasi Lelang:</span>
+                            <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 text-right">{{ $auction->auction_location }}</span>
                         </div>
                     </div>
                 </div>
@@ -196,9 +196,9 @@
                     <div class="space-y-3">
                         @if($auction->contacts && is_array($auction->contacts) && count($auction->contacts) > 0)
                             @foreach($auction->contacts as $index => $contact)
-                                <div class="{{ $index > 0 ? 'pt-3 border-t border-zinc-100' : '' }}">
-                                    <div class="font-medium text-zinc-900">{{ $contact['name'] ?? '-' }}</div>
-                                    <div class="text-[13px] text-zinc-600 mb-1">{{ $contact['position'] ?? 'Staf Lelang' }}</div>
+                                <div class="{{ $index > 0 ? 'pt-3 border-t dark:border-slate-800 border-zinc-100' : '' }}">
+                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $contact['name'] ?? '-' }}</div>
+                                    <div class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600 mb-1">{{ $contact['position'] ?? 'Staf Lelang' }}</div>
                                     <div class="space-y-1">
                                         @if(isset($contact['phone']) && $contact['phone'])
                                             <a href="tel:{{ $contact['phone'] }}" class="flex items-center text-[13px] text-blue-600 hover:text-blue-800">
@@ -213,12 +213,12 @@
                             @endforeach
                         @else
                             <div>
-                                <span class="text-[13px] text-zinc-600">Kontak Person:</span>
-                                <div class="font-medium text-zinc-900">{{ $auction->contact_person }}</div>
+                                <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kontak Person:</span>
+                                <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->contact_person }}</div>
                             </div>
                             <div>
-                                <span class="text-[13px] text-zinc-600">Telepon:</span>
-                                <div class="font-medium text-zinc-900">
+                                <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Telepon:</span>
+                                <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">
                                     <a href="tel:{{ $auction->contact_phone }}" class="text-blue-600 hover:text-blue-800">
                                         {{ $auction->contact_phone }}
                                     </a>
@@ -226,8 +226,8 @@
                             </div>
                             @if($auction->contact_email)
                                 <div>
-                                    <span class="text-[13px] text-zinc-600">Email:</span>
-                                    <div class="font-medium text-zinc-900">
+                                    <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Email:</span>
+                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">
                                         <a href="mailto:{{ $auction->contact_email }}" class="text-blue-600 hover:text-blue-800">
                                             {{ $auction->contact_email }}
                                         </a>
@@ -242,30 +242,30 @@
 
         <!-- Detailed Information Tabs -->
         <div class="admin-auction-card">
-            <div class="border-b border-zinc-200 px-6 pt-6">
+            <div class="border-b dark:border-slate-700 border-zinc-200 px-6 pt-6">
                 <nav class="-mb-px flex space-x-8">
-                    <button class="tab-button active border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
+                    <button class="tab-button active border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
                             data-tab="property">
                         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                         Properti
                     </button>
-                    <button class="tab-button border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
+                    <button class="tab-button border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
                             data-tab="auction">
                         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4h3a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3z"></path>
                         </svg>
                         Lelang Agunan
                     </button>
-                    <button class="tab-button border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
+                    <button class="tab-button border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
                             data-tab="legal">
                         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         Legal
                     </button>
-                    <button class="tab-button border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
+                    <button class="tab-button border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
                             data-tab="contact">
                         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
@@ -280,7 +280,7 @@
                 <div class="tab-content" id="property">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
@@ -288,63 +288,63 @@
                             </h4>
                             <div class="space-y-3">
                                 @if($auction->asset_category)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Kategori:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->asset_category }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kategori:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->asset_category }}</span>
                                     </div>
                                 @endif
                                 @if($auction->land_area)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Luas Tanah:</span>
-                                        <span class="font-medium text-zinc-900">{{ number_format($auction->land_area, 0) }} m²</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Luas Tanah:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ number_format($auction->land_area, 0) }} m²</span>
                                     </div>
                                 @endif
                                 @if($auction->building_area)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Luas Bangunan:</span>
-                                        <span class="font-medium text-zinc-900">{{ number_format($auction->building_area, 0) }} m²</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Luas Bangunan:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ number_format($auction->building_area, 0) }} m²</span>
                                     </div>
                                 @endif
                                 @if($auction->floors)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Jumlah Lantai:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->floors }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jumlah Lantai:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->floors }}</span>
                                     </div>
                                 @endif
                                 @if($auction->bedrooms)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Kamar Tidur:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->bedrooms }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kamar Tidur:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->bedrooms }}</span>
                                     </div>
                                 @endif
                                 @if($auction->bathrooms)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Kamar Mandi:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->bathrooms }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kamar Mandi:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->bathrooms }}</span>
                                     </div>
                                 @endif
                                 @if($auction->parking_spaces)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Tempat Parkir:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->parking_spaces }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tempat Parkir:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->parking_spaces }}</span>
                                     </div>
                                 @endif
                                 @if($auction->year_built)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Tahun Dibangun:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->year_built }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tahun Dibangun:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->year_built }}</span>
                                     </div>
                                 @endif
                                 @if($auction->building_condition)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Kondisi Bangunan:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->building_condition }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kondisi Bangunan:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->building_condition }}</span>
                                     </div>
                                 @endif
                             </div>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -353,19 +353,19 @@
                             </h4>
                             <div class="space-y-3">
                                 <div>
-                                    <span class="text-zinc-600 block mb-1">Alamat:</span>
-                                    <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">{{ $auction->full_address }}</div>
+                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Alamat:</span>
+                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->full_address }}</div>
                                 </div>
                                 @if($auction->facilities)
                                     <div>
-                                        <span class="text-zinc-600 block mb-1">Fasilitas:</span>
-                                        <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">{{ $auction->facilities }}</div>
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Fasilitas:</span>
+                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->facilities }}</div>
                                     </div>
                                 @endif
                                 @if($auction->nearby_facilities)
                                     <div>
-                                        <span class="text-zinc-600 block mb-1">Fasilitas Sekitar:</span>
-                                        <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">{{ $auction->nearby_facilities }}</div>
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Fasilitas Sekitar:</span>
+                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->nearby_facilities }}</div>
                                     </div>
                                 @endif
                             </div>
@@ -376,37 +376,37 @@
                 <div class="tab-content hidden" id="auction">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4h3a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3z"></path>
                                 </svg>
                                 Informasi Lelang Agunan
                             </h4>
                             <div class="space-y-3">
-                                <div class="flex justify-between py-2 border-b border-zinc-100">
-                                    <span class="text-zinc-600">Jenis Lelang Agunan:</span>
-                                    <span class="font-medium text-zinc-900">{{ $auction->auction_type_label }}</span>
+                                <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jenis Lelang Agunan:</span>
+                                    <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->auction_type_label }}</span>
                                 </div>
-                                <div class="flex justify-between py-2 border-b border-zinc-100">
-                                    <span class="text-zinc-600">Metode:</span>
-                                    <span class="font-medium text-zinc-900">{{ $auction->auction_method ?? 'Lelang Agunan Terbuka' }}</span>
+                                <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Metode:</span>
+                                    <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->auction_method ?? 'Lelang Agunan Terbuka' }}</span>
                                 </div>
                                 @if($auction->registration_start && $auction->registration_end)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Pendaftaran:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->registration_start->format('d/m/Y') }} - {{ $auction->registration_end->format('d/m/Y') }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Pendaftaran:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->registration_start->format('d/m/Y') }} - {{ $auction->registration_end->format('d/m/Y') }}</span>
                                     </div>
                                 @endif
                                 @if($auction->viewing_start && $auction->viewing_end)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Viewing:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->viewing_start->format('d/m/Y') }} - {{ $auction->viewing_end->format('d/m/Y') }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Viewing:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->viewing_start->format('d/m/Y') }} - {{ $auction->viewing_end->format('d/m/Y') }}</span>
                                     </div>
                                 @endif
                             </div>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                                 </svg>
@@ -414,20 +414,20 @@
                             </h4>
                             <div class="space-y-3">
                                 @if($auction->calculated_deposit)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Uang Jaminan:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->formatted_calculated_deposit }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Uang Jaminan:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->formatted_calculated_deposit }}</span>
                                     </div>
                                 @endif
                                 @if($auction->increment_amount)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Kelipatan Penawaran:</span>
-                                        <span class="font-medium text-zinc-900">Rp {{ number_format($auction->increment_amount, 0, ',', '.') }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kelipatan Penawaran:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($auction->increment_amount, 0, ',', '.') }}</span>
                                     </div>
                                 @endif
-                                <div class="flex justify-between py-2 border-b border-zinc-100">
-                                    <span class="text-zinc-600">Batas Pelunasan:</span>
-                                    <span class="font-medium text-zinc-900">{{ $auction->payment_deadline_days }} hari</span>
+                                <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Batas Pelunasan:</span>
+                                    <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->payment_deadline_days }} hari</span>
                                 </div>
                             </div>
                         </div>
@@ -437,7 +437,7 @@
                 <div class="tab-content hidden" id="legal">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
@@ -445,27 +445,27 @@
                             </h4>
                             <div class="space-y-3">
                                 @if($auction->certificate_type)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Jenis Sertifikat:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->certificate_type_label }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jenis Sertifikat:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->certificate_type_label }}</span>
                                     </div>
                                 @endif
                                 @if($auction->certificate_number)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Nomor Sertifikat:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->certificate_number }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Nomor Sertifikat:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->certificate_number }}</span>
                                     </div>
                                 @endif
                                 @if($auction->certificate_date)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Tanggal Terbit:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->certificate_date->format('d F Y') }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tanggal Terbit:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->certificate_date->format('d F Y') }}</span>
                                     </div>
                                 @endif
                             </div>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                                 </svg>
@@ -473,21 +473,21 @@
                             </h4>
                             <div class="space-y-3">
                                 @if($auction->creditor_name)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Kreditur:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->creditor_name }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kreditur:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->creditor_name }}</span>
                                     </div>
                                 @endif
                                 @if($auction->debt_amount)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Jumlah Hutang:</span>
-                                        <span class="font-medium text-zinc-900">Rp {{ number_format($auction->debt_amount, 0, ',', '.') }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jumlah Hutang:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($auction->debt_amount, 0, ',', '.') }}</span>
                                     </div>
                                 @endif
                                 @if($auction->court_decision)
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-600">Putusan Pengadilan:</span>
-                                        <span class="font-medium text-zinc-900">{{ $auction->court_decision }}</span>
+                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Putusan Pengadilan:</span>
+                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->court_decision }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -498,7 +498,7 @@
                 <div class="tab-content hidden" id="contact">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
@@ -507,20 +507,20 @@
                             <div class="space-y-3">
                                 @if($auction->organizer_name)
                                     <div>
-                                        <span class="text-zinc-600 block mb-1">Nama:</span>
-                                        <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">{{ $auction->organizer_name }}</div>
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Nama:</span>
+                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->organizer_name }}</div>
                                     </div>
                                 @endif
                                 @if($auction->organizer_address)
                                     <div>
-                                        <span class="text-zinc-600 block mb-1">Alamat:</span>
-                                        <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">{{ $auction->organizer_address }}</div>
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Alamat:</span>
+                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->organizer_address }}</div>
                                     </div>
                                 @endif
                                 @if($auction->organizer_phone)
                                     <div>
-                                        <span class="text-zinc-600 block mb-1">Telepon:</span>
-                                        <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Telepon:</span>
+                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
                                             <a href="tel:{{ $auction->organizer_phone }}" class="text-blue-600 hover:text-blue-800">
                                                 {{ $auction->organizer_phone }}
                                             </a>
@@ -530,7 +530,7 @@
                             </div>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-lg mb-4 text-zinc-900 flex items-center">
+                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
@@ -538,18 +538,18 @@
                             </h4>
                             <div class="space-y-3">
                                 <div>
-                                    <span class="text-zinc-600 block mb-1">Nama:</span>
-                                    <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">{{ $auction->contact_person }}</div>
+                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Nama:</span>
+                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->contact_person }}</div>
                                 </div>
                                 @if($auction->contact_position)
                                     <div>
-                                        <span class="text-zinc-600 block mb-1">Jabatan:</span>
-                                        <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">{{ $auction->contact_position }}</div>
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Jabatan:</span>
+                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->contact_position }}</div>
                                     </div>
                                 @endif
                                 <div>
-                                    <span class="text-zinc-600 block mb-1">Telepon:</span>
-                                    <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">
+                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Telepon:</span>
+                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
                                         <a href="tel:{{ $auction->contact_phone }}" class="text-blue-600 hover:text-blue-800">
                                             {{ $auction->contact_phone }}
                                         </a>
@@ -557,8 +557,8 @@
                                 </div>
                                 @if($auction->contact_email)
                                     <div>
-                                        <span class="text-zinc-600 block mb-1">Email:</span>
-                                        <div class="font-medium text-zinc-900 bg-zinc-50 p-3 rounded-xl">
+                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Email:</span>
+                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
                                             <a href="mailto:{{ $auction->contact_email }}" class="text-blue-600 hover:text-blue-800">
                                                 {{ $auction->contact_email }}
                                             </a>
@@ -612,12 +612,12 @@
                     // Remove active class from all buttons
                     document.querySelectorAll('.tab-button').forEach(btn => {
                         btn.classList.remove('active', 'border-orange-500', 'text-orange-600');
-                        btn.classList.add('border-transparent', 'text-zinc-500');
+                        btn.classList.add('border-transparent', 'dark:text-slate-400 dark:text-slate-400 text-zinc-500');
                     });
 
                     // Add active class to clicked button
                     this.classList.add('active', 'border-orange-500', 'text-orange-600');
-                    this.classList.remove('border-transparent', 'text-zinc-500');
+                    this.classList.remove('border-transparent', 'dark:text-slate-400 dark:text-slate-400 text-zinc-500');
 
                     // Hide all tab contents
                     document.querySelectorAll('.tab-content').forEach(content => {
@@ -633,7 +633,7 @@
             const firstTab = document.querySelector('.tab-button[data-tab="property"]');
             if (firstTab) {
                 firstTab.classList.add('border-orange-500', 'text-orange-600');
-                firstTab.classList.remove('border-transparent', 'text-zinc-500');
+                firstTab.classList.remove('border-transparent', 'dark:text-slate-400 dark:text-slate-400 text-zinc-500');
             }
 
             // Image modal functions

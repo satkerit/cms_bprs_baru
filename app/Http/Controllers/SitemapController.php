@@ -20,9 +20,7 @@ class SitemapController extends Controller
             'dashboard' => 1.0, // Home
             'about.company' => 0.8,
             'about.struktur' => 0.8,
-            'about.komisaris' => 0.8,
-            'about.direksi' => 0.8,
-            'about.pengawas-syariah' => 0.8,
+            'about.manajemen' => 0.8,
             'contact' => 0.8,
             'news.index' => 0.8,
             'auctions.index' => 0.8,

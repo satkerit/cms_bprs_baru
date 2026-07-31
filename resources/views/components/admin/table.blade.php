@@ -14,7 +14,7 @@
     $stickyClass = $sticky ? 'sticky top-0 z-10' : '';
 @endphp
 
-<div class="relative overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-sm ring-1 ring-slate-900/5">
+<div class="relative overflow-hidden rounded-xl border border-slate-200/70 dark:border-slate-800/70 bg-white dark:bg-slate-900 shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-800/50">
     <div class="overflow-x-auto -mx-[1px]">
         <table class="w-full border-collapse">
             @if(count($headers) > 0)
@@ -23,8 +23,8 @@
                         @foreach($headers as $i => $header)
                             <th scope="col"
                                 class="{{ $i === 0 ? $firstCellPadding : ($i === count($headers) - 1 ? $lastCellPadding : $cellPadding) }}
-                                       text-left text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em] leading-4
-                                       bg-gradient-to-b from-slate-50 to-slate-50/80 border-b border-slate-200/70
+                                       text-left text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-[0.06em] leading-4
+                                       bg-gradient-to-b from-slate-50 dark:from-slate-800 to-slate-50/80 dark:to-slate-800/80 border-b border-slate-200/70 dark:border-slate-800/70
                                        whitespace-nowrap select-none {{ $stickyClass }}">
                                 <div class="flex items-center gap-2">
                                     @if($i === 0)
@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
             @endif
-            <tbody class="divide-y divide-slate-100/80 @if($striped) [&>tr:nth-child(even)]:bg-slate-50/40 @endif">
+            <tbody class="divide-y divide-slate-100/80 dark:divide-slate-800/80 @if($striped) [&>tr:nth-child(even)]:bg-slate-50/40 dark:[&>tr:nth-child(even)]:bg-slate-800/30 @endif">
                 @php
                     $slotHtml = (string) $slot;
                     if ($hoverable) {

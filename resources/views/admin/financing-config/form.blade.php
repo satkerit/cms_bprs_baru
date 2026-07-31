@@ -8,7 +8,7 @@
  :subtitle="$config ? 'Ubah parameter perhitungan ' . $config->name : 'Tambah jenis pembiayaan baru'"
 >
  <x-slot:actions>
- <a href="{{ route('admin.financing-config.index') }}" class="inline-flex items-center px-4 py-2.5 text-[13px] font-medium text-zinc-700 bg-white rounded-xl">
+ <a href="{{ route('admin.financing-config.index') }}" class="inline-flex items-center px-4 py-2.5 text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 bg-white rounded-xl">
  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
  </svg>
@@ -52,9 +52,9 @@
  <div class="space-y-4">
  @if($config)
  <div>
- <label class="block text-[11px] font-semibold text-zinc-700 mb-1.5">Tipe Pembiayaan</label>
- <input type="text" value="{{ $config->type }}" disabled class="block w-full rounded-xl border border-zinc-200 py-2.5 px-4 text-zinc-500 bg-zinc-50">
- <p class="mt-1.5 text-[11px] text-zinc-500">Tipe pembiayaan tidak dapat diubah</p>
+ <label class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1.5">Tipe Pembiayaan</label>
+ <input type="text" value="{{ $config->type }}" disabled class="block w-full rounded-xl border dark:border-slate-700 border-zinc-200 py-2.5 px-4 dark:text-slate-400 dark:text-slate-400 text-zinc-500 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50">
+ <p class="mt-1.5 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Tipe pembiayaan tidak dapat diubah</p>
  </div>
  @endif
 
@@ -73,14 +73,14 @@
  <x-admin.card title="Parameter Perhitungan">
  <div class="space-y-4">
  <div>
- <label for="calculation_type" class="block text-[11px] font-semibold text-zinc-700 mb-1.5">
+ <label for="calculation_type" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1.5">
  Tipe Perhitungan <span class="text-red-600">*</span>
  </label>
  <select
  name="calculation_type"
  id="calculation_type"
  required
- class="block w-full rounded-xl border border-zinc-200 py-2.5 px-4 text-zinc-900 bg-zinc-50 {{ $errors->has('calculation_type') ? ' bg-red-100/50' : '' }}"
+ class="block w-full rounded-xl border dark:border-slate-700 border-zinc-200 py-2.5 px-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 {{ $errors->has('calculation_type') ? ' bg-red-100/50' : '' }}"
  >
  <option value=">-- Pilih Tipe Perhitungan --</option>
  <option value="margin" {{ old('calculation_type', $config?->calculation_type) === 'margin' ? 'selected' : '' }}>
@@ -90,7 +90,7 @@
  Bagi Hasil (Profit Sharing)
  </option>
  </select>
- <p class="mt-1.5 text-[11px] text-zinc-500">
+ <p class="mt-1.5 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
  <strong>Margin:</strong> Perhitungan berdasarkan plafond pembiayaan<br>
  <strong>Bagi Hasil:</strong> Perhitungan berdasarkan proyeksi keuntungan proyek
  </p>
@@ -100,7 +100,7 @@
  </div>
 
  <div>
- <label for="margin_rate" class="block text-[11px] font-semibold text-zinc-700 mb-1.5">
+ <label for="margin_rate" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1.5">
  Margin Rate (%) <span class="text-red-600">*</span>
  </label>
  <div >
@@ -113,14 +113,14 @@
  min="0.01"
  max="100"
  required
- class="block w-full rounded-xl border border-zinc-200 py-2.5 px-4 pr-12 text-zinc-900 bg-zinc-50 {{ $errors->has('margin_rate') ? ' bg-red-100/50' : '' }}"
+ class="block w-full rounded-xl border dark:border-slate-700 border-zinc-200 py-2.5 px-4 pr-12 dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 {{ $errors->has('margin_rate') ? ' bg-red-100/50' : '' }}"
  placeholder="12.00"
  >
  <div class="right-0 flex items-center pr-4">
- <span class="text-zinc-500 text-[11px]">%</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500 text-[11px]">%</span>
  </div>
  </div>
- <p class="mt-1.5 text-[11px] text-zinc-500">Margin rate per tahun (contoh: 12 untuk 12%)</p>
+ <p class="mt-1.5 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Margin rate per tahun (contoh: 12 untuk 12%)</p>
  @error('margin_rate')
  <p class="mt-1.5 text-[11px] text-red-600 font-medium">{{ $message }}</p>
  @enderror
@@ -128,7 +128,7 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label for="min_principal" class="block text-[11px] font-semibold text-zinc-700 mb-1.5">
+ <label for="min_principal" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1.5">
  Plafon Minimal (Rp) <span class="text-red-600">*</span>
  </label>
  <input
@@ -138,7 +138,7 @@
  value="{{ old('min_principal', $config?->min_principal) }}"
  min="1"
  required
- class="block w-full rounded-xl border border-zinc-200 py-2.5 px-4 text-zinc-900 bg-zinc-50 {{ $errors->has('min_principal') ? ' bg-red-100/50' : '' }}"
+ class="block w-full rounded-xl border dark:border-slate-700 border-zinc-200 py-2.5 px-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 {{ $errors->has('min_principal') ? ' bg-red-100/50' : '' }}"
  placeholder="5000000"
  >
  @error('min_principal')
@@ -147,7 +147,7 @@
  </div>
 
  <div>
- <label for="max_principal" class="block text-[11px] font-semibold text-zinc-700 mb-1.5">
+ <label for="max_principal" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1.5">
  Plafon Maksimal (Rp) <span class="text-red-600">*</span>
  </label>
  <input
@@ -157,7 +157,7 @@
  value="{{ old('max_principal', $config?->max_principal) }}"
  min="1"
  required
- class="block w-full rounded-xl border border-zinc-200 py-2.5 px-4 text-zinc-900 bg-zinc-50 {{ $errors->has('max_principal') ? ' bg-red-100/50' : '' }}"
+ class="block w-full rounded-xl border dark:border-slate-700 border-zinc-200 py-2.5 px-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 {{ $errors->has('max_principal') ? ' bg-red-100/50' : '' }}"
  placeholder="500000000"
  >
  @error('max_principal')
@@ -171,7 +171,7 @@
  {{-- Tenor --}}
  <x-admin.card title="Tenor Tersedia">
  <div class="space-y-4">
- <p class="text-[11px] text-zinc-700">Pilih tenor (jangka waktu) yang tersedia untuk jenis pembiayaan ini:</p>
+ <p class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Pilih tenor (jangka waktu) yang tersedia untuk jenis pembiayaan ini:</p>
 
  @php
  $tenorOptions = [6, 12, 18, 24, 30, 36, 48, 60, 72, 84, 96, 120];
@@ -180,7 +180,7 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  @foreach($tenorOptions as $tenor)
- <label class="flex items-center justify-center p-3 rounded-xl border {{ in_array($tenor, $selectedTenors) ? 'border-blue-500 bg-amber-50' : 'border-zinc-200 bg-white ' }}">
+ <label class="flex items-center justify-center p-3 rounded-xl border {{ in_array($tenor, $selectedTenors) ? 'border-blue-500 bg-amber-50' : 'dark:border-slate-700 border-zinc-200 bg-white ' }}">
  <input
  type="checkbox"
  name="available_tenors[]"
@@ -189,7 +189,7 @@
  
  data-action="toggle-tenor"
  >
- <span class="text-[11px] font-medium {{ in_array($tenor, $selectedTenors) ? 'text-amber-700' : 'text-zinc-700' }}">{{ $tenor }} bln</span>
+ <span class="text-[11px] font-medium {{ in_array($tenor, $selectedTenors) ? 'text-amber-700' : 'dark:text-slate-300 dark:text-slate-300 text-zinc-700' }}">{{ $tenor }} bln</span>
  </label>
  @endforeach
  </div>
@@ -201,7 +201,7 @@
  <p class="text-[11px] text-red-600 font-medium">{{ $message }}</p>
  @enderror
 
- <p class="text-[11px] text-zinc-500">Minimal pilih 1 tenor. Tenor akan ditampilkan pada halaman simulasi pembiayaan.</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Minimal pilih 1 tenor. Tenor akan ditampilkan pada halaman simulasi pembiayaan.</p>
  </div>
  </x-admin.card>
 
@@ -210,8 +210,8 @@
  <div class="space-y-4" x-data="{ dpEnabled: @js(old('dp_enabled', $config?->dp_enabled ?? false)) }">
  <div class="flex items-center justify-between">
  <div>
- <p class="text-[11px] font-medium text-zinc-900">Aktifkan Input DP</p>
- <p class="text-[11px] text-zinc-500">Jika diaktifkan, nasabah dapat memasukkan DP pada simulasi</p>
+ <p class="text-[11px] font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Aktifkan Input DP</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Jika diaktifkan, nasabah dapat memasukkan DP pada simulasi</p>
  </div>
  <label class="inline-flex items-center">
  <input type="hidden" name="dp_enabled" value="0">
@@ -223,13 +223,13 @@
  {{ old('dp_enabled', $config?->dp_enabled ?? false) ? 'checked' : '' }}
  
  >
- <div class="w-11 h-6 bg-zinc-200 after:content-[''] after: after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:"></div>
+ <div class="w-11 h-6 dark:bg-slate-700 bg-zinc-200 after:content-[''] after: after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:"></div>
  </label>
  </div>
 
- <div x-show="dpEnabled" x-transition class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-zinc-200">
+ <div x-show="dpEnabled" x-transition class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t dark:border-slate-700 border-zinc-200">
  <div>
- <label for="dp_min_percentage" class="block text-[11px] font-semibold text-zinc-700 mb-1.5">
+ <label for="dp_min_percentage" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1.5">
  DP Minimal (%)
  </label>
  <div >
@@ -241,21 +241,21 @@
  step="0.01"
  min="0"
  max="100"
- class="block w-full rounded-xl border border-zinc-200 py-2.5 px-4 pr-12 text-zinc-900 bg-zinc-50 {{ $errors->has('dp_min_percentage') ? ' bg-red-100/50' : '' }}"
+ class="block w-full rounded-xl border dark:border-slate-700 border-zinc-200 py-2.5 px-4 pr-12 dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 {{ $errors->has('dp_min_percentage') ? ' bg-red-100/50' : '' }}"
  placeholder="10"
  >
  <div class="right-0 flex items-center pr-4">
- <span class="text-zinc-500 text-[11px]">%</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500 text-[11px]">%</span>
  </div>
  </div>
- <p class="mt-1.5 text-[11px] text-zinc-500">Kosongkan jika tidak ada batas minimal</p>
+ <p class="mt-1.5 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Kosongkan jika tidak ada batas minimal</p>
  @error('dp_min_percentage')
  <p class="mt-1.5 text-[11px] text-red-600 font-medium">{{ $message }}</p>
  @enderror
  </div>
 
  <div>
- <label for="dp_max_percentage" class="block text-[11px] font-semibold text-zinc-700 mb-1.5">
+ <label for="dp_max_percentage" class="block text-[11px] font-semibold dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1.5">
  DP Maksimal (%)
  </label>
  <div >
@@ -267,14 +267,14 @@
  step="0.01"
  min="0"
  max="100"
- class="block w-full rounded-xl border border-zinc-200 py-2.5 px-4 pr-12 text-zinc-900 bg-zinc-50 {{ $errors->has('dp_max_percentage') ? ' bg-red-100/50' : '' }}"
+ class="block w-full rounded-xl border dark:border-slate-700 border-zinc-200 py-2.5 px-4 pr-12 dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 {{ $errors->has('dp_max_percentage') ? ' bg-red-100/50' : '' }}"
  placeholder="50"
  >
  <div class="right-0 flex items-center pr-4">
- <span class="text-zinc-500 text-[11px]">%</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500 text-[11px]">%</span>
  </div>
  </div>
- <p class="mt-1.5 text-[11px] text-zinc-500">Kosongkan jika tidak ada batas maksimal</p>
+ <p class="mt-1.5 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Kosongkan jika tidak ada batas maksimal</p>
  @error('dp_max_percentage')
  <p class="mt-1.5 text-[11px] text-red-600 font-medium">{{ $message }}</p>
  @enderror
@@ -287,8 +287,8 @@
  <x-admin.card title="Status">
  <div class="flex items-center justify-between">
  <div>
- <p class="text-[11px] font-medium text-zinc-900">Aktifkan Konfigurasi</p>
- <p class="text-[11px] text-zinc-500">Jika dinonaktifkan, jenis pembiayaan ini tidak akan muncul di halaman simulasi</p>
+ <p class="text-[11px] font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Aktifkan Konfigurasi</p>
+ <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Jika dinonaktifkan, jenis pembiayaan ini tidak akan muncul di halaman simulasi</p>
  </div>
  <label class="inline-flex items-center">
  <input type="hidden" name="is_active" value="0">
@@ -299,13 +299,13 @@
  {{ old('is_active', $config?->is_active ?? true) ? 'checked' : '' }}
  
  >
- <div class="w-11 h-6 bg-zinc-200 after:content-[''] after: after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:"></div>
+ <div class="w-11 h-6 dark:bg-slate-700 bg-zinc-200 after:content-[''] after: after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:"></div>
  </label>
  </div>
  </x-admin.card>
 
  <div class="flex justify-end gap-3">
- <a href="{{ route('admin.financing-config.index') }}" class="inline-flex items-center px-4 py-2.5 text-[13px] font-medium text-zinc-700 bg-white rounded-xl">
+ <a href="{{ route('admin.financing-config.index') }}" class="inline-flex items-center px-4 py-2.5 text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 bg-white rounded-xl">
  Batal
  </a>
  <x-admin.button type="submit">
@@ -325,22 +325,22 @@
  {{-- Preview Calculation --}}
  <x-admin.card title="Preview Perhitungan">
  <div class="space-y-4">
- <p class="text-[11px] text-zinc-700">Contoh perhitungan dengan konfigurasi saat ini:</p>
+ <p class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Contoh perhitungan dengan konfigurasi saat ini:</p>
 
- <div class="p-4 bg-zinc-50 rounded-xl space-y-3">
+ <div class="p-4 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl space-y-3">
  <div class="flex justify-between text-[11px]">
- <span class="text-zinc-500">Pokok Pembiayaan:</span>
- <span class="font-medium text-zinc-900">Rp 100.000.000</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Pokok Pembiayaan:</span>
+ <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp 100.000.000</span>
  </div>
  <div class="flex justify-between text-[11px]">
- <span class="text-zinc-500">Margin Rate:</span>
- <span class="font-medium text-zinc-900">{{ number_format($config->margin_rate * 100, 2) }}%</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Margin Rate:</span>
+ <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ number_format($config->margin_rate * 100, 2) }}%</span>
  </div>
  <div class="flex justify-between text-[11px]">
- <span class="text-zinc-500">Tenor:</span>
- <span class="font-medium text-zinc-900">12 bulan</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Tenor:</span>
+ <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">12 bulan</span>
  </div>
- <hr class="border-zinc-200">
+ <hr class="dark:border-slate-700 border-zinc-200">
  @php
  $examplePrincipal = 100000000;
  $exampleTenor = 12;
@@ -349,15 +349,15 @@
  $monthlyInstallment = $totalPayment / $exampleTenor;
  @endphp
  <div class="flex justify-between text-[11px]">
- <span class="text-zinc-500">Total Margin:</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Total Margin:</span>
  <span class="font-medium text-sky-600">Rp {{ number_format($totalMargin, 0, ',', '.') }}</span>
  </div>
  <div class="flex justify-between text-[11px]">
- <span class="text-zinc-500">Total Pembayaran:</span>
- <span class="font-medium text-zinc-900">Rp {{ number_format($totalPayment, 0, ',', '.') }}</span>
+ <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Total Pembayaran:</span>
+ <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($totalPayment, 0, ',', '.') }}</span>
  </div>
  <div class="flex justify-between text-[11px] font-semibold">
- <span class="text-zinc-700">Angsuran/Bulan:</span>
+ <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-700">Angsuran/Bulan:</span>
  <span class="text-sky-600">Rp {{ number_format($monthlyInstallment, 0, ',', '.') }}</span>
  </div>
  </div>
@@ -374,7 +374,7 @@
  Angsuran = (P + (P × M × T/12)) / T
  </code>
  </div>
- <div class="text-zinc-700 space-y-1">
+ <div class="dark:text-slate-300 dark:text-slate-300 text-zinc-700 space-y-1">
  <p><strong>P</strong> = Pokok Pembiayaan</p>
  <p><strong>M</strong> = Margin Rate (desimal)</p>
  <p><strong>T</strong> = Tenor (bulan)</p>
@@ -385,14 +385,14 @@
  {{-- Last Updated --}}
  @if($config)
  <x-admin.card title="Informasi">
- <div class="space-y-2 text-[11px] text-zinc-700">
+ <div class="space-y-2 text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">
  <div class="flex justify-between">
  <span>Dibuat:</span>
- <span class="text-zinc-900">{{ $config->created_at->format('d M Y, H:i') }}</span>
+ <span class="dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $config->created_at->format('d M Y, H:i') }}</span>
  </div>
  <div class="flex justify-between">
  <span>Terakhir diubah:</span>
- <span class="text-zinc-900">{{ $config->updated_at->format('d M Y, H:i') }}</span>
+ <span class="dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $config->updated_at->format('d M Y, H:i') }}</span>
  </div>
  </div>
  </x-admin.card>
@@ -406,7 +406,7 @@
  input.addEventListener('change', function() {
  this.closest('label').classList.toggle('border-blue-500', this.checked);
  this.closest('label').classList.toggle('bg-amber-50', this.checked);
- this.closest('label').classList.toggle('border-zinc-200', !this.checked);
+ this.closest('label').classList.toggle('dark:border-slate-700 border-zinc-200', !this.checked);
  });
  });
 </script>

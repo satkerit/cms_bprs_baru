@@ -22,8 +22,8 @@
  {{-- Header --}}
  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
  <div>
- <h1 class="text-3xl font-bold text-zinc-900">Backup Database</h1>
- <p class="text-zinc-500 mt-1">Kelola backup database untuk keamanan data</p>
+ <h1 class="text-3xl font-bold dark:text-slate-100 text-zinc-900">Backup Database</h1>
+ <p class="dark:text-slate-400 text-zinc-500 mt-1">Kelola backup database untuk keamanan data</p>
  </div>
  <button @click="showModal = true"
  class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-xl">
@@ -46,17 +46,17 @@
  </svg>
  </div>
  <div>
- <h3 class="font-semibold text-zinc-900">Database</h3>
- <p class="text-[13px] text-zinc-500">{{ $databaseInfo['name'] ?? 'N/A' }}</p>
+ <h3 class="font-semibold dark:text-slate-100 text-zinc-900">Database</h3>
+ <p class="text-[13px] dark:text-slate-400 text-zinc-500">{{ $databaseInfo['name'] ?? 'N/A' }}</p>
  </div>
  </div>
  <div class="mt-4 space-y-2">
  <div class="flex justify-between text-[13px]">
- <span class="text-zinc-500">Tabel:</span>
+ <span class="dark:text-slate-400 text-zinc-500">Tabel:</span>
  <span class="font-medium">{{ $databaseInfo['table_count'] ?? 'N/A' }}</span>
  </div>
  <div class="flex justify-between text-[13px]">
- <span class="text-zinc-500">Host:</span>
+ <span class="dark:text-slate-400 text-zinc-500">Host:</span>
  <span class="font-medium">{{ ($databaseInfo['host'] ?? 'N/A') }}:{{ ($databaseInfo['port'] ?? 'N/A') }}</span>
  </div>
  </div>
@@ -71,17 +71,17 @@
  </svg>
  </div>
  <div>
- <h3 class="font-semibold text-zinc-900">Storage Backup</h3>
- <p class="text-[13px] text-zinc-500">{{ $storageInfo['total_backups'] ?? 0 }} file backup</p>
+ <h3 class="font-semibold dark:text-slate-100 text-zinc-900">Storage Backup</h3>
+ <p class="text-[13px] dark:text-slate-400 text-zinc-500">{{ $storageInfo['total_backups'] ?? 0 }} file backup</p>
  </div>
  </div>
  <div class="mt-4 space-y-2">
  <div class="flex justify-between text-[13px]">
- <span class="text-zinc-500">Total Backup:</span>
+ <span class="dark:text-slate-400 text-zinc-500">Total Backup:</span>
  <span class="font-medium">{{ $storageInfo['total_backups'] ?? 0 }}</span>
  </div>
  <div class="flex justify-between text-[13px]">
- <span class="text-zinc-500">Ukuran Total:</span>
+ <span class="dark:text-slate-400 text-zinc-500">Ukuran Total:</span>
  <span class="font-medium">{{ $storageInfo['total_size_formatted'] ?? '0 B' }}</span>
  </div>
  </div>
@@ -97,8 +97,8 @@
  </svg>
  </div>
  <div>
- <h3 class="font-semibold text-zinc-900">Quick Backup</h3>
- <p class="text-[13px] text-zinc-500">Buat backup cepat</p>
+ <h3 class="font-semibold dark:text-slate-100 text-zinc-900">Quick Backup</h3>
+ <p class="text-[13px] dark:text-slate-400 text-zinc-500">Buat backup cepat</p>
  </div>
  </div>
  <div class="mt-4">
@@ -120,7 +120,7 @@
  {{-- Backup List --}}
  <div class="bg-white rounded-xl border">
  <div class="px-6 py-4 border-b">
- <h2 class="text-xl font-semibold text-zinc-900">Daftar Backup</h2>
+ <h2 class="text-xl font-semibold dark:text-slate-100 text-zinc-900">Daftar Backup</h2>
  </div>            <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
@@ -137,13 +137,13 @@
                         <tr class="table-row-hover">
                             <td class="table-cell-text">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-zinc-50 rounded-xl flex items-center justify-center shrink-0">
-                                        <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-8 h-8 dark:bg-slate-800/50 bg-zinc-50 rounded-xl flex items-center justify-center shrink-0">
+                                        <svg class="w-4 h-4 dark:text-slate-400 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <p class="font-medium text-zinc-900 text-[13px]">{{ $backup['filename'] }}</p>
+                                        <p class="font-medium dark:text-slate-100 text-zinc-900 text-[13px]">{{ $backup['filename'] }}</p>
                                         @if($backup['compressed'])
                                         <span class="text-[11px] text-sky-600">Compressed</span>
                                         @endif
@@ -156,7 +156,7 @@
                                     'full' => ['label' => 'Full Backup', 'class' => 'bg-blue-50 text-blue-700'],
                                     'structure_only' => ['label' => 'Structure Only', 'class' => 'bg-sky-50 text-sky-700'],
                                     'data_only' => ['label' => 'Data Only', 'class' => 'bg-purple-50 text-purple-700'],
-                                    'unknown' => ['label' => 'Unknown', 'class' => 'bg-zinc-50 text-zinc-500'],
+                                    'unknown' => ['label' => 'Unknown', 'class' => 'dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-400 text-zinc-500'],
                                 ];
                                 $type = $typeLabels[$backup['type']] ?? $typeLabels['unknown'];
                                 @endphp
@@ -166,9 +166,9 @@
                             </td>
                             <td class="table-cell-text">{{ $backup['size_formatted'] }}</td>
                             <td class="table-cell-text">
-                                <span class="text-zinc-900">{{ $backup['created_at']->format('d/m/Y H:i') }}</span>
+                                <span class="dark:text-slate-100 text-zinc-900">{{ $backup['created_at']->format('d/m/Y H:i') }}</span>
                                 <br>
-                                <span class="text-[11px] text-zinc-400">{{ $backup['created_at']->diffForHumans() }}</span>
+                                <span class="text-[11px] dark:text-slate-500 text-zinc-400">{{ $backup['created_at']->diffForHumans() }}</span>
                             </td>
                             <td class="table-cell-text text-right">
                                 <div class="flex items-center justify-end gap-2">
@@ -193,14 +193,14 @@
                         <tr>
                             <td colspan="5" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center gap-3">
-                                    <div class="w-12 h-12 bg-zinc-50 rounded-xl flex items-center justify-center">
-                                        <svg class="w-6 h-6 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-12 h-12 dark:bg-slate-800/50 bg-zinc-50 rounded-xl flex items-center justify-center">
+                                        <svg class="w-6 h-6 dark:text-slate-400 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="font-medium text-zinc-900">Belum ada backup</h3>
-                                        <p class="text-[13px] text-zinc-500 mt-1">Buat backup pertama dengan mengklik tombol "Buat Backup Baru"</p>
+                                        <h3 class="font-medium dark:text-slate-100 text-zinc-900">Belum ada backup</h3>
+                                        <p class="text-[13px] dark:text-slate-400 text-zinc-500 mt-1">Buat backup pertama dengan mengklik tombol "Buat Backup Baru"</p>
                                     </div>
                                 </div>
                             </td>
@@ -215,7 +215,7 @@
  {{-- Create Backup Modal --}}
  <div x-show="showModal" x-cloak>
  <div class="flex items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
- <div x-show="showModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed bg-zinc-500 bg-opacity-75" @click="showModal = false"></div>
+ <div x-show="showModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed dark:bg-slate-800/50 bg-zinc-500 bg-opacity-75" @click="showModal = false"></div>
 
  <div x-show="showModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block w-full max-w-md p-6 my-8 text-left align-middle transform bg-white rounded-xl">
  <div class="flex items-center gap-4 mb-6">
@@ -225,27 +225,27 @@
  </svg>
  </div>
  <div>
- <h3 class="text-xl font-semibold text-zinc-900">Buat Backup Database</h3>
- <p class="text-[13px] text-zinc-500">Pilih jenis backup yang ingin dibuat</p>
+ <h3 class="text-xl font-semibold dark:text-slate-100 text-zinc-900">Buat Backup Database</h3>
+ <p class="text-[13px] dark:text-slate-400 text-zinc-500">Pilih jenis backup yang ingin dibuat</p>
  </div>
  </div>
 
  <form @submit.prevent="createBackup()">
  <div class="space-y-4">
  <div>
- <label class="block text-[11px] font-medium text-zinc-900 mb-2">Jenis Backup</label>
+ <label class="block text-[11px] font-medium dark:text-slate-100 text-zinc-900 mb-2">Jenis Backup</label>
  <div class="space-y-2">
  <label class="flex items-center">
  <input type="radio" x-model="backupType" value="full" class="text-sky-600">
- <span class="ml-2 text-[13px] text-zinc-900">Full Backup (Struktur + Data)</span>
+ <span class="ml-2 text-[13px] dark:text-slate-100 text-zinc-900">Full Backup (Struktur + Data)</span>
  </label>
  <label class="flex items-center">
  <input type="radio" x-model="backupType" value="structure_only" class="text-sky-600">
- <span class="ml-2 text-[13px] text-zinc-900">Struktur Saja (Tanpa Data)</span>
+ <span class="ml-2 text-[13px] dark:text-slate-100 text-zinc-900">Struktur Saja (Tanpa Data)</span>
  </label>
  <label class="flex items-center">
  <input type="radio" x-model="backupType" value="data_only" class="text-sky-600">
- <span class="ml-2 text-[13px] text-zinc-900">Data Saja (Tanpa Struktur)</span>
+ <span class="ml-2 text-[13px] dark:text-slate-100 text-zinc-900">Data Saja (Tanpa Struktur)</span>
  </label>
  </div>
  </div>
@@ -253,12 +253,12 @@
  <div>
  <label class="flex items-center">
  <input type="checkbox" x-model="compression" class="rounded border-zinc-300 bg-white text-sky-600 h-4 w-4">
- <span class="ml-2 text-[13px] text-zinc-900">Kompres file backup (gzip)</span>
+ <span class="ml-2 text-[13px] dark:text-slate-100 text-zinc-900">Kompres file backup (gzip)</span>
  </label>
  </div>
 
  <div>
- <label class="block text-[11px] font-medium text-zinc-900 mb-2">Deskripsi (Opsional)</label>
+ <label class="block text-[11px] font-medium dark:text-slate-100 text-zinc-900 mb-2">Deskripsi (Opsional)</label>
  <input type="text" x-model="description"
  class="w-full px-3 py-2 border border-zinc-300 rounded-xl"
  placeholder="Contoh: Backup sebelum update sistem">
@@ -267,7 +267,7 @@
 
  <div class="flex gap-3 mt-6">
  <button type="button" @click="showModal = false"
- class="flex-1 px-4 py-2 text-zinc-500 bg-zinc-50 rounded-xl">
+ class="flex-1 px-4 py-2 dark:text-slate-400 text-zinc-500 dark:bg-slate-800/50 bg-zinc-50 rounded-xl">
  Batal
  </button>
  <button type="submit" :disabled="isCreating"

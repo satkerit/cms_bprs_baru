@@ -26,7 +26,7 @@
     deleteFieldName: @js($deleteFieldName)
 })">
     @if($label)
-        <label class="block text-[13px] font-medium text-zinc-700 mb-1.5">
+        <label class="block text-[13px] font-medium dark:text-slate-300 text-zinc-700 mb-1.5">
             {{ $label }}
             @if($required) <span class="text-red-500">*</span> @endif
         </label>
@@ -34,7 +34,7 @@
 
     {{-- Preview --}}
     <div class="mb-3" x-show="previewUrl" x-cloak>
-        <img :src="previewUrl" alt="Preview" class="rounded-xl border border-zinc-200 bg-zinc-50 {{ $previewClass }} w-full" style="object-fit: contain;">
+        <img :src="previewUrl" alt="Preview" class="rounded-xl border dark:border-slate-700 border-zinc-200 dark:bg-slate-800/50 bg-zinc-50 {{ $previewClass }} w-full" style="object-fit: contain;">
     </div>
 
     {{-- Hidden input for storage path --}}
@@ -71,7 +71,7 @@
     </div>
 
     @if($hint)
-        <p class="mt-2 text-[12px] text-zinc-400">{{ $hint }}</p>
+        <p class="mt-2 text-[12px] dark:text-slate-500 text-zinc-400">{{ $hint }}</p>
     @endif
 
     {{-- Storage Modal --}}
@@ -80,9 +80,9 @@
             <div @click="closeStorageModal()" class="fixed inset-0 bg-zinc-900/50 backdrop-blur-sm transition-opacity"></div>
             <div class="relative z-10 w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white shadow-2xl shadow-zinc-900/10">
                 {{-- Header --}}
-                <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-100">
-                    <h3 class="text-[15px] font-semibold text-zinc-900">Pilih Gambar dari Storage</h3>
-                    <button type="button" @click="closeStorageModal()" class="text-zinc-400 hover:text-zinc-600 transition-colors p-1 rounded-lg hover:bg-zinc-100">
+                <div class="flex items-center justify-between px-6 py-4 border-b dark:border-slate-800 border-zinc-100">
+                    <h3 class="text-[15px] font-semibold dark:text-slate-100 text-zinc-900">Pilih Gambar dari Storage</h3>
+                    <button type="button" @click="closeStorageModal()" class="dark:text-slate-500 text-zinc-400 hover:text-zinc-600 transition-colors p-1 rounded-lg hover:bg-zinc-100">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -100,7 +100,7 @@
                         </button>
                         <template x-for="(crumb, index) in breadcrumbs" :key="index">
                             <>
-                                <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-3.5 h-3.5 dark:text-slate-500 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                 </svg>
                                 <button type="button" @click="navigateTo(crumb.path)" class="text-emerald-600 hover:text-emerald-700 font-medium" x-text="crumb.name"></button>
@@ -117,12 +117,12 @@
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                     </div>
-                    <div x-show="!loading && items.length === 0" class="text-center py-12 text-zinc-500">Folder kosong</div>
+                    <div x-show="!loading && items.length === 0" class="text-center py-12 dark:text-slate-400 text-zinc-500">Folder kosong</div>
                     <div x-show="!loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                         <template x-for="item in items" :key="item.path">
                             <div @click="item.type === 'folder' ? navigateTo(item.path) : selectImage(item)"
                                  :class="{'ring-2 ring-emerald-500 ring-offset-2': selectedItem?.path === item.path}"
-                                 class="relative rounded-xl border border-zinc-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-150 hover:-translate-y-0.5">
+                                 class="relative rounded-xl border dark:border-slate-700 border-zinc-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-150 hover:-translate-y-0.5">
                                 <template x-if="item.type === 'folder'">
                                     <div class="bg-zinc-100 p-4 text-center">
                                         <svg class="w-10 h-10 mx-auto text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
@@ -147,8 +147,8 @@
                 </div>
 
                 {{-- Footer --}}
-                <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-zinc-100">
-                    <button type="button" @click="closeStorageModal()" class="inline-flex items-center px-4 py-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-xl hover:bg-zinc-50 hover:border-zinc-300 transition-all duration-150">
+                <div class="flex items-center justify-end gap-3 px-6 py-4 border-t dark:border-slate-800 border-zinc-100">
+                    <button type="button" @click="closeStorageModal()" class="inline-flex items-center px-4 py-2 text-sm font-medium dark:text-slate-300 text-zinc-700 bg-white border dark:border-slate-700 border-zinc-200 rounded-xl hover:dark:bg-slate-800/50 bg-zinc-50 hover:border-zinc-300 transition-all duration-150">
                         Batal
                     </button>
                     <button type="button" @click="confirmSelection()" :disabled="!selectedItem" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm shadow-emerald-600/20">
