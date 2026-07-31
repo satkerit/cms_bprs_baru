@@ -34,30 +34,29 @@
     </div>
 
     {{-- ═══ TRUST BADGES ═══ --}}
-    <section class="relative" x-data>
-        <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/30 to-transparent pointer-events-none"></div>
+    <section class="relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/30 dark:from-emerald-950/20 to-transparent pointer-events-none"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
-            <div class="flex flex-wrap items-center justify-center gap-3 lg:gap-5"
-                 x-intersect="$el.querySelectorAll('.trust-badge').forEach((el, i) => { setTimeout(() => el.classList.add('is-visible'), i * 100) })">
-                <div class="trust-badge reveal-up flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 backdrop-blur-sm border border-emerald-100/50 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all duration-500">
+            <div class="flex flex-wrap items-center justify-center gap-3 lg:gap-5">
+                <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-emerald-100/50 dark:border-emerald-900/50 shadow-sm hover:shadow-md hover:border-emerald-200 dark:hover:border-emerald-700 transition-all duration-300">
                     <div class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     </div>
                     <span class="text-xs sm:text-sm font-semibold text-foreground">Terdaftar & Diawasi OJK</span>
                 </div>
-                <div class="trust-badge reveal-up flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 backdrop-blur-sm border border-amber-100/50 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-500" style="animation-delay: 100ms">
+                <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-amber-100/50 dark:border-amber-900/50 shadow-sm hover:shadow-md hover:border-amber-200 dark:hover:border-amber-700 transition-all duration-300">
                     <div class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-50 text-amber-600 shrink-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                     </div>
                     <span class="text-xs sm:text-sm font-semibold text-foreground">Dijamin oleh LPS</span>
                 </div>
-                <div class="trust-badge reveal-up flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 backdrop-blur-sm border border-emerald-100/50 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all duration-500" style="animation-delay: 200ms">
+                <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-emerald-100/50 dark:border-emerald-900/50 shadow-sm hover:shadow-md hover:border-emerald-200 dark:hover:border-emerald-700 transition-all duration-300">
                     <div class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
                     </div>
                     <span class="text-xs sm:text-sm font-semibold text-foreground">Sesuai Prinsip Syariah</span>
                 </div>
-                <div class="trust-badge reveal-up flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 backdrop-blur-sm border border-emerald-100/50 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all duration-500" style="animation-delay: 300ms">
+                <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-emerald-100/50 dark:border-emerald-900/50 shadow-sm hover:shadow-md hover:border-emerald-200 dark:hover:border-emerald-700 transition-all duration-300">
                     <div class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
@@ -68,14 +67,14 @@
     </section>
 
     {{-- ═══ WHY CHOOSE US ═══ --}}
-    <section class="py-14 lg:py-18 bg-white dark:bg-slate-900">
+    <section class="py-14 lg:py-20 bg-white dark:bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <x-frontend.why-choose-us :why-choose-us-settings="$whyChooseUsSettings" :why-choose-us="$whyChooseUs" />
         </div>
     </section>
 
     {{-- ═══ QUICK ACCESS — Shortcut Cards ═══ --}}
-    <section class="py-14 lg:py-18 bg-muted dark:bg-slate-950">
+    <section class="py-14 lg:py-20 bg-muted dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-intersect="$el.classList.add('is-visible')">
             <div class="text-center mb-10 reveal-up">
                 <span class="eyebrow-badge mb-3 inline-flex">Jelajahi Layanan</span>
@@ -90,8 +89,8 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
                 {{-- Produk & Layanan --}}
                 <a href="{{ route('products.simpanan-syariah') }}"
-                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-500 reveal-up card-hover">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-800/70 transition-all duration-500">
+                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-up card-hover">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-800/70 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                     </div>
                     <h3 class="font-bold text-foreground dark:text-slate-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors text-sm sm:text-base">Produk & Layanan</h3>
@@ -100,9 +99,8 @@
 
                 {{-- Simulasi Pembiayaan --}}
                 <a href="{{ route('financing-simulation') }}"
-                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-amber-200 dark:hover:border-amber-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-500 reveal-up card-hover"
-                   style="transition-delay:50ms">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 mb-4 group-hover:scale-110 group-hover:bg-amber-100 dark:group-hover:bg-amber-800/70 transition-all duration-500">
+                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-amber-200 dark:hover:border-amber-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-up card-hover">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 mb-4 group-hover:scale-110 group-hover:bg-amber-100 dark:group-hover:bg-amber-800/70 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                     </div>
                     <h3 class="font-bold text-foreground dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-sm sm:text-base">Simulasi Pembiayaan</h3>
@@ -111,9 +109,8 @@
 
                 {{-- Berita & Artikel --}}
                 <a href="{{ route('news.index') }}"
-                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-500 reveal-up card-hover"
-                   style="transition-delay:100ms">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-800/70 transition-all duration-500">
+                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-up card-hover">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-800/70 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     </div>
                     <h3 class="font-bold text-foreground dark:text-slate-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors text-sm sm:text-base">Berita & Artikel</h3>
@@ -122,9 +119,8 @@
 
                 {{-- Lelang Agunan --}}
                 <a href="{{ route('auctions.index') }}"
-                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-500 reveal-up card-hover"
-                   style="transition-delay:150ms">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-800/70 transition-all duration-500">
+                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-up card-hover">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-800/70 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
                     </div>
                     <h3 class="font-bold text-foreground dark:text-slate-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors text-sm sm:text-base">Lelang Agunan</h3>
@@ -133,9 +129,8 @@
 
                 {{-- Pengaduan Nasabah --}}
                 <a href="{{ route('pengaduan-nasabah') }}"
-                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-red-200 dark:hover:border-red-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-500 reveal-up card-hover"
-                   style="transition-delay:200ms">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/50 text-red-600 dark:text-red-400 mb-4 group-hover:scale-110 group-hover:bg-red-100 dark:group-hover:bg-red-800/70 transition-all duration-500">
+                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-red-200 dark:hover:border-red-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-up card-hover">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/50 text-red-600 dark:text-red-400 mb-4 group-hover:scale-110 group-hover:bg-red-100 dark:group-hover:bg-red-800/70 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                     </div>
                     <h3 class="font-bold text-foreground dark:text-slate-100 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors text-sm sm:text-base">Pengaduan Nasabah</h3>
@@ -144,9 +139,8 @@
 
                 {{-- Hubungi Kami --}}
                 <a href="{{ route('contact') }}"
-                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-amber-200 dark:hover:border-amber-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-500 reveal-up card-hover"
-                   style="transition-delay:250ms">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 mb-4 group-hover:scale-110 group-hover:bg-amber-100 dark:group-hover:bg-amber-800/70 transition-all duration-500">
+                   class="group relative bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 border border-border dark:border-slate-700 hover:border-amber-200 dark:hover:border-amber-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-up card-hover">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 mb-4 group-hover:scale-110 group-hover:bg-amber-100 dark:group-hover:bg-amber-800/70 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </div>
                     <h3 class="font-bold text-foreground dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-sm sm:text-base">Hubungi Kami</h3>
@@ -157,14 +151,14 @@
     </section>
 
     {{-- ═══ STATS ═══ --}}
-    <section class="py-14 lg:py-18 bg-white dark:bg-slate-900">
+    <section class="py-14 lg:py-20 bg-white dark:bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <x-frontend.stats-section :company-info="$companyInfo" />
         </div>
     </section>
 
     {{-- ═══ COMPLAINT & WHISTLEBLOWING ═══ --}}
-    <section class="py-14 lg:py-18 bg-muted dark:bg-slate-950">
+    <section class="py-14 lg:py-20 bg-muted dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8 fade-in-section" x-intersect="$el.classList.add('is-visible')">
                 <h2 class="text-2xl sm:text-3xl font-bold text-foreground mb-2 leading-tight tracking-tight">
