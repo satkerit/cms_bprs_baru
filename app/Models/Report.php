@@ -141,6 +141,8 @@ class Report extends Model
     {
         $clearCache = function ($model) {
             app(CacheService::class)->clearReportCache();
+            // Hapus HTML response cache agar tanggal publish terbaru langsung tampil di frontend
+            \Spatie\ResponseCache\Facades\ResponseCache::clear();
         };
 
         static::saved($clearCache);

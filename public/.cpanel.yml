@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/bpre3914/public_html/dev/
+    - /bin/cp -R * $DEPLOYPATH
