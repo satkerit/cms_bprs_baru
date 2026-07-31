@@ -267,23 +267,41 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     // Composer Update
     Route::get('composer-update', [App\Http\Controllers\Admin\ComposerUpdateController::class, 'index'])->name('composer-update.index');
     Route::post('composer-update/run', [App\Http\Controllers\Admin\ComposerUpdateController::class, 'runUpdate'])->name('composer-update.run');    // Cache Management
-                    Route::post('cache/clear', function () {
-                        \Illuminate\Support\Facades\Artisan::call('cache:clear');
-                        \Illuminate\Support\Facades\Artisan::call('view:clear');
-                        \Illuminate\Support\Facades\Artisan::call('route:clear');
-                        \Illuminate\Support\Facades\Artisan::call('config:clear');
-                        \Illuminate\Support\Facades\Artisan::call('responsecache:clear');
+    Route::post('cache/clear', function () {
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('responsecache:clear');
 
-                        // Clear model caches
-                        \App\Models\SiteSetting::clearCache();
-                        \Illuminate\Support\Facades\Cache::forget('hero_slide_images');
-                        for ($i = 1; $i <= 20; $i++) {
-                            \Illuminate\Support\Facades\Cache::forget(config('cache-keys.hero_slides', 'hero_slides') . "_{$i}");
-                        }
+        // Clear model caches
+        \App\Models\SiteSetting::clearCache();
+        \Illuminate\Support\Facades\Cache::forget('hero_slide_images');
+        for ($i = 1; $i <= 20; $i++) {
+            \Illuminate\Support\Facades\Cache::forget(config('cache-keys.hero_slides', 'hero_slides') . "_{$i}");
+        }
 
-                        \Illuminate\Support\Facades\Session::flash('success', 'Semua cache berhasil dibersihkan.');
-                        return redirect()->back();
-                    })->name('cache.clear');
+        \Illuminate\Support\Facades\Session::flash('success', 'Semua cache berhasil dibersihkan.');
+        return redirect()->back();
+    })->name('cache.clear');
+
+    // Hard Refresh: config:cache + view:cache untuk production
+    Route::post('cache/hard-refresh', function () {
+        try {
+            // Clear response cache dulu (Spatie) agar tidak ada URL http:// yang tersimpan
+            \Illuminate\Support\Facades\Artisan::call('responsecache:clear');
+            \Illuminate\Support\Facades\Artisan::call('cache:clear');
+            \Illuminate\Support\Facades\Artisan::call('view:clear');
+            \Illuminate\Support\Facades\Artisan::call('config:cache');
+            \Illuminate\Support\Facades\Artisan::call('route:cache');
+            \Illuminate\Support\Facades\Artisan::call('event:cache');
+            \App\Models\SiteSetting::clearCache();
+            \Illuminate\Support\Facades\Session::flash('success', 'Hard refresh berhasil. Response cache, config, route, dan event sudah di-rebuild.');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Session::flash('error', 'Hard refresh gagal: ' . $e->getMessage());
+        }
+        return redirect()->back();
+    })->name('cache.hard-refresh');
 });
 
 // API Routes

@@ -18,17 +18,30 @@
                 </div>
             </div>
         </div>
-        <form method="POST" action="{{ route('admin.cache.clear') }}">
-            @csrf
-            <button type="submit"
-                class="btn-secondary h-9 text-xs"
-                onclick="return confirm('Bersihkan semua cache?')">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                </svg>
-                Clear Cache
-            </button>
-        </form>
+        <div class="flex items-center gap-2">
+            <form method="POST" action="{{ route('admin.cache.clear') }}">
+                @csrf
+                <button type="submit"
+                    class="btn-secondary h-9 text-xs"
+                    onclick="return confirm('Bersihkan semua cache?')">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Clear Cache
+                </button>
+            </form>
+            <form method="POST" action="{{ route('admin.cache.hard-refresh') }}">
+                @csrf
+                <button type="submit"
+                    class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white transition-colors"
+                    onclick="return confirm('Jalankan hard refresh? Ini akan me-rebuild config cache untuk production.')">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    Hard Refresh
+                </button>
+            </form>
+        </div>
     </div>
 
     {{-- ═══ QUICK STATS — Emerald + Gold Bento Grid ═══ --}}
