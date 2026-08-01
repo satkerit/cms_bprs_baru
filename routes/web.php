@@ -328,6 +328,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
         }
         return redirect()->back();
     })->name('cache.hard-refresh');
+
+    // Optimize: optimize:clear lalu optimize (config:cache, route:cache, event:cache, compiled)
+    // Aman digunakan di shared hosting — bootstrap/cache/*.php sudah untrack dari git.
+    Route::post('cache/optimize', function () {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+            \Illuminate\Support\Facades\Artisan::call('responsecache:clear');
+            \Illuminate\Support\Facades\Artisan::call('optimize');
+            \App\Models\SiteSetting::clearCache();
+            \Illuminate\Support\Facades\Session::flash('success', 'Optimize berhasil. Config, route, event, dan compiled cache dibuat ulang.');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Session::flash('error', 'Optimize gagal: ' . $e->getMessage() . ' — pastikan folder bootstrap/cache dapat ditulis (permission 755/775).');
+        }
+        return redirect()->back();
+    })->name('cache.optimize');
 });
 
 // API Routes
