@@ -7,6 +7,25 @@ use App\Http\Controllers\CspReportController;
 // CSP Violation Report (must be before other routes)
 Route::post('/api/csp-report', [CspReportController::class, 'report'])->name('csp.report');
 
+// Diagnostik konfigurasi (token-protected, TANPA query DB) — verifikasi sumber kredensial database
+// Akses: GET /dev-diagnostics?token={SECRET_CACHE_TOKEN}
+Route::get('/dev-diagnostics', function (\Illuminate\Http\Request $request) {
+    if (! hash_equals((string) config('app.secret_cache_token'), (string) $request->query('token', ''))) {
+        abort(403);
+    }
+    $configFile = base_path('bootstrap/cache/config.php');
+    return response()->json([
+        'app_env' => config('app.env'),
+        'config_cache_exists' => file_exists($configFile),
+        'config_cache_mtime' => file_exists($configFile) ? date('Y-m-d H:i:s', filemtime($configFile)) : null,
+        'db_host' => config('database.connections.mysql.host'),
+        'db_database' => config('database.connections.mysql.database'),
+        'db_username' => config('database.connections.mysql.username'),
+        'env_exists' => file_exists(base_path('.env')),
+        'env_path' => base_path('.env'),
+    ]);
+})->name('dev.diagnostics');
+
 // Storage Serve Route (CRITICAL FOR FILES)
 Route::get('/storage/{path}', [\App\Http\Controllers\StorageServeController::class, 'serve'])
     ->where('path', '.*')
