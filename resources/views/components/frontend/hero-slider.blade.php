@@ -16,7 +16,7 @@
             @foreach($heroSlides as $index => $slide)
             @php $isActive = $index === 0; @endphp
             <!-- Slide Wrapper -->
-            <div class="hero-slide absolute inset-0 w-full h-full transition-all duration-500 ease-out {{ $isActive ? 'opacity-100 z-10' : 'opacity-0 z-0' }}"
+            <div class="hero-slide absolute inset-0 w-full h-full transition-all duration-500 ease-out {{ $isActive ? 'opacity-100 z-10 active' : 'opacity-0 z-0' }}"
                  data-index="{{ $index }}">
                 @if($slide->image)
                 @php
@@ -188,10 +188,10 @@
             if(c.dataset.hide)c.classList.add.apply(c.classList,c.dataset.hide.split(' '));
         });
         setTimeout(function(){
-            slides[active].classList.remove('opacity-100','z-10');
+            slides[active].classList.remove('opacity-100','z-10','active');
             slides[active].classList.add('opacity-0','z-0');
             slides[i].classList.remove('opacity-0','z-0');
-            slides[i].classList.add('opacity-100','z-10');
+            slides[i].classList.add('opacity-100','z-10','active');
             // Show content on new slide
             slides[i].querySelectorAll('.hero-content').forEach(function(c){
                 if(c.dataset.hide)c.classList.remove.apply(c.classList,c.dataset.hide.split(' '));

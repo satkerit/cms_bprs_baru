@@ -6,6 +6,24 @@
       "sourceType": "github",
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "7fb344d018367dd93ed70f2cd6c906535ea437ed90d69160b55d7bee98b4ff85"
+    },
+    "laravel-owasp-security": {
+      "source": "asyrafhussin/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/laravel-owasp-security/SKILL.md",
+      "computedHash": "c8e335415263f9f7bb224f15f82dda0a6cdfc136538e3fbf6b0eb1928fa110b5"
+    },
+    "laravel-security": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/laravel-security/SKILL.md",
+      "computedHash": "6ec0611d65b0787530f725ca630d9075e5e2eb3d7779abb43447983174dce854"
+    },
+    "laravel-security-audit": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "skillPath": "skills/laravel-security-audit/SKILL.md",
+      "computedHash": "6cc0dbf736685e39e1c230ea6333fd2b402a0a6f1b48c2ea88ff8964df8be327"
     }
   }
 }

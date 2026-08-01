@@ -845,14 +845,21 @@ html {
         }
     }
     @media (max-width: 640px) {
+        /* Di mobile, kontainer tidak pakai aspect-ratio — tinggi mengikuti slide aktif */
         .hero-slider-hybrid {
-            aspect-ratio: 16 / 9;
-            min-height: 220px;
-            max-height: 55vh;
+            aspect-ratio: unset;
+            min-height: unset;
+            max-height: unset;
+            height: auto;
+            /* overflow hidden tetap agar slide inactive tidak muncul */
         }
-        /* Mobile: tampilkan gambar hero utuh (tidak terpotong kiri-kanan),
-           ruang kosong diisi gradasi emerald agar tetap elegan */
+        /* Semua slide tetap absolute agar bisa overlap saat transisi,
+           tapi slide pertama (placeholder ukuran) pakai position relative
+           sehingga kontainer punya tinggi alami */
         .hero-slider-hybrid .hero-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
             background: linear-gradient(
                 135deg,
                 #047857 0%,
@@ -860,11 +867,42 @@ html {
                 #10b981 100%
             );
         }
-        .hero-slider-hybrid .hero-slide img {
+        /* Slide aktif dijadikan "flow element" sehingga kontainer mengikuti tingginya */
+        .hero-slider-hybrid .hero-slide.active {
+            position: relative;
+            inset: auto;
+            width: 100%;
+            height: auto;
+        }
+        /* Gambar di dalam slide aktif: contain agar tidak terpotong */
+        .hero-slider-hybrid .hero-slide.active img {
+            width: 100%;
+            height: auto;
             object-fit: contain;
         }
-        .hero-slider-hybrid .hero-slide picture {
-            background: transparent;
+        .hero-slider-hybrid .hero-slide.active picture {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    /* ── Mobile image focus fix ──
+       Gambar card (produk, berita, kantor, pengurus) pakai object-cover.
+       Di mobile, paksa object-position ke center agar bagian penting tidak terpotong.
+       Khusus foto pengurus di board-member-card yang default-nya object-top. */
+    @media (max-width: 640px) {
+        /* Thumbnail berita — aspect-[16/9] */
+        .aspect-\[16\/9\] img,
+        /* Gambar produk — aspect-[4/3] */
+        .aspect-\[4\/3\] img,
+        /* Foto kantor — aspect-video */
+        .aspect-video img {
+            object-position: center center !important;
+        }
+        /* Foto pengurus — object-top diganti object-center di mobile */
+        .aspect-\[3\/4\] img {
+            object-position: center top !important;
         }
     }
 
