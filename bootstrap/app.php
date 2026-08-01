@@ -25,8 +25,15 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Trust all proxies — shared hosting reverse proxy HTTPS termination
-        $middleware->trustProxies(at: '*', headers: Request::HEADER_X_FORWARDED_FOR |
+        // Trusted proxies — dibatasi ke daftar IP/CIDR proxy nyata (bukan '*' agar X-Forwarded-For tidak bisa dipalsukan).
+        // Konfigurasi via env TRUSTED_PROXIES (comma-separated, mis. "1.2.3.4,10.0.0.0/8").
+        // Default: loopback + rentang privat (hosting bersama/cPanel). Sesuaikan di .env production bila proxy berbeda.
+        $trustedProxies = array_values(array_filter(array_map('trim', explode(',', (string) env('TRUSTED_PROXIES', '')))));
+        if ($trustedProxies === []) {
+            $trustedProxies = ['127.0.0.1', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
+        }
+
+        $middleware->trustProxies(at: $trustedProxies, headers: Request::HEADER_X_FORWARDED_FOR |
             Request::HEADER_X_FORWARDED_HOST |
             Request::HEADER_X_FORWARDED_PORT |
             Request::HEADER_X_FORWARDED_PROTO |

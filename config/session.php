@@ -32,7 +32,8 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 120),
+    // 60 menit (rekomendasi 15-30); idle timeout 30 menit + strict IP check tetap aktif sebagai lapisan kedua
+    'lifetime' => (int) env('SESSION_LIFETIME', 60),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 

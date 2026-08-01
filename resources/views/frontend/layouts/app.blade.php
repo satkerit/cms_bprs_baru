@@ -83,7 +83,7 @@
         ]));
     @endphp
     <div id="swal-flash"
-         data-messages='{!! $__swalFlash !!}'
+         data-messages='{{ $__swalFlash }}'
          aria-hidden="true"
          style="display:none"></div>
 

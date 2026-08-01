@@ -31,8 +31,7 @@ class SecurityHeaders
         // Prevent MIME type sniffing
         $response->headers->set('X-Content-Type-Options', 'nosniff');
 
-        // Enable XSS filter
-        $response->headers->set('X-XSS-Protection', '1; mode=block');
+        // Note: X-XSS-Protection dihapus — deprecated & bisa memicu false-positive (CSP sudah menangani XSS)
 
         // Referrer policy
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -66,6 +65,9 @@ class SecurityHeaders
             "default-src 'self'",
             // Tidak pakai 'strict-dynamic' karena browser mengabaikan host-based allowlisting saat strict-dynamic ada.
             // Dengan nonce + host allowlist, script dari CDN dan inline script yang diberi nonce tetap diizinkan.
+            // 'unsafe-eval' WAJIB dipertahankan: Alpine.js v3 (vendor-alpine) & SweetAlert2 mengevaluasi
+            // ekspresi via `new Function()`. Tanpa 'unsafe-eval', seluruh interaktivitas UI (x-data/x-on/modal)
+            // rusak di production. Risiko L1 diterima — di-mitigasi nonce + tanpa input user dieval.
             "script-src 'nonce-{$nonce}' 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com https://cdn.ckeditor.com https://analytics.ahrefs.com",
             // Styles: Allow self, unsafe-inline (for Alpine.js dynamic styles and nonce-based <style> tags),
             // unsafe-hashes (for style attributes), and trusted CDNs

@@ -827,7 +827,7 @@ class ImageService
         ];
 
         foreach ($possiblePaths as $path) {
-            $test = shell_exec("where {$path} 2>NUL");
+            $test = shell_exec('where ' . escapeshellarg($path) . ' 2>NUL');
             if ($test) {
                 $lines = explode("\n", trim($test));
                 return trim($lines[0]);
@@ -925,14 +925,14 @@ class ImageService
             $outputPath = $disk->path($formatPath);
 
             $cmd = sprintf(
-                '"%s" -y -i "%s" -vf "scale=\'min(%d,iw)\':min\'(%d*ih/iw)\':force_original_aspect_ratio=decrease" -c:v %s %s "%s" 2>&1',
-                $ffmpeg,
-                $fullPath,
+                '%s -y -i %s -vf "scale=\'min(%d,iw)\':min\'(%d*ih/iw)\':force_original_aspect_ratio=decrease" -c:v %s %s %s 2>&1',
+                escapeshellarg($ffmpeg),
+                escapeshellarg($fullPath),
                 $width,
                 $width,
                 $codec,
                 $extraOpts,
-                $outputPath
+                escapeshellarg($outputPath)
             );
 
             $output = shell_exec($cmd);

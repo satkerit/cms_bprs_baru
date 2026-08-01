@@ -1,19 +1,40 @@
 <x-frontend-layout>
-    <x-slot:title>Profil Perusahaan - {{ $info->company_name ?? 'BPRS Bangka Belitung' }}</x-slot:title>
-    <x-slot:metaDescription>Profil BPRS Bangka Belitung — bank pembiayaan rakyat syariah yang berkomitmen memberikan layanan keuangan syariah terbaik untuk masyarakat Bangka Belitung.</x-slot:metaDescription>
-    <x-slot:metaKeywords>BPRS Bangka Belitung, Profil Perusahaan, Bank Syariah, Visi Misi, Sejarah Perusahaan</x-slot:metaKeywords>
+    <x-slot:title>Profil Perusahaan - {{ $info->name ?? config('app.name') }}</x-slot:title>
+    <x-slot:metaDescription>{{ $info->tagline ?? 'Profil perusahaan — visi, misi, sejarah, dan informasi lengkap.' }}</x-slot:metaDescription>
+    <x-slot:metaKeywords>Profil Perusahaan, {{ $info->name ?? config('app.name') }}, Visi Misi, Sejarah Perusahaan, OJK, LPS</x-slot:metaKeywords>
 
     @php
-        // Gunakan fallback statis jika $companyInfo dari database belum tersedia
-        $info = $companyInfo;
-        $logo = isset($info) && $info?->logo ? \App\Helpers\StorageHelper::url($info->logo) : null;
-        $companyName = $info?->company_name ?? 'BPRS Bangka Belitung';
-        $establishedYear = $info?->established_year ?? '2010';
-        $description = $info?->description ?? 'BPRS Bangka Belitung adalah bank pembiayaan rakyat syariah yang resmi beroperasi melayani masyarakat Bangka Belitung. Berkomitmen menghadirkan layanan keuangan yang transparan, adil, dan sesuai prinsip syariah. Dengan dukungan sumber daya profesional dan teknologi modern, BPRS Bangka Belitung terus berinovasi untuk memberikan solusi keuangan syariah yang terbaik bagi nasabah.';
-        $vision = $info?->vision ?? 'Menjadi bank pembiayaan rakyat syariah terdepan dan terpercaya di Bangka Belitung yang memberikan solusi keuangan syariah yang inovatif dan berkelanjutan.';
-        $missionText = $info?->mission ?? 'Memberikan layanan pembiayaan dan simpanan syariah yang berkualitas, Membangun kemitraan yang saling menguntungkan dengan nasabah dan stakeholder, Mengembangkan sumber daya manusia yang profesional dan berintegritas, Menerapkan tata kelola perusahaan yang baik (GCG) sesuai prinsip syariah.';
-        $missions = collect(explode("\n", $missionText))->map(fn($m) => trim($m))->filter();
-        $history = $info?->history ?? '';
+        $info          = $companyInfo;
+        $logo          = $info?->logo          ? \App\Helpers\StorageHelper::url($info->logo)          : null;
+        $profileImage  = $info?->profile_image ? \App\Helpers\StorageHelper::url($info->profile_image) : $logo;
+        $companyName   = $info?->name          ?? config('app.name');
+        $establishedYear = (int) ($info?->established_year ?? 0);
+        $tagline       = $info?->tagline       ?? '';
+        $description   = $info?->description   ?? '';
+        $vision        = $info?->vision        ?? '';
+        $missions      = $info?->mission
+                            ? collect(explode("\n", $info->mission))->map(fn($m) => trim($m))->filter()
+                            : collect();
+        $history       = $info?->history       ?? '';
+
+        // Statistik dari DB — tidak ada hardcode
+        $statYears     = (int) ($info?->stat_years_experience    ?? 0);
+        $statBranch    = (int) ($info?->stat_branch_offices      ?? 0);
+        $statCash      = (int) ($info?->stat_cash_offices        ?? 0);
+        $statMobile    = (int) ($info?->stat_mobile_cash_offices ?? 0);
+
+        // Hitung tahun beroperasi: gunakan stat_years_experience jika ada, fallback kalkulasi
+        $yearsDisplay  = $statYears > 0
+                            ? $statYears
+                            : ($establishedYear > 0 ? (date('Y') - $establishedYear) : null);
+
+        // Apakah ada data regulasi
+        $hasRegulasi   = $info?->ojk_license || $info?->ojk_tagline || $info?->lps_tagline;
+
+        // Jam operasional
+        $operationalHours = is_array($info?->operational_hours) ? $info->operational_hours : [];
+
+        $nonce = request()->attributes->get('csp_nonce');
     @endphp
 
     {{-- ═══ HERO ═══ --}}
@@ -40,24 +61,32 @@
                         <span class="text-emerald-300">Perusahaan</span>
                     </h1>
 
+                    @if($tagline)
                     <p class="text-white/80 text-base sm:text-lg leading-relaxed mb-8 w-full">
-                        {{ $companyName }} — bank pembiayaan rakyat syariah yang berkomitmen menghadirkan layanan keuangan syariah terbaik, transparan, dan amanah untuk masyarakat Bangka Belitung.
+                        {{ $tagline }}
                     </p>
+                    @endif
 
-                    {{-- Stats row --}}
-                    <div class="grid grid-cols-3 gap-4 sm:gap-6">
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-4 text-center border border-white/15">
-                            <div class="text-2xl sm:text-3xl font-bold text-white">{{ date('Y') - (int)$establishedYear }}+</div>
+                    {{-- Badge stats: hanya tampil jika ada data --}}
+                    <div class="flex flex-wrap gap-3">
+                        @if($yearsDisplay)
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 text-center border border-white/15">
+                            <div class="text-2xl sm:text-3xl font-bold text-white">{{ $yearsDisplay }}+</div>
                             <div class="text-xs text-white/70 mt-1 leading-tight">Tahun<br>Beroperasi</div>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-4 text-center border border-white/15">
+                        @endif
+                        @if($info?->ojk_license || $info?->ojk_tagline)
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 text-center border border-white/15">
                             <div class="text-2xl sm:text-3xl font-bold text-emerald-300">OJK</div>
                             <div class="text-xs text-white/70 mt-1 leading-tight">Terdaftar &amp;<br>Diawasi</div>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-4 text-center border border-white/15">
+                        @endif
+                        @if($info?->lps_tagline || $info?->lps_guarantee_amount)
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 text-center border border-white/15">
                             <div class="text-2xl sm:text-3xl font-bold text-amber-300">LPS</div>
                             <div class="text-xs text-white/70 mt-1 leading-tight">Dijamin<br>Pemerintah</div>
                         </div>
+                        @endif
                     </div>
                 </div>
 
@@ -141,24 +170,35 @@
                         @endif
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4 reveal-up" style="transition-delay:100ms">
-                    <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-6 text-center border border-emerald-100 dark:border-emerald-800/30">
-                        <div class="text-4xl font-bold text-emerald-600 dark:text-emerald-400 mb-1">{{ $info?->statistics['years_experience'] ?? number_format(now()->year - (int)$establishedYear) }}</div>
-                        <div class="text-xs sm:text-sm text-emerald-700 dark:text-emerald-300 font-medium">Tahun Pengalaman</div>
+                {{-- Grid statistik: hanya tampilkan card yang > 0 --}}
+                @php
+                    $statsGrid = array_filter([
+                        ['val' => $yearsDisplay,  'label' => 'Tahun Pengalaman', 'color' => 'emerald'],
+                        ['val' => $statBranch,    'label' => 'Kantor Cabang',    'color' => 'amber'],
+                        ['val' => $statCash,      'label' => 'Kantor Kas',       'color' => 'emerald'],
+                        ['val' => $statMobile,    'label' => 'Kas Mobil/Keliling','color' => 'amber'],
+                    ], fn($s) => $s['val'] > 0);
+                @endphp
+                @if(count($statsGrid) > 0 || $profileImage)
+                <div class="space-y-6 reveal-up" style="transition-delay:100ms">
+                    @if($profileImage)
+                    <div class="rounded-2xl overflow-hidden shadow-lg">
+                        <img src="{{ $profileImage }}" alt="{{ $companyName }}"
+                             class="w-full h-48 sm:h-56 object-cover">
                     </div>
-                    <div class="bg-amber-50 dark:bg-amber-900/20 rounded-2xl p-6 text-center border border-amber-100 dark:border-amber-800/30">
-                        <div class="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-1">{{ $info?->statistics['branch_offices'] ?? '3' }}</div>
-                        <div class="text-xs sm:text-sm text-amber-700 dark:text-amber-300 font-medium">Kantor Cabang</div>
+                    @endif
+                    @if(count($statsGrid) > 0)
+                    <div class="grid grid-cols-2 gap-4">
+                        @foreach($statsGrid as $stat)
+                        <div class="bg-{{ $stat['color'] }}-50 dark:bg-{{ $stat['color'] }}-900/20 rounded-2xl p-5 text-center border border-{{ $stat['color'] }}-100 dark:border-{{ $stat['color'] }}-800/30">
+                            <div class="text-3xl sm:text-4xl font-bold text-{{ $stat['color'] }}-600 dark:text-{{ $stat['color'] }}-400 mb-1">{{ $stat['val'] }}</div>
+                            <div class="text-xs sm:text-sm text-{{ $stat['color'] }}-700 dark:text-{{ $stat['color'] }}-300 font-medium">{{ $stat['label'] }}</div>
+                        </div>
+                        @endforeach
                     </div>
-                    <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-6 text-center border border-emerald-100 dark:border-emerald-800/30">
-                        <div class="text-4xl font-bold text-emerald-600 dark:text-emerald-400 mb-1">{{ $info?->statistics['total_assets'] ?? '100+' }}</div>
-                        <div class="text-xs sm:text-sm text-emerald-700 dark:text-emerald-300 font-medium">Jumlah Karyawan</div>
-                    </div>
-                    <div class="bg-amber-50 dark:bg-amber-900/20 rounded-2xl p-6 text-center border border-amber-100 dark:border-amber-800/30">
-                        <div class="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-1">{{ $info?->statistics['cash_offices'] ?? '5000+' }}</div>
-                        <div class="text-xs sm:text-sm text-amber-700 dark:text-amber-300 font-medium">Nasabah Terlayani</div>
-                    </div>
+                    @endif
                 </div>
+                @endif
             </div>
         </div>
     </section>
@@ -209,7 +249,109 @@
     </section>
     @endif
 
-    {{-- ═══ SEJARAH (jika ada) ═══ --}}
+    {{-- ═══ REGULASI & KEAMANAN ═══ --}}
+    @if($hasRegulasi)
+    <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <span class="eyebrow-badge mb-3 inline-flex">Legalitas & Keamanan</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">
+                    Regulasi & Keamanan
+                </h2>
+                <p class="mt-3 text-secondary dark:text-slate-400 text-base max-w-xl mx-auto">
+                    Dana Anda aman dan diawasi oleh otoritas resmi pemerintah Republik Indonesia.
+                </p>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+
+                {{-- OJK --}}
+                @if($info?->ojk_license || $info?->ojk_tagline)
+                <div class="card-elevated reveal-up p-8 flex flex-col items-center text-center gap-4"
+                     x-intersect="$el.classList.add('is-visible')">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
+                        {{-- Ikon OJK (shield) --}}
+                        <svg class="w-9 h-9 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">OJK</div>
+                        <h3 class="text-lg font-bold text-foreground dark:text-slate-100 mb-2">Terdaftar &amp; Diawasi OJK</h3>
+                        @if($info?->ojk_license)
+                        <p class="text-sm text-secondary dark:text-slate-400 font-mono">No. {{ $info->ojk_license }}</p>
+                        @endif
+                        @if($info?->ojk_tagline)
+                        <p class="text-sm text-secondary dark:text-slate-400 mt-1 leading-relaxed">{{ $info->ojk_tagline }}</p>
+                        @endif
+                    </div>
+                </div>
+                @endif
+
+                {{-- LPS --}}
+                @if($info?->lps_tagline || $info?->lps_guarantee_amount)
+                <div class="card-elevated reveal-up p-8 flex flex-col items-center text-center gap-4"
+                     style="transition-delay:100ms"
+                     x-intersect="$el.classList.add('is-visible')">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
+                        {{-- Ikon LPS (lock) --}}
+                        <svg class="w-9 h-9 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">LPS</div>
+                        <h3 class="text-lg font-bold text-foreground dark:text-slate-100 mb-2">Dijamin LPS</h3>
+                        @if($info?->lps_guarantee_amount)
+                        <p class="text-sm font-semibold text-amber-600 dark:text-amber-400">
+                            Dijamin s.d. {{ is_numeric($info->lps_guarantee_amount) ? 'Rp ' . number_format($info->lps_guarantee_amount, 0, ',', '.') : $info->lps_guarantee_amount }}
+                        </p>
+                        @endif
+                        @if($info?->lps_tagline)
+                        <p class="text-sm text-secondary dark:text-slate-400 mt-1 leading-relaxed">{{ $info->lps_tagline }}</p>
+                        @endif
+                    </div>
+                </div>
+                @endif
+
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- ═══ JAM OPERASIONAL ═══ --}}
+    @if(count($operationalHours) > 0)
+    <section class="py-16 sm:py-20 lg:py-24 bg-slate-50 dark:bg-slate-950">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <span class="eyebrow-badge mb-3 inline-flex">Layanan</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">
+                    Jam Operasional
+                </h2>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 shadow-sm overflow-hidden reveal-up"
+                 x-intersect="$el.classList.add('is-visible')">
+                @foreach($operationalHours as $i => $schedule)
+                <div class="flex items-center justify-between px-6 py-4 {{ !$loop->last ? 'border-b border-border dark:border-slate-700' : '' }} {{ $loop->even ? 'bg-slate-50/60 dark:bg-slate-700/20' : '' }}">
+                    <span class="font-medium text-foreground dark:text-slate-200 text-sm sm:text-base">
+                        {{ $schedule['day'] ?? $schedule[0] ?? '' }}
+                    </span>
+                    <span class="text-sm sm:text-base text-secondary dark:text-slate-400 font-mono">
+                        @if(isset($schedule['open']) && isset($schedule['close']))
+                            {{ $schedule['open'] }} &ndash; {{ $schedule['close'] }}
+                        @elseif(isset($schedule[1]))
+                            {{ $schedule[1] }}
+                        @else
+                            Tutup
+                        @endif
+                    </span>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- ═══ SEJARAH ═══ --}}
     @if($history)
     <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -217,8 +359,9 @@
                 <span class="eyebrow-badge mb-3 inline-flex">Perjalanan</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">Sejarah Perusahaan</h2>
             </div>
-            <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert reveal-up" x-intersect="$el.classList.add('is-visible')">
-                {!! nl2br(e($history)) !!}
+            <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert reveal-up"
+                 x-intersect="$el.classList.add('is-visible')">
+                {!! $history !!}
             </div>
         </div>
     </section>
@@ -235,7 +378,7 @@
                     Jadilah bagian dari keluarga besar {{ $companyName }}. Nikmati layanan keuangan syariah yang aman, nyaman, dan sesuai prinsip.
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="{{ route('products.simpanan-syariah') }}"
+                    <a href="{{ route('products') }}"
                        class="inline-flex items-center gap-2 bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 font-semibold px-8 py-3.5 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/50 hover:-translate-y-0.5 transition-all duration-300 shadow-lg">
                         Lihat Produk
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>

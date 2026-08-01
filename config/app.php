@@ -134,5 +134,6 @@ return [
 
     'secret_cache_token' => env('SECRET_CACHE_TOKEN', 'change_this_to_strong_token'),
     'production_public_path' => env('PRODUCTION_PUBLIC_PATH', '/public'),
+    'storage_mode' => env('STORAGE_MODE', 'development'),
 
 ];

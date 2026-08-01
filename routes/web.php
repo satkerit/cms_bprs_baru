@@ -9,7 +9,11 @@ Route::post('/api/csp-report', [CspReportController::class, 'report'])->name('cs
 
 // Diagnostik konfigurasi (token-protected, TANPA query DB) — verifikasi sumber kredensial database
 // Akses: GET /dev-diagnostics?token={SECRET_CACHE_TOKEN}
+// HANYA tersedia di environment local — mencegah kebocoran info DB di production
 Route::get('/dev-diagnostics', function (\Illuminate\Http\Request $request) {
+    if (! app()->environment('local')) {
+        abort(404);
+    }
     if (! hash_equals((string) config('app.secret_cache_token'), (string) $request->query('token', ''))) {
         abort(403);
     }
@@ -24,7 +28,7 @@ Route::get('/dev-diagnostics', function (\Illuminate\Http\Request $request) {
         'db_username' => config('database.connections.mysql.username'),
         'storage_url' => config('filesystems.disks.public.url'),
         'storage_root' => config('filesystems.disks.public.root'),
-        'storage_mode' => env('STORAGE_MODE', 'development'),
+        'storage_mode' => config('app.storage_mode'),
         'env_exists' => file_exists(base_path('.env')),
         'env_path' => base_path('.env'),
     ]);
@@ -164,7 +168,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     Route::resource('auctions', App\Http\Controllers\Admin\AuctionController::class);
 
     // Reports Management
-    Route::get('reports/clear-caches', [App\Http\Controllers\Admin\ReportController::class, 'clearAllCaches'])
+    // POST + CSRF — mencegah CSRF via GET (<img src=...>) yang memicu pembersihan cache berulang
+    Route::post('reports/clear-caches', [App\Http\Controllers\Admin\ReportController::class, 'clearAllCaches'])
         ->name('reports.clear-caches');
     Route::resource('reports', App\Http\Controllers\Admin\ReportController::class)
         ->middleware(['optimize.upload']);
@@ -245,6 +250,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     // Whistleblowing Management
     Route::resource('complaints', App\Http\Controllers\Admin\ComplaintController::class)
         ->only(['index', 'show', 'update', 'destroy']);
+    // Download lampiran whistleblowing — disk privat, hanya admin dengan permission complaints.view
+    // whereNumber: index non-numerik -> 404 (bukan TypeError 500)
+    Route::get('complaints/{complaint}/attachment/{index}', [App\Http\Controllers\Admin\ComplaintController::class, 'downloadAttachment'])
+        ->name('complaints.attachment')
+        ->whereNumber('index');
 
     // Database Backup Management
     Route::get('database-backup', [App\Http\Controllers\Admin\DatabaseBackupController::class, 'index'])->name('database-backup.index');

@@ -81,7 +81,8 @@ class Form extends Component
         $attachmentPaths = [];
         if ($this->attachments) {
             foreach ($this->attachments as $file) {
-                $attachmentPaths[] = $file->store('complaints', 'public');
+                // Disk privat (storage/app/private) — lampiran whistleblowing tidak boleh disimpan di public disk
+                $attachmentPaths[] = $file->store('complaints');
             }
         }
 
