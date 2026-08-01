@@ -53,17 +53,13 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
                  x-intersect="$el.querySelectorAll('.product-card').forEach((el, i) => { setTimeout(() => el.classList.add('is-visible'), i * 100) })">
                 @foreach($products as $index => $product)
-                @php
-                    $isFeatured = $index === 0;
-                    $spanClass = $isFeatured ? 'lg:col-span-2 lg:row-span-1' : '';
-                @endphp
-                <div class="product-card reveal-up {{ $spanClass }}" style="transition-delay: {{ $index * 60 }}ms">
+                <div class="product-card reveal-up h-full flex">
                     {{-- Double-Bezel Card --}}
-                    <a href="{{ route('products.show', $product->slug) }}" class="block group no-underline">
-                        <div class="double-bezel">
-                            <div class="double-bezel-inner">
+                    <a href="{{ route('products.show', $product->slug) }}" class="block group no-underline w-full h-full">
+                        <div class="double-bezel h-full flex">
+                            <div class="double-bezel-inner w-full flex flex-col">
                                 {{-- Image Area --}}
-                                <div class="relative overflow-hidden" style="border-radius: var(--radius-double-inner) var(--radius-double-inner) 0 0;">
+                                <div class="relative overflow-hidden flex-shrink-0" style="border-radius: var(--radius-double-inner) var(--radius-double-inner) 0 0;">
                                     <div class="aspect-[4/3] bg-muted">
                                         @if($product->image)
                                         <img src="{{ \App\Helpers\StorageHelper::url($product->image) }}"
@@ -106,7 +102,7 @@
                                 </div>
 
                                 {{-- Content Area --}}
-                                <div class="p-5 sm:p-6">
+                                <div class="p-5 sm:p-6 flex flex-col flex-1">
                                     <h3 class="text-lg sm:text-xl font-bold text-foreground group-hover:text-emerald-600 transition-colors duration-300 leading-tight mb-2">
                                         {{ $product->name }}
                                     </h3>
@@ -118,7 +114,7 @@
                                     @endif
 
                                     {{-- Button-in-Button CTA --}}
-                                    <div class="flex items-center gap-1.5 text-emerald-600 font-semibold text-sm group-hover:gap-2.5 transition-all duration-300">
+                                    <div class="mt-auto pt-4 flex items-center gap-1.5 text-emerald-600 font-semibold text-sm group-hover:gap-2.5 transition-all duration-300">
                                         <span>Selengkapnya</span>                                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
