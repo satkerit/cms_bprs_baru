@@ -16,11 +16,15 @@ Route::get('/dev-diagnostics', function (\Illuminate\Http\Request $request) {
     $configFile = base_path('bootstrap/cache/config.php');
     return response()->json([
         'app_env' => config('app.env'),
+        'app_url' => config('app.url'),
         'config_cache_exists' => file_exists($configFile),
         'config_cache_mtime' => file_exists($configFile) ? date('Y-m-d H:i:s', filemtime($configFile)) : null,
         'db_host' => config('database.connections.mysql.host'),
         'db_database' => config('database.connections.mysql.database'),
         'db_username' => config('database.connections.mysql.username'),
+        'storage_url' => config('filesystems.disks.public.url'),
+        'storage_root' => config('filesystems.disks.public.root'),
+        'storage_mode' => env('STORAGE_MODE', 'development'),
         'env_exists' => file_exists(base_path('.env')),
         'env_path' => base_path('.env'),
     ]);
