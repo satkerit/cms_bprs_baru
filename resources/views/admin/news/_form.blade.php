@@ -105,7 +105,7 @@
                             <div class="relative group">
                                 <img src="{{ storage_url($img->image_path) }}" class="w-full h-24 object-cover rounded-lg">
                                 <button type="button"
-                                    onclick="deleteGalleryImage('{{ $img->id }}', this)"
+                                    @click="deleteGalleryImage('{{ $img->id }}', $el)"
                                     class="absolute top-1 right-1 w-5 h-5 bg-destructive text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                     &times;
                                 </button>

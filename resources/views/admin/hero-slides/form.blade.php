@@ -99,7 +99,7 @@
                             </div>
                             <button type="button"
                                     class="text-xs text-emerald-600 hover:underline"
-                                    onclick="document.getElementById('focal_x_input').value=0.5; document.getElementById('focal_y_input').value=0.5; updateCrosshair();">
+                                    @click="document.getElementById('focal_x_input').value=0.5; document.getElementById('focal_y_input').value=0.5; updateCrosshair();">
                                 Reset ke tengah
                             </button>
                         </div>
