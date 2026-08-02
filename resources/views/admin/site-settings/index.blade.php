@@ -319,6 +319,129 @@
  </div>
  </div>
 
+ {{-- SEO Settings --}}
+ <div class="border-b border-zinc-200 pb-6">
+ <h3 class="text-3xl font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan SEO</h3>
+
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+ <div>
+ <label for="seo_site_name" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ Nama Website (Site Name)
+ </label>
+ <input type="text"
+ name="seo_site_name"
+ id="seo_site_name"
+ value="{{ old('seo_site_name', $settings->seo_site_name ?? '') }}"
+ class="w-full rounded-xl border-zinc-300"
+ maxlength="100">
+ </div>
+
+ <div>
+ <label for="seo_og_image" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ URL Gambar Open Graph Default
+ </label>
+ <input type="text"
+ name="seo_og_image"
+ id="seo_og_image"
+ value="{{ old('seo_og_image', $settings->seo_og_image ?? '') }}"
+ class="w-full rounded-xl border-zinc-300"
+ maxlength="500">
+ <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Dipakai saat share ke media sosial jika tidak ada gambar spesifik</p>
+ </div>
+
+ <div>
+ <label for="seo_default_description" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ Deskripsi Default (Meta Description)
+ </label>
+ <textarea name="seo_default_description"
+ id="seo_default_description"
+ rows="3"
+ maxlength="300"
+ class="w-full rounded-xl border-zinc-300">{{ old('seo_default_description', $settings->seo_default_description ?? '') }}</textarea>
+ <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Maks 160 karakter. Dipakai jika halaman tidak punya deskripsi khusus.</p>
+ </div>
+
+ <div>
+ <label for="seo_default_keywords" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ Kata Kunci Default
+ </label>
+ <textarea name="seo_default_keywords"
+ id="seo_default_keywords"
+ rows="2"
+ maxlength="500"
+ class="w-full rounded-xl border-zinc-300">{{ old('seo_default_keywords', $settings->seo_default_keywords ?? '') }}</textarea>
+ <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Pisahkan dengan koma</p>
+ </div>
+
+ <div>
+ <label for="seo_twitter_handle" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ Twitter/X Handle
+ </label>
+ <input type="text"
+ name="seo_twitter_handle"
+ id="seo_twitter_handle"
+ value="{{ old('seo_twitter_handle', $settings->seo_twitter_handle ?? '') }}"
+ class="w-full rounded-xl border-zinc-300"
+ placeholder="@username"
+ maxlength="100">
+ <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Contoh: @BPRSBabelID</p>
+ </div>
+
+ <div>
+ <label for="seo_robots_default" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ Robots Default
+ </label>
+ <select name="seo_robots_default"
+ id="seo_robots_default"
+ class="w-full rounded-xl border-zinc-300">
+ <option value="index, follow" {{ old('seo_robots_default', $settings->seo_robots_default ?? 'index, follow') === 'index, follow' ? 'selected' : '' }}>index, follow (default)</option>
+ <option value="noindex, nofollow" {{ old('seo_robots_default', $settings->seo_robots_default ?? '') === 'noindex, nofollow' ? 'selected' : '' }}>noindex, nofollow</option>
+ <option value="noindex, follow" {{ old('seo_robots_default', $settings->seo_robots_default ?? '') === 'noindex, follow' ? 'selected' : '' }}>noindex, follow</option>
+ <option value="index, nofollow" {{ old('seo_robots_default', $settings->seo_robots_default ?? '') === 'index, nofollow' ? 'selected' : '' }}>index, nofollow</option>
+ </select>
+ </div>
+
+ <div>
+ <label for="seo_google_verification" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ Google Search Console Verification Code
+ </label>
+ <input type="text"
+ name="seo_google_verification"
+ id="seo_google_verification"
+ value="{{ old('seo_google_verification', $settings->seo_google_verification ?? '') }}"
+ class="w-full rounded-xl border-zinc-300"
+ maxlength="200">
+ </div>
+
+ <div>
+ <label for="seo_bing_verification" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
+ Bing Webmaster Verification Code
+ </label>
+ <input type="text"
+ name="seo_bing_verification"
+ id="seo_bing_verification"
+ value="{{ old('seo_bing_verification', $settings->seo_bing_verification ?? '') }}"
+ class="w-full rounded-xl border-zinc-300"
+ maxlength="200">
+ </div>
+
+ <div class="md:col-span-2">
+ <div class="flex items-center gap-3">
+ <input type="hidden" name="seo_canonical_enabled" value="0">
+ <input type="checkbox"
+ name="seo_canonical_enabled"
+ id="seo_canonical_enabled"
+ value="1"
+ {{ old('seo_canonical_enabled', $settings->seo_canonical_enabled ?? true) ? 'checked' : '' }}
+ class="rounded border-zinc-300 text-sky-600">
+ <label for="seo_canonical_enabled" class="text-[11px] font-medium dark:text-slate-300 text-zinc-700">
+ Aktifkan Canonical URL otomatis
+ </label>
+ </div>
+ </div>
+ </div>
+ </div>
+
  {{-- Submit Button --}}
  <div class="flex justify-end pt-4">
  <x-admin.button type="submit" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>'>

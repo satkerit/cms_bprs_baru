@@ -42,8 +42,11 @@ class HomeController extends Controller
         // Preload first hero image for better performance
         $firstHeroImage = $heroSlides->first()?->image;
 
+        $companyInfo = app(CacheService::class)->getCompanyInfo();
+
         return view('frontend.home', [
-            'companyInfo' => app(CacheService::class)->getCompanyInfo(),
+            'companyInfo' => $companyInfo,
+            'metaDescription' => ($companyInfo?->tagline ?? 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya di Kepulauan Bangka Belitung. Produk simpanan syariah, pembiayaan syariah, dan deposito syariah yang aman, terjangkau, dan sesuai prinsip Islam.'),
             'heroSlides' => $heroSlides,
             'heroSlideImages' => $heroSlideImages,
             'heroSliderDelay' => $settings->hero_slider_delay ?? 5000,

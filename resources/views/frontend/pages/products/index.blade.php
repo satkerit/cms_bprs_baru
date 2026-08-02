@@ -1,6 +1,6 @@
 <x-frontend-layout>
     <x-slot name="title">{{ $title ?? 'Produk & Layanan' }} - BPRS Bangka Belitung</x-slot>
-    <x-slot name="meta_description">{{ $subtitle ?? 'Produk pembiayaan syariah, simpanan, dan layanan perbankan dari BPRS Bangka Belitung.' }}</x-slot>
+    <x-slot name="metaDescription">{{ $subtitle ?? 'Produk pembiayaan syariah, simpanan, dan layanan perbankan dari BPRS Bangka Belitung.' }}</x-slot>
 
     {{-- ═══ HIGH-END v2: HERO — Ethereal Glass ═══ --}}
     <section class="relative pt-8 sm:pt-10 md:pt-12 pb-12 sm:pb-14 md:pb-16 overflow-hidden">

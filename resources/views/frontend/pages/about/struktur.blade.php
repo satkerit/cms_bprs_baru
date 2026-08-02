@@ -1,5 +1,6 @@
 <x-frontend-layout>
     <x-slot name="title">Struktur Organisasi - BPRS Bangka Belitung</x-slot>
+    <x-slot name="metaDescription">{{ $metaDescription ?? 'Struktur organisasi BPRS Bangka Belitung yang transparan, akuntabel, dan sesuai prinsip syariah.' }}</x-slot>
 
     @php
         $companyInfo = \App\Models\CompanyInfo::getInfo();

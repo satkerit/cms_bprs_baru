@@ -45,6 +45,16 @@ class SiteSettingController extends Controller
                 'max_document_size_kb' => 'nullable|integer|min:1024|max:512000',
                 'max_hero_image_size_kb' => 'nullable|integer|min:512|max:102400',
                 'max_auction_image_size_kb' => 'nullable|integer|min:512|max:102400',
+                // ===== SEO Settings =====
+                'seo_site_name'            => 'nullable|string|max:100',
+                'seo_default_description'  => 'nullable|string|max:300',
+                'seo_default_keywords'     => 'nullable|string|max:500',
+                'seo_og_image'             => 'nullable|string|max:500',
+                'seo_twitter_handle'       => 'nullable|string|max:100',
+                'seo_google_verification'  => 'nullable|string|max:200',
+                'seo_bing_verification'    => 'nullable|string|max:200',
+                'seo_robots_default'       => 'nullable|string|in:index,follow,noindex,nofollow,noindex\,nofollow',
+                'seo_canonical_enabled'    => 'nullable|boolean',
 
             ], [
                 'hero_slider_delay.min' => 'Delay slider minimal 1000ms',
@@ -76,6 +86,7 @@ class SiteSettingController extends Controller
 
             // Handle maintenance_mode checkbox
             $validated['maintenance_mode'] = $request->boolean('maintenance_mode', false);
+            $validated['seo_canonical_enabled'] = $request->boolean('seo_canonical_enabled', true);
 
             // Handle maintenance_pages - if not present, set to empty array
             $validated['maintenance_pages'] = $request->input('maintenance_pages', []);

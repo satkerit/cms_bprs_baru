@@ -11,8 +11,10 @@ class AboutController extends Controller
 {
     public function company()
     {
+        $companyInfo = app(CacheService::class)->getCompanyInfo();
         return view('frontend.pages.about.company', [
-            'companyInfo' => app(CacheService::class)->getCompanyInfo(),
+            'companyInfo' => $companyInfo,
+            'metaDescription' => 'Profil perusahaan ' . ($companyInfo?->name ?? 'BPRS Bangka Belitung') . '. Visi, misi, sejarah, regulasi OJK & LPS, dan jam operasional bank syariah terpercaya di Kepulauan Bangka Belitung.',
         ]);
     }
 
@@ -26,12 +28,17 @@ class AboutController extends Controller
             'komisaris' => app(CacheService::class)->getBoardMembers('komisaris'),
             'direksi' => app(CacheService::class)->getBoardMembers('direksi'),
             'pengawasSyariah' => app(CacheService::class)->getBoardMembers('pengawas_syariah'),
+            'metaDescription' => 'Dewan Komisaris, Dewan Direksi, dan Dewan Pengawas Syariah BPRS Bangka Belitung. Kenali para pemimpin yang memastikan tata kelola bank berjalan transparan dan sesuai prinsip syariah.',
         ]);
     }
 
     public function struktur()
     {
-        return view('frontend.pages.about.struktur');
+        $companyInfo = app(CacheService::class)->getCompanyInfo();
+        return view('frontend.pages.about.struktur', [
+            'companyInfo' => $companyInfo,
+            'metaDescription' => 'Struktur organisasi ' . ($companyInfo?->name ?? 'BPRS Bangka Belitung') . '. Gambaran tata kelola dan hierarki organisasi bank syariah yang transparan, akuntabel, dan sesuai prinsip syariah.',
+        ]);
     }
 
     public function offices(Request $request)
@@ -53,6 +60,7 @@ class AboutController extends Controller
 
             return view('frontend.pages.about.offices', [
                 'offices' => $offices,
+                'metaDescription' => 'Daftar kantor cabang, kantor kas, dan kas keliling BPRS Bangka Belitung di seluruh Kepulauan Bangka Belitung. Temukan kantor terdekat untuk layanan perbankan syariah.',
             ]);
         } catch (\Exception $e) {
             \Log::error('AboutController::offices error', [

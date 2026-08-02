@@ -12,37 +12,53 @@
 
     @php
         $company = $company ?? \App\Models\CompanyInfo::getInfo();
+        $seoSettings = \App\Models\SiteSetting::getSettings();
     @endphp
 
     {{-- Dynamic SEO Meta Tags --}}
-    <meta name="description" content="{{ $metaDescription ?? 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya. Menyediakan produk simpanan syariah, pembiayaan syariah, dan deposito syariah untuk masyarakat.' }}">
-    <meta name="keywords" content="{{ $metaKeywords ?? 'BPRS, Bank Syariah, Simpanan Syariah, Pembiayaan Syariah, Deposito, Bangka Belitung, BPR Syariah' }}">
-    <meta name="robots" content="{{ $metaRobots ?? 'index, follow' }}">
+    <meta name="description" content="{{ $metaDescription ?? ($seoSettings->seo_default_description ?: 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya. Menyediakan produk simpanan syariah, pembiayaan syariah, dan deposito syariah untuk masyarakat.') }}">
+    <meta name="keywords" content="{{ $metaKeywords ?? ($seoSettings->seo_default_keywords ?: 'BPRS, Bank Syariah, Simpanan Syariah, Pembiayaan Syariah, Deposito, Bangka Belitung, BPR Syariah') }}">
+    <meta name="robots" content="{{ $metaRobots ?? ($seoSettings->seo_robots_default ?? 'index, follow') }}">
     <meta name="theme-color" content="#059669">
+    @if($seoSettings->seo_google_verification)
+    <meta name="google-site-verification" content="{{ $seoSettings->seo_google_verification }}">
+    @endif
+    @if($seoSettings->seo_bing_verification)
+    <meta name="msvalidate.01" content="{{ $seoSettings->seo_bing_verification }}">
+    @endif
 
     {{-- Open Graph / Facebook --}}
     <meta property="og:type" content="{{ $ogType ?? 'website' }}">
-    <meta property="og:title" content="{{ $ogTitle ?? ($title ?? config('app.name', 'BPRS Bangka Belitung')) }}">
-    <meta property="og:description" content="{{ $ogDescription ?? ($metaDescription ?? 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya.') }}">
+    <meta property="og:title" content="{{ $ogTitle ?? ($title ?? $seoSettings->seo_site_name ?? config('app.name', 'BPRS Bangka Belitung')) }}">
+    <meta property="og:description" content="{{ $ogDescription ?? ($metaDescription ?? ($seoSettings->seo_default_description ?: 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya.')) }}">
     <meta property="og:url" content="{{ $ogUrl ?? url()->current() }}">
     @if(isset($ogImage))
     <meta property="og:image" content="{{ $ogImage }}">
+    @elseif($seoSettings->seo_og_image)
+    <meta property="og:image" content="{{ $seoSettings->seo_og_image }}">
     @elseif(isset($company) && $company?->logo)
     <meta property="og:image" content="{{ \App\Helpers\StorageHelper::url($company->logo) }}">
     @endif
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $ogTitle ?? ($title ?? config('app.name', 'BPRS Bangka Belitung')) }}">
-    <meta name="twitter:description" content="{{ $ogDescription ?? ($metaDescription ?? 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya.') }}">
+    <meta name="twitter:title" content="{{ $ogTitle ?? ($title ?? $seoSettings->seo_site_name ?? config('app.name', 'BPRS Bangka Belitung')) }}">
+    <meta name="twitter:description" content="{{ $ogDescription ?? ($metaDescription ?? ($seoSettings->seo_default_description ?: 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya.')) }}">
+    @if($seoSettings->seo_twitter_handle)
+    <meta name="twitter:site" content="{{ $seoSettings->seo_twitter_handle }}">
+    @endif
     @if(isset($ogImage))
     <meta name="twitter:image" content="{{ $ogImage }}">
+    @elseif($seoSettings->seo_og_image)
+    <meta name="twitter:image" content="{{ $seoSettings->seo_og_image }}">
     @elseif(isset($company) && $company?->logo)
     <meta name="twitter:image" content="{{ \App\Helpers\StorageHelper::url($company->logo) }}">
     @endif
 
     {{-- Canonical URL --}}
+    @if($seoSettings->seo_canonical_enabled !== false)
     <link rel="canonical" href="{{ $canonicalUrl ?? url()->current() }}">
+    @endif
 
     @if(isset($company) && $company?->favicon)
     <link rel="icon" href="{{ \App\Helpers\StorageHelper::url($company->favicon) }}" type="image/x-icon">

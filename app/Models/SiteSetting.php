@@ -40,6 +40,16 @@ class SiteSetting extends Model
         'max_document_size_kb',
         'max_hero_image_size_kb',
         'max_auction_image_size_kb',
+        // ===== SEO Settings =====
+        'seo_site_name',
+        'seo_default_description',
+        'seo_default_keywords',
+        'seo_og_image',
+        'seo_twitter_handle',
+        'seo_google_verification',
+        'seo_bing_verification',
+        'seo_robots_default',
+        'seo_canonical_enabled',
 
     ];
 
@@ -61,6 +71,8 @@ class SiteSetting extends Model
         'max_document_size_kb' => 'integer',
         'max_hero_image_size_kb' => 'integer',
         'max_auction_image_size_kb' => 'integer',
+        // ===== SEO Settings =====
+        'seo_canonical_enabled' => 'boolean',
 
     ];
 
@@ -393,6 +405,16 @@ class SiteSetting extends Model
                 'report_tata_kelola_description' => 'Laporan Tata Kelola (Good Corporate Governance/GCG) merupakan laporan yang menyajikan penerapan prinsip-prinsip tata kelola perusahaan yang baik di BPRS Bangka Belitung. Laporan ini mencakup struktur dan mekanisme tata kelola, pelaksanaan tugas dan tanggung jawab Dewan Komisaris dan Direksi, pengelolaan risiko, sistem pengendalian internal, serta kepatuhan terhadap peraturan perundang-undangan yang berlaku.',
                 'report_tahunan_description' => 'Laporan Tahunan (Annual Report) merupakan laporan komprehensif yang diterbitkan setiap tahun oleh BPRS Bangka Belitung. Laporan ini menyajikan gambaran menyeluruh mengenai kinerja perusahaan sepanjang tahun buku, termasuk laporan keuangan tahunan yang telah diaudit, laporan pelaksanaan tata kelola, profil perusahaan, analisis dan pembahasan manajemen, serta informasi penting lainnya.',
                 'report_tahunan_berkelanjutan_description' => 'Laporan Tahunan Berkelanjutan (Sustainability Report) merupakan laporan yang menyajikan informasi mengenai kinerja ekonomi, sosial, dan lingkungan (Environmental, Social, and Governance/ESG) dari BPRS Bangka Belitung. Laporan ini menggambarkan komitmen perusahaan dalam menerapkan prinsip-prinsip pembangunan berkelanjutan, termasuk pengelolaan dampak lingkungan, tanggung jawab sosial perusahaan, serta kontribusi terhadap pemberdayaan masyarakat dan ekonomi lokal.',
+                // ===== SEO Settings =====
+                'seo_site_name'           => 'BPRS Bangka Belitung',
+                'seo_default_description' => 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya di Kepulauan Bangka Belitung. Layanan simpanan syariah, pembiayaan syariah, dan deposito syariah yang aman, amanah, dan sesuai prinsip Islam. Terdaftar dan diawasi OJK, dijamin LPS.',
+                'seo_default_keywords'    => 'BPRS Bangka Belitung, bank syariah Bangka, bank syariah Belitung, simpanan syariah, pembiayaan syariah, deposito syariah, BPR syariah, tabungan syariah, kredit syariah, bank Islam Bangka Belitung, bprsbabel',
+                'seo_og_image'            => '',
+                'seo_twitter_handle'      => '',
+                'seo_google_verification' => '',
+                'seo_bing_verification'   => '',
+                'seo_robots_default'      => 'index, follow',
+                'seo_canonical_enabled'   => true,
             ];
 
             foreach ($defaults as $key => $value) {

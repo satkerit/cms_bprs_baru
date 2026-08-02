@@ -7,5 +7,9 @@ Disallow: /reset-password
 Disallow: /verify-email
 Disallow: /storage/*.php
 Disallow: /dev/storage/*.php
+Disallow: /api/
+Disallow: /dev-diagnostics
+Disallow: /_ignition/
+Disallow: /telescope/
 
 Sitemap: https://www.bprsbabel.id/sitemap.xml
