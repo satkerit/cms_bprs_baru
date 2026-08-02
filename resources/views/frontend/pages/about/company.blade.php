@@ -336,6 +336,7 @@
             </div>
             <div class="bg-white dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 shadow-sm overflow-hidden">
                 @php
+                    $dayNames = ['Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu','Minggu'];
                     $jadwal = count($operationalHours) > 0 ? $operationalHours : [
                         ['day' => 'Senin',   'active' => true,  'open' => '08:00', 'close' => '15:00'],
                         ['day' => 'Selasa',  'active' => true,  'open' => '08:00', 'close' => '15:00'],
@@ -347,10 +348,16 @@
                     ];
                 @endphp
                 @foreach($jadwal as $loop_i => $schedule)
-                @php $isEven = $loop_i % 2 === 0; $isLast = $loop_i === count($jadwal) - 1; $isActive = (bool)($schedule['active'] ?? true); @endphp
+                @php
+                    $isEven    = $loop_i % 2 === 0;
+                    $isLast    = $loop_i === count($jadwal) - 1;
+                    $isActive  = filter_var($schedule['active'] ?? true, FILTER_VALIDATE_BOOLEAN);
+                    // Fallback nama hari dari index jika key day kosong
+                    $dayLabel  = ($schedule['day'] ?? null) ?: ($dayNames[$loop_i] ?? '');
+                @endphp
                 <div class="flex items-center justify-between px-6 py-4 {{ !$isLast ? 'border-b border-border dark:border-slate-700' : '' }} {{ $isEven ? 'bg-slate-50/60 dark:bg-slate-700/20' : '' }}">
                     <span class="font-medium text-sm sm:text-base {{ $isActive ? 'text-foreground dark:text-slate-200' : 'text-secondary dark:text-slate-500' }}">
-                        {{ $schedule['day'] ?? '' }}
+                        {{ $dayLabel }}
                     </span>
                     <span class="text-sm sm:text-base font-mono {{ $isActive ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-secondary dark:text-slate-500' }}">
                         @if($isActive && ($schedule['open'] ?? null))
