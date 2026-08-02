@@ -388,6 +388,66 @@
  </div>
  </x-admin.card>
 
+ <!-- Jam Operasional -->
+ <x-admin.card title="Jam Operasional" subtitle="Atur jam buka/tutup per hari">
+  @php
+   $days = ['Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu','Minggu'];
+   $savedHours = old('operational_hours', $company->operational_hours ?? []);
+   // Normalise: support both indexed and keyed formats
+   $hoursMap = [];
+   if (is_array($savedHours)) {
+    foreach ($savedHours as $item) {
+     if (isset($item['day'])) $hoursMap[$item['day']] = $item;
+    }
+   }
+  @endphp
+  <div class="divide-y divide-zinc-200 dark:divide-slate-700 rounded-xl border border-zinc-200 dark:border-slate-700 overflow-hidden">
+   @foreach($days as $i => $day)
+    @php
+     $saved  = $hoursMap[$day] ?? null;
+     $active = isset($saved['active']) ? (bool)$saved['active'] : in_array($day, ['Senin','Selasa','Rabu','Kamis',"Jum'at"]);
+     $open   = $saved['open']  ?? '08:00';
+     $close  = $saved['close'] ?? '15:00';
+    @endphp
+    <div x-data="{ active: {{ $active ? 'true' : 'false' }} }"
+         class="flex flex-wrap items-center gap-4 px-4 py-3 {{ $i % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-700/30' }}">
+     <input type="hidden" name="operational_hours[{{ $i }}][day]" value="{{ $day }}">
+     <input type="hidden" name="operational_hours[{{ $i }}][active]" :value="active ? 1 : 0">
+
+     {{-- Toggle aktif --}}
+     <label class="flex items-center gap-2 cursor-pointer w-28 shrink-0">
+      <button type="button"
+       @click="active = !active"
+       :class="active ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-slate-600'"
+       class="relative inline-flex h-5 w-9 rounded-full transition-colors focus:outline-none">
+       <span :class="active ? 'translate-x-4' : 'translate-x-0.5'"
+             class="inline-block w-4 h-4 mt-0.5 bg-white rounded-full shadow transition-transform"></span>
+      </button>
+      <span class="text-sm font-medium text-zinc-700 dark:text-slate-300">{{ $day }}</span>
+     </label>
+
+     {{-- Jam --}}
+     <div x-show="active" class="flex items-center gap-2 flex-1">
+      <div class="flex items-center gap-1">
+       <label class="text-xs text-zinc-500 dark:text-slate-400 w-10">Buka</label>
+       <input type="time" name="operational_hours[{{ $i }}][open]"
+        value="{{ $open }}"
+        class="px-2 py-1.5 text-sm border border-zinc-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-zinc-700 dark:text-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <span class="text-zinc-400">–</span>
+      <div class="flex items-center gap-1">
+       <label class="text-xs text-zinc-500 dark:text-slate-400 w-10">Tutup</label>
+       <input type="time" name="operational_hours[{{ $i }}][close]"
+        value="{{ $close }}"
+        class="px-2 py-1.5 text-sm border border-zinc-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-zinc-700 dark:text-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+      </div>
+     </div>
+     <div x-show="!active" class="text-xs text-zinc-400 dark:text-slate-500 italic flex-1">Tutup</div>
+    </div>
+   @endforeach
+  </div>
+ </x-admin.card>
+
  <!-- Submit Button -->
  <div class="flex justify-end">
  <x-admin.button type="submit" variant="primary" size="lg">

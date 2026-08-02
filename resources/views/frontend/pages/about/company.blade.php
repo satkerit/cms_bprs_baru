@@ -326,27 +326,35 @@
     @endif
 
     {{-- ═══ JAM OPERASIONAL ═══ --}}
-    @if(count($operationalHours) > 0)
-    <section class="py-16 sm:py-20 lg:py-24 bg-slate-50 dark:bg-slate-950">
+    <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 reveal-up" x-intersect="$el.classList.add('is-visible')">
+            <div class="text-center mb-10">
                 <span class="eyebrow-badge mb-3 inline-flex">Layanan</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">
+                <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight">
                     Jam Operasional
                 </h2>
             </div>
-            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 shadow-sm overflow-hidden reveal-up"
-                 x-intersect="$el.classList.add('is-visible')">
-                @foreach($operationalHours as $i => $schedule)
-                <div class="flex items-center justify-between px-6 py-4 {{ !$loop->last ? 'border-b border-border dark:border-slate-700' : '' }} {{ $loop->even ? 'bg-slate-50/60 dark:bg-slate-700/20' : '' }}">
-                    <span class="font-medium text-foreground dark:text-slate-200 text-sm sm:text-base">
-                        {{ $schedule['day'] ?? $schedule[0] ?? '' }}
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 shadow-sm overflow-hidden">
+                @php
+                    $jadwal = count($operationalHours) > 0 ? $operationalHours : [
+                        ['day' => 'Senin',   'active' => true,  'open' => '08:00', 'close' => '15:00'],
+                        ['day' => 'Selasa',  'active' => true,  'open' => '08:00', 'close' => '15:00'],
+                        ['day' => 'Rabu',    'active' => true,  'open' => '08:00', 'close' => '15:00'],
+                        ['day' => 'Kamis',   'active' => true,  'open' => '08:00', 'close' => '15:00'],
+                        ['day' => "Jum'at",  'active' => true,  'open' => '08:00', 'close' => '15:00'],
+                        ['day' => 'Sabtu',   'active' => false, 'open' => null,    'close' => null],
+                        ['day' => 'Minggu',  'active' => false, 'open' => null,    'close' => null],
+                    ];
+                @endphp
+                @foreach($jadwal as $loop_i => $schedule)
+                @php $isEven = $loop_i % 2 === 0; $isLast = $loop_i === count($jadwal) - 1; $isActive = (bool)($schedule['active'] ?? true); @endphp
+                <div class="flex items-center justify-between px-6 py-4 {{ !$isLast ? 'border-b border-border dark:border-slate-700' : '' }} {{ $isEven ? 'bg-slate-50/60 dark:bg-slate-700/20' : '' }}">
+                    <span class="font-medium text-sm sm:text-base {{ $isActive ? 'text-foreground dark:text-slate-200' : 'text-secondary dark:text-slate-500' }}">
+                        {{ $schedule['day'] ?? '' }}
                     </span>
-                    <span class="text-sm sm:text-base text-secondary dark:text-slate-400 font-mono">
-                        @if(isset($schedule['open']) && isset($schedule['close']))
+                    <span class="text-sm sm:text-base font-mono {{ $isActive ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-secondary dark:text-slate-500' }}">
+                        @if($isActive && ($schedule['open'] ?? null))
                             {{ $schedule['open'] }} &ndash; {{ $schedule['close'] }}
-                        @elseif(isset($schedule[1]))
-                            {{ $schedule[1] }}
                         @else
                             Tutup
                         @endif
@@ -356,7 +364,6 @@
             </div>
         </div>
     </section>
-    @endif
 
     {{-- ═══ SEJARAH ═══ --}}
     @if($history)

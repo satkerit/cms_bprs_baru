@@ -54,6 +54,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout', [App\Http\Controllers\Auth\AdminLoginController::class, 'logout'])->name('logout')->middleware('auth');
 });
 
+// Redirect /login dan /admin ke admin login atau dashboard
+Route::get('/login', function () {
+    return auth()->check()
+        ? redirect()->route('admin.dashboard')
+        : redirect()->route('admin.login');
+})->name('login');
+
+Route::get('/admin', function () {
+    return auth()->check()
+        ? redirect()->route('admin.dashboard')
+        : redirect()->route('admin.login');
+});
+
 // Public Routes
 Route::middleware(['web', 'throttle:120,1'])->group(function () {
     // Product Routes
