@@ -266,8 +266,7 @@
 
                 {{-- OJK --}}
                 @if($info?->ojk_license || $info?->ojk_tagline)
-                <div class="card-elevated reveal-up p-10 flex flex-col items-center text-center gap-6"
-                     x-intersect="$el.classList.add('is-visible')">
+                <div class="card-elevated p-10 flex flex-col items-center text-center gap-6">
                     <div class="w-20 h-20 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
                         {{-- Ikon OJK (shield) --}}
                         <svg class="w-11 h-11 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,9 +288,8 @@
 
                 {{-- LPS --}}
                 @if($info?->lps_tagline || $info?->lps_guarantee_amount)
-                <div class="card-elevated reveal-up p-10 flex flex-col items-center text-center gap-6"
-                     style="transition-delay:100ms"
-                     x-intersect="$el.classList.add('is-visible')">
+                <div class="card-elevated p-10 flex flex-col items-center text-center gap-6"
+                     style="transition-delay:100ms">
                     <div class="w-20 h-20 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
                         {{-- Ikon LPS (lock) --}}
                         <svg class="w-11 h-11 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
