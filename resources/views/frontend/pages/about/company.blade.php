@@ -251,62 +251,71 @@
 
     {{-- ═══ REGULASI & KEAMANAN ═══ --}}
     @if($hasRegulasi)
-    <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14 reveal-up" x-intersect="$el.classList.add('is-visible')">
+    <section class="py-16 sm:py-20 lg:py-24 bg-slate-50 dark:bg-slate-950">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            {{-- Header --}}
+            <div class="text-center mb-12">
                 <span class="eyebrow-badge mb-3 inline-flex">Legalitas & Keamanan</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">
+                <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight">
                     Regulasi & Keamanan
                 </h2>
-                <p class="mt-3 text-secondary dark:text-slate-400 text-base mx-auto">
+                <p class="mt-4 text-secondary dark:text-slate-400 text-base">
                     Dana Anda aman dan diawasi oleh otoritas resmi pemerintah Republik Indonesia.
                 </p>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+
+            {{-- Cards stacked vertical — tidak ada grid yang bisa overlap --}}
+            <div class="flex flex-col gap-6">
 
                 {{-- OJK --}}
                 @if($info?->ojk_license || $info?->ojk_tagline)
-                <div class="card-elevated p-10 flex flex-col items-center text-center gap-6">
-                    <div class="w-20 h-20 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
-                        {{-- Ikon OJK (shield) --}}
-                        <svg class="w-11 h-11 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">OJK</div>
-                        <h3 class="text-xl font-bold text-foreground dark:text-slate-100">Terdaftar &amp; Diawasi OJK</h3>
-                        @if($info?->ojk_license)
-                        <p class="text-sm text-secondary dark:text-slate-400 font-mono bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg inline-block">No. {{ $info->ojk_license }}</p>
-                        @endif
-                        @if($info?->ojk_tagline)
-                        <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed">{{ $info->ojk_tagline }}</p>
-                        @endif
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-emerald-100 dark:border-emerald-900/40 shadow-sm p-6 sm:p-8">
+                    <div class="flex items-start gap-5">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
+                            <svg class="w-8 h-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest bg-emerald-50 dark:bg-emerald-900/40 px-2.5 py-1 rounded-full">OJK</span>
+                                <h3 class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Terdaftar &amp; Diawasi OJK</h3>
+                            </div>
+                            @if($info?->ojk_license)
+                            <p class="text-sm text-secondary dark:text-slate-400 font-mono mb-2">No. {{ $info->ojk_license }}</p>
+                            @endif
+                            @if($info?->ojk_tagline)
+                            <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed">{{ $info->ojk_tagline }}</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 @endif
 
                 {{-- LPS --}}
                 @if($info?->lps_tagline || $info?->lps_guarantee_amount)
-                <div class="card-elevated p-10 flex flex-col items-center text-center gap-6"
-                     style="transition-delay:100ms">
-                    <div class="w-20 h-20 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                        {{-- Ikon LPS (lock) --}}
-                        <svg class="w-11 h-11 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                        </svg>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-widest">LPS</div>
-                        <h3 class="text-xl font-bold text-foreground dark:text-slate-100">Dijamin LPS</h3>
-                        @if($info?->lps_guarantee_amount)
-                        <p class="text-sm font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-3 py-1.5 rounded-lg inline-block">
-                            Dijamin s.d. {{ is_numeric($info->lps_guarantee_amount) ? 'Rp ' . number_format($info->lps_guarantee_amount, 0, ',', '.') : $info->lps_guarantee_amount }}
-                        </p>
-                        @endif
-                        @if($info?->lps_tagline)
-                        <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed">{{ $info->lps_tagline }}</p>
-                        @endif
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-amber-100 dark:border-amber-900/40 shadow-sm p-6 sm:p-8">
+                    <div class="flex items-start gap-5">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
+                            <svg class="w-8 h-8 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest bg-amber-50 dark:bg-amber-900/40 px-2.5 py-1 rounded-full">LPS</span>
+                                <h3 class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Dijamin LPS</h3>
+                            </div>
+                            @if($info?->lps_guarantee_amount)
+                            <p class="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-2">
+                                Dijamin s.d. {{ is_numeric($info->lps_guarantee_amount) ? 'Rp ' . number_format($info->lps_guarantee_amount, 0, ',', '.') : $info->lps_guarantee_amount }}
+                            </p>
+                            @endif
+                            @if($info?->lps_tagline)
+                            <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed">{{ $info->lps_tagline }}</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 @endif
