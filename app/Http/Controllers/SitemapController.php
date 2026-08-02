@@ -17,7 +17,7 @@ class SitemapController extends Controller
 
         // Static Pages
         $staticRoutes = [
-            'dashboard' => 1.0, // Home
+            'home' => 1.0, // Home
             'about.company' => 0.8,
             'about.struktur' => 0.8,
             'about.manajemen' => 0.8,
@@ -77,7 +77,7 @@ class SitemapController extends Controller
                 'priority' => 0.9,
             ];
         }
-        
+
         // Dynamic Pages: Careers
         $careers = Career::available()->latest()->get();
         foreach ($careers as $item) {
