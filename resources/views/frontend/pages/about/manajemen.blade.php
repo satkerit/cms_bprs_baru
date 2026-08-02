@@ -188,6 +188,14 @@
                     <div class="relative h-36 sm:h-44 overflow-hidden rounded-t-3xl bg-gradient-to-br from-emerald-700 via-emerald-600 to-emerald-800 flex-shrink-0">
                         <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
 
+                        {{-- Jabatan pengurus — lebar container mengikuti parent (inset-x), auto responsive --}}
+                        <div class="absolute inset-x-4 sm:inset-x-8 top-4 sm:top-5 pr-10 flex items-center justify-start">
+                            <span class="inline-flex items-center max-w-full gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-black/10">
+                                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                <span class="truncate" x-text="member?.position"></span>
+                            </span>
+                        </div>
+
                         {{-- Close button --}}
                         <div class="absolute right-4 top-4 z-10">
                             <button @click="open = false" type="button"
@@ -202,10 +210,10 @@
 
                     {{-- Foto + nama di luar header agar tidak terpotong --}}
                     <div class="bg-card px-6 pt-4 sm:px-8 flex items-end gap-5 flex-shrink-0">
-                        <div class="flex-shrink-0 -mt-16 sm:-mt-20">
+                        <div class="relative z-10 flex-shrink-0 -mt-16 sm:-mt-20">
                             <template x-if="member && member.photo">
                                 <img :src="member.photo_url || '/storage/' + member.photo" :alt="member.name"
-                                     class="w-28 h-36 sm:w-32 sm:h-44 object-cover object-top rounded-2xl ring-4 ring-card shadow-2xl">
+                                     class="w-28 h-36 sm:w-32 sm:h-44 object-contain object-top bg-slate-100 dark:bg-slate-800 rounded-2xl ring-4 ring-card shadow-2xl">
                             </template>
                             <template x-if="!member || !member.photo">
                                 <div class="w-28 h-36 sm:w-32 sm:h-44 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl ring-4 ring-card shadow-2xl flex items-center justify-center">
@@ -217,9 +225,6 @@
                         </div>
                         <div class="pb-3">
                             <h3 class="text-xl sm:text-2xl font-bold text-foreground leading-tight" x-text="member?.name"></h3>
-                            <span class="inline-flex mt-1.5 items-center px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300">
-                                <span x-text="member?.position"></span>
-                            </span>
                         </div>
                     </div>
 
