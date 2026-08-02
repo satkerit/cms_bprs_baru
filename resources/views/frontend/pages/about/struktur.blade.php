@@ -5,20 +5,20 @@
         $companyInfo = \App\Models\CompanyInfo::getInfo();
     @endphp
 
-    {{-- ═══ HIGH-END v2: HERO — Ethereal Glass ═══ --}}
-    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-28 overflow-hidden">
+    {{-- ═══ HERO ═══ --}}
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-12 sm:pb-14 md:pb-16 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
             <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
             <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
         </div>
-        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-up">
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span class="eyebrow-badge mb-5 inline-flex bg-white/20 text-white border-white/20">
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
                 Tentang Kami
             </span>
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">Struktur Organisasi</h1>
-            <p class="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto px-4 leading-relaxed">
+            <p class="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto px-4 leading-relaxed">
                 Gambaran tata kelola dan hierarki organisasi {{ $companyInfo?->name ?? 'BPRS Bangka Belitung' }}
                 yang transparan, akuntabel, dan sesuai prinsip syariah demi memberikan layanan terbaik bagi nasabah.
             </p>
@@ -29,7 +29,7 @@
     {{-- ═══ STRUCTURE IMAGE — Double-Bezel ═══ --}}
     <section class="py-16 lg:py-24 -mt-6 sm:-mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="reveal-up" x-intersect="$el.classList.add('is-visible')">
+            <div>
                 @if($companyInfo?->organization_structure)
                 <div class="double-bezel">
                     <div class="double-bezel-inner p-4 sm:p-6 lg:p-8">
