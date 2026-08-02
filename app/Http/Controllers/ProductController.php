@@ -20,7 +20,7 @@ class ProductController extends Controller
             'products' => app(CacheService::class)->getProductsByType('simpanan_syariah'),
             'categories' => collect(), // Empty collection — filter not needed for type-specific page
             'title' => 'Simpanan Syariah',
-            'subtitle' => 'Produk simpanan dengan prinsip syariah',
+            'subtitle' => 'Kelola dana Anda dengan aman dan berkah melalui produk simpanan berbasis prinsip syariah yang amanah, transparan, dan menguntungkan.',
         ]);
     }
 
@@ -33,7 +33,7 @@ class ProductController extends Controller
             'products' => app(CacheService::class)->getProductsByType('pembiayaan_syariah'),
             'categories' => collect(), // Empty collection — filter not needed for type-specific page
             'title' => 'Pembiayaan Syariah',
-            'subtitle' => 'Produk pembiayaan dengan prinsip syariah',
+            'subtitle' => 'Wujudkan impian Anda dengan solusi pembiayaan berbasis syariah yang adil, transparan, dan bebas riba untuk kebutuhan pribadi maupun usaha.',
         ]);
     }
 
@@ -46,7 +46,7 @@ class ProductController extends Controller
             'products' => app(CacheService::class)->getProductsByType('deposito_syariah'),
             'categories' => collect(), // Empty collection — filter not needed for type-specific page
             'title' => 'Deposito Syariah',
-            'subtitle' => 'Produk deposito dengan akad syariah',
+            'subtitle' => 'Investasikan dana Anda dengan bagi hasil kompetitif melalui deposito berjangka berbasis akad syariah yang aman, terpercaya, dan dijamin LPS.',
         ]);
     }
 

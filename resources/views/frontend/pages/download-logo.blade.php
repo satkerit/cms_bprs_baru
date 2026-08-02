@@ -8,7 +8,7 @@
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4 tracking-tight">Download Logo</h1>
-            <p class="text-base sm:text-lg text-white/80">Unduh logo resmi {{ $company->name ?? 'BPRS Bangka Belitung' }}</p>
+            <p class="text-base sm:text-lg text-white/80 max-w-xl mx-auto leading-relaxed">Unduh logo resmi {{ $company?->name ?? 'BPRS Bangka Belitung' }} dalam berbagai format untuk keperluan media, publikasi, dan dokumentasi resmi.</p>
         </div>
     </section>
 
