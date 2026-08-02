@@ -79,7 +79,7 @@ class SecurityHeaders
             // 'unsafe-eval' WAJIB dipertahankan: Alpine.js v3 (vendor-alpine) & SweetAlert2 mengevaluasi
             // ekspresi via `new Function()`. Tanpa 'unsafe-eval', seluruh interaktivitas UI (x-data/x-on/modal)
             // rusak di production. Risiko L1 diterima — di-mitigasi nonce + tanpa input user dieval.
-            "script-src 'nonce-{$nonce}' 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com https://cdn.ckeditor.com https://analytics.ahrefs.com",
+            "script-src 'nonce-{$nonce}' 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com https://cdn.ckeditor.com https://analytics.ahrefs.com https://www.clarity.ms",
             // Styles: Allow self, unsafe-inline (for Alpine.js dynamic styles and nonce-based <style> tags),
             // unsafe-hashes (for style attributes), and trusted CDNs
             // Note: 'unsafe-inline' takes effect when no nonce is present in style-src.
