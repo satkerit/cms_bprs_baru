@@ -20,30 +20,34 @@ class StoreNewsRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_published' => $this->has('is_published') ? 1 : 0,
+        ]);
+    }
+
     public function rules(): array
     {
         $imageMaxKb = get_upload_max_size('image');
-        $imageMaxMb = round($imageMaxKb / 1024);
 
         return [
-            'title' => 'required|string|max:255',
-            'slug' => [
-                'nullable',
-                'string',
-                'max:255',
+            'title'            => 'required|string|max:255',
+            'slug'             => [
+                'nullable', 'string', 'max:255',
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
-                Rule::unique('news')
+                Rule::unique('news'),
             ],
-            'content' => 'required|string',
-            'excerpt' => 'nullable|string|max:500',
-            'category' => 'required|in:Berita,Artikel,Pengumuman,Promo,Event',
-            'author' => 'nullable|string|max:100',
+            'content'          => 'required|string',
+            'excerpt'          => 'nullable|string|max:500',
+            'category'         => 'required|in:Berita,Artikel,Pengumuman,Promo,Event',
+            'author'           => 'nullable|string|max:100',
             'meta_description' => 'nullable|string|max:160',
-            'tags' => 'nullable|string|max:255',
-            'published_at' => 'nullable|date',
-            'is_published' => 'boolean',
-            'featured_image' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$imageMaxKb}|dimensions:min_width=800,min_height=450,max_width=7680,max_height=4320",
-            'slide_images.*' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$imageMaxKb}|dimensions:min_width=400,min_height=225,max_width=7680,max_height=4320"
+            'tags'             => 'nullable|string|max:255',
+            'published_at'     => 'nullable|date',
+            'is_published'     => 'required|boolean',
+            'featured_image'   => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$imageMaxKb}",
+            'slide_images.*'   => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$imageMaxKb}",
         ];
     }
 
