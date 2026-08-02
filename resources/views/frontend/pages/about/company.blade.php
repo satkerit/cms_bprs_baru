@@ -262,7 +262,7 @@
                     Dana Anda aman dan diawasi oleh otoritas resmi pemerintah Republik Indonesia.
                 </p>
             </div>
-            <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
 
                 {{-- OJK --}}
                 @if($info?->ojk_license || $info?->ojk_tagline)
