@@ -78,7 +78,7 @@
     <div x-show="showModal" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-50 overflow-y-auto" aria-modal="true">
         <div class="flex min-h-full items-center justify-center p-4">
             <div @click="closeStorageModal()" class="fixed inset-0 bg-zinc-900/50 backdrop-blur-sm transition-opacity"></div>
-            <div class="relative z-10 w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white shadow-2xl shadow-zinc-900/10">
+            <div class="relative z-10 w-full max-w-6xl transform overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-2xl shadow-zinc-900/10">
                 {{-- Header --}}
                 <div class="flex items-center justify-between px-6 py-4 border-b dark:border-slate-800 border-zinc-100">
                     <h3 class="text-[15px] font-semibold dark:text-slate-100 text-zinc-900">Pilih Gambar dari Storage</h3>
@@ -110,7 +110,7 @@
                 </div>
 
                 {{-- Content --}}
-                <div class="px-6 py-4 max-h-96 overflow-y-auto">
+                <div class="px-6 py-4 max-h-[65vh] overflow-y-auto">
                     <div x-show="loading" class="flex items-center justify-center py-12">
                         <svg class="animate-spin h-8 w-8 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -118,26 +118,26 @@
                         </svg>
                     </div>
                     <div x-show="!loading && items.length === 0" class="text-center py-12 dark:text-slate-400 text-zinc-500">Folder kosong</div>
-                    <div x-show="!loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                    <div x-show="!loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                         <template x-for="item in items" :key="item.path">
                             <div @click="item.type === 'folder' ? navigateTo(item.path) : selectImage(item)"
                                  :class="{'ring-2 ring-emerald-500 ring-offset-2': selectedItem?.path === item.path}"
                                  class="relative rounded-xl border dark:border-slate-700 border-zinc-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-150 hover:-translate-y-0.5">
                                 <template x-if="item.type === 'folder'">
-                                    <div class="bg-zinc-100 p-4 text-center">
-                                        <svg class="w-10 h-10 mx-auto text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <div class="bg-zinc-100 dark:bg-slate-800 p-6 text-center">
+                                        <svg class="w-12 h-12 mx-auto text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
                                         </svg>
-                                        <p class="text-[11px] text-zinc-600 mt-1 truncate" x-text="item.name"></p>
+                                        <p class="text-[12px] text-zinc-600 dark:text-slate-300 mt-2 truncate font-medium" x-text="item.name"></p>
                                     </div>
                                 </template>
                                 <template x-if="item.type === 'file' && item.isImage">
                                     <div>
-                                        <div class="aspect-square bg-zinc-100">
+                                        <div class="aspect-video bg-zinc-100 dark:bg-slate-800">
                                             <img :src="item.url" :alt="item.name" class="w-full h-full object-cover">
                                         </div>
-                                        <div class="bg-zinc-900/80 px-2 py-1">
-                                            <p class="text-[11px] text-white truncate" x-text="item.name"></p>
+                                        <div class="px-2.5 py-2 bg-white dark:bg-slate-800 border-t dark:border-slate-700 border-zinc-100">
+                                            <p class="text-[12px] dark:text-slate-300 text-zinc-700 truncate font-medium" x-text="item.name"></p>
                                         </div>
                                     </div>
                                 </template>
