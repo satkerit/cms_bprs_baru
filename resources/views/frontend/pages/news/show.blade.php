@@ -47,7 +47,7 @@
             </div>
 
             {{-- Title --}}
-            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight max-w-4xl">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight">
                 {{ $news->title }}
             </h1>
 

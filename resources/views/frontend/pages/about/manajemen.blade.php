@@ -19,7 +19,7 @@
                 Tentang Kami
             </span>
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">Manajemen</h1>
-            <p class="text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto px-4 leading-relaxed">
+            <p class="text-base sm:text-lg md:text-xl text-white/85 mx-auto px-4 leading-relaxed">
                 Kenali para pemimpin {{ $companyInfo?->name ?? 'BPRS Bangka Belitung' }} — Dewan Komisaris, Direksi, dan Dewan Pengawas Syariah yang memastikan tata kelola bank berjalan transparan, akuntabel, dan sesuai prinsip syariah.
             </p>
         </div>
