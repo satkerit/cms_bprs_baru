@@ -68,6 +68,13 @@
                     {{ number_format($news->views ?? 0) }} dilihat
                 </div>
             </div>
+
+            {{-- Excerpt / Description --}}
+            @if($news->excerpt)
+            <p class="max-w-3xl text-base sm:text-lg text-white/75 leading-relaxed mt-5 sm:mt-6">
+                {{ Str::limit($news->excerpt, 220) }}
+            </p>
+            @endif
         </div>
         <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white dark:from-slate-900 to-transparent"></div>
     </section>
