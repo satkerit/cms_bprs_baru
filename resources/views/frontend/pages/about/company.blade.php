@@ -258,7 +258,7 @@
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">
                     Regulasi & Keamanan
                 </h2>
-                <p class="mt-3 text-secondary dark:text-slate-400 text-base max-w-xl mx-auto">
+                <p class="mt-3 text-secondary dark:text-slate-400 text-base mx-auto">
                     Dana Anda aman dan diawasi oleh otoritas resmi pemerintah Republik Indonesia.
                 </p>
             </div>
@@ -281,7 +281,7 @@
                         <p class="text-sm text-secondary dark:text-slate-400 font-mono bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg inline-block">No. {{ $info->ojk_license }}</p>
                         @endif
                         @if($info?->ojk_tagline)
-                        <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed max-w-xs mx-auto">{{ $info->ojk_tagline }}</p>
+                        <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed">{{ $info->ojk_tagline }}</p>
                         @endif
                     </div>
                 </div>
@@ -307,7 +307,7 @@
                         </p>
                         @endif
                         @if($info?->lps_tagline)
-                        <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed max-w-xs mx-auto">{{ $info->lps_tagline }}</p>
+                        <p class="text-sm text-secondary dark:text-slate-400 leading-relaxed">{{ $info->lps_tagline }}</p>
                         @endif
                     </div>
                 </div>
