@@ -74,7 +74,7 @@
                 $heroExcerpt = trim((string) $news->excerpt) ?: Str::limit(strip_tags($news->content ?? ''), 200);
             @endphp
             @if($heroExcerpt)
-            <p class="max-w-3xl text-base sm:text-lg text-white/75 leading-relaxed mt-4 sm:mt-5">
+            <p class="text-base sm:text-lg text-white/75 leading-relaxed mt-4 sm:mt-5">
                 {{ $heroExcerpt }}
             </p>
             @endif

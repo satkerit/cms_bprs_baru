@@ -45,7 +45,7 @@
                 @endif
             </div>
             @if($auction->description)
-            <p class="max-w-3xl text-white/75 leading-relaxed mt-5 sm:mt-6 text-sm sm:text-base line-clamp-3">
+            <p class="text-white/75 leading-relaxed mt-5 sm:mt-6 text-sm sm:text-base line-clamp-3">
                 {{ Str::limit(strip_tags($auction->description), 300) }}
             </p>
             @endif
