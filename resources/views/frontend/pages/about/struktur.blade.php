@@ -18,7 +18,7 @@
                 Tentang Kami
             </span>
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">Struktur Organisasi</h1>
-            <p class="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto px-4 leading-relaxed">
+            <p class="text-base sm:text-lg md:text-xl text-white/90 mx-auto px-4 leading-relaxed">
                 Gambaran tata kelola dan hierarki organisasi {{ $companyInfo?->name ?? 'BPRS Bangka Belitung' }}
                 yang transparan, akuntabel, dan sesuai prinsip syariah demi memberikan layanan terbaik bagi nasabah.
             </p>
