@@ -168,8 +168,6 @@
                         </div>
                         @endif
 
-
-
                         @if($company?->email)
                         <div class="group flex gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-emerald-400/30 transition-all duration-300">
                             <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-all duration-300">
@@ -210,7 +208,7 @@
                     &copy; {{ date('Y') }} {{ $company->name ?? 'BPRS Bangka Belitung' }}. All rights reserved.
                     <br class="sm:hidden">
                     <span class="hidden sm:inline">—</span>
-                    <span class="text-white/50">Bank Pembiayaan Rakyat Syariah terpercaya.</span>
+                    <span class="text-white/50">Bank Perekonomian Rakyat Syariah terpercaya.</span>
                 </p>
                 <div class="flex items-center gap-4 text-xs">
                     <a href="{{ route('privacy-policy') }}" class="text-white/60 hover:text-emerald-300 transition-colors duration-200 relative group">
