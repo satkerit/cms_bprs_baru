@@ -12,8 +12,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UserSeeder::class,
+            // Role & permission harus dibuat dulu agar UserSeeder bisa
+            // mengaitkan user ke role (role_id) dengan benar.
             RolePermissionSeeder::class,
+            UserSeeder::class,
             AdminMenuSeeder::class,
             CompanyInfoSeeder::class,
             BoardMemberSeeder::class,

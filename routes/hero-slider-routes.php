@@ -4,7 +4,7 @@ use App\Http\Controllers\HeroSliderController;
 use Illuminate\Support\Facades\Route;
 
 // Hero Slider Routes
-Route::prefix('admin/hero-slider')->middleware(['auth', 'role', 'idle.timeout'])->group(function () {
+Route::prefix('admin/hero-slider')->middleware(['auth', 'role', 'idle.timeout', 'menu.permission'])->group(function () {
 
     // Upload hero image
     Route::post('/upload', [HeroSliderController::class, 'upload'])

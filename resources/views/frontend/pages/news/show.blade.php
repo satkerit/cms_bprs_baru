@@ -18,7 +18,7 @@
             <div class="absolute top-10 left-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
             <div class="absolute bottom-10 right-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up" x-intersect="$el.classList.add('is-visible')">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {{-- Back link --}}
             <a href="{{ route('news.index') }}" class="group inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-6 transition-all duration-300 text-sm">
                 <span class="flex items-center justify-center w-6 h-6 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300">

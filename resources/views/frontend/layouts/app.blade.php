@@ -29,9 +29,12 @@
     <link rel="shortcut icon" href="{{ \App\Helpers\StorageHelper::url($company->favicon) }}" type="image/x-icon">
     @endif
 
-    {{-- Preload critical fonts — HIGH-END v2: Plus Jakarta Sans --}}
-    <link rel="preload" href="https://fonts.bunny.net/css?family=plus-jakarta-sans:300,400,500,600,700,800&display=swap" as="style">
-    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:300,400,500,600,700,800&display=swap" rel="stylesheet" />
+    {{-- Fonts — loaded non-blocking (media=print + swap) so first paint is never held by the font CDN --}}
+    <link id="fonts-css" rel="stylesheet" href="https://fonts.bunny.net/css?family=plus-jakarta-sans:300,400,500,600,700,800&display=swap" media="print" />
+    <script nonce="{{ $nonce }}">
+        var fontsCss = document.getElementById('fonts-css');
+        if (fontsCss) fontsCss.addEventListener('load', function () { this.media = 'all'; });
+    </script>
 
     {{-- ═══ DARK MODE: Flash Prevention & Theme Remember — Runs BEFORE first paint ═══ --}}
     <script nonce="{{ $nonce }}">

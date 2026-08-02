@@ -97,8 +97,12 @@
     {{-- Set navbar height immediately — prevents content-from-jumping on scroll --}}
     <style nonce="{{ $nonce }}">:root { --navbar-height: 88px; }</style>
 
-    {{-- Fonts with display=swap for performance --}}
-    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700&display=swap" rel="stylesheet" />
+    {{-- Fonts — loaded non-blocking (media=print + swap) so first paint is never held by the font CDN --}}
+    <link id="fonts-css" rel="stylesheet" href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700&display=swap" media="print" />
+    <script nonce="{{ $nonce }}">
+        var fontsCss = document.getElementById('fonts-css');
+        if (fontsCss) fontsCss.addEventListener('load', function () { this.media = 'all'; });
+    </script>
 
     {{-- Vite Assets --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -195,7 +199,7 @@
         @include('frontend.partials.navbar', ['company' => $company])
     </header>
 
-    <!-- Page Transition Animation -->
+    {{-- Page Transition Animation --}}
     <style nonce="{{ $nonce }}">
         @keyframes page-enter {
             from { opacity: 0; transform: translateY(12px); }

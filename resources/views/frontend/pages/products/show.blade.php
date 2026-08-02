@@ -26,7 +26,7 @@
                 Kembali ke Produk
             </a>
 
-            <div class="reveal-up">
+            <div>
                 @if($product->type)
                 <span class="eyebrow-badge mb-4 inline-flex gap-1.5 bg-white/20 text-white border-white/20">
                     @switch($product->type)

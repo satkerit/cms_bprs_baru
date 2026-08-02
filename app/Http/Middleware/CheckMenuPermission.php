@@ -24,8 +24,6 @@ class CheckMenuPermission
         "admin.storage.upload-editor-image",
         "session.extend",
         "session.status",
-        "admin.composer-update.index",
-        "admin.composer-update.run",
     ];
 
     /**
@@ -35,6 +33,8 @@ class CheckMenuPermission
         "admin.menu-permissions",
         "admin.roles",
         "admin.users",
+        "admin.cache",              // cache clear/hard-refresh/optimize — operasional, super admin only
+        "admin.composer-update",    // menjalankan composer update — super admin only
     ];
 
     /**
@@ -66,14 +66,19 @@ class CheckMenuPermission
         "admin.company-info.storage" => "company-info",
         "admin.settings" => "settings",
         "admin.financing-config" => "financing-config",
-                "admin.report-categories" => "site-settings",
+        "admin.report-categories" => "site-settings",
 
-                // Complaints (accessible to admin and editor roles)
+        // Complaints (accessible to admin and editor roles)
         "admin.customer-complaints" => "customer-complaints",
         "admin.complaints" => "complaints",
 
         // Storage (accessible to all authenticated users for image picker)
         "admin.storage" => null,
+
+        // Hero slider upload (group terpisah di routes/hero-slider-routes.php)
+        "hero-slider.upload" => "hero-slides",
+        "hero-slider.preview" => "hero-slides",
+        "hero-slider.size-recommendations" => "hero-slides",
 
         // Monitoring (accessible to admin roles)
         "admin.audit-trails" => "audit-trails",
@@ -106,8 +111,8 @@ class CheckMenuPermission
         "customer-complaints" => "complaints.view",
         "complaints" => "complaints.view",
         "settings" => "settings.maintenance",
-                "report-categories" => "settings.site",
-                "financing-config" => "settings.financing",
+        "report-categories" => "settings.site",
+        "financing-config" => "settings.financing",
         "audit-trails" => "audit.view",
         "visitor-stats" => "visitors.view",
         "security-monitor" => "security.view",

@@ -8,7 +8,7 @@
             <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
             <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 2.5s;"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-up">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span class="eyebrow-badge mb-5 inline-flex bg-white/20 text-white border-white/20">
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg>
                 Layanan Jemput Tabungan

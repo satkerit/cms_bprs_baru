@@ -5,7 +5,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CspReportController;
 
 // CSP Violation Report (must be before other routes)
-Route::post('/api/csp-report', [CspReportController::class, 'report'])->name('csp.report');
+Route::post('/api/csp-report', [CspReportController::class, 'report'])->name('csp.report')->middleware('throttle:60,1');
 
 // Diagnostik konfigurasi (token-protected, TANPA query DB) — verifikasi sumber kredensial database
 // Akses: GET /dev-diagnostics?token={SECRET_CACHE_TOKEN}
@@ -273,8 +273,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     // Database Backup Management
     Route::get('database-backup', [App\Http\Controllers\Admin\DatabaseBackupController::class, 'index'])->name('database-backup.index');
     Route::post('database-backup/create', [App\Http\Controllers\Admin\DatabaseBackupController::class, 'create'])->name('database-backup.create');
-    Route::get('database-backup/download/{filename}', [App\Http\Controllers\Admin\DatabaseBackupController::class, 'download'])->name('database-backup.download');
-    Route::delete('database-backup/delete/{filename}', [App\Http\Controllers\Admin\DatabaseBackupController::class, 'delete'])->name('database-backup.delete');
+    Route::get('database-backup/download/{filename}', [App\Http\Controllers\Admin\DatabaseBackupController::class, 'download'])->where('filename', '[A-Za-z0-9._\-]+')->name('database-backup.download');
+    Route::delete('database-backup/delete/{filename}', [App\Http\Controllers\Admin\DatabaseBackupController::class, 'delete'])->where('filename', '[A-Za-z0-9._\-]+')->name('database-backup.delete');
 
     // Storage Management
     Route::get('storage', [App\Http\Controllers\Admin\StorageController::class, 'index'])->name('storage.index');
