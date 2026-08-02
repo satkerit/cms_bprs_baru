@@ -13,14 +13,22 @@
     @php
         $company = $company ?? \App\Models\CompanyInfo::getInfo();
         $seoSettings = \App\Models\SiteSetting::getSettings();
+        // Potong title maks 65 karakter agar tidak di-flag Bing/Google
+        $rawTitle = $title ?? config('app.name', 'BPRS Bangka Belitung');
+        $pageTitle = mb_strlen($rawTitle) > 65 ? mb_substr($rawTitle, 0, 62) . '...' : $rawTitle;
+        // Pastikan description selalu ada walau kolom DB belum ada
+        $defaultDesc = 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya. Menyediakan produk simpanan syariah, pembiayaan syariah, dan deposito syariah untuk masyarakat Bangka Belitung.';
+        $pageDesc = $metaDescription ?? ($seoSettings?->seo_default_description ?: $defaultDesc);
     @endphp
 
+    <title>{{ $pageTitle }}</title>
+
     {{-- Dynamic SEO Meta Tags --}}
-    <meta name="description" content="{{ $metaDescription ?? ($seoSettings->seo_default_description ?: 'BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya. Menyediakan produk simpanan syariah, pembiayaan syariah, dan deposito syariah untuk masyarakat.') }}">
-    <meta name="keywords" content="{{ $metaKeywords ?? ($seoSettings->seo_default_keywords ?: 'BPRS, Bank Syariah, Simpanan Syariah, Pembiayaan Syariah, Deposito, Bangka Belitung, BPR Syariah') }}">
-    <meta name="robots" content="{{ $metaRobots ?? ($seoSettings->seo_robots_default ?? 'index, follow') }}">
+    <meta name="description" content="{{ $pageDesc }}">
+    <meta name="keywords" content="{{ $metaKeywords ?? ($seoSettings?->seo_default_keywords ?: 'BPRS, Bank Syariah, Simpanan Syariah, Pembiayaan Syariah, Deposito, Bangka Belitung, BPR Syariah') }}">
+    <meta name="robots" content="{{ $metaRobots ?? ($seoSettings?->seo_robots_default ?? 'index, follow') }}">
     <meta name="theme-color" content="#059669">
-    @if($seoSettings->seo_google_verification)
+    @if($seoSettings?->seo_google_verification)
     <meta name="google-site-verification" content="{{ $seoSettings->seo_google_verification }}">
     @endif
     @if($seoSettings->seo_bing_verification)
