@@ -3,13 +3,13 @@
     <x-slot name="meta_description">{{ $subtitle ?? 'Produk pembiayaan syariah, simpanan, dan layanan perbankan dari BPRS Bangka Belitung.' }}</x-slot>
 
     {{-- ═══ HIGH-END v2: HERO — Ethereal Glass ═══ --}}
-    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-28 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-12 sm:pb-14 md:pb-16 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
             <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
             <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-up">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             @if(isset($title))
             <span class="eyebrow-badge mb-5 inline-flex bg-white/20 text-white border-white/20">{{ $title }}</span>
             @endif
