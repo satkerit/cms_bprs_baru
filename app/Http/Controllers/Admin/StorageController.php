@@ -4,6 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuditTrail;
+use App\Models\Auction;
+use App\Models\BoardMember;
+use App\Models\Brochure;
+use App\Models\CompanyInfo;
+use App\Models\HeroSlide;
+use App\Models\NewsImage;
+use App\Models\Office;
+use App\Models\Product;
+use App\Models\Report;
 use App\Services\FileScanner;
 use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
@@ -611,5 +620,137 @@ class StorageController extends Controller
                 500,
             );
         }
+    }
+
+    /**
+     * Tampilkan daftar file orphaned (tidak terdaftar di DB)
+     */
+    public function orphanedFiles()
+    {
+        $this->authorizeView("storage.manage");
+
+        $allFiles = $this->getAllStorageFiles();
+        $dbFiles  = $this->getAllDbFiles();
+
+        $orphaned = array_values(array_filter($allFiles, function ($file) use ($dbFiles) {
+            return !in_array($file['path'], $dbFiles);
+        }));
+
+        $totalSize = array_sum(array_column($orphaned, 'size'));
+
+        return view('admin.storage.orphaned', compact('orphaned', 'totalSize'));
+    }
+
+    /**
+     * Hapus file orphaned yang dipilih
+     */
+    public function cleanupOrphaned(Request $request)
+    {
+        $this->authorizeEdit("storage.manage");
+
+        $request->validate([
+            'files'   => 'required|array',
+            'files.*' => 'required|string',
+        ]);
+
+        $deleted = 0;
+        $dbFiles = $this->getAllDbFiles();
+
+        foreach ($request->input('files', []) as $path) {
+            $safePath = $this->sanitizePath($path);
+
+            // Double check — jangan hapus file yang ternyata ada di DB
+            if (in_array($safePath, $dbFiles)) {
+                continue;
+            }
+
+            if (Storage::disk($this->disk)->exists($safePath)) {
+                Storage::disk($this->disk)->delete($safePath);
+                $deleted++;
+
+                AuditTrail::log(
+                    'delete',
+                    "Hapus orphaned file: {$safePath}",
+                    null,
+                    null,
+                    ['path' => $safePath]
+                );
+            }
+        }
+
+        return redirect()->route('admin.storage.orphaned')
+            ->with('success', "{$deleted} file berhasil dihapus.");
+    }
+
+    /**
+     * Ambil semua file dari storage/app/public secara rekursif
+     */
+    private function getAllStorageFiles(): array
+    {
+        $files = [];
+        try {
+            $allPaths = Storage::disk($this->disk)->allFiles();
+            foreach ($allPaths as $path) {
+                if (basename($path) === '.gitignore') continue;
+                $files[] = [
+                    'path'     => $path,
+                    'name'     => basename($path),
+                    'size'     => $this->safeFileSize($path) ?? 0,
+                    'modified' => $this->safeLastModified($path),
+                    'url'      => Storage::disk($this->disk)->url($path),
+                    'extension' => strtolower(pathinfo($path, PATHINFO_EXTENSION)),
+                ];
+            }
+        } catch (\Exception $e) {
+            \Log::error('orphanedFiles: gagal scan storage', ['error' => $e->getMessage()]);
+        }
+        return $files;
+    }
+
+    /**
+     * Kumpulkan semua path file yang terdaftar di database
+     */
+    private function getAllDbFiles(): array
+    {
+        $paths = [];
+
+        // HeroSlide
+        HeroSlide::whereNotNull('image')->pluck('image')->each(fn($v) => $paths[] = $v);
+
+        // Product
+        Product::whereNotNull('image')->pluck('image')->each(fn($v) => $paths[] = $v);
+
+        // Office
+        Office::whereNotNull('photo')->pluck('photo')->each(fn($v) => $paths[] = $v);
+
+        // BoardMember
+        BoardMember::whereNotNull('photo')->pluck('photo')->each(fn($v) => $paths[] = $v);
+
+        // CompanyInfo
+        $company = CompanyInfo::first();
+        if ($company) {
+            foreach (['logo', 'logo_footer'] as $field) {
+                if (!empty($company->$field)) $paths[] = $company->$field;
+            }
+        }
+
+        // NewsImage
+        NewsImage::whereNotNull('image_path')->pluck('image_path')->each(fn($v) => $paths[] = $v);
+
+        // Report
+        Report::whereNotNull('file_path')->pluck('file_path')->each(fn($v) => $paths[] = $v);
+
+        // Brochure
+        Brochure::whereNotNull('file_path')->pluck('file_path')->each(fn($v) => $paths[] = $v);
+
+        // Auction — images & documents berupa array JSON
+        Auction::whereNotNull('images')->get()->each(function ($auction) use (&$paths) {
+            foreach ($auction->images ?? [] as $img) $paths[] = $img;
+        });
+        Auction::whereNotNull('documents')->get()->each(function ($auction) use (&$paths) {
+            foreach ($auction->documents ?? [] as $doc) $paths[] = $doc;
+        });
+
+        return array_filter(array_unique($paths));
     }
 }

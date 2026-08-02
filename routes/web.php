@@ -283,6 +283,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     Route::put('storage/rename', [App\Http\Controllers\Admin\StorageController::class, 'rename'])->name('storage.rename');
     Route::post('storage/create-folder', [App\Http\Controllers\Admin\StorageController::class, 'createFolder'])->name('storage.create-folder');
     Route::get('storage/download', [App\Http\Controllers\Admin\StorageController::class, 'download'])->name('storage.download');
+    Route::get('storage/orphaned', [App\Http\Controllers\Admin\StorageController::class, 'orphanedFiles'])->name('storage.orphaned');
+    Route::post('storage/cleanup-orphaned', [App\Http\Controllers\Admin\StorageController::class, 'cleanupOrphaned'])->name('storage.cleanup-orphaned');
 
     // Audit Trails Management
     Route::get('audit-trails', [App\Http\Controllers\Admin\AuditTrailController::class, 'index'])->name('audit-trails.index');
