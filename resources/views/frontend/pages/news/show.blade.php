@@ -12,13 +12,13 @@
     @endpush
 
     {{-- ═══ HIGH-END v2: HERO — Ethereal Glass ═══ --}}
-    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-24 overflow-hidden">
+    <section class="relative pt-8 sm:pt-10 md:pt-12 pb-12 sm:pb-16 overflow-hidden">
         <div class="absolute inset-0 hero-gradient">
             <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
             <div class="absolute top-10 left-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
             <div class="absolute bottom-10 right-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up" x-intersect="$el.classList.add('is-visible')">
             {{-- Back link --}}
             <a href="{{ route('news.index') }}" class="group inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-6 transition-all duration-300 text-sm">
                 <span class="flex items-center justify-center w-6 h-6 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300">
@@ -70,9 +70,12 @@
             </div>
 
             {{-- Excerpt / Description --}}
-            @if($news->excerpt)
-            <p class="max-w-3xl text-base sm:text-lg text-white/75 leading-relaxed mt-5 sm:mt-6">
-                {{ Str::limit($news->excerpt, 220) }}
+            @php
+                $heroExcerpt = trim((string) $news->excerpt) ?: Str::limit(strip_tags($news->content ?? ''), 200);
+            @endphp
+            @if($heroExcerpt)
+            <p class="max-w-3xl text-base sm:text-lg text-white/75 leading-relaxed mt-4 sm:mt-5">
+                {{ $heroExcerpt }}
             </p>
             @endif
         </div>
