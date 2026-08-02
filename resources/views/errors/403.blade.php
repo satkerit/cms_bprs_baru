@@ -3,7 +3,7 @@
 @section('title', 'Forbidden')
 @section('code', '403')
 @section('page-title', 'Akses Ditolak')
-@section('message', __($exception->getMessage() ?: 'Maaf, Anda tidak memiliki izin untuk mengakses halaman ini. Jika Anda merasa seharusnya bisa mengakses, hubungi administrator.'))
+@section('message', __((isset($exception) ? $exception->getMessage() : null) ?: 'Maaf, Anda tidak memiliki izin untuk mengakses halaman ini. Jika Anda merasa seharusnya bisa mengakses, hubungi administrator.'))
 
 @section('orb-color', 'rgba(239,68,68,0.08)')
 @section('orb-color-2', 'rgba(248,113,113,0.06)')

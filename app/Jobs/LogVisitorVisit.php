@@ -87,7 +87,9 @@ class LogVisitorVisit implements ShouldQueue
         }
 
         try {
-            $response = @file_get_contents("http://ip-api.com/json/{$ip}?fields=status,country,countryCode,region,city,timezone,lat,lon,isp");
+            // Timeout pendek agar job (yang kini dijalankan afterResponse) tidak memblokir proses.
+            $context = stream_context_create(['http' => ['timeout' => 3]]);
+            $response = @file_get_contents("http://ip-api.com/json/{$ip}?fields=status,country,countryCode,region,city,timezone,lat,lon,isp", false, $context);
             if ($response) {
                 $data = json_decode($response, true);
                 if ($data && ($data['status'] ?? null) === 'success') {
