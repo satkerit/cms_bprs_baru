@@ -281,6 +281,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     Route::delete('storage/delete', [App\Http\Controllers\Admin\StorageController::class, 'delete'])->name('storage.delete');
     Route::put('storage/rename', [App\Http\Controllers\Admin\StorageController::class, 'rename'])->name('storage.rename');
     Route::post('storage/create-folder', [App\Http\Controllers\Admin\StorageController::class, 'createFolder'])->name('storage.create-folder');
+    Route::get('storage/download', [App\Http\Controllers\Admin\StorageController::class, 'download'])->name('storage.download');
 
     // Audit Trails Management
     Route::get('audit-trails', [App\Http\Controllers\Admin\AuditTrailController::class, 'index'])->name('audit-trails.index');

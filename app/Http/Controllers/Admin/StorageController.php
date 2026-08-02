@@ -212,8 +212,13 @@ class StorageController extends Controller
 
     protected function getDirectoryContents(string $path): array
     {
-        $directories = Storage::disk($this->disk)->directories($path);
-        $files = Storage::disk($this->disk)->files($path);
+        try {
+            $directories = Storage::disk($this->disk)->directories($path);
+            $files = Storage::disk($this->disk)->files($path);
+        } catch (\Exception $e) {
+            \Log::error('StorageController: gagal baca direktori', ['path' => $path, 'error' => $e->getMessage()]);
+            return [];
+        }
 
         $items = [];
 
@@ -223,7 +228,7 @@ class StorageController extends Controller
                 "path" => $dir,
                 "type" => "folder",
                 "size" => null,
-                "modified" => Storage::disk($this->disk)->lastModified($dir),
+                "modified" => $this->safeLastModified($dir),
             ];
         }
 
@@ -236,14 +241,32 @@ class StorageController extends Controller
                 "name" => basename($file),
                 "path" => $file,
                 "type" => "file",
-                "size" => Storage::disk($this->disk)->size($file),
-                "modified" => Storage::disk($this->disk)->lastModified($file),
+                "size" => $this->safeFileSize($file),
+                "modified" => $this->safeLastModified($file),
                 "extension" => pathinfo($file, PATHINFO_EXTENSION),
-                "url" => asset("storage/" . $file),
+                "url" => Storage::disk($this->disk)->url($file),
             ];
         }
 
         return $items;
+    }
+
+    protected function safeLastModified(string $path): ?int
+    {
+        try {
+            return Storage::disk($this->disk)->lastModified($path);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    protected function safeFileSize(string $path): ?int
+    {
+        try {
+            return Storage::disk($this->disk)->size($path);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     protected function getBreadcrumbs(string $path): array
@@ -271,11 +294,22 @@ class StorageController extends Controller
     {
         $storagePath = Storage::disk($this->disk)->path("");
 
+        // disk_total_space() / disk_free_space() bisa return false di shared hosting
+        $total = @disk_total_space($storagePath);
+        $free  = @disk_free_space($storagePath);
+
+        if ($total === false || $free === false) {
+            return [
+                "total" => null,
+                "free"  => null,
+                "used"  => null,
+            ];
+        }
+
         return [
-            "total" => disk_total_space($storagePath),
-            "free" => disk_free_space($storagePath),
-            "used" =>
-            disk_total_space($storagePath) - disk_free_space($storagePath),
+            "total" => $total,
+            "free"  => $free,
+            "used"  => $total - $free,
         ];
     }
 
@@ -460,7 +494,7 @@ class StorageController extends Controller
                 "path" => $file,
                 "type" => "file",
                 "extension" => $extension,
-                "url" => asset("storage/" . $file),
+                "url" => Storage::disk($this->disk)->url($file),
                 "isImage" => $isImage,
             ];
         }
@@ -556,7 +590,7 @@ class StorageController extends Controller
             }
 
             // Get full URL
-            $url = asset("storage/" . $storedPath);
+            $url = Storage::disk('public')->url($storedPath);
 
             return response()->json([
                 "success" => true,

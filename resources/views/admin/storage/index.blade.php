@@ -21,18 +21,24 @@
 </x-admin.page-header>
 
 {{-- Storage Info --}}
-<div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="mb-4 grid grid-cols-1 md:grid-cols-3 gap-6">
  <div class="bg-white rounded-xl p-4 border dark:border-slate-700 border-zinc-200">
- <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Total Storage</p>
- <p class="text-4xl font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ number_format($storageInfo['total'] / 1024 / 1024 / 1024, 2) }} GB</p>
+ <p class="text-[11px] dark:text-slate-400 text-zinc-500">Total Storage</p>
+ <p class="text-4xl font-semibold dark:text-slate-100 text-zinc-900">
+  {{ $storageInfo['total'] !== null ? number_format($storageInfo['total'] / 1024 / 1024 / 1024, 2).' GB' : 'N/A' }}
+ </p>
  </div>
  <div class="bg-white rounded-xl p-4 border dark:border-slate-700 border-zinc-200">
- <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Terpakai</p>
- <p class="text-4xl font-semibold text-sky-600">{{ number_format($storageInfo['used'] / 1024 / 1024 / 1024, 2) }} GB</p>
+ <p class="text-[11px] dark:text-slate-400 text-zinc-500">Terpakai</p>
+ <p class="text-4xl font-semibold text-sky-600">
+  {{ $storageInfo['used'] !== null ? number_format($storageInfo['used'] / 1024 / 1024 / 1024, 2).' GB' : 'N/A' }}
+ </p>
  </div>
  <div class="bg-white rounded-xl p-4 border dark:border-slate-700 border-zinc-200">
- <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Tersedia</p>
- <p class="text-4xl font-semibold text-sky-600">{{ number_format($storageInfo['free'] / 1024 / 1024 / 1024, 2) }} GB</p>
+ <p class="text-[11px] dark:text-slate-400 text-zinc-500">Tersedia</p>
+ <p class="text-4xl font-semibold text-sky-600">
+  {{ $storageInfo['free'] !== null ? number_format($storageInfo['free'] / 1024 / 1024 / 1024, 2).' GB' : 'N/A' }}
+ </p>
  </div>
 </div>
 
@@ -80,7 +86,7 @@
  </a>
  @else
  <p class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $item['name'] }}</p>
- <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ number_format($item['size'] / 1024, 1) }} KB</p>
+ <p class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $item['size'] !== null ? number_format($item['size'] / 1024, 1).' KB' : '-' }}</p>
  @endif
  </div>
  <div class="flex items-center gap-1">
@@ -142,13 +148,13 @@
  </td>
  <td class="px-4 py-3 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
  @if($item['type'] === 'file')
- {{ number_format($item['size'] / 1024, 1) }} KB
+ {{ $item['size'] !== null ? number_format($item['size'] / 1024, 1).' KB' : '-' }}
  @else
  -
  @endif
  </td>
  <td class="px-4 py-3 text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">
- {{ date('d M Y H:i', $item['modified']) }}
+ {{ $item['modified'] !== null ? date('d M Y H:i', $item['modified']) : '-' }}
  </td>
  <td class="px-4 py-3">
  <div class="flex items-center gap-1">
