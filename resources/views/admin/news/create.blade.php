@@ -6,10 +6,6 @@
 <x-admin.page-header
  title="Tambah Berita"
  subtitle="Buat berita atau artikel baru"
- :breadcrumbs="[
- ['label' => 'Berita', 'url' => route('admin.news.index')],
- ['label' => 'Tambah']
- ]"
 >
  <x-slot:actions>
  <x-admin.button href="{{ route('admin.news.index') }}" variant="outline">

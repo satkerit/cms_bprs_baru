@@ -33,7 +33,7 @@
                 <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 tracking-tight text-white px-4">
                     Temukan Agunan <span class="text-emerald-600 animate-pulse">Impian Anda</span>
                 </h1>
-                <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-emerald-700 mb-6 sm:mb-8 mx-auto px-4">
+                <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 mb-6 sm:mb-8 mx-auto px-4">
                     Dapatkan agunan berkualitas dengan harga terbaik melalui lelang resmi dan terpercaya
                 </p>
 

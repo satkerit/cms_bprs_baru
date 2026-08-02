@@ -211,16 +211,6 @@
                     <span class="text-white/50">Bank Perekonomian Rakyat Syariah terpercaya.</span>
                 </p>
                 <div class="flex items-center gap-4 text-xs">
-                    <a href="{{ route('privacy-policy') }}" class="text-white/60 hover:text-emerald-300 transition-colors duration-200 relative group">
-                        Kebijakan Privasi
-                        <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-emerald-400 group-hover:w-full transition-all duration-300"></span>
-                    </a>
-                    <span class="text-white/40">•</span>
-                    <a href="#" class="text-white/60 hover:text-emerald-300 transition-colors duration-200 relative group">
-                        Syarat & Ketentuan
-                        <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-emerald-400 group-hover:w-full transition-all duration-300"></span>
-                    </a>
-                    <span class="text-white/40">•</span>
                     <span class="text-white/50">v{{ config('app.version', '1.0') }}</span>
                 </div>
             </div>

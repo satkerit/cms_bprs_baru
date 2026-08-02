@@ -9,7 +9,7 @@
     };
 @endphp
 
-<div {{ $attributes->merge(['class' => 'mb-6 lg:mb-8 fade-in']) }}>
+<div {{ $attributes->merge(['class' => (string) 'mb-6 lg:mb-8 fade-in']) }}>
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div class="min-w-0 flex-1">
             <div class="flex items-center gap-3">
