@@ -165,7 +165,7 @@
 
             @if($news->hasPages())
             <div class="mt-12 flex justify-center reveal-up" x-intersect="$el.classList.add('is-visible')">
-                {{ $news->appends(request()->query())->links('pagination.custom') }}
+                {{ $news->appends(request()->query())->links() }}
             </div>
             @endif
         </div>
