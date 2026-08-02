@@ -51,6 +51,17 @@ class SecurityHeaders
         // Add additional security headers
         $this->addAdditionalSecurityHeaders($response);
 
+        // RFC 8288 Link headers — agent/crawler discovery
+        if ($request->is('/') || $request->is('')) {
+            $base = rtrim(config('app.url'), '/');
+            $response->headers->set('Link', implode(', ', [
+                "<{$base}/sitemap.xml>; rel=\"sitemap\"",
+                "<{$base}/robots.txt>; rel=\"robots\"",
+                "<{$base}/tentang/perusahaan>; rel=\"about\"",
+                "<{$base}/kontak>; rel=\"help\"",
+            ]));
+        }
+
         return $response;
     }
 
