@@ -11,12 +11,11 @@
     <link href="https://fonts.bunny.net/css?family=montserrat:400,500,600,700,800|inter:400,500,600,700&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    @vite(['resources/js/admin.js', 'resources/css/app.css'])
-    @livewireStyles(['nonce' => $nonce])
-
     @php
         $nonce = request()->attributes->get('csp_nonce', '');
     @endphp
+    @vite(['resources/js/admin.js', 'resources/css/app.css'])
+    @livewireStyles(['nonce' => $nonce])
 
     <style nonce="{{ $nonce }}">
         /* Admin Auction Specific Styling */
