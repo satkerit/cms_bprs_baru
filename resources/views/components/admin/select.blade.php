@@ -40,6 +40,7 @@
             @foreach($options as $key => $label)
                 <option value="{{ $key }}">{{ $label }}</option>
             @endforeach
+            {{ $slot ?? '' }}
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
