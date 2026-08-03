@@ -40,10 +40,10 @@
  <x-admin.input name="username" label="Username" :value="old('username', $settings->username ?? '')" placeholder="email@domain.com" hint="Username untuk autentikasi SMTP" autocomplete="username"/>
  <div>
  <label class="block text-xs font-medium text-gray-700 mb-1">Password</label>
- <input type="password" 
- name="password" 
+ <input type="password"
+ name="password"
  autocomplete="current-password"
- class="block w-full rounded-xl border-0 py-2.5 px-4 text-gray-900 bg-gray-50" 
+ class="block w-full rounded-xl border-0 py-2.5 px-4 text-gray-900 bg-gray-50"
  placeholder="{{ $settings && $settings->hasPassword() ? '••••••••' : 'Masukkan password' }}">
  <p class="mt-1 text-xs text-gray-500">
  @if($settings && $settings->hasPassword())
@@ -79,9 +79,18 @@
  <x-admin.input type="email" name="reply_to_address" label="Reply-To Email" :value="old('reply_to_address', $settings->reply_to_address ?? '')" placeholder="support@domain.com" hint="Email untuk balasan (opsional)"/>
  <x-admin.input name="reply_to_name" label="Reply-To Name" :value="old('reply_to_name', $settings->reply_to_name ?? '')" placeholder="Customer Support" hint="Nama untuk balasan (opsional)"/>
  </div>
+ </div>
+ </x-admin.card>
 
- <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
- <x-admin.input type="email" name="career_recipient_email" label="Email Penerima Lamaran Karier" :value="old('career_recipient_email', $settings->career_recipient_email ?? '')" placeholder="personalia@domain.com" hint="Email tujuan lamaran pekerjaan dari halaman Karier (opsional, default: konfigurasi .env)"/>
+ {{-- Career Application Address --}}
+ <x-admin.card title="Pengiriman Lamaran Karier">
+ <div class="space-y-4">
+ <p class="text-xs text-gray-500">Alamat yang ditampilkan di halaman detail lowongan karier sebagai tujuan pengiriman lamaran (fisik & email).</p>
+ <x-admin.input type="email" name="career_recipient_email" label="Email Pengiriman Lamaran" :value="old('career_recipient_email', $settings->career_recipient_email ?? '')" placeholder="personalia@domain.com" hint="Alamat email tujuan kirim lamaran (opsional, default: personalia.bsbb@gmail.com)"/>
+ <div>
+ <label class="block text-xs font-medium text-gray-700 mb-1">Alamat Fisik Pengiriman Lamaran</label>
+ <textarea name="career_recipient_address" rows="3" class="block w-full rounded-xl border-0 py-2.5 px-4 text-gray-900 bg-gray-50" placeholder="Contoh: TJ TOWER, Jl. Kampung Melayu, Bukit Merapin, Pangkalpinang">{{ old('career_recipient_address', $settings->career_recipient_address ?? '') }}</textarea>
+ <p class="mt-1 text-xs text-gray-500">Alamat kantor untuk pengiriman lamaran fisik (opsional, default: alamat perusahaan di Profil Perusahaan)</p>
  </div>
  </div>
  </x-admin.card>

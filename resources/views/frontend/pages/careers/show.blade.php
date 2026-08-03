@@ -129,52 +129,48 @@
 
                 <!-- Sidebar -->
                 <div class="space-y-6">
-                    <!-- Apply Card -->
-                    <div class="bg-card rounded-lg p-6 sticky top-24" x-data="{ showForm: @json($errors->any()) }">
-                        <h3 class="text-base font-bold text-foreground mb-4">Tertarik dengan posisi ini?</h3>
+                    <!-- Submission Address Card -->
+                    <div class="bg-card rounded-lg p-6 sticky top-24">
+                        <h3 class="text-base font-bold text-foreground mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2M8 4a2 2 0 002 2h4a2 2 0 002-2M8 4a2 2 0 012-2h4a2 2 0 012 2m-2 8h2m-2 4h2m-6-4h.01M9 16h.01"/>
+                            </svg>
+                            Cara Melamar
+                        </h3>
                         @if(!$career->isExpired())
-                            <p class="text-secondary text-sm mb-6">Isi formulir lamaran di bawah dan lampirkan CV Anda. Data akan diteruskan ke Tim Personalia.</p>
-
-                            <button type="button" @click="showForm = !showForm" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors touch-manipulation">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                </svg>
-                                <span x-text="showForm ? 'Tutup Formulir' : 'Kirim Lamaran'"></span>
-                            </button>
-
-                            {{-- Form lamar pekerjaan --}}
-                            <form x-show="showForm" x-cloak x-transition method="POST" action="{{ route('careers.apply', $career) }}" enctype="multipart/form-data" class="mt-6 space-y-4" data-swal-confirm="auto" data-swal-title="Konfirmasi Lamaran" data-swal-text="Apakah Anda yakin ingin mengirim lamaran untuk posisi ini?">
-                                @csrf
-                                <div>
-                                    <label for="apply-name" class="block text-sm font-semibold text-foreground mb-1.5">Nama Lengkap *</label>
-                                    <input id="apply-name" type="text" name="name" value="{{ old('name') }}" required maxlength="255" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-base border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">
-                                    @error('name')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
+                            <p class="text-secondary text-sm mb-6">Kirim lamaran Anda ke alamat berikut, baik secara fisik maupun melalui email.</p>
+                            <div class="space-y-5">
+                                @if(!$applyAddress && !$applyEmail)
+                                    <p class="text-sm text-secondary">Alamat pengiriman lamaran belum diatur. Silakan hubungi tim personalia melalui menu Hubungi Kami.</p>
+                                @endif
+                                @if($applyAddress)
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-600/10 text-emerald-600 flex items-center justify-center shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-foreground">Alamat Fisik</p>
+                                        <p class="text-sm text-secondary mt-1 leading-relaxed">{{ $applyAddress }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="apply-email" class="block text-sm font-semibold text-foreground mb-1.5">Email *</label>
-                                    <input id="apply-email" type="email" name="email" value="{{ old('email') }}" required maxlength="255" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-base border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">
-                                    @error('email')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
+                                @endif
+                                @if($applyEmail)
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-600/10 text-emerald-600 flex items-center justify-center shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <p class="text-sm font-semibold text-foreground">Via Email</p>
+                                        <a href="mailto:{{ $applyEmail }}" class="text-sm text-emerald-600 font-medium hover:underline break-all">{{ $applyEmail }}</a>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="apply-phone" class="block text-sm font-semibold text-foreground mb-1.5">No. Telepon / WhatsApp *</label>
-                                    <input id="apply-phone" type="text" name="phone" value="{{ old('phone') }}" required maxlength="30" placeholder="08xxxxxxxxxx" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-base border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">
-                                    @error('phone')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
-                                </div>
-                                <div>
-                                    <label for="apply-cover" class="block text-sm font-semibold text-foreground mb-1.5">Surat Lamaran / Cover Letter <span class="font-normal text-secondary">(opsional)</span></label>
-                                    <textarea id="apply-cover" name="cover_letter" rows="4" maxlength="5000" class="w-full px-3 sm:px-4 py-2.5 text-xs sm:text-sm border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">{{ old('cover_letter') }}</textarea>
-                                    @error('cover_letter')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
-                                </div>
-                                <div>
-                                    <label for="apply-cv" class="block text-sm font-semibold text-foreground mb-1.5">CV / Berkas Lamaran * <span class="font-normal text-secondary">(PDF, DOC, DOCX — maks 5MB)</span></label>
-                                    <input id="apply-cv" type="file" name="cv" accept=".pdf,.doc,.docx" required class="w-full px-3 sm:px-4 py-2.5 text-xs sm:text-sm border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground bg-muted/50 transition-all touch-manipulation file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-emerald-600 file:text-white file:text-xs file:font-semibold hover:file:bg-emerald-700">
-                                    @error('cv')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
-                                </div>
-                                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors touch-manipulation active:scale-[0.99]">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Kirim Lamaran
-                                </button>
-                            </form>
+                                @endif
+                            </div>
                         @else
                             <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
                                 <svg class="w-10 h-10 text-red-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

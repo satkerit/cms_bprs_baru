@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Crypt;
 
 class EmailSettingController extends Controller
 {
@@ -60,6 +59,7 @@ class EmailSettingController extends Controller
             'reply_to_address' => 'nullable|email|max:255',
             'reply_to_name' => 'nullable|string|max:255',
             'career_recipient_email' => 'nullable|email|max:255',
+            'career_recipient_address' => 'nullable|string|max:1000',
         ]);
 
         try {
@@ -71,8 +71,10 @@ class EmailSettingController extends Controller
             $settings->username = $validated['username'];
 
             // Only update password if provided
+            // NOTE: jangan enkripsi manual — mutator setPasswordAttribute()
+            // di model EmailSetting sudah menangani enkripsi otomatis.
             if (!empty($validated['password'])) {
-                $settings->password = Crypt::encryptString($validated['password']);
+                $settings->password = $validated['password'];
             }
 
             $settings->encryption = $validated['encryption'];
@@ -81,6 +83,7 @@ class EmailSettingController extends Controller
             $settings->reply_to_address = $validated['reply_to_address'];
             $settings->reply_to_name = $validated['reply_to_name'];
             $settings->career_recipient_email = $validated['career_recipient_email'] ?? null;
+            $settings->career_recipient_address = $validated['career_recipient_address'] ?? null;
             $settings->save();
 
             EmailSetting::clearCache();
