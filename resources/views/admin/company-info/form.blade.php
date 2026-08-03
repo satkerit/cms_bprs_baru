@@ -232,10 +232,10 @@
  </div>
 
  <div>
- <label for="history" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Sejarah</label>
- <textarea name="history" id="history" rows="5"
- class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('history', $company->history) }}</textarea>
- <p class="mt-1 text-xs text-zinc-400 dark:text-slate-500">Tulis satu peristiwa per baris untuk tampilan timeline. Opsional diawali tahun, contoh: <code class="text-zinc-500">2012 - Berdiri di Pangkalpinang</code></p>
+ <label for="summernote" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Sejarah</label>
+ <textarea name="history" id="summernote" rows="5"
+ class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors min-h-[300px]">{{ old('history', $company->history) }}</textarea>
+ <p class="mt-1 text-xs text-zinc-400 dark:text-slate-500">Gunakan editor untuk memformat konten sejarah: paragraf, judul, daftar, teks tebal, dan lainnya.</p>
  </div>
  </div>
  </x-admin.card>
@@ -395,12 +395,63 @@
   @php
    $days = ['Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu','Minggu'];
    $savedHours = old('operational_hours', $company->operational_hours ?? []);
-   // Normalise: support both indexed and keyed formats
+   // Normalisasi: dukung format indexed (dengan 'day'), keyed (key = nama hari),
+   // string (mis. '08:00 - 16:00 WIB'), serta rentang gabungan (mis. "Senin s/d Jum'at").
    $hoursMap = [];
    if (is_array($savedHours)) {
-    foreach ($savedHours as $item) {
-     if (isset($item['day'])) $hoursMap[$item['day']] = $item;
+    foreach ($savedHours as $key => $item) {
+     if ($key === 'notes') continue;
+     if (is_array($item)) {
+      $entry = isset($item['day']) ? $item : array_merge(['day' => (string) $key], $item);
+     } elseif (is_string($item) && is_string($key)) {
+      $raw = trim($item);
+      $isClosed = in_array(strtolower($raw), ['tutup','libur','closed','off','-','','0'], true);
+      $open = null; $close = null;
+      if (!$isClosed && preg_match('/(\d{1,2}:\d{2})\s*[-–—]\s*(\d{1,2}:\d{2})/', $raw, $m)) {
+       $open = $m[1]; $close = $m[2];
+      }
+      $entry = ['day' => (string) $key, 'active' => !$isClosed, 'open' => $open, 'close' => $close];
+     } else {
+      continue;
+     }
+     $hoursMap[(string) ($entry['day'] ?? '')] = $entry;
     }
+
+    // Ekspansi rentang gabungan (mis. "Senin s/d Jum'at") ke hari-hari individual
+    $normDay = fn($s) => mb_strtolower(str_replace(["'", '’'], '', trim($s)));
+    $expanded = [];
+    foreach ($hoursMap as $label => $entry) {
+     $normLabel = $normDay($label);
+     $matched = false;
+     foreach ($days as $i => $startDay) {
+      for ($j = $i; $j < count($days); $j++) {
+       $endDay = $days[$j];
+       $pattern = '/^' . preg_quote($normDay($startDay), '/') . '.*' . preg_quote($normDay($endDay), '/') . '$/';
+       if (preg_match($pattern, $normLabel)) {
+        for ($k = $i; $k <= $j; $k++) {
+         $expanded[$days[$k]] = array_merge($entry, ['day' => $days[$k]]);
+        }
+        $matched = true;
+        break 2;
+       }
+      }
+     }
+     if (!$matched) {
+      // Coba cocokkan ke hari tunggal (mis. "Jumat" -> "Jum'at")
+      $singleMatched = false;
+      foreach ($days as $day) {
+       if ($normDay($label) === $normDay($day)) {
+        $expanded[$day] = array_merge($entry, ['day' => $day]);
+        $singleMatched = true;
+        break;
+       }
+      }
+      if (!$singleMatched) {
+       $expanded[$label] = $entry;
+      }
+     }
+    }
+    $hoursMap = $expanded;
    }
   @endphp
   <div class="divide-y divide-zinc-200 dark:divide-slate-700 rounded-xl border border-zinc-200 dark:border-slate-700 overflow-hidden">

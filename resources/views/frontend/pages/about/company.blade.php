@@ -22,6 +22,9 @@
                                 ->values()
                             : collect();
         $history       = $info?->history       ?? '';
+        // Sejarah: dari editor (Summernote) biasanya HTML. Jika masih teks polos
+        // (data lama), konversi aman ke paragraf agar tetap tampil rapi.
+        $historyHtml   = $history ? (str_contains($history, '<') ? $history : nl2br(e($history))) : '';
 
         // Statistik dari DB — tidak ada hardcode
         $statYears     = (int) ($info?->stat_years_experience    ?? 0);
@@ -37,26 +40,25 @@
         // Apakah ada data regulasi
         $hasRegulasi   = $info?->ojk_license || $info?->ojk_tagline || $info?->lps_tagline;
 
-        // Jam operasional
-        $operationalHours = is_array($info?->operational_hours) ? $info->operational_hours : [];
-
-        // Normalisasi format jam operasional agar mendukung:
+        // Jam operasional — selalu tampilkan 7 hari (Senin–Minggu) agar jadwal lengkap,
+        // meskipun data lama di database hanya berisi rentang gabungan (mis. "Senin s/d Jum'at").
+        // Mendukung format:
         //   A) Format list (disimpan admin): [ ['day'=>'Senin','active'=>true,'open'=>'08:00','close'=>'15:00'], ... ]
         //   B) Format keyed-array:          [ 'Senin' => ['active'=>true,'open'=>'08:00','close'=>'15:00'], ... ]
         //   C) Format keyed-string (lama/seeder): [ 'Senin - Jumat' => '08:00 - 16:00 WIB', 'Sabtu' => 'Tutup' ]
-        $operationalList = [];
+        //   D) Rentang gabungan (lama):     [ ['day' => "Senin s/d Jum'at", 'open' => '08:00', 'close' => '15:00'] ]
+        $canonicalDays = ['Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu', 'Minggu'];
+        $operationalHours = is_array($info?->operational_hours) ? $info->operational_hours : [];
+
+        // Normalisasi ke map ber-key nama hari
+        $hoursMap = [];
         foreach ($operationalHours as $key => $value) {
             if ($key === 'notes') {
                 continue; // skip metadata key
             }
             if (is_array($value)) {
-                if (isset($value['day'])) {
-                    // Format A — langsung dipakai
-                    $operationalList[] = $value;
-                } else {
-                    // Format B — tambahkan key sebagai nama hari
-                    $operationalList[] = array_merge(['day' => (string) $key], $value);
-                }
+                // Format A — langsung dipakai; Format B — tambahkan key sebagai nama hari
+                $entry = isset($value['day']) ? $value : array_merge(['day' => (string) $key], $value);
             } elseif (is_string($value) && is_string($key)) {
                 // Format C — parse string jam, mis. '08:00 - 16:00 WIB' atau 'Tutup'
                 $raw = trim($value);
@@ -67,15 +69,77 @@
                     $open = $m[1];
                     $close = $m[2];
                 }
-                $operationalList[] = [
-                    'day' => (string) $key,
-                    'active' => !$isClosed,
-                    'open' => $open,
-                    'close' => $close,
+                $entry = ['day' => (string) $key, 'active' => !$isClosed, 'open' => $open, 'close' => $close];
+            } else {
+                continue;
+            }
+            $hoursMap[(string) ($entry['day'] ?? '')] = $entry;
+        }
+
+        // Ekspansi rentang gabungan (mis. "Senin s/d Jum'at", "Senin - Jumat", "Senin–Jumat")
+        // ke hari-hari individual, sehingga data lama ikut tampil per hari.
+        $normDay = fn($s) => mb_strtolower(str_replace(["'", '’'], '', trim($s)));
+        $expanded = [];
+        foreach ($hoursMap as $label => $entry) {
+            $normLabel = $normDay($label);
+            $matched = false;
+            foreach ($canonicalDays as $i => $startDay) {
+                for ($j = $i; $j < count($canonicalDays); $j++) {
+                    $endDay = $canonicalDays[$j];
+                    $pattern = '/^' . preg_quote($normDay($startDay), '/') . '.*' . preg_quote($normDay($endDay), '/') . '$/';
+                    if (preg_match($pattern, $normLabel)) {
+                        for ($k = $i; $k <= $j; $k++) {
+                            $expanded[$canonicalDays[$k]] = array_merge($entry, ['day' => $canonicalDays[$k]]);
+                        }
+                        $matched = true;
+                        break 2;
+                    }
+                }
+            }
+            if (!$matched) {
+                // Coba cocokkan ke hari tunggal (mis. "Jumat" -> "Jum'at")
+                $singleMatched = false;
+                foreach ($canonicalDays as $day) {
+                    if ($normDay($label) === $normDay($day)) {
+                        $expanded[$day] = array_merge($entry, ['day' => $day]);
+                        $singleMatched = true;
+                        break;
+                    }
+                }
+                if (!$singleMatched) {
+                    $expanded[$label] = $entry;
+                }
+            }
+        }
+        $hoursMap = $expanded;
+
+        // Susun jadwal 7 hari berurutan.
+        // - Jika sama sekali tidak ada data: pakai jadwal default (Senin–Jumat buka 08:00–15:00,
+        //   Sabtu/Minggu tutup) sebagai placeholder.
+        // - Jika ada data sebagian: hari yang tidak dikonfigurasi ditampilkan "Tutup" agar
+        //   tidak menampilkan jam yang tidak pernah ditetapkan.
+        $hasAnyData = count($hoursMap) > 0;
+        $jadwal = [];
+        foreach ($canonicalDays as $day) {
+            if (isset($hoursMap[$day])) {
+                $jadwal[] = $hoursMap[$day];
+            } else {
+                $defaultActive = !$hasAnyData && in_array($day, ['Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at"], true);
+                $jadwal[] = [
+                    'day' => $day,
+                    'active' => $defaultActive,
+                    'open' => $defaultActive ? '08:00' : null,
+                    'close' => $defaultActive ? '15:00' : null,
                 ];
             }
         }
-        $operationalHours = $operationalList;
+        // Pertahankan entri berlabel non-hari (mis. "Setiap Hari", "Hari Raya") agar tidak hilang
+        $jadwal = array_merge($jadwal, array_filter(
+            $hoursMap,
+            fn($entry, $label) => !in_array($label, $canonicalDays, true),
+            ARRAY_FILTER_USE_BOTH
+        ));
+        $operationalHours = array_values($jadwal);
 
         $nonce = request()->attributes->get('csp_nonce');
     @endphp
@@ -255,7 +319,7 @@
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">
                     Visi & Misi
                 </h2>
-                <p class="mt-4 text-secondary dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                <p class="mt-4 text-secondary dark:text-slate-400 text-sm sm:text-base">
                     Fondasi arah langkah kami dalam melayani masyarakat Negeri Serumpun Sebalai.
                 </p>
             </div>
@@ -287,20 +351,16 @@
                     </div>
                 </div>
 
-                {{-- Misi — kartu bernomor --}}
+                {{-- Misi — daftar per poin --}}
                 @if($missions->isNotEmpty())
-                <div class="lg:col-span-3">
-                    <div class="grid sm:grid-cols-2 gap-5 lg:gap-6">
+                <div class="lg:col-span-3 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl border border-border dark:border-slate-700 shadow-sm divide-y divide-border dark:divide-slate-700 overflow-hidden">
                         @foreach($missions as $index => $mission)
-                        <div class="group reveal-up bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-7 border border-border dark:border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300"
-                             x-intersect="$el.classList.add('is-visible')"
-                             style="transition-delay:{{ $index * 60 }}ms">
-                            <div class="flex items-start gap-4">
-                                <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 font-bold text-base shrink-0 border border-amber-100 dark:border-amber-800/40 group-hover:bg-amber-500 group-hover:text-white group-hover:border-amber-500 transition-colors duration-300">
-                                    {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
-                                </div>
-                                <p class="text-secondary dark:text-slate-300 text-sm sm:text-base leading-relaxed pt-1.5">{{ $mission }}</p>
-                            </div>
+                        <div class="flex items-start gap-4 px-6 py-5">
+                            <span class="shrink-0 w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-900/40 border border-emerald-100 dark:border-emerald-800/40 text-emerald-600 dark:text-emerald-400 font-bold text-sm flex items-center justify-center">
+                                {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                            </span>
+                            <p class="text-secondary dark:text-slate-300 text-sm sm:text-base leading-relaxed pt-2">{{ $mission }}</p>
                         </div>
                         @endforeach
                     </div>
@@ -407,15 +467,8 @@
             <div class="bg-white dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 shadow-sm overflow-hidden">
                 @php
                     $dayNames = ['Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu','Minggu'];
-                    $jadwal = count($operationalHours) > 0 ? $operationalHours : [
-                        ['day' => 'Senin',   'active' => true,  'open' => '08:00', 'close' => '15:00'],
-                        ['day' => 'Selasa',  'active' => true,  'open' => '08:00', 'close' => '15:00'],
-                        ['day' => 'Rabu',    'active' => true,  'open' => '08:00', 'close' => '15:00'],
-                        ['day' => 'Kamis',   'active' => true,  'open' => '08:00', 'close' => '15:00'],
-                        ['day' => "Jum'at",  'active' => true,  'open' => '08:00', 'close' => '15:00'],
-                        ['day' => 'Sabtu',   'active' => false, 'open' => null,    'close' => null],
-                        ['day' => 'Minggu',  'active' => false, 'open' => null,    'close' => null],
-                    ];
+                    // Jadwal sudah selalu berisi 7 hari (dibangun di blok normalisasi di atas)
+                    $jadwal = $operationalHours;
                 @endphp
                 @foreach($jadwal as $loop_i => $schedule)
                 @php
@@ -451,88 +504,22 @@
 
     {{-- ═══ SEJARAH ═══ --}}
     @if($history)
-    @php
-        // Sejarah: pecah per baris (1 peristiwa per baris).
-        // Mendukung format dengan tahun di awal baris: "2012 - ...", "2012: ...", "Tahun 2012 ..."
-        $historyRaw  = trim((string) $history);
-        $historyLines = collect(preg_split('/\r\n|\r|\n/', $historyRaw))
-            ->map(fn($l) => trim($l))
-            ->filter()
-            ->values();
-
-        // Jika hanya 1 paragraf panjang (format lama), pecah per kalimat.
-        // Fragmen terlalu pendek (mis. singkatan "PT.", "No.") digabung ke
-        // kalimat berikutnya agar tidak muncul sebagai item timeline terpisah.
-        if ($historyLines->count() <= 1) {
-            $historyLines = collect(preg_split('/(?<=[.!?])\s+(?=[A-Z0-9])/', $historyRaw))
-                ->map(fn($l) => trim($l))
-                ->filter()
-                ->values();
-
-            $merged = [];
-            foreach ($historyLines as $fragment) {
-                $lastIndex = count($merged) - 1;
-                if ($lastIndex >= 0 && mb_strlen($merged[$lastIndex]) < 30) {
-                    $merged[$lastIndex] .= ' ' . $fragment;
-                } else {
-                    $merged[] = $fragment;
-                }
-            }
-            $historyLines = collect($merged);
-        }
-
-        // Parse tahun & teks per baris
-        $historyItems = $historyLines->map(function ($line) {
-            $year = null;
-            $text = $line;
-            if (preg_match('/^((?:19|20)\d{2})\s*[\-–—:.)]?\s*(.+)$/u', $line, $m)) {
-                $year = $m[1];
-                $text = trim($m[2]);
-            } elseif (preg_match('/^Tahun\s+((?:19|20)\d{2})[\s\-–—:.)]*(.+)$/iu', $line, $m)) {
-                $year = $m[1];
-                $text = trim($m[2]);
-            }
-            return ['year' => $year, 'text' => $text ?: $line];
-        });
-    @endphp
     <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal-up" x-intersect="$el.classList.add('is-visible')">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal-up" x-intersect="$el.classList.add('is-visible')">
                 <span class="eyebrow-badge mb-3 inline-flex">Perjalanan</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">Sejarah Perusahaan</h2>
-                <p class="mt-4 text-secondary dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                <p class="mt-4 text-secondary dark:text-slate-400 text-sm sm:text-base">
                     Langkah demi langkah membangun kepercayaan masyarakat Bangka Belitung.
                 </p>
             </div>
 
-            {{-- Timeline vertikal --}}
-            <div class="relative reveal-up" x-intersect="$el.classList.add('is-visible')">
-                {{-- Garis tengah --}}
-                <div class="absolute left-5 sm:left-1/2 sm:-translate-x-px top-2 bottom-2 w-0.5 bg-gradient-to-b from-emerald-400 via-emerald-200 to-emerald-400 dark:from-emerald-600 dark:via-emerald-800 dark:to-emerald-600"></div>
-
-                <ol class="space-y-10 sm:space-y-14">
-                    @foreach($historyItems as $index => $item)
-                    <li class="relative flex sm:items-center group">
-                        {{-- Titik pada garis --}}
-                        <div class="absolute left-5 sm:left-1/2 top-2 sm:top-1/2 -translate-x-1/2 sm:-translate-y-1/2 z-10">
-                            <div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border-2 border-emerald-500 dark:border-emerald-400 shadow-md flex items-center justify-center">
-                                @if($item['year'])
-                                    <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 leading-none">{{ $item['year'] }}</span>
-                                @else
-                                    <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                                @endif
-                            </div>
-                        </div>
-
-                        {{-- Kartu konten --}}
-                        <div class="w-full sm:w-[calc(50%-3.5rem)] pl-16 sm:pl-0 {{ $index % 2 === 0 ? 'sm:mr-auto' : 'sm:ml-auto' }}">
-                            <div class="bg-slate-50 dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 p-6 sm:p-7 shadow-sm hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300">
-                                <p class="text-secondary dark:text-slate-300 text-sm sm:text-base leading-relaxed">{{ $item['text'] }}</p>
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
-                </ol>
+            <div class="double-bezel reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <div class="double-bezel-inner p-8 sm:p-12">
+                    <div class="prose prose-sm sm:prose-base lg:prose-lg prose-emerald max-w-none text-secondary leading-relaxed">
+                        {!! $historyHtml !!}
+                    </div>
+                </div>
             </div>
         </div>
     </section>
