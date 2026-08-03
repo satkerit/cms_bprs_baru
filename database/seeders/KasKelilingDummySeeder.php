@@ -206,6 +206,9 @@ class KasKelilingDummySeeder extends Seeder
                         'location' => $schedule['location'],
                         'route' => $schedule['route'],
                         'services_offered' => $schedule['services'],
+                        'facility' => implode(', ', $schedule['services']),
+                        'pic_name' => $data['contact_person'],
+                        'pic_phone' => $data['contact_phone'],
                         'notes' => null,
                         'is_active' => true,
                     ]);

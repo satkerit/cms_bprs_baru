@@ -99,6 +99,23 @@ class KasKelilingSchedule extends Model
         return array_map('trim', explode(',', $this->facility));
     }
 
+    /**
+     * Gabungan fasilitas (field facility) dan layanan (services_offered) untuk ditampilkan di frontend.
+     */
+    public function getServicesListAttribute(): array
+    {
+        $services = $this->facility_list;
+
+        if (is_array($this->services_offered)) {
+            $services = array_merge($services, $this->services_offered);
+        }
+
+        $services = array_map('trim', $services);
+        $services = array_filter($services, fn($item) => $item !== '');
+
+        return array_values(array_unique($services));
+    }
+
     // Cache management
     protected static function booted(): void
     {

@@ -112,6 +112,7 @@ Route::middleware(['web', 'throttle:120,1'])->group(function () {
     // Careers
     Route::get('/karir', [App\Http\Controllers\CareerController::class, 'index'])->name('careers.index');
     Route::get('/karir/{career:slug}', [App\Http\Controllers\CareerController::class, 'show'])->name('careers.show');
+    Route::post('/karir/{career:slug}/lamar', [App\Http\Controllers\CareerController::class, 'apply'])->name('careers.apply')->middleware('throttle:5,10');
 
     // About Pages
     Route::prefix('tentang-kami')->name('about.')->group(function () {

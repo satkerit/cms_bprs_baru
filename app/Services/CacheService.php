@@ -331,6 +331,7 @@ class CacheService
                 ])
                 ->orderBy('schedule_date', 'asc')
                 ->orderBy('start_time', 'asc')
+                ->with('kasKeliling')
                 ->get()
                 ->groupBy(function ($schedule) {
                     return $schedule->schedule_date->format('Y-m-d');

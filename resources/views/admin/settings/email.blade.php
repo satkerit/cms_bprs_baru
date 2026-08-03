@@ -79,6 +79,10 @@
  <x-admin.input type="email" name="reply_to_address" label="Reply-To Email" :value="old('reply_to_address', $settings->reply_to_address ?? '')" placeholder="support@domain.com" hint="Email untuk balasan (opsional)"/>
  <x-admin.input name="reply_to_name" label="Reply-To Name" :value="old('reply_to_name', $settings->reply_to_name ?? '')" placeholder="Customer Support" hint="Nama untuk balasan (opsional)"/>
  </div>
+
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+ <x-admin.input type="email" name="career_recipient_email" label="Email Penerima Lamaran Karier" :value="old('career_recipient_email', $settings->career_recipient_email ?? '')" placeholder="personalia@domain.com" hint="Email tujuan lamaran pekerjaan dari halaman Karier (opsional, default: konfigurasi .env)"/>
+ </div>
  </div>
  </x-admin.card>
 

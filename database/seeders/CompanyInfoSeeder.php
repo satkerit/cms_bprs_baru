@@ -49,9 +49,9 @@ class CompanyInfoSeeder extends Seeder
                 'meta_description' => 'PT. Bank Perekonomian Rakyat Syariah Bangka Belitung - Bank syariah terpercaya di Kepulauan Bangka Belitung dengan produk simpanan syariah, deposito syariah, dan pembiayaan syariah.',
                 'meta_keywords' => 'BPRS Babel, Bank Syariah Bangka Belitung, Simpanan Syariah, Pembiayaan Syariah, Deposito Syariah, Bank Bangka Belitung, Bank Syariah Babel',
                 'operational_hours' => [
-                    'Senin - Jumat' => '08:00 - 16:00 WIB',
-                    'Sabtu' => 'Tutup',
-                    'Minggu' => 'Tutup'
+                    ['day' => 'Senin - Jumat', 'active' => true, 'open' => '08:00', 'close' => '16:00'],
+                    ['day' => 'Sabtu', 'active' => false, 'open' => null, 'close' => null],
+                    ['day' => 'Minggu', 'active' => false, 'open' => null, 'close' => null]
                 ]
             ]
         );

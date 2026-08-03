@@ -44,4 +44,13 @@ return [
         'measurement_id' => env('GA4_MEASUREMENT_ID'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | HR / Personnel
+    |--------------------------------------------------------------------------
+    */
+    'hr' => [
+        'email' => env('JOB_APPLICATION_EMAIL', 'personalia.bsbb@gmail.com'),
+    ],
+
 ];

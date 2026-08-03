@@ -191,6 +191,9 @@ class KasKelilingSeeder extends Seeder
                         'location' => $scheduleData['location'],
                         'route' => $scheduleData['route'],
                         'services_offered' => $scheduleData['services'],
+                        'facility' => implode(', ', $scheduleData['services']),
+                        'pic_name' => $data['contact_person'],
+                        'pic_phone' => $data['contact_phone'],
                         'notes' => $scheduleData['notes'],
                         'is_active' => true
                     ]);

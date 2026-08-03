@@ -34,6 +34,43 @@
         // Jam operasional
         $operationalHours = is_array($info?->operational_hours) ? $info->operational_hours : [];
 
+        // Normalisasi format jam operasional agar mendukung:
+        //   A) Format list (disimpan admin): [ ['day'=>'Senin','active'=>true,'open'=>'08:00','close'=>'15:00'], ... ]
+        //   B) Format keyed-array:          [ 'Senin' => ['active'=>true,'open'=>'08:00','close'=>'15:00'], ... ]
+        //   C) Format keyed-string (lama/seeder): [ 'Senin - Jumat' => '08:00 - 16:00 WIB', 'Sabtu' => 'Tutup' ]
+        $operationalList = [];
+        foreach ($operationalHours as $key => $value) {
+            if ($key === 'notes') {
+                continue; // skip metadata key
+            }
+            if (is_array($value)) {
+                if (isset($value['day'])) {
+                    // Format A — langsung dipakai
+                    $operationalList[] = $value;
+                } else {
+                    // Format B — tambahkan key sebagai nama hari
+                    $operationalList[] = array_merge(['day' => (string) $key], $value);
+                }
+            } elseif (is_string($value) && is_string($key)) {
+                // Format C — parse string jam, mis. '08:00 - 16:00 WIB' atau 'Tutup'
+                $raw = trim($value);
+                $isClosed = in_array(strtolower($raw), ['tutup', 'libur', 'closed', 'off', '-', '', '0'], true);
+                $open = null;
+                $close = null;
+                if (!$isClosed && preg_match('/(\d{1,2}:\d{2})\s*[-–—]\s*(\d{1,2}:\d{2})/', $raw, $m)) {
+                    $open = $m[1];
+                    $close = $m[2];
+                }
+                $operationalList[] = [
+                    'day' => (string) $key,
+                    'active' => !$isClosed,
+                    'open' => $open,
+                    'close' => $close,
+                ];
+            }
+        }
+        $operationalHours = $operationalList;
+
         $nonce = request()->attributes->get('csp_nonce');
     @endphp
 
@@ -362,6 +399,8 @@
                     <span class="text-sm sm:text-base font-mono {{ $isActive ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-secondary dark:text-slate-500' }}">
                         @if($isActive && ($schedule['open'] ?? null))
                             {{ $schedule['open'] }} &ndash; {{ $schedule['close'] }}
+                        @elseif($isActive)
+                            Buka
                         @else
                             Tutup
                         @endif

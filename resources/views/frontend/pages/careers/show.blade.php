@@ -130,19 +130,51 @@
                 <!-- Sidebar -->
                 <div class="space-y-6">
                     <!-- Apply Card -->
-                    <div class="bg-card rounded-lg p-6 sticky top-24">
+                    <div class="bg-card rounded-lg p-6 sticky top-24" x-data="{ showForm: @json($errors->any()) }">
                         <h3 class="text-base font-bold text-foreground mb-4">Tertarik dengan posisi ini?</h3>
                         @if(!$career->isExpired())
-                            <p class="text-secondary text-sm mb-6">Kirimkan lamaran Anda melalui email dengan menyertakan CV dan dokumen pendukung lainnya.</p>
-                            @php
-                                $company = \App\Models\CompanyInfo::getInfo();
-                            @endphp
-                            <a href="mailto:{{ $company->email ?? 'hrd@example.com' }}?subject=Lamaran: {{ $career->title }}" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                            <p class="text-secondary text-sm mb-6">Isi formulir lamaran di bawah dan lampirkan CV Anda. Data akan diteruskan ke Tim Personalia.</p>
+
+                            <button type="button" @click="showForm = !showForm" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors touch-manipulation">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
-                                Kirim Lamaran
-                            </a>
+                                <span x-text="showForm ? 'Tutup Formulir' : 'Kirim Lamaran'"></span>
+                            </button>
+
+                            {{-- Form lamar pekerjaan --}}
+                            <form x-show="showForm" x-cloak x-transition method="POST" action="{{ route('careers.apply', $career) }}" enctype="multipart/form-data" class="mt-6 space-y-4" data-swal-confirm="auto" data-swal-title="Konfirmasi Lamaran" data-swal-text="Apakah Anda yakin ingin mengirim lamaran untuk posisi ini?">
+                                @csrf
+                                <div>
+                                    <label for="apply-name" class="block text-sm font-semibold text-foreground mb-1.5">Nama Lengkap *</label>
+                                    <input id="apply-name" type="text" name="name" value="{{ old('name') }}" required maxlength="255" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-base border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">
+                                    @error('name')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
+                                </div>
+                                <div>
+                                    <label for="apply-email" class="block text-sm font-semibold text-foreground mb-1.5">Email *</label>
+                                    <input id="apply-email" type="email" name="email" value="{{ old('email') }}" required maxlength="255" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-base border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">
+                                    @error('email')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
+                                </div>
+                                <div>
+                                    <label for="apply-phone" class="block text-sm font-semibold text-foreground mb-1.5">No. Telepon / WhatsApp *</label>
+                                    <input id="apply-phone" type="text" name="phone" value="{{ old('phone') }}" required maxlength="30" placeholder="08xxxxxxxxxx" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-base border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">
+                                    @error('phone')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
+                                </div>
+                                <div>
+                                    <label for="apply-cover" class="block text-sm font-semibold text-foreground mb-1.5">Surat Lamaran / Cover Letter <span class="font-normal text-secondary">(opsional)</span></label>
+                                    <textarea id="apply-cover" name="cover_letter" rows="4" maxlength="5000" class="w-full px-3 sm:px-4 py-2.5 text-xs sm:text-sm border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground transition-all touch-manipulation">{{ old('cover_letter') }}</textarea>
+                                    @error('cover_letter')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
+                                </div>
+                                <div>
+                                    <label for="apply-cv" class="block text-sm font-semibold text-foreground mb-1.5">CV / Berkas Lamaran * <span class="font-normal text-secondary">(PDF, DOC, DOCX — maks 5MB)</span></label>
+                                    <input id="apply-cv" type="file" name="cv" accept=".pdf,.doc,.docx" required class="w-full px-3 sm:px-4 py-2.5 text-xs sm:text-sm border border-border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground bg-muted/50 transition-all touch-manipulation file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-emerald-600 file:text-white file:text-xs file:font-semibold hover:file:bg-emerald-700">
+                                    @error('cv')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
+                                </div>
+                                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors touch-manipulation active:scale-[0.99]">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    Kirim Lamaran
+                                </button>
+                            </form>
                         @else
                             <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
                                 <svg class="w-10 h-10 text-red-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

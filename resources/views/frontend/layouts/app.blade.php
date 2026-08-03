@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="google-site-verification" content="0OtvQgB_NIsFOhRnDVRlMnKnunQZOerEvZ4RHNY7wbM" />
+    <meta name="msvalidate.01" content="BB8861008F4F5E77171E76B1E6F93151" />
     <meta name="theme-color" content="#059669" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
 

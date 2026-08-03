@@ -59,6 +59,7 @@ class EmailSettingController extends Controller
             'from_name' => 'required|string|max:255',
             'reply_to_address' => 'nullable|email|max:255',
             'reply_to_name' => 'nullable|string|max:255',
+            'career_recipient_email' => 'nullable|email|max:255',
         ]);
 
         try {
@@ -79,6 +80,7 @@ class EmailSettingController extends Controller
             $settings->from_name = $validated['from_name'];
             $settings->reply_to_address = $validated['reply_to_address'];
             $settings->reply_to_name = $validated['reply_to_name'];
+            $settings->career_recipient_email = $validated['career_recipient_email'] ?? null;
             $settings->save();
 
             EmailSetting::clearCache();

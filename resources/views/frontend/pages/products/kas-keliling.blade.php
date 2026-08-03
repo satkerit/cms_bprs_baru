@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
 
-                                {{-- Details: Day & Time --}}
+                                {{-- Details: Date, Day & Time --}}
                                 <div class="space-y-2.5 text-xs sm:text-sm mb-4 flex-1">
                                     <div class="flex items-center gap-2.5">
                                         <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 shrink-0">
@@ -62,7 +62,10 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
                                         </span>
-                                        <span class="font-semibold text-foreground">{{ $schedule->day_name }}</span>
+                                        <div class="min-w-0 leading-tight">
+                                            <span class="block font-semibold text-foreground">{{ $schedule->day_name }}</span>
+                                            <span class="block text-secondary dark:text-slate-400">{{ $schedule->schedule_date?->locale('id')->translatedFormat('d F Y') }}</span>
+                                        </div>
                                     </div>
                                     <div class="flex items-center gap-2.5">
                                         <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 shrink-0">
@@ -72,17 +75,61 @@
                                         </span>
                                         <span class="text-secondary dark:text-slate-400">{{ $schedule->start_time ? \Carbon\Carbon::parse($schedule->start_time)->format('H:i') : '-' }} — {{ $schedule->end_time ? \Carbon\Carbon::parse($schedule->end_time)->format('H:i') : '-' }} WIB</span>
                                     </div>
+
+                                    {{-- Layanan / Fasilitas --}}
+                                    @if(count($schedule->services_list) > 0)
+                                    <div class="pt-2">
+                                        <div class="flex flex-wrap gap-1.5">
+                                            @foreach($schedule->services_list as $service)
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-[10px] sm:text-xs font-medium border border-emerald-100 dark:border-emerald-900/60">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                                {{ $service }}
+                                            </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
 
-                                {{-- Notes --}}
-                                @if($schedule->notes)
-                                <div class="pt-3 mt-auto border-t border-border/50 dark:border-slate-700/50">
+                                {{-- PIC & Catatan --}}
+                                @php
+                                    $picName = $schedule->pic_name ?? $schedule->kasKeliling?->contact_person;
+                                    $picPhone = $schedule->pic_phone ?? $schedule->kasKeliling?->contact_phone;
+                                @endphp
+                                @if($picName || $picPhone || $schedule->notes)
+                                <div class="pt-3 mt-auto border-t border-border/50 dark:border-slate-700/50 space-y-3">
+                                    @if($picName || $picPhone)
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400 shrink-0">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                            </svg>
+                                        </span>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-[10px] sm:text-xs font-semibold text-secondary dark:text-slate-400 uppercase tracking-wide">PIC / Petugas</p>
+                                            <p class="font-semibold text-foreground text-xs sm:text-sm leading-snug">{{ $picName }}</p>
+                                        </div>
+                                        @if($picPhone)
+                                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $picPhone) }}"
+                                           class="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold border border-emerald-100 dark:border-emerald-900/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors"
+                                           title="Hubungi {{ $picName }}">
+                                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h.5a1.5 1.5 0 011.4 1l.9 2.7a1.5 1.5 0 01-.5 1.7l-1 .8a12.05 12.05 0 005.4 5.4l.8-1a1.5 1.5 0 011.7-.5l2.7.9a1.5 1.5 0 011 1.4V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/>
+                                            </svg>
+                                            <span class="hidden sm:inline">{{ $picPhone }}</span>
+                                        </a>
+                                        @endif
+                                    </div>
+                                    @endif
+
+                                    @if($schedule->notes)
                                     <div class="flex items-start gap-2">
                                         <svg class="w-3.5 h-3.5 text-secondary mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                         <p class="text-xs sm:text-sm text-secondary dark:text-slate-400 italic">{{ $schedule->notes }}</p>
                                     </div>
+                                    @endif
                                 </div>
                                 @endif
                             </div>

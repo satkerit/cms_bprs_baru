@@ -19,6 +19,7 @@ class EmailSetting extends Model
         'from_name',
         'reply_to_address',
         'reply_to_name',
+        'career_recipient_email',
     ];
 
     protected $hidden = [
