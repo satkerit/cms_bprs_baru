@@ -158,6 +158,78 @@ html {
 }
 
 /* ═══════════════════════════════════════════════
+ * WYSIWYG — LIST STYLING (Summernote editor + prose display)
+ * Tailwind v4 preflight resets ol/ul to list-style:none; margin:0; padding:0.
+ * Neither summernote-lite.css (editor) nor the uninstalled typography
+ * plugin (frontend .prose) restores list markers, so ordered/unordered
+ * lists rendered without bullets/numbers. Restore them below.
+ * ═══════════════════════════════════════════════ */
+
+/* ── Admin: Summernote editor (company history, news content, dst.) ── */
+.note-editable ul,
+.note-editor .note-editing-area .note-editable ul {
+    list-style-type: disc;
+    list-style-position: outside;
+    margin: 0 0 1rem 1.5em;
+    padding-left: 0;
+}
+.note-editable ol,
+.note-editor .note-editing-area .note-editable ol {
+    list-style-type: decimal;
+    list-style-position: outside;
+    margin: 0 0 1rem 1.5em;
+    padding-left: 0;
+}
+.note-editable ul ul,
+.note-editable ol ul {
+    list-style-type: circle;
+}
+.note-editable ul ul ul,
+.note-editable ol ul ul {
+    list-style-type: square;
+}
+.note-editable ol ol,
+.note-editable ul ol {
+    list-style-type: lower-alpha;
+}
+.note-editable ol ol ol,
+.note-editable ul ol ol {
+    list-style-type: lower-roman;
+}
+.note-editable li {
+    display: list-item;
+}
+
+/* ── Frontend: rich content rendered inside .prose / .prose-emerald ── */
+.prose ul,
+.prose ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+.prose ul {
+    list-style-type: disc;
+}
+.prose ul ul {
+    list-style-type: circle;
+}
+.prose ul ul ul {
+    list-style-type: square;
+}
+.prose ol {
+    list-style-type: decimal;
+}
+.prose ol ol {
+    list-style-type: lower-alpha;
+}
+.prose ol ol ol {
+    list-style-type: lower-roman;
+}
+.prose li {
+    display: list-item;
+    margin: 0.25rem 0;
+}
+
+/* ═══════════════════════════════════════════════
  * DESIGN TOKENS — Emerald + Gold Premium Theme (HIGH-END v2)
  * Syariah banking — premium, trustworthy, modern
  * Inspired by high-end-visual-design skill

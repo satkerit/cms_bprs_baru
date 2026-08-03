@@ -148,8 +148,8 @@ class HtmlSanitizer
                 preg_match_all('/(\w+)\s*=\s*["\']([^"\']*)["\']|(\w+)\s*=\s*(\S+)/i', $attributes, $attrMatches, PREG_SET_ORDER);
 
                 foreach ($attrMatches as $attr) {
-                    $name = strtolower($attr[1] ?: $attr[3]);
-                    $value = $attr[2] ?: $attr[4];
+                    $name = strtolower($attr[1] ?? $attr[3]);
+                    $value = $attr[2] ?? $attr[4];
 
                     if (in_array($name, $allowed)) {
                         // Additional sanitization for specific attributes

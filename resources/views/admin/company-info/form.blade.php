@@ -430,7 +430,15 @@
     foreach ($savedHours as $key => $item) {
      if ($key === 'notes') continue;
      if (is_array($item)) {
-      $entry = isset($item['day']) ? $item : array_merge(['day' => (string) $key], $item);
+      // Format A (indexed + 'day'), Format B (keyed = nama hari),
+      // dan legacy indexed TANPA 'day' (posisi 0=Senin..6=Minggu)
+      if (isset($item['day'])) {
+       $entry = $item;
+      } elseif (is_numeric($key)) {
+       $entry = array_merge($item, ['day' => $days[(int) $key] ?? (string) $key]);
+      } else {
+       $entry = array_merge(['day' => (string) $key], $item);
+      }
      } elseif (is_string($item) && is_string($key)) {
       $raw = trim($item);
       $isClosed = in_array(strtolower($raw), ['tutup','libur','closed','off','-','','0'], true);
@@ -462,6 +470,15 @@
         $matched = true;
         break 2;
        }
+      }
+     }
+     if (!$matched) {
+      // Label "Setiap Hari" = buka semua hari
+      if ($normLabel === 'setiaphari') {
+       foreach ($days as $day) {
+        $expanded[$day] = array_merge($entry, ['day' => $day]);
+       }
+       $matched = true;
       }
      }
      if (!$matched) {

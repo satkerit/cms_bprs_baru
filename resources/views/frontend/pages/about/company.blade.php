@@ -57,8 +57,15 @@
                 continue; // skip metadata key
             }
             if (is_array($value)) {
-                // Format A — langsung dipakai; Format B — tambahkan key sebagai nama hari
-                $entry = isset($value['day']) ? $value : array_merge(['day' => (string) $key], $value);
+                // Format A (indexed + 'day'), Format B (keyed = nama hari),
+                // dan legacy indexed TANPA 'day' (posisi 0=Senin..6=Minggu)
+                if (isset($value['day'])) {
+                    $entry = $value;
+                } elseif (is_numeric($key)) {
+                    $entry = array_merge($value, ['day' => $canonicalDays[(int) $key] ?? (string) $key]);
+                } else {
+                    $entry = array_merge(['day' => (string) $key], $value);
+                }
             } elseif (is_string($value) && is_string($key)) {
                 // Format C — parse string jam, mis. '08:00 - 16:00 WIB' atau 'Tutup'
                 $raw = trim($value);
@@ -94,6 +101,15 @@
                         $matched = true;
                         break 2;
                     }
+                }
+            }
+            if (!$matched) {
+                // Label "Setiap Hari" = buka semua hari
+                if ($normLabel === 'setiaphari') {
+                    foreach ($canonicalDays as $day) {
+                        $expanded[$day] = array_merge($entry, ['day' => $day]);
+                    }
+                    $matched = true;
                 }
             }
             if (!$matched) {
@@ -451,12 +467,26 @@
     @php
         $todayDay  = $canonicalDays[(int) date('N') - 1] ?? 'Senin';
         $actives   = array_values(array_filter($operationalHours, fn($e) => filter_var($e['active'] ?? false, FILTER_VALIDATE_BOOLEAN)));
-        $openBlock = $actives[0] ?? null;
-        $summary   = '';
-        if ($actives) {
-            $first = $actives[0]['day'];
-            $last  = $actives[count($actives) - 1]['day'];
-            $summary = count($actives) > 1 ? "{$first} s/d {$last}" : $first;
+        // Prioritas jam besar: hari ini jika aktif; jika tutup, pakai hari aktif pertama
+        $openBlock = null;
+        foreach ($actives as $e) {
+            if (($e['day'] ?? null) === $todayDay) { $openBlock = $e; break; }
+        }
+        $openBlock = $openBlock ?? ($actives[0] ?? null);
+        // Ringkasan hanya dipadatkan jika hari aktif berurutan (mis. "Senin s/d Jumat");
+        // jika tidak berurutan, tampilkan daftar hari dipisah koma.
+        $activeDays = array_values(array_filter(
+            array_map(fn($e) => $e['day'] ?? '', $actives),
+            fn($d) => in_array($d, $canonicalDays, true)
+        ));
+        $summary = '';
+        if ($activeDays) {
+            $pos = array_values(array_map(fn($d) => array_search($d, $canonicalDays, true), $activeDays));
+            if (count($pos) > 1 && max($pos) - min($pos) + 1 === count($pos)) {
+                $summary = $activeDays[0] . ' s/d ' . end($activeDays);
+            } else {
+                $summary = implode(', ', $activeDays);
+            }
         }
     @endphp
     <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
