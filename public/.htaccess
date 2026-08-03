@@ -13,6 +13,20 @@
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
+    # ============================================
+    # SECURITY: BLOCK SENSITIVE DIRECTORIES/FILES
+    # ============================================
+    # Block entire /dev/ tree (storage mirror - not for public access)
+    RewriteCond %{REQUEST_URI} ^/dev/ [NC]
+    RewriteRule .* - [F,L]
+    # Block dotfiles (.env, .git, etc) - but allow .well-known (ACME/Let's Encrypt)
+    RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
+    RewriteCond %{REQUEST_URI} ^/\. [NC]
+    RewriteRule .* - [F,L]
+    # Block PHP execution under /storage/ (uploads area)
+    RewriteCond %{REQUEST_URI} ^/storage/.*\.php$ [NC]
+    RewriteRule .* - [F,L]
+
     # Force HTTPS (uncomment when ready for production)
     # RewriteCond %{HTTPS} off
     # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

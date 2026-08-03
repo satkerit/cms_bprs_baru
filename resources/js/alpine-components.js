@@ -851,4 +851,14 @@ window.companyInfoForm = function () {
     };
 };
 
+// Repeater poin misi — admin kelola per poin, disimpan dipisah baris baru
+window.missionPoints = function (initial = []) {
+    return {
+        points: initial,
+        get missionJoined() {
+            return this.points.map((p) => (p.text || '').trim()).filter(Boolean).join('\n');
+        },
+    };
+};
+
 console.log("[Alpine] All components registered successfully");

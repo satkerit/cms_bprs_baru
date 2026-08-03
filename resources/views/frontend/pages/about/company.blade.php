@@ -448,8 +448,20 @@
     @endif
 
     {{-- ═══ JAM OPERASIONAL ═══ --}}
+    @php
+        $todayDay  = $canonicalDays[(int) date('N') - 1] ?? 'Senin';
+        $actives   = array_values(array_filter($operationalHours, fn($e) => filter_var($e['active'] ?? false, FILTER_VALIDATE_BOOLEAN)));
+        $openBlock = $actives[0] ?? null;
+        $summary   = '';
+        if ($actives) {
+            $first = $actives[0]['day'];
+            $last  = $actives[count($actives) - 1]['day'];
+            $summary = count($actives) > 1 ? "{$first} s/d {$last}" : $first;
+        }
+    @endphp
     <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            {{-- Header --}}
             <div class="text-center mb-10">
                 <span class="eyebrow-badge mb-3 inline-flex">
                     <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -464,40 +476,58 @@
                     Kami siap melayani Anda pada jam kerja berikut.
                 </p>
             </div>
-            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 shadow-sm overflow-hidden">
-                @php
-                    $dayNames = ['Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu','Minggu'];
-                    // Jadwal sudah selalu berisi 7 hari (dibangun di blok normalisasi di atas)
-                    $jadwal = $operationalHours;
-                @endphp
-                @foreach($jadwal as $loop_i => $schedule)
-                @php
-                    $isEven    = $loop_i % 2 === 0;
-                    $isLast    = $loop_i === count($jadwal) - 1;
-                    $isActive  = filter_var($schedule['active'] ?? true, FILTER_VALIDATE_BOOLEAN);
-                    // Fallback nama hari dari index jika key day kosong
-                    $dayLabel  = ($schedule['day'] ?? null) ?: ($dayNames[$loop_i] ?? '');
-                @endphp
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-6 py-5 {{ !$isLast ? 'border-b border-border dark:border-slate-700' : '' }} {{ $isEven ? 'bg-slate-50/60 dark:bg-slate-700/20' : '' }}">
-                    <span class="flex items-center gap-3 min-w-0">
-                        <span class="shrink-0 w-2 h-2 rounded-full {{ $isActive ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600' }}"></span>
-                        <span class="font-semibold text-sm sm:text-base {{ $isActive ? 'text-foreground dark:text-slate-200' : 'text-secondary dark:text-slate-500' }}">
-                            {{ $dayLabel }}
-                        </span>
-                    </span>
-                    <span class="sm:text-right text-sm sm:text-base {{ $isActive ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-secondary dark:text-slate-500' }}">
-                        @if($isActive && ($schedule['open'] ?? null))
-                            <span class="inline-flex items-center gap-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800/40 px-3 py-1.5 font-mono">
-                                {{ $schedule['open'] }} &ndash; {{ $schedule['close'] }} <span class="text-[10px] uppercase tracking-wider text-emerald-600/70 dark:text-emerald-400/70 font-semibold">WIB</span>
-                            </span>
-                        @elseif($isActive)
-                            Buka
-                        @else
-                            Tutup
-                        @endif
-                    </span>
+
+            {{-- Kartu terbelah: kiri jam besar, kanan 7 hari --}}
+            <div class="rounded-3xl border border-border dark:border-slate-700 shadow-xl overflow-hidden grid lg:grid-cols-5">
+                {{-- Panel kiri: gradien emerald --}}
+                <div class="lg:col-span-2 bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 dark:from-emerald-700 dark:to-emerald-900 p-8 sm:p-10 flex flex-col justify-between gap-8 text-white">
+                    <div class="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur border border-white/20 flex items-center justify-center">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <span class="block text-emerald-100/80 text-xs font-semibold uppercase tracking-widest">Jam Layanan</span>
+                    @if($openBlock)
+                        <div class="text-3xl sm:text-4xl font-mono font-bold leading-none">
+                            {{ $openBlock['open'] }} – {{ $openBlock['close'] }}
+                        </div>
+                        <span class="block text-sm font-semibold text-emerald-100/80 mt-2">WIB</span>
+                        <p class="mt-1 text-emerald-50/90 text-sm font-medium">{{ $summary }}</p>
+                    @else
+                        <div class="text-3xl sm:text-4xl font-bold leading-none">Tutup</div>
+                        <p class="mt-2 text-emerald-50/90 text-sm font-medium">Saat ini kami tidak beroperasi</p>
+                    @endif
                 </div>
-                @endforeach
+
+                {{-- Panel kanan: daftar 7 hari --}}
+                <div class="lg:col-span-3 bg-white dark:bg-slate-800 p-6 sm:p-8 divide-y divide-border dark:divide-slate-700">
+                    @foreach($operationalHours as $schedule)
+                    @php
+                        $isActive = filter_var($schedule['active'] ?? false, FILTER_VALIDATE_BOOLEAN);
+                        $isToday  = ($schedule['day'] ?? null) === $todayDay;
+                    @endphp
+                    <div class="flex items-center justify-between gap-4 py-3.5 px-3 -mx-3 rounded-xl transition-colors duration-150 {{ $isToday ? 'bg-emerald-50/70 dark:bg-emerald-900/20' : '' }}">
+                        <span class="flex items-center gap-2.5 min-w-0">
+                            <span class="shrink-0 rounded-full {{ $isToday ? 'w-2.5 h-2.5 bg-emerald-500' : 'w-2 h-2 ' . ($isActive ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600') }}"></span>
+                            <span class="font-semibold text-sm sm:text-base {{ $isActive ? 'text-foreground dark:text-slate-200' : 'text-secondary dark:text-slate-500' }}">
+                                {{ $schedule['day'] }}
+                            </span>
+                            @if($isToday)
+                                <span class="ml-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-600 text-white">Hari ini</span>
+                            @endif
+                        </span>
+                        <span class="shrink-0">
+                            @if($isActive && ($schedule['open'] ?? null))
+                                <span class="inline-flex items-center rounded-lg bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800/40 px-3 py-1.5 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+                                    {{ $schedule['open'] }} – {{ $schedule['close'] }}
+                                </span>
+                            @else
+                                <span class="text-sm font-semibold text-secondary dark:text-slate-500">Tutup</span>
+                            @endif
+                        </span>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
