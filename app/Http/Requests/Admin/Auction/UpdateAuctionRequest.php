@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Auction;
 
+use App\Enums\AuctionStatus;
 use App\Models\Auction;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
