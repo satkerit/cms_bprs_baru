@@ -12,8 +12,14 @@
         $tagline       = $info?->tagline       ?? '';
         $description   = $info?->description   ?? '';
         $vision        = $info?->vision        ?? '';
+        // Misi: pecah per baris, hilangkan awalan nomor ("1. ", "2)", dst) agar
+        // penomoran ditangani oleh kartu desain (bukan teks mentah)
         $missions      = $info?->mission
-                            ? collect(explode("\n", $info->mission))->map(fn($m) => trim($m))->filter()
+                            ? collect(preg_split('/\r\n|\r|\n/', $info->mission))
+                                ->map(fn($m) => trim($m))
+                                ->filter()
+                                ->map(fn($m) => preg_replace('/^\d+[\.\)]?\s*/', '', $m))
+                                ->values()
                             : collect();
         $history       = $info?->history       ?? '';
 
@@ -243,44 +249,63 @@
     {{-- ═══ VISI & MISI ═══ --}}
     @if($vision || $missions->isNotEmpty())
     <section class="py-16 sm:py-20 lg:py-24 bg-muted dark:bg-slate-950">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-intersect="$el.classList.add('is-visible')">
-            <div class="text-center mb-14 reveal-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-up" x-intersect="$el.classList.add('is-visible')">
                 <span class="eyebrow-badge mb-3 inline-flex">Arah & Tujuan</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">
                     Visi & Misi
                 </h2>
+                <p class="mt-4 text-secondary dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                    Fondasi arah langkah kami dalam melayani masyarakat Negeri Serumpun Sebalai.
+                </p>
             </div>
-            <div class="grid lg:grid-cols-2 gap-10 lg:gap-14">
-                {{-- Visi --}}
-                <div class="reveal-up bg-white dark:bg-slate-800 rounded-2xl p-8 sm:p-10 border border-border dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="flex items-center justify-center w-14 h-14 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 shrink-0">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+
+            <div class="grid lg:grid-cols-5 gap-8 lg:gap-10 items-stretch">
+                {{-- Visi — statement besar --}}
+                <div class="{{ $missions->isNotEmpty() ? 'lg:col-span-2' : 'lg:col-span-5' }} reveal-up" x-intersect="$el.classList.add('is-visible')">
+                    <div class="relative h-full overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-8 sm:p-10 shadow-xl flex flex-col justify-between min-h-[280px]">
+                        <div class="absolute -top-16 -right-16 w-56 h-56 bg-white/10 rounded-full blur-2xl"></div>
+                        <div class="absolute -bottom-20 -left-10 w-48 h-48 bg-amber-300/10 rounded-full blur-3xl"></div>
+
+                        <div class="relative">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-11 h-11 rounded-xl bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                </div>
+                                <div>
+                                    <span class="block text-emerald-200/90 text-xs font-semibold uppercase tracking-widest">Arah Kami</span>
+                                    <h3 class="text-white font-bold text-xl sm:text-2xl leading-tight">Visi</h3>
+                                </div>
+                            </div>
+
+                            <svg class="w-10 h-10 text-white/25 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/></svg>
+
+                            <p class="text-white text-lg sm:text-xl lg:text-[1.35rem] font-medium leading-relaxed italic">
+                                "{{ $vision }}"
+                            </p>
                         </div>
-                        <h3 class="text-2xl font-bold text-foreground dark:text-slate-100">Visi</h3>
                     </div>
-                    <p class="text-secondary dark:text-slate-400 leading-relaxed text-base italic border-l-4 border-emerald-400 pl-4">
-                        "{{ $vision }}"
-                    </p>
                 </div>
 
-                {{-- Misi --}}
-                <div class="reveal-up bg-white dark:bg-slate-800 rounded-2xl p-8 sm:p-10 border border-border dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow" style="transition-delay:100ms">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="flex items-center justify-center w-14 h-14 rounded-xl bg-amber-50 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 shrink-0">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                {{-- Misi — kartu bernomor --}}
+                @if($missions->isNotEmpty())
+                <div class="lg:col-span-3">
+                    <div class="grid sm:grid-cols-2 gap-5 lg:gap-6">
+                        @foreach($missions as $index => $mission)
+                        <div class="group reveal-up bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-7 border border-border dark:border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300"
+                             x-intersect="$el.classList.add('is-visible')"
+                             style="transition-delay:{{ $index * 60 }}ms">
+                            <div class="flex items-start gap-4">
+                                <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 font-bold text-base shrink-0 border border-amber-100 dark:border-amber-800/40 group-hover:bg-amber-500 group-hover:text-white group-hover:border-amber-500 transition-colors duration-300">
+                                    {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                </div>
+                                <p class="text-secondary dark:text-slate-300 text-sm sm:text-base leading-relaxed pt-1.5">{{ $mission }}</p>
+                            </div>
                         </div>
-                        <h3 class="text-2xl font-bold text-foreground dark:text-slate-100">Misi</h3>
-                    </div>
-                    <ul class="space-y-3">
-                        @foreach($missions as $mission)
-                        <li class="flex items-start gap-3 text-secondary dark:text-slate-400">
-                            <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                            <span class="text-base leading-relaxed">{{ $mission }}</span>
-                        </li>
                         @endforeach
-                    </ul>
+                    </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>
@@ -366,10 +391,18 @@
     <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
-                <span class="eyebrow-badge mb-3 inline-flex">Layanan</span>
+                <span class="eyebrow-badge mb-3 inline-flex">
+                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Layanan
+                </span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight">
                     Jam Operasional
                 </h2>
+                <p class="mt-3 text-secondary dark:text-slate-400 text-sm sm:text-base">
+                    Kami siap melayani Anda pada jam kerja berikut.
+                </p>
             </div>
             <div class="bg-white dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 shadow-sm overflow-hidden">
                 @php
@@ -392,13 +425,18 @@
                     // Fallback nama hari dari index jika key day kosong
                     $dayLabel  = ($schedule['day'] ?? null) ?: ($dayNames[$loop_i] ?? '');
                 @endphp
-                <div class="flex items-center justify-between px-6 py-4 {{ !$isLast ? 'border-b border-border dark:border-slate-700' : '' }} {{ $isEven ? 'bg-slate-50/60 dark:bg-slate-700/20' : '' }}">
-                    <span class="font-medium text-sm sm:text-base {{ $isActive ? 'text-foreground dark:text-slate-200' : 'text-secondary dark:text-slate-500' }}">
-                        {{ $dayLabel }}
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-6 py-5 {{ !$isLast ? 'border-b border-border dark:border-slate-700' : '' }} {{ $isEven ? 'bg-slate-50/60 dark:bg-slate-700/20' : '' }}">
+                    <span class="flex items-center gap-3 min-w-0">
+                        <span class="shrink-0 w-2 h-2 rounded-full {{ $isActive ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600' }}"></span>
+                        <span class="font-semibold text-sm sm:text-base {{ $isActive ? 'text-foreground dark:text-slate-200' : 'text-secondary dark:text-slate-500' }}">
+                            {{ $dayLabel }}
+                        </span>
                     </span>
-                    <span class="text-sm sm:text-base font-mono {{ $isActive ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-secondary dark:text-slate-500' }}">
+                    <span class="sm:text-right text-sm sm:text-base {{ $isActive ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-secondary dark:text-slate-500' }}">
                         @if($isActive && ($schedule['open'] ?? null))
-                            {{ $schedule['open'] }} &ndash; {{ $schedule['close'] }}
+                            <span class="inline-flex items-center gap-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800/40 px-3 py-1.5 font-mono">
+                                {{ $schedule['open'] }} &ndash; {{ $schedule['close'] }} <span class="text-[10px] uppercase tracking-wider text-emerald-600/70 dark:text-emerald-400/70 font-semibold">WIB</span>
+                            </span>
                         @elseif($isActive)
                             Buka
                         @else
@@ -413,15 +451,88 @@
 
     {{-- ═══ SEJARAH ═══ --}}
     @if($history)
+    @php
+        // Sejarah: pecah per baris (1 peristiwa per baris).
+        // Mendukung format dengan tahun di awal baris: "2012 - ...", "2012: ...", "Tahun 2012 ..."
+        $historyRaw  = trim((string) $history);
+        $historyLines = collect(preg_split('/\r\n|\r|\n/', $historyRaw))
+            ->map(fn($l) => trim($l))
+            ->filter()
+            ->values();
+
+        // Jika hanya 1 paragraf panjang (format lama), pecah per kalimat.
+        // Fragmen terlalu pendek (mis. singkatan "PT.", "No.") digabung ke
+        // kalimat berikutnya agar tidak muncul sebagai item timeline terpisah.
+        if ($historyLines->count() <= 1) {
+            $historyLines = collect(preg_split('/(?<=[.!?])\s+(?=[A-Z0-9])/', $historyRaw))
+                ->map(fn($l) => trim($l))
+                ->filter()
+                ->values();
+
+            $merged = [];
+            foreach ($historyLines as $fragment) {
+                $lastIndex = count($merged) - 1;
+                if ($lastIndex >= 0 && mb_strlen($merged[$lastIndex]) < 30) {
+                    $merged[$lastIndex] .= ' ' . $fragment;
+                } else {
+                    $merged[] = $fragment;
+                }
+            }
+            $historyLines = collect($merged);
+        }
+
+        // Parse tahun & teks per baris
+        $historyItems = $historyLines->map(function ($line) {
+            $year = null;
+            $text = $line;
+            if (preg_match('/^((?:19|20)\d{2})\s*[\-–—:.)]?\s*(.+)$/u', $line, $m)) {
+                $year = $m[1];
+                $text = trim($m[2]);
+            } elseif (preg_match('/^Tahun\s+((?:19|20)\d{2})[\s\-–—:.)]*(.+)$/iu', $line, $m)) {
+                $year = $m[1];
+                $text = trim($m[2]);
+            }
+            return ['year' => $year, 'text' => $text ?: $line];
+        });
+    @endphp
     <section class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14 reveal-up" x-intersect="$el.classList.add('is-visible')">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up" x-intersect="$el.classList.add('is-visible')">
                 <span class="eyebrow-badge mb-3 inline-flex">Perjalanan</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight leading-tight">Sejarah Perusahaan</h2>
+                <p class="mt-4 text-secondary dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                    Langkah demi langkah membangun kepercayaan masyarakat Bangka Belitung.
+                </p>
             </div>
-            <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert reveal-up"
-                 x-intersect="$el.classList.add('is-visible')">
-                {!! $history !!}
+
+            {{-- Timeline vertikal --}}
+            <div class="relative reveal-up" x-intersect="$el.classList.add('is-visible')">
+                {{-- Garis tengah --}}
+                <div class="absolute left-5 sm:left-1/2 sm:-translate-x-px top-2 bottom-2 w-0.5 bg-gradient-to-b from-emerald-400 via-emerald-200 to-emerald-400 dark:from-emerald-600 dark:via-emerald-800 dark:to-emerald-600"></div>
+
+                <ol class="space-y-10 sm:space-y-14">
+                    @foreach($historyItems as $index => $item)
+                    <li class="relative flex sm:items-center group">
+                        {{-- Titik pada garis --}}
+                        <div class="absolute left-5 sm:left-1/2 top-2 sm:top-1/2 -translate-x-1/2 sm:-translate-y-1/2 z-10">
+                            <div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border-2 border-emerald-500 dark:border-emerald-400 shadow-md flex items-center justify-center">
+                                @if($item['year'])
+                                    <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 leading-none">{{ $item['year'] }}</span>
+                                @else
+                                    <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Kartu konten --}}
+                        <div class="w-full sm:w-[calc(50%-3.5rem)] pl-16 sm:pl-0 {{ $index % 2 === 0 ? 'sm:mr-auto' : 'sm:ml-auto' }}">
+                            <div class="bg-slate-50 dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 p-6 sm:p-7 shadow-sm hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300">
+                                <p class="text-secondary dark:text-slate-300 text-sm sm:text-base leading-relaxed">{{ $item['text'] }}</p>
+                            </div>
+                        </div>
+                    </li>
+                    @endforeach
+                </ol>
             </div>
         </div>
     </section>

@@ -228,12 +228,14 @@
  <label for="mission" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Misi</label>
  <textarea name="mission" id="mission" rows="4"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('mission', $company->mission) }}</textarea>
+ <p class="mt-1 text-xs text-zinc-400 dark:text-slate-500">Tulis satu poin misi per baris. Nomor (1., 2., dst.) otomatis ditambahkan oleh halaman.</p>
  </div>
 
  <div>
  <label for="history" class="block text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-2">Sejarah</label>
  <textarea name="history" id="history" rows="5"
  class="w-full px-4 py-3 border border-zinc-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">{{ old('history', $company->history) }}</textarea>
+ <p class="mt-1 text-xs text-zinc-400 dark:text-slate-500">Tulis satu peristiwa per baris untuk tampilan timeline. Opsional diawali tahun, contoh: <code class="text-zinc-500">2012 - Berdiri di Pangkalpinang</code></p>
  </div>
  </div>
  </x-admin.card>
