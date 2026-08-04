@@ -29,15 +29,10 @@
             <tr>
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-4">
-                        @php
-                            $newsThumb = !empty($item->featured_image) && \App\Helpers\StorageHelper::exists($item->featured_image)
-                                ? \App\Helpers\StorageHelper::url($item->featured_image)
-                                : null;
-                        @endphp
-                        @if($newsThumb)
-                            <img src="{{ $newsThumb }}" alt=""
+                        @if(!empty($item->featured_image))
+                            <img src="{{ \App\Helpers\StorageHelper::url($item->featured_image) }}" alt="{{ $item->title }}"
                                  class="w-12 h-12 rounded-xl object-cover dark:bg-slate-800 bg-zinc-100 ring-1 ring-zinc-200/60 flex-shrink-0
-                                        group-hover:ring-emerald-300/60 transition-all duration-300"
+                                        transition-all duration-300"
                                  loading="lazy">
                         @else
                             <div class="w-12 h-12 rounded-xl dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 ring-1 ring-zinc-200/60 flex items-center justify-center flex-shrink-0">
