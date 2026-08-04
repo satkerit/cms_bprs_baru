@@ -180,7 +180,8 @@ class Auction extends Model
     public static function getCachedStats(): array
     {
         return Cache::remember('auction_stats', 300, fn() => [
-            'total'             => self::count(),
+            // Total = jumlah yang benar-benar tampil di halaman lelang (publish, pendaftaran, selesai, terjual)
+            'total'             => self::published()->count(),
             'registration_open' => self::where('status', 'registration_open')->count(),
             'sold'              => self::where('status', 'sold')->count(),
         ]);
