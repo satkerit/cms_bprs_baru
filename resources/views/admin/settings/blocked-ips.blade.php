@@ -107,63 +107,75 @@
 </x-admin.card>
 
 <!-- Block IP Modal -->
-<div x-data="{ open: false }" 
- @open-modal.window="open = ($event.detail === 'block-ip')"
- x-show="open" 
+<div x-data="{ open: false, permanent: false }"
  x-cloak
- 
- style="display: none;">
- <div class="flex items-center justify-center px-4">
- <div x-show="open" @click="open = false" class="fixed bg-black"></div>
- 
- <div x-show="open" class="bg-white rounded-2xl container max-w-5xl w-full p-8">
- <h3 class="text-3xl font-bold dark:text-slate-100 text-zinc-900 mb-6">Blokir IP Manual</h3>
- 
+ @open-modal.window="open = ($event.detail === 'block-ip'); permanent = false">
+ <!-- Backdrop -->
+ <div x-show="open"
+ x-transition:enter="transition ease-out duration-200"
+ x-transition:enter-start="opacity-0"
+ x-transition:enter-end="opacity-100"
+ x-transition:leave="transition ease-in duration-150"
+ x-transition:leave-start="opacity-100"
+ x-transition:leave-end="opacity-0"
+ @click="open = false"
+ class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"></div>
+
+ <!-- Modal Panel -->
+ <div x-show="open"
+ x-transition:enter="transition ease-out duration-200"
+ x-transition:enter-start="opacity-0 scale-95"
+ x-transition:enter-end="opacity-100 scale-100"
+ x-transition:leave="transition ease-in duration-150"
+ x-transition:leave-start="opacity-100 scale-100"
+ x-transition:leave-end="opacity-0 scale-95"
+ class="fixed inset-0 z-50 flex items-center justify-center p-4">
+ <div class="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl w-full max-w-md p-6">
+ <h3 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-5">Blokir IP Manual</h3>
+
  <form action="{{ route('admin.settings.blocked-ips.block') }}" method="POST" class="space-y-4">
  @csrf
- 
+
  <div>
- <label class="block text-[11px] font-semibold dark:text-slate-300 text-zinc-700 mb-2">
+ <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
  IP Address
  </label>
  <input type="text" name="ip_address" required
  placeholder="192.168.1.1"
- class="w-full rounded-xl border-zinc-300 font-mono">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Masukkan IP address yang ingin diblokir</p>
  </div>
- 
+
  <div>
- <label class="block text-[11px] font-semibold dark:text-slate-300 text-zinc-700 mb-2">
+ <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
  Alasan
  </label>
  <input type="text" name="reason"
  placeholder="Contoh: Suspicious activity, Brute force attempt"
- class="w-full rounded-xl border-zinc-300">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
  </div>
- 
+
  <div class="flex items-center">
  <input type="checkbox" name="is_permanent" id="is_permanent" value="1"
- x-data="{ checked: false }"
- x-model="checked"
- @change="document.getElementById('duration_field').style.display = checked ? 'none' : 'block'"
- class="rounded border-zinc-300 text-sky-600">
+ x-model="permanent"
+ class="rounded border-zinc-300 dark:border-zinc-600 text-emerald-600">
  <label for="is_permanent" class="ml-2 text-[11px] dark:text-slate-300 text-zinc-700">Blokir Permanen</label>
  </div>
- 
- <div id="duration_field">
- <label class="block text-[11px] font-semibold dark:text-slate-300 text-zinc-700 mb-2">
+
+ <div x-show="!permanent">
+ <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
  Durasi (jam)
  </label>
  <input type="number" name="duration_hours" value="24" min="1" max="168"
- class="w-full rounded-xl border-zinc-300">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Durasi pemblokiran dalam jam (1-168 jam / 1-7 hari)</p>
  </div>
- 
+
  <div class="flex gap-3 pt-4">
- <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-xl font-medium">
+ <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-xl font-medium text-sm">
  Blokir IP
  </button>
- <button type="button" @click="open = false" class="px-4 py-2 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 text-zinc-700 rounded-xl font-medium">
+ <button type="button" @click="open = false" class="px-4 py-2 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 text-zinc-700 rounded-xl font-medium text-sm">
  Batal
  </button>
  </div>

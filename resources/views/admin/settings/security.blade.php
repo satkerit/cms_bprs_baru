@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Pengaturan Keamanan')
 
@@ -14,8 +14,9 @@
  </x-slot:actions>
 </x-admin.page-header>
 
-@if(session('success'))  <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg">
- {{ session('success') }}
+@if(session('success'))
+<div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl">
+    {{ session('success') }}
 </div>
 @endif
 
@@ -78,12 +79,12 @@
 
  <div class="space-y-4">
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Web (requests/minute)
  </label>
  <input type="number" name="rate_limit_web" value="{{ old('rate_limit_web', $settings->rate_limit_web) }}"
  min="10" max="1000" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Jumlah maksimal request per menit untuk halaman publik</p>
  @error('rate_limit_web')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -91,12 +92,12 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Admin (requests/minute)
  </label>
  <input type="number" name="rate_limit_admin" value="{{ old('rate_limit_admin', $settings->rate_limit_admin) }}"
  min="10" max="500" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Jumlah maksimal request per menit untuk halaman admin</p>
  @error('rate_limit_admin')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -104,12 +105,12 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Login (attempts/minute)
  </label>
  <input type="number" name="rate_limit_login" value="{{ old('rate_limit_login', $settings->rate_limit_login) }}"
  min="1" max="20" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Jumlah maksimal percobaan login per menit</p>
  @error('rate_limit_login')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -117,12 +118,12 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Password Reset (attempts/minute)
  </label>
  <input type="number" name="rate_limit_password_reset" value="{{ old('rate_limit_password_reset', $settings->rate_limit_password_reset) }}"
  min="1" max="10" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Jumlah maksimal request reset password per menit</p>
  @error('rate_limit_password_reset')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -130,12 +131,12 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Download (requests/minute)
  </label>
  <input type="number" name="rate_limit_download" value="{{ old('rate_limit_download', $settings->rate_limit_download) }}"
  min="5" max="100" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Jumlah maksimal download per menit</p>
  @error('rate_limit_download')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -153,12 +154,12 @@
 
  <div class="space-y-4">
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Block Threshold (failed attempts)
  </label>
  <input type="number" name="block_threshold" value="{{ old('block_threshold', $settings->block_threshold) }}"
  min="3" max="50" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Jumlah percobaan gagal sebelum IP diblokir</p>
  @error('block_threshold')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -166,12 +167,12 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Block Duration (hours)
  </label>
  <input type="number" name="block_duration_hours" value="{{ old('block_duration_hours', $settings->block_duration_hours) }}"
  min="1" max="168" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Durasi pemblokiran otomatis (1-168 jam / 1-7 hari)</p>
  @error('block_duration_hours')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -179,11 +180,11 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  IP Whitelist
  </label>
  <textarea name="ip_whitelist" rows="5"
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 font-mono text-[11px] bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
  placeholder="Satu IP per baris&#10;192.168.1.1&#10;10.0.0.1">{{ old('ip_whitelist', $settings->ip_whitelist) }}</textarea>
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">IP yang tidak akan pernah diblokir (satu per baris)</p>
  @error('ip_whitelist')
@@ -192,11 +193,11 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  IP Blacklist
  </label>
  <textarea name="ip_blacklist" rows="5"
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 font-mono text-[11px] bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
  placeholder="Satu IP per baris&#10;192.168.1.100&#10;10.0.0.100">{{ old('ip_blacklist', $settings->ip_blacklist) }}</textarea>
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">IP yang selalu diblokir (satu per baris)</p>
  @error('ip_blacklist')
@@ -215,45 +216,54 @@
  </div>
 
  <div class="space-y-4">
- <div class="flex items-start">
- <div class="flex items-center h-5">
- <input type="checkbox" name="enable_suspicious_blocking" id="enable_suspicious_blocking" value="1"
- {{ old('enable_suspicious_blocking', $settings->enable_suspicious_blocking) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+ <div x-data="{ on: {{ old('enable_suspicious_blocking', $settings->enable_suspicious_blocking) ? 'true' : 'false' }} }"
+ class="flex items-center justify-between p-3.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700">
+ <div>
+ <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Enable Suspicious Request Blocking</p>
+ <p class="text-xs text-zinc-500 dark:text-zinc-400">Blokir otomatis request yang mencurigakan (SQL injection, XSS, dll)</p>
  </div>
- <div class="ml-3">
- <label for="enable_suspicious_blocking" class="font-medium dark:text-slate-100 text-zinc-900">
- Enable Suspicious Request Blocking
- </label>
- <p class="text-[11px] dark:text-slate-400 text-zinc-500">Blokir otomatis request yang mencurigakan (SQL injection, XSS, dll)</p>
- </div>
- </div>
-
- <div class="flex items-start">
- <div class="flex items-center h-5">
- <input type="checkbox" name="enable_rate_limiting" id="enable_rate_limiting" value="1"
- {{ old('enable_rate_limiting', $settings->enable_rate_limiting) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
- </div>
- <div class="ml-3">
- <label for="enable_rate_limiting" class="font-medium dark:text-slate-100 text-zinc-900">
- Enable Rate Limiting
- </label>
- <p class="text-[11px] dark:text-slate-400 text-zinc-500">Aktifkan pembatasan jumlah request</p>
+ <div class="flex items-center gap-2">
+ <button type="button" @click="on = !on"
+ :class="on ? 'bg-emerald-500' : 'bg-zinc-200 dark:bg-zinc-700'"
+ class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+ <span :class="on ? 'translate-x-6' : 'translate-x-1'"
+ class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform"></span>
+ </button>
+ <input type="hidden" name="enable_suspicious_blocking" :value="on ? '1' : '0'">
  </div>
  </div>
 
- <div class="flex items-start">
- <div class="flex items-center h-5">
- <input type="checkbox" name="log_security_events" id="log_security_events" value="1"
- {{ old('log_security_events', $settings->log_security_events) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+ <div x-data="{ on: {{ old('enable_rate_limiting', $settings->enable_rate_limiting) ? 'true' : 'false' }} }"
+ class="flex items-center justify-between p-3.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700">
+ <div>
+ <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Enable Rate Limiting</p>
+ <p class="text-xs text-zinc-500 dark:text-zinc-400">Aktifkan pembatasan jumlah request</p>
  </div>
- <div class="ml-3">
- <label for="log_security_events" class="font-medium dark:text-slate-100 text-zinc-900">
- Log Security Events
- </label>
- <p class="text-[11px] dark:text-slate-400 text-zinc-500">Catat semua event keamanan ke log file</p>
+ <div class="flex items-center gap-2">
+ <button type="button" @click="on = !on"
+ :class="on ? 'bg-emerald-500' : 'bg-zinc-200 dark:bg-zinc-700'"
+ class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+ <span :class="on ? 'translate-x-6' : 'translate-x-1'"
+ class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform"></span>
+ </button>
+ <input type="hidden" name="enable_rate_limiting" :value="on ? '1' : '0'">
+ </div>
+ </div>
+
+ <div x-data="{ on: {{ old('log_security_events', $settings->log_security_events) ? 'true' : 'false' }} }"
+ class="flex items-center justify-between p-3.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700">
+ <div>
+ <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Log Security Events</p>
+ <p class="text-xs text-zinc-500 dark:text-zinc-400">Catat semua event keamanan ke log file</p>
+ </div>
+ <div class="flex items-center gap-2">
+ <button type="button" @click="on = !on"
+ :class="on ? 'bg-emerald-500' : 'bg-zinc-200 dark:bg-zinc-700'"
+ class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+ <span :class="on ? 'translate-x-6' : 'translate-x-1'"
+ class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform"></span>
+ </button>
+ <input type="hidden" name="log_security_events" :value="on ? '1' : '0'">
  </div>
  </div>
  </div>
@@ -268,12 +278,12 @@
 
  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Session Lifetime (menit)
  </label>
  <input type="number" name="session_lifetime" value="{{ old('session_lifetime', $settings->session_lifetime) }}"
  min="30" max="1440" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Durasi maksimal sesi (30-1440 menit / 0.5-24 jam)</p>
  @error('session_lifetime')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -281,12 +291,12 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Idle Timeout (menit)
  </label>
  <input type="number" name="idle_timeout" value="{{ old('idle_timeout', $settings->idle_timeout) }}"
  min="5" max="480" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Waktu idle sebelum auto logout (5-480 menit / 5 menit - 8 jam)</p>
  @error('idle_timeout')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -294,12 +304,12 @@
  </div>
 
  <div>
- <label class="block mb-2 text-[11px] font-semibold text-zinc-600">
+ <label class="block mb-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
  Idle Warning (menit)
  </label>
  <input type="number" name="idle_warning" value="{{ old('idle_warning', $settings->idle_warning) }}"
  min="1" max="60" required
- class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
  <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">Waktu warning sebelum idle timeout (harus lebih kecil dari idle timeout)</p>
  @error('idle_warning')
  <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
@@ -307,31 +317,37 @@
  </div>
  </div>
 
- <div class="flex items-center pt-6">
- <div class="flex items-center h-5">
- <input type="checkbox" name="auto_extend_session" id="auto_extend_session" value="1"
- {{ old('auto_extend_session', $settings->auto_extend_session) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+ <div x-data="{ on: {{ old('auto_extend_session', $settings->auto_extend_session) ? 'true' : 'false' }} }"
+ class="flex items-center justify-between p-3.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700">
+ <div>
+ <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Auto Extend Session</p>
+ <p class="text-xs text-zinc-500 dark:text-zinc-400">Perpanjang sesi otomatis saat ada aktivitas user</p>
  </div>
- <div class="ml-3">
- <label for="auto_extend_session" class="font-medium dark:text-slate-100 text-zinc-900">
- Auto Extend Session
- </label>
- <p class="text-[11px] dark:text-slate-400 text-zinc-500">Perpanjang sesi otomatis saat ada aktivitas user</p>
+ <div class="flex items-center gap-2">
+ <button type="button" @click="on = !on"
+ :class="on ? 'bg-emerald-500' : 'bg-zinc-200 dark:bg-zinc-700'"
+ class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+ <span :class="on ? 'translate-x-6' : 'translate-x-1'"
+ class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform"></span>
+ </button>
+ <input type="hidden" name="auto_extend_session" :value="on ? '1' : '0'">
  </div>
  </div>
 
- <div class="flex items-start mt-6">
- <div class="flex items-center h-5">
- <input type="checkbox" name="enable_session_tracking" id="enable_session_tracking" value="1"
- {{ old('enable_session_tracking', $settings->enable_session_tracking) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+ <div x-data="{ on: {{ old('enable_session_tracking', $settings->enable_session_tracking) ? 'true' : 'false' }} }"
+ class="flex items-center justify-between p-3.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700 mt-3">
+ <div>
+ <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Enable Session Tracking</p>
+ <p class="text-xs text-zinc-500 dark:text-zinc-400">Aktifkan pelacakan aktivitas sesi untuk keamanan</p>
  </div>
- <div class="ml-3">
- <label for="enable_session_tracking" class="font-medium dark:text-slate-100 text-zinc-900">
- Enable Session Tracking
- </label>
- <p class="text-[11px] dark:text-slate-400 text-zinc-500">Aktifkan pelacakan aktivitas sesi untuk keamanan</p>
+ <div class="flex items-center gap-2">
+ <button type="button" @click="on = !on"
+ :class="on ? 'bg-emerald-500' : 'bg-zinc-200 dark:bg-zinc-700'"
+ class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+ <span :class="on ? 'translate-x-6' : 'translate-x-1'"
+ class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform"></span>
+ </button>
+ <input type="hidden" name="enable_session_tracking" :value="on ? '1' : '0'">
  </div>
  </div>
  </x-admin.card>

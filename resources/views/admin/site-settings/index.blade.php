@@ -17,8 +17,8 @@
  @method('PUT')
 
  {{-- Hero Slider Settings --}}
- <div class="border-b border-zinc-200 pb-6">
- <h3 class="text-3xl font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan Hero Slider</h3>
+ <div class="border-b border-zinc-200 dark:border-zinc-700 pb-6">
+ <h3 class="text-base font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan Hero Slider</h3>
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
@@ -29,8 +29,8 @@
  name="hero_slider_delay"
  id="hero_slider_delay"
  value="{{ old('hero_slider_delay', $settings->hero_slider_delay ?? 5000) }}"
- class="w-full rounded-xl border-zinc-300"
- min="1000"
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                min="1000"
  max="20000"
  step="500"
  required>
@@ -45,8 +45,8 @@
  name="hero_slide_limit"
  id="hero_slide_limit"
  value="{{ old('hero_slide_limit', $settings->hero_slide_limit ?? 5) }}"
- class="w-full rounded-xl border-zinc-300"
- min="1"
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                min="1"
  max="20"
  required>
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Jumlah maksimal slide yang ditampilkan di halaman utama (1-20)</p>
@@ -55,8 +55,8 @@
  </div>
 
  {{-- Upload Settings --}}
- <div class="border-b border-zinc-200 pb-6">
- <h3 class="text-3xl font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan Upload File</h3>
+ <div class="border-b border-zinc-200 dark:border-zinc-700 pb-6">
+ <h3 class="text-base font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan Upload File</h3>
 
  {{-- PHP-level Settings --}}
  <div class="mb-6">
@@ -70,8 +70,8 @@
  name="upload_max_filesize"
  id="upload_max_filesize"
  value="{{ old('upload_max_filesize', $settings->upload_max_filesize ?? '100M') }}"
- class="w-full rounded-xl border-zinc-300"
- placeholder="100M">
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                placeholder="100M">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Ukuran maksimal file yang diupload (contoh: 100M, 2G)</p>
  </div>
 
@@ -83,8 +83,8 @@
  name="post_max_size"
  id="post_max_size"
  value="{{ old('post_max_size', $settings->post_max_size ?? '100M') }}"
- class="w-full rounded-xl border-zinc-300"
- placeholder="100M">
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                placeholder="100M">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Ukuran maksimal data POST (contoh: 100M, 2G)</p>
  </div>
 
@@ -96,7 +96,7 @@
  name="max_execution_time"
  id="max_execution_time"
  value="{{ old('max_execution_time', $settings->max_execution_time ?? 300) }}"
- class="w-full rounded-xl border-zinc-300"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
  min="30"
  max="3600">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Waktu maksimal eksekusi script (30-3600 detik)</p>
@@ -110,7 +110,7 @@
  name="max_input_time"
  id="max_input_time"
  value="{{ old('max_input_time', $settings->max_input_time ?? 300) }}"
- class="w-full rounded-xl border-zinc-300"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
  min="30"
  max="3600">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Waktu maksimal menerima input (30-3600 detik)</p>
@@ -124,8 +124,8 @@
  name="memory_limit"
  id="memory_limit"
  value="{{ old('memory_limit', $settings->memory_limit ?? '512M') }}"
- class="w-full rounded-xl border-zinc-300"
- placeholder="512M">
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                placeholder="512M">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Batas memori script (contoh: 512M, 2G)</p>
  </div>
 
@@ -137,9 +137,9 @@
  name="max_file_uploads"
  id="max_file_uploads"
  value="{{ old('max_file_uploads', $settings->max_file_uploads ?? 20) }}"
- class="w-full rounded-xl border-zinc-300"
- min="1"
- max="100">
+			class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+			min="1"
+			max="100">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Jumlah file yang bisa diupload sekaligus (1-100)</p>
  </div>
  </div>
@@ -158,7 +158,7 @@
  name="max_image_size_kb"
  id="max_image_size_kb"
  value="{{ old('max_image_size_kb', $settings->max_image_size_kb ?? 2048) }}"
- class="w-full rounded-xl border-zinc-300"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
  min="512"
  max="102400">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Berita, Board Member, Office, Logo, WhyChooseUs (512-102400 KB)</p>
@@ -172,10 +172,10 @@
  name="max_product_image_size_kb"
  id="max_product_image_size_kb"
  value="{{ old('max_product_image_size_kb', $settings->max_product_image_size_kb ?? 5120) }}"
- class="w-full rounded-xl border-zinc-300"
- min="512"
- max="102400">
- <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Gambar produk & layanan (512-102400 KB)</p>
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                min="512"
+                max="102400">
+                <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Gambar produk & layanan (512-102400 KB)</p>
  </div>
 
  <div>
@@ -186,7 +186,7 @@
  name="max_document_size_kb"
  id="max_document_size_kb"
  value="{{ old('max_document_size_kb', $settings->max_document_size_kb ?? 15360) }}"
- class="w-full rounded-xl border-zinc-300"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
  min="1024"
  max="512000">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Laporan & Brosur PDF (1024-512000 KB)</p>
@@ -200,10 +200,10 @@
  name="max_hero_image_size_kb"
  id="max_hero_image_size_kb"
  value="{{ old('max_hero_image_size_kb', $settings->max_hero_image_size_kb ?? 5120) }}"
- class="w-full rounded-xl border-zinc-300"
- min="512"
- max="102400">
- <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Slide hero slider utama (512-102400 KB)</p>
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                min="512"
+                max="102400">
+                <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Slide hero slider utama (512-102400 KB)</p>
  </div>
 
  <div>
@@ -214,7 +214,7 @@
  name="max_auction_image_size_kb"
  id="max_auction_image_size_kb"
  value="{{ old('max_auction_image_size_kb', $settings->max_auction_image_size_kb ?? 5120) }}"
- class="w-full rounded-xl border-zinc-300"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
  min="512"
  max="102400">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Gambar aset lelang (512-102400 KB)</p>
@@ -224,8 +224,8 @@
  </div>
 
  {{-- Report Page Settings --}}
- <div class="border-b border-zinc-200 pb-6">
- <h3 class="text-3xl font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan Halaman Laporan</h3>
+        <div class="border-b border-zinc-200 dark:border-zinc-700 pb-6">
+            <h3 class="text-base font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan Halaman Laporan</h3>
  <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-6">
                 <div class="flex items-start gap-4">
                     <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0">
@@ -247,81 +247,22 @@
  </div>
  </div>
 
- {{-- Maintenance Mode Settings --}}
- <div class="border-b border-zinc-200 pb-6">
- <h3 class="text-3xl font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan Maintenance Mode</h3>
-
- <div class="space-y-4">
- <div class="flex items-center">
- <input type="checkbox"
- name="maintenance_mode"
- id="maintenance_mode"
- value="1"
- {{ old('maintenance_mode', $settings->maintenance_mode ?? false) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-sky-600">
- <label for="maintenance_mode" class="ml-2 text-[11px] font-medium dark:text-slate-300 text-zinc-700">
- Aktifkan Mode Pemeliharaan
- </label>
- </div>
-
- <div id="maintenance_fields" class="grid grid-cols-1 md:grid-cols-2 gap-6 {{ !old('maintenance_mode', $settings->maintenance_mode ?? false) ? 'hidden' : '' }}">
- <div class="md:lg:col-span-2 col-span-1">
- <label for="maintenance_message" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
- Pesan Maintenance
- </label>
- <textarea name="maintenance_message"
- id="maintenance_message"
- rows="3"
- class="w-full rounded-xl border-zinc-300">{{ old('maintenance_message', $settings->maintenance_message ?? '') }}</textarea>
- </div>
-
- <div>
- <label for="maintenance_end_time" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
- Waktu Selesai Maintenance
- </label>
- <input type="datetime-local"
- name="maintenance_end_time"
- id="maintenance_end_time"
- value="{{ old('maintenance_end_time', $settings->maintenance_end_time ? $settings->maintenance_end_time->format('Y-m-d\\TH:i') : '') }}"
- class="w-full rounded-xl border-zinc-300">
- </div>
-
- <div class="md:lg:col-span-2 col-span-1">
- <label for="maintenance_allowed_ips" class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
- IP Address yang Diizinkan (satu per baris)
- </label>
- <textarea name="maintenance_allowed_ips"
- id="maintenance_allowed_ips"
- rows="3"
- placeholder="192.168.1.1&#10;10.0.0.1&#10;contoh.com"
- class="w-full rounded-xl border-zinc-300">{{ old('maintenance_allowed_ips', $settings->maintenance_allowed_ips ?? '') }}</textarea>
- <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Kosongkan untuk memblokir semua IP</p>
- </div>
-
- <div class="md:lg:col-span-2 col-span-1">
- <label class="block text-[11px] font-medium dark:text-slate-300 text-zinc-700 mb-2">
- Halaman yang Di-maintenance
- </label>
- <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:grid-cols-2 gap-2 max-h-48 border border-zinc-200 rounded-xl p-3">
- @foreach(\App\Models\SiteSetting::getAvailablePages() as $key => $page)
- <div class="flex items-center">
- <input type="checkbox"
- name="maintenance_pages[]"
- value="{{ $key }}"
- {{ in_array($key, old('maintenance_pages', $settings->maintenance_pages ?? [])) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-sky-600">
- <label class="ml-2 text-[11px] dark:text-slate-300 text-zinc-700">{{ $page['name'] }}</label>
- </div>
- @endforeach
- </div>
- </div>
- </div>
- </div>
+ {{-- Maintenance Mode --}}
+ <div class="border-b border-zinc-200 dark:border-zinc-700 pb-6">
+ <h3 class="text-base font-semibold dark:text-slate-100 text-zinc-900 mb-1">Mode Maintenance</h3>
+ <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-4">Kelola mode maintenance dan halaman yang dinonaktifkan</p>
+ <a href="{{ route('admin.settings.maintenance') }}" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-zinc-800 dark:bg-zinc-700 rounded-xl hover:bg-zinc-700 dark:hover:bg-zinc-600 transition-colors">
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+ </svg>
+ Buka Pengaturan Maintenance
+ </a>
  </div>
 
  {{-- SEO Settings --}}
- <div class="border-b border-zinc-200 pb-6">
- <h3 class="text-3xl font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan SEO</h3>
+        <div class="border-b border-zinc-200 dark:border-zinc-700 pb-6">
+            <h3 class="text-base font-semibold dark:text-slate-100 text-zinc-900 mb-4">Pengaturan SEO</h3>
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
@@ -332,8 +273,8 @@
  name="seo_site_name"
  id="seo_site_name"
  value="{{ old('seo_site_name', $settings->seo_site_name ?? '') }}"
- class="w-full rounded-xl border-zinc-300"
- maxlength="100">
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                maxlength="100">
  </div>
 
  <div>
@@ -344,8 +285,8 @@
  name="seo_og_image"
  id="seo_og_image"
  value="{{ old('seo_og_image', $settings->seo_og_image ?? '') }}"
- class="w-full rounded-xl border-zinc-300"
- maxlength="500">
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                maxlength="500">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Dipakai saat share ke media sosial jika tidak ada gambar spesifik</p>
  </div>
 
@@ -356,8 +297,8 @@
  <textarea name="seo_default_description"
  id="seo_default_description"
  rows="3"
- maxlength="300"
- class="w-full rounded-xl border-zinc-300">{{ old('seo_default_description', $settings->seo_default_description ?? '') }}</textarea>
+                maxlength="300"
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">{{ old('seo_default_description', $settings->seo_default_description ?? '') }}</textarea>
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Maks 160 karakter. Dipakai jika halaman tidak punya deskripsi khusus.</p>
  </div>
 
@@ -368,8 +309,8 @@
  <textarea name="seo_default_keywords"
  id="seo_default_keywords"
  rows="2"
- maxlength="500"
- class="w-full rounded-xl border-zinc-300">{{ old('seo_default_keywords', $settings->seo_default_keywords ?? '') }}</textarea>
+                maxlength="500"
+                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">{{ old('seo_default_keywords', $settings->seo_default_keywords ?? '') }}</textarea>
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Pisahkan dengan koma</p>
  </div>
 
@@ -381,7 +322,7 @@
  name="seo_twitter_handle"
  id="seo_twitter_handle"
  value="{{ old('seo_twitter_handle', $settings->seo_twitter_handle ?? '') }}"
- class="w-full rounded-xl border-zinc-300"
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
  placeholder="@username"
  maxlength="100">
  <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Contoh: @BPRSBabelID</p>
@@ -393,7 +334,7 @@
  </label>
  <select name="seo_robots_default"
  id="seo_robots_default"
- class="w-full rounded-xl border-zinc-300">
+ class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
  <option value="index, follow" {{ old('seo_robots_default', $settings->seo_robots_default ?? 'index, follow') === 'index, follow' ? 'selected' : '' }}>index, follow (default)</option>
  <option value="noindex, nofollow" {{ old('seo_robots_default', $settings->seo_robots_default ?? '') === 'noindex, nofollow' ? 'selected' : '' }}>noindex, nofollow</option>
  <option value="noindex, follow" {{ old('seo_robots_default', $settings->seo_robots_default ?? '') === 'noindex, follow' ? 'selected' : '' }}>noindex, follow</option>
@@ -409,8 +350,8 @@
  name="seo_google_verification"
  id="seo_google_verification"
  value="{{ old('seo_google_verification', $settings->seo_google_verification ?? '') }}"
- class="w-full rounded-xl border-zinc-300"
- maxlength="200">
+			class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+			maxlength="200">
  </div>
 
  <div>
@@ -421,8 +362,8 @@
  name="seo_bing_verification"
  id="seo_bing_verification"
  value="{{ old('seo_bing_verification', $settings->seo_bing_verification ?? '') }}"
- class="w-full rounded-xl border-zinc-300"
- maxlength="200">
+			class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+			maxlength="200">
  </div>
 
  <div class="md:col-span-2">
@@ -433,8 +374,8 @@
  id="seo_canonical_enabled"
  value="1"
  {{ old('seo_canonical_enabled', $settings->seo_canonical_enabled ?? true) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-sky-600">
- <label for="seo_canonical_enabled" class="text-[11px] font-medium dark:text-slate-300 text-zinc-700">
+ class="rounded border-zinc-300 text-emerald-600">
+                    <label for="seo_canonical_enabled" class="text-[11px] font-medium dark:text-slate-300 text-zinc-700">
  Aktifkan Canonical URL otomatis
  </label>
  </div>
@@ -451,23 +392,5 @@
  </form>
 </x-admin.card>
 
-@push('scripts')
-<script nonce="{{ $nonce }}">
-document.addEventListener('DOMContentLoaded', function() {
- const maintenanceModeCheckbox = document.getElementById('maintenance_mode');
- const maintenanceFields = document.getElementById('maintenance_fields');
 
- function toggleMaintenanceFields() {
- if (maintenanceModeCheckbox.checked) {
- maintenanceFields.classList.remove('hidden');
- } else {
- maintenanceFields.classList.add('hidden');
- }
- }
-
- maintenanceModeCheckbox.addEventListener('change', toggleMaintenanceFields);
- toggleMaintenanceFields(); // Initial state
-});
-</script>
-@endpush
 @endsection
