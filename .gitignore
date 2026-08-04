@@ -84,6 +84,7 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 NUL
+/docs/*
 
 # ============================================
 # HOMESTEAD (legacy)
@@ -97,3 +98,5 @@ Homestead.yaml
 /obsidian-vault*
 /graphify-out
 /.ulpi
+
+

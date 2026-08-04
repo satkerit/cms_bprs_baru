@@ -61,7 +61,7 @@
            class="stat-card-emerald group hover:-translate-y-0.5 no-underline block">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-emerald-600/70 uppercase tracking-wider mb-1">Total Berita</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $newsCount }}</p>
+                    <p class="text-[11px] font-semibold text-emerald-600/70 dark:text-emerald-400/80 uppercase tracking-wider mb-1">Total Berita</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $newsCount }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-emerald-100/80 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -69,7 +69,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="pt-3 border-t border-emerald-200/40 text-[12px] text-emerald-600/60 group-hover:text-emerald-700 flex items-center justify-between">
+            <div class="pt-3 border-t border-emerald-200/40 dark:border-emerald-900/50 text-[12px] text-emerald-600/60 dark:text-emerald-400/70 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 flex items-center justify-between">
                 <span class="font-medium">Kelola berita</span>
                 <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </div>
@@ -79,7 +79,7 @@
            class="stat-card-sky group hover:-translate-y-0.5 no-underline block">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-sky-600/70 uppercase tracking-wider mb-1">Total Produk</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $productCount }}</p>
+                    <p class="text-[11px] font-semibold text-sky-600/70 dark:text-sky-400/80 uppercase tracking-wider mb-1">Total Produk</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $productCount }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-sky-100/80 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -87,7 +87,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="pt-3 border-t border-sky-200/40 text-[12px] text-sky-600/60 group-hover:text-sky-700 flex items-center justify-between">
+            <div class="pt-3 border-t border-sky-200/40 dark:border-sky-900/50 text-[12px] text-sky-600/60 dark:text-sky-400/70 group-hover:text-sky-700 dark:group-hover:text-sky-300 flex items-center justify-between">
                 <span class="font-medium">Kelola produk</span>
                 <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </div>
@@ -97,7 +97,7 @@
            class="stat-card-gold group hover:-translate-y-0.5 no-underline block">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-amber-600/70 uppercase tracking-wider mb-1">Lelang Aktif</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $upcomingAuctions }}</p>
+                    <p class="text-[11px] font-semibold text-amber-600/70 dark:text-amber-400/80 uppercase tracking-wider mb-1">Lelang Aktif</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $upcomingAuctions }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-amber-100/80 flex items-center justify-center text-amber-600 group-hover:bg-amber-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -105,7 +105,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="pt-3 border-t border-amber-200/40 text-[12px] text-amber-600/60 group-hover:text-amber-700 flex items-center justify-between">
+            <div class="pt-3 border-t border-amber-200/40 dark:border-amber-900/50 text-[12px] text-amber-600/60 dark:text-amber-400/70 group-hover:text-amber-700 dark:group-hover:text-amber-300 flex items-center justify-between">
                 <span class="font-medium">Kelola lelang</span>
                 <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </div>
@@ -115,7 +115,7 @@
            class="stat-card group hover:-translate-y-0.5 no-underline block bg-gradient-to-br from-red-50 dark:from-red-950/40 to-white dark:to-slate-900 border-red-200/50 dark:border-red-900/50 hover:shadow-lg hover:shadow-red-500/5">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-[11px] font-semibold text-red-600/70 uppercase tracking-wider mb-1">Aduan Baru</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $pendingComplaints }}</p>
+                    <p class="text-[11px] font-semibold text-red-600/70 dark:text-red-400/80 uppercase tracking-wider mb-1">Aduan Baru</p>                            <p class="text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-slate-100">{{ $pendingComplaints }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-red-100/80 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -125,12 +125,12 @@
             </div>
             <div class="pt-3 border-t border-red-200/40 text-[12px] flex items-center justify-between">
                 @if($pendingComplaints > 0)
-                <span class="font-medium text-red-600 flex items-center gap-1">
+                <span class="font-medium text-red-600 dark:text-red-400 flex items-center gap-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
                     Perlu tindakan
                 </span>
                 @else
-                <span class="text-red-600/60">Semua tertangani</span>
+                <span class="text-red-600/60 dark:text-red-400/70">Semua tertangani</span>
                 @endif
                 <svg class="w-3.5 h-3.5 text-red-400/60 group-hover:text-red-500 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </div>
@@ -144,7 +144,7 @@
                     <div class="admin-accent-strip"></div>
                     <div>
                         <h2 class="text-[15px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight">Statistik Pengunjung</h2>
-                        <p class="text-[12px] text-slate-400 dark:text-slate-500">7 hari terakhir</p>
+                        <p class="text-[12px] text-slate-400 dark:text-slate-400">7 hari terakhir</p>
                 </div>
             </div>
             <a href="{{ route('admin.visitor-stats.index') }}" class="btn-outline h-8 text-xs">
@@ -157,24 +157,24 @@
             {{-- Mini Stats --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
                 <div class="stat-card-emerald">
-                    <p class="text-[10px] font-semibold text-emerald-600 mb-1 uppercase tracking-wider">Hari Ini</p>
+                    <p class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 mb-1 uppercase tracking-wider">Hari Ini</p>
                     <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['todayVisits']) }}</p>
-                    <p class="text-[10px] text-slate-400 dark:text-slate-500">kunjungan</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-400">kunjungan</p>
                 </div>
                 <div class="stat-card-sky">
-                    <p class="text-[10px] font-semibold text-sky-600 mb-1 uppercase tracking-wider">Unik Hari Ini</p>
+                    <p class="text-[10px] font-semibold text-sky-600 dark:text-sky-400 mb-1 uppercase tracking-wider">Unik Hari Ini</p>
                     <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['todayUnique']) }}</p>
-                    <p class="text-[10px] text-slate-400 dark:text-slate-500">pengunjung</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-400">pengunjung</p>
                 </div>
                 <div class="stat-card-emerald">
-                    <p class="text-[10px] font-semibold text-emerald-600 mb-1 uppercase tracking-wider">7 Hari</p>
+                    <p class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 mb-1 uppercase tracking-wider">7 Hari</p>
                     <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['weekTotal']) }}</p>
-                    <p class="text-[10px] text-slate-400 dark:text-slate-500">kunjungan</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-400">kunjungan</p>
                 </div>
                 <div class="stat-card-violet">
-                    <p class="text-[10px] font-semibold text-violet-600 mb-1 uppercase tracking-wider">Unik 7 Hari</p>
+                    <p class="text-[10px] font-semibold text-violet-600 dark:text-violet-400 mb-1 uppercase tracking-wider">Unik 7 Hari</p>
                     <p class="text-lg font-bold text-slate-900 dark:text-slate-100 tabular-nums">{{ number_format($visitorStats['weekUnique']) }}</p>
-                    <p class="text-[10px] text-slate-400 dark:text-slate-500">pengunjung</p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-400">pengunjung</p>
                 </div>
             </div>
 

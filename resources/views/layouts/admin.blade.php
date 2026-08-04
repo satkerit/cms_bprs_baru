@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth"
-      x-data="adminTheme()"
-      :class="darkMode ? 'dark' : ''"
-      x-init="initTheme()">
+      x-data x-init="$store.theme.init()">
 
 <head>
     <meta charset="utf-8">
@@ -10,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="csp-nonce" content="{{ request()->attributes->get('csp_nonce') }}">
     <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#059669" media="(prefers-color-scheme: light)">
 
     {{-- Idle Timeout Configuration --}}
     @auth
@@ -44,9 +42,9 @@
     {{-- ═══ DARK MODE: Flash Prevention & Theme Remember — Runs BEFORE first paint ═══ --}}
     <script nonce="{{ request()->attributes->get('csp_nonce') }}">
         (function() {
-            var stored = localStorage.getItem('admin_dark_mode');
+            var stored = localStorage.getItem('theme');
             var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            var isDark = stored === 'true' || (stored === null && prefersDark);
+            var isDark = stored === 'dark' || (stored === null && prefersDark);
 
             if (isDark) {
                 document.documentElement.classList.add('dark');
@@ -57,7 +55,7 @@
 
             var meta = document.querySelector('meta[name="theme-color"]');
             if (meta) {
-                meta.content = isDark ? '#0b1120' : '#0b1120';
+                meta.content = isDark ? '#0b1120' : '#059669';
             }
         })();
     </script>
@@ -149,7 +147,7 @@
                             <span class="text-white font-bold text-[15px] leading-tight tracking-tight">Admin</span>
                             <span class="text-emerald-400 font-bold text-[15px] leading-tight tracking-tight">Panel</span>
                         </div>
-                        <span class="text-[10px] text-slate-500 leading-tight mt-0.5 font-medium tracking-wide">{{ config('app.name') }}</span>
+                        <span class="text-[10px] text-slate-400 leading-tight mt-0.5 font-medium tracking-wide">{{ config('app.name') }}</span>
                     </div>
                 </a>
                 <button @click="closeSidebar()" aria-label="Tutup sidebar"
@@ -187,7 +185,7 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-[13px] font-semibold text-slate-200 truncate leading-tight">{{ auth()->user()->name }}</p>
-                        <p class="text-[11px] text-slate-500 truncate mt-0.5">{{ auth()->user()->getRoleDisplayName() }}</p>
+                        <p class="text-[11px] text-slate-400 truncate mt-0.5">{{ auth()->user()->getRoleDisplayName() }}</p>
                     </div>
                     <div class="w-2 h-2 rounded-full bg-emerald-500/60 shadow-sm shadow-emerald-500/30 shrink-0"></div>
                 </div>
@@ -220,17 +218,17 @@
                     <div class="flex items-center gap-2">
                         {{-- Dark Mode Toggle — Enhanced Indicator --}}
                         <div class="relative group">
-                            <button @click="toggleTheme()"
+                            <button @click="$store.theme.toggleDark()"
                                 class="theme-toggle-btn p-2 rounded-xl text-slate-500 dark:text-slate-400
                                        hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150
                                        active:scale-90 relative"
                                 aria-label="Toggle dark mode">
-                                <template x-if="!darkMode">
+                                <template x-if="!$store.theme.darkMode">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
                                     </svg>
                                 </template>
-                                <template x-if="darkMode">
+                                <template x-if="$store.theme.darkMode">
                                     <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
                                     </svg>
@@ -242,7 +240,7 @@
                                 <div class="px-2 py-1 rounded-lg text-[10px] font-semibold whitespace-nowrap
                                             bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900
                                             shadow-lg shadow-black/20">
-                                    <span x-text="darkMode ? '🌙 Mode Gelap' : '☀️ Mode Terang'"></span>
+                                    <span x-text="$store.theme.darkMode ? '🌙 Mode Gelap' : '☀️ Mode Terang'"></span>
                                 </div>
                                 <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45
                                             bg-slate-900 dark:bg-slate-100"></div>
@@ -348,20 +346,8 @@
                 </div>
             </main>
 
-            {{-- Dark Mode Floating Indicator Badge --}}
-            <div class="dark-mode-indicator" aria-hidden="true">
-                <div class="dark-mode-indicator-inner">
-                    <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-                        </svg>
-                    </span>
-                    <span>Mode Gelap</span>
-                </div>
-            </div>
-
             {{-- Footer --}}
-            <footer class="mt-auto border-t border-slate-200/60 dark:border-slate-800/60 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400 dark:text-slate-500">
+            <footer class="mt-auto border-t border-slate-200/60 dark:border-slate-800/60 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400 dark:text-slate-400">
                 <p>&copy; {{ date('Y') }} {{ config('app.name') }}. Hak Cipta Dilindungi.</p>
                 <p class="hidden sm:block">Versi 1.0.0</p>
             </footer>
@@ -370,62 +356,10 @@
 
     <script nonce="{{ $nonce }}">
         window.adminLogoutUrl = "{{ route('admin.logout') }}";
-
-        function adminTheme() {
-            return {
-                darkMode: false,
-                _transitionTimer: null,
-
-                initTheme() {
-                    var saved = localStorage.getItem('admin_dark_mode');
-                    if (saved !== null) {
-                        this.darkMode = saved === 'true';
-                    } else {
-                        this.darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    }
-
-                    // Sync class (flash prevention already ran, but we need Alpine in sync)
-                    document.documentElement.classList.toggle('dark', this.darkMode);
-
-                    // Listen for OS scheme changes (only when no explicit choice)
-                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                        if (!localStorage.getItem('admin_dark_mode')) {
-                            this.darkMode = e.matches;
-                            this._applyAdminTheme(e.matches, true);
-                        }
-                    });
-                },
-
-                _applyAdminTheme(isDark, animate) {
-                    if (animate) {
-                        document.documentElement.classList.add('dark-transitioning');
-                    }
-                    // Note: `dark` class is handled reactively by Alpine :class binding on <html>
-                    // Only manage color-scheme and theme-color here
-                    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
-
-                    // Update theme-color meta for browser chrome
-                    var meta = document.querySelector('meta[name="theme-color"]');
-                    if (meta) {
-                        meta.content = isDark ? '#0b1120' : '#0b1120';
-                    }
-
-                    if (animate) {
-                        clearTimeout(this._transitionTimer);
-                        this._transitionTimer = setTimeout(() => {
-                            document.documentElement.classList.remove('dark-transitioning');
-                        }, 400);
-                    }
-                },
-
-                toggleTheme() {
-                    this.darkMode = !this.darkMode;
-                    localStorage.setItem('admin_dark_mode', this.darkMode);
-                    this._applyAdminTheme(this.darkMode, true);
-                }
-            }
-        }
     </script>
+
+    {{-- ═══ DARK MODE: Alpine Store — shared single source (frontend + admin) ═══ --}}
+    @include('components.theme-store')
     @stack('scripts')
 
     {{-- Fallback untuk browser lama --}}

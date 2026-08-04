@@ -101,18 +101,6 @@
         @endif
     </main>
 
-    {{-- ═══ Dark Mode Floating Indicator Badge ═══ --}}
-    <div class="dark-mode-indicator" aria-hidden="true">
-        <div class="dark-mode-indicator-inner">
-            <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-                </svg>
-            </span>
-            <span>Mode Gelap</span>
-        </div>
-    </div>
-
     <!-- Footer -->
     @php
         $__footerKey = 'frontend_footer';
@@ -133,67 +121,7 @@
     @livewireScripts(['nonce' => $nonce])
     @stack('scripts')
 
-    {{-- ═══ DARK MODE: Alpine Store + System Preference Sync + Smooth Transitions ═══ --}}
-    <script nonce="{{ $nonce }}">
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('theme', {
-                // ── State ──
-                darkMode: false,
-                _hasExplicitChoice: localStorage.getItem('theme') !== null,
-                _systemPref: window.matchMedia('(prefers-color-scheme: dark)'),
-
-                // ── Initialize ──
-                init() {
-                    var stored = localStorage.getItem('theme');
-                    var prefersDark = this._systemPref.matches;
-
-                    this.darkMode = stored === 'dark' || (!stored && prefersDark);
-
-                    // Apply class (flash prevention script already ran; this syncs Alpine)
-                    document.documentElement.classList.toggle('dark', this.darkMode);
-
-                    // Listen for OS-level scheme changes (only if user has NOT set explicit choice)
-                    this._systemPref.addEventListener('change', (e) => {
-                        if (!localStorage.getItem('theme')) {
-                            this.darkMode = e.matches;
-                            this._applyTheme(e.matches, false);
-                        }
-                    });
-                },
-
-                // ── Internal: apply theme with optional transition ──
-                _applyTheme(isDark, animate) {
-                    if (animate) {
-                        document.documentElement.classList.add('dark-transitioning');
-                    }
-
-                    document.documentElement.classList.toggle('dark', isDark);
-                    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
-
-                    // Update theme-color meta for browser chrome
-                    var meta = document.querySelector('meta[name="theme-color"]');
-                    if (meta) {
-                        meta.content = isDark ? '#0b1120' : '#059669';
-                    }
-
-                    if (animate) {
-                        clearTimeout(this._transitionTimer);
-                        this._transitionTimer = setTimeout(() => {
-                            document.documentElement.classList.remove('dark-transitioning');
-                        }, 400);
-                    }
-                },
-
-                // ── Toggle (with smooth animation) ──
-                toggleDark() {
-                    var newVal = !this.darkMode;
-                    this.darkMode = newVal;
-                    localStorage.setItem('theme', newVal ? 'dark' : 'light');
-                    this._hasExplicitChoice = true;
-                    this._applyTheme(newVal, true);
-                }
-            });
-        });
-    </script>
+    {{-- ═══ DARK MODE: Alpine Store — shared single source (frontend + admin) ═══ --}}
+    @include('components.theme-store')
 </body>
 </html>
