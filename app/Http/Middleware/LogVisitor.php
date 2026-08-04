@@ -13,9 +13,15 @@ class LogVisitor
     {
         $response = $next($request);
 
-        if ($response->isSuccessful() &&
-            !$request->is('admin/*') && !$request->is('api/*') &&
-            !$request->is('livewire/*') && !$request->is('storage/*')) {
+        // Statistik pengunjung = akses PUBLIK (frontend), bukan backend.
+        // Eksklusi: path backend + semua request admin yang sudah login (termasuk preview frontend).
+        $isBackendPath = $request->is('admin', 'admin/*', 'api/*', 'livewire/*', 'storage/*');
+
+        if (
+            $response->isSuccessful() &&
+            !$isBackendPath &&
+            !auth()->check()
+        ) {
             try {
                 // afterResponse() runs the job synchronously after the response is sent to the
                 // browser — no queue worker required. This guarantees visitor logs are written
