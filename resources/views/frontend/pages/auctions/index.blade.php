@@ -181,6 +181,13 @@
                                         </span>
                                     </div>
                                     @endif
+
+                                    {{-- Watermark Terjual --}}
+                                    @if($auction->status === 'sold')
+                                    <div class="absolute inset-0 z-[5] flex items-center justify-center pointer-events-none" aria-hidden="true">
+                                        <div class="select-none border-4 border-white/80 text-white font-black uppercase tracking-[0.35em] text-2xl sm:text-3xl px-6 py-2 -rotate-[24deg] bg-red-600/45 shadow-xl">Terjual</div>
+                                    </div>
+                                    @endif
                                 </div>
 
                                 {{-- Content --}}

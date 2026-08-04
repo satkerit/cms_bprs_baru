@@ -82,6 +82,13 @@
                                         <svg class="w-16 h-16 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h2m4 0h4M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                                     </div>
                                     @endif
+
+                                    {{-- Watermark Terjual --}}
+                                    @if($auction->status === 'sold')
+                                    <div class="absolute inset-0 z-[5] flex items-center justify-center pointer-events-none" aria-hidden="true">
+                                        <div class="select-none border-4 border-white/80 text-white font-black uppercase tracking-[0.35em] text-3xl sm:text-4xl px-8 py-2 -rotate-[24deg] bg-red-600/45 shadow-xl">Terjual</div>
+                                    </div>
+                                    @endif
                                 </div>
                                 @if(count($images) > 1)
                                 <div class="flex gap-2 mt-3 overflow-x-auto pb-1">
@@ -322,6 +329,11 @@
                                     </div>
                                     @else
                                     <div class="aspect-[16/10] bg-gradient-to-br from-emerald-50 dark:from-emerald-900/30 to-emerald-100/50 dark:to-emerald-900/10"></div>
+                                    @endif
+                                    @if($rel->status === 'sold')
+                                    <div class="absolute inset-0 z-[5] flex items-center justify-center pointer-events-none" aria-hidden="true">
+                                        <div class="select-none border-4 border-white/80 text-white font-black uppercase tracking-[0.3em] text-2xl px-5 py-1 -rotate-[24deg] bg-red-600/45 shadow-xl">Terjual</div>
+                                    </div>
                                     @endif
                                 </div>
                                 <div class="p-4">

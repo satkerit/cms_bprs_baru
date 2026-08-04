@@ -101,8 +101,9 @@ class Auction extends Model
 
     public function scopePublished(Builder $query): Builder
     {
-        return $query->whereIn('status', ['published', 'registration_open', 'registration_closed', 'sold'])
-            ->whereNotNull('published_at');
+        // published_at tidak diwajibkan: data lama bisa NULL.
+        // Validasi publik cukup dari status.
+        return $query->whereIn('status', ['published', 'registration_open', 'registration_closed', 'sold']);
     }
 
     public function scopeActive(Builder $query): Builder

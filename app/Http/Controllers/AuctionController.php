@@ -28,7 +28,7 @@ class AuctionController extends Controller
         }
 
         $auctions = $query->orderByDesc('is_featured')
-            ->orderByDesc('published_at')
+            ->orderByRaw('COALESCE(published_at, created_at) DESC')
             ->paginate(12)
             ->withQueryString();
 
