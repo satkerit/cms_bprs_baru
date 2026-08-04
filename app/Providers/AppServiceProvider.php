@@ -106,6 +106,10 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('uploads', function (Request $request) {
             return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
         });
+        // Operasi destruktif storage admin (delete/rename/buat folder/bersihkan orphan)
+        RateLimiter::for('admin.storage', function (Request $request) {
+            return Limit::perMinute(30)->by($request->user()?->id ?: $request->ip());
+        });
     }
 
     /**

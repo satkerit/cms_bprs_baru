@@ -2,34 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\AuctionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auction\StoreAuctionRequest;
 use App\Http\Requests\Admin\Auction\UpdateAuctionRequest;
 use App\Models\Auction;
-use App\Services\CacheService;
 use App\Services\ImageService;
-use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AuctionController extends Controller
 {
-    use AuthorizesAdminActions;
-
     public function index(Request $request)
     {
-        $this->authorizeView('auctions.view');
-
-        $query = Auction::query();
+        $query = Auction::query()->latest();
 
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
                     ->orWhere('auction_number', 'like', "%{$search}%")
-                    ->orWhere('address', 'like', "%{$search}%")
-                    ->orWhere('city', 'like', "%{$search}%");
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhere('debtor_name', 'like', "%{$search}%");
             });
         }
 
@@ -41,187 +36,142 @@ class AuctionController extends Controller
             $query->where('asset_type', $request->asset_type);
         }
 
-        if ($request->filled('city')) {
-            $query->where('city', 'like', "%{$request->city}%");
-        }
-
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
-        $query->orderBy($sortBy, $sortOrder);
-
         $auctions = $query->paginate(15)->withQueryString();
 
-        return view('admin.auctions.index', compact('auctions'));
+        $stats = [
+            'total'             => Auction::count(),
+            'registration_open' => Auction::where('status', AuctionStatus::RegistrationOpen->value)->count(),
+            'sold'              => Auction::where('status', AuctionStatus::Sold->value)->count(),
+            'draft'             => Auction::where('status', AuctionStatus::Draft->value)->count(),
+        ];
+
+        return view('admin.auctions.index', compact('auctions', 'stats'));
     }
 
     public function create()
     {
-        $this->authorizeCreate('auctions.create');
-        return view('admin.auctions.create');
+        $statuses   = AuctionStatus::cases();
+        $assetTypes = ['tanah', 'rumah', 'ruko', 'apartemen', 'gedung', 'pabrik', 'kendaraan', 'mesin', 'lainnya'];
+
+        return view('admin.auctions.create', compact('statuses', 'assetTypes'));
     }
 
     public function store(StoreAuctionRequest $request)
     {
-        $this->authorizeCreate('auctions.create');
+        $data         = $request->validated();
+        $data['slug'] = Str::slug($data['title']) . '-' . Str::random(6);
 
-        $validated = $request->validated();
+        $data['is_featured'] = $request->boolean('is_featured');
 
+        // Handle image uploads
+        $imagePaths = [];
         if ($request->hasFile('images')) {
-            $validated['images'] = $this->uploadAuctionImages($request->file('images'));
+            $slug = $data['slug'];
+            foreach ($request->file('images') as $image) {
+                $result       = ImageService::upload($image, [
+                    'dir'     => "auctions/{$slug}",
+                    'formats' => ['webp', 'jpg'],
+                    'sizes'   => [1280, 768, 480],
+                ]);
+                $imagePaths[] = $result['original'] ?? $result['path'] ?? $image->store("auctions/{$slug}", 'public');
+            }
         }
 
-        if ($validated['status'] !== 'draft') {
-            $validated['published_at'] = now();
-        }
+        $data['images'] = $imagePaths;
 
-        Auction::create($validated);
-
-        app(CacheService::class)->clearAuctionCache();
+        $auction = Auction::create($data);
 
         return redirect()->route('admin.auctions.index')
-            ->with('success', 'Lelang berhasil dibuat.');
+            ->with('success', "Lelang \"{$auction->title}\" berhasil ditambahkan.");
     }
 
     public function show(Auction $auction)
     {
-        $this->authorizeView('auctions.view');
         return view('admin.auctions.show', compact('auction'));
     }
 
     public function edit(Auction $auction)
     {
-        $this->authorizeEdit('auctions.edit');
-        return view('admin.auctions.edit', compact('auction'));
+        $statuses   = AuctionStatus::cases();
+        $assetTypes = ['tanah', 'rumah', 'ruko', 'apartemen', 'gedung', 'pabrik', 'kendaraan', 'mesin', 'lainnya'];
+
+        return view('admin.auctions.edit', compact('auction', 'statuses', 'assetTypes'));
     }
 
     public function update(UpdateAuctionRequest $request, Auction $auction)
     {
-        $this->authorizeEdit('auctions.edit');
+        $data = $request->validated();
 
-        $validated = $request->validated();
+        $data['is_featured'] = $request->boolean('is_featured');
 
-        $currentImages = $auction->images ?? [];
-        $hasImageUpdates = false;
-
-        if ($request->has('delete_images')) {
-            $imagesToDelete = $request->delete_images;
-            $currentImages = array_values(array_filter($currentImages, function ($img) use ($imagesToDelete) {
-                if (in_array($img, $imagesToDelete)) {
-                    Storage::disk('public')->delete($img);
-                    return false;
-                }
-                return true;
-            }));
-            $hasImageUpdates = true;
-        }
+        // Handle new image uploads
+        $existingImages = $auction->images ?? [];
 
         if ($request->hasFile('images')) {
-            $currentImages = array_merge($currentImages, $this->uploadAuctionImages($request->file('images')));
-            $hasImageUpdates = true;
+            $slug = $auction->slug;
+            foreach ($request->file('images') as $image) {
+                $result           = ImageService::upload($image, [
+                    'dir'         => "auctions/{$slug}",
+                    'formats'     => ['webp', 'jpg'],
+                    'sizes'       => [1280, 768, 480],
+                ]);
+                $existingImages[] = $result['original'] ?? $result['path'] ?? $image->store("auctions/{$slug}", 'public');
+            }
         }
 
-        if ($hasImageUpdates) {
-            $validated['images'] = $currentImages;
+        // Handle deleted images
+        $deletedImages = $request->input('deleted_images', []);
+        // deleted_images bukan kolom DB — buang dari data agar tidak kena MassAssignment
+        unset($data['deleted_images']);
+        if (!empty($deletedImages)) {
+            foreach ($deletedImages as $path) {
+                Storage::disk('public')->delete($path);
+            }
+            $existingImages = array_values(array_filter($existingImages, fn($p) => !in_array($p, $deletedImages)));
         }
 
-        if ($auction->status === 'draft' && $validated['status'] !== 'draft' && !$auction->published_at) {
-            $validated['published_at'] = now();
-        }
+        $data['images'] = $existingImages;
 
-        $auction->update($validated);
+        $auction->update($data);
 
-        app(CacheService::class)->clearAuctionCache();
-
-        return redirect()->route('admin.auctions.index')
-            ->with('success', 'Lelang berhasil diperbarui.');
+        return redirect()->route('admin.auctions.show', $auction)
+            ->with('success', "Lelang \"{$auction->title}\" berhasil diperbarui.");
     }
 
     public function destroy(Auction $auction)
     {
-        $this->authorizeDelete('auctions.delete');
+        // Hapus gambar dari storage
+        if (!empty($auction->images)) {
+            foreach ($auction->images as $path) {
+                Storage::disk('public')->delete($path);
+            }
+            // Coba hapus folder jika kosong
+            Storage::disk('public')->deleteDirectory("auctions/{$auction->slug}");
+        }
 
-        $this->deleteAuctionImages($auction->images);
-
+        $title = $auction->title;
         $auction->delete();
 
-        app(CacheService::class)->clearAuctionCache();
-
         return redirect()->route('admin.auctions.index')
-            ->with('success', 'Lelang berhasil dihapus.');
+            ->with('success', "Lelang \"{$title}\" berhasil dihapus.");
     }
 
-    public function bulkAction(Request $request)
+    public function updateStatus(Request $request, Auction $auction)
     {
-        $this->authorizeEdit('auctions.edit');
-
         $request->validate([
-            'action' => 'required|in:delete,publish,unpublish,feature,unfeature',
-            'selected_ids' => 'required|array|min:1',
-            'selected_ids.*' => 'exists:auctions,id',
+            'status' => ['required', 'in:' . implode(',', array_column(AuctionStatus::cases(), 'value'))],
         ]);
 
-        $auctions = Auction::whereIn('id', $request->selected_ids);
+        $auction->update(['status' => $request->status]);
 
-        switch ($request->action) {
-            case 'delete':
-                $this->authorizeDelete('auctions.delete');
-                $count = $auctions->count();
-
-                foreach ($auctions->get() as $auction) {
-                    $this->deleteAuctionImages($auction->images);
-                }
-
-                $auctions->delete();
-                app(CacheService::class)->clearAuctionCache();
-                return back()->with('success', "{$count} lelang berhasil dihapus.");
-
-            case 'publish':
-                $auctions->update(['status' => 'published', 'published_at' => now()]);
-                app(CacheService::class)->clearAuctionCache();
-                return back()->with('success', 'Lelang terpilih berhasil dipublikasi.');
-
-            case 'unpublish':
-                $auctions->update(['status' => 'draft']);
-                app(CacheService::class)->clearAuctionCache();
-                return back()->with('success', 'Lelang terpilih berhasil di-unpublish.');
-
-            case 'feature':
-                $auctions->update(['is_featured' => true, 'featured_until' => now()->addDays(30)]);
-                return back()->with('success', 'Lelang terpilih berhasil di-feature.');
-
-            case 'unfeature':
-                $auctions->update(['is_featured' => false, 'featured_until' => null]);
-                return back()->with('success', 'Lelang terpilih berhasil di-unfeature.');
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Status lelang berhasil diperbarui.',
+                'status'  => $auction->status,
+            ]);
         }
 
-        return back();
-    }
-
-    private function uploadAuctionImages(array $files): array
-    {
-        $images = [];
-        foreach ($files as $image) {
-            $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('auctions', $filename, 'public');
-
-            try {
-                ImageService::compressForWeb($path, 80, 1200);
-            } catch (\Exception $e) {
-                \Log::error('Failed to optimize auction image: ' . $e->getMessage());
-            }
-
-            $images[] = $path;
-        }
-        return $images;
-    }
-
-    private function deleteAuctionImages(?array $images): void
-    {
-        if (empty($images)) {
-            return;
-        }
-        foreach ($images as $image) {
-            Storage::disk('public')->delete($image);
-        }
+        return back()->with('success', 'Status lelang berhasil diperbarui.');
     }
 }

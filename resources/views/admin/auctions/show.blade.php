@@ -1,721 +1,269 @@
-<x-admin-auction-layout>
-    <x-slot name="header">Detail Lelang Agunan</x-slot>
-    <x-slot name="subtitle">{{ $auction->title }}</x-slot>
+@extends('layouts.admin')
 
-    <div class="max-w-7xl mx-auto animate-fade-in-up">
-        <!-- Breadcrumb -->
-        <nav class="flex mb-6" aria-label="Breadcrumb">
-            <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                <li class="inline-flex items-center">
-                    <a href="{{ route('admin.auctions.index') }}" class="inline-flex items-center text-[13px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:text-orange-600">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                        </svg>
-                        Daftar Lelang
-                    </a>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <svg class="w-6 h-6 dark:text-slate-500 dark:text-slate-500 text-zinc-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="ml-1 text-[13px] font-medium dark:text-slate-400 dark:text-slate-400 text-zinc-500 md:ml-2">Detail Lelang</span>
-                    </div>
-                </li>
-            </ol>
-        </nav>
+@section('title', $auction->title)
 
-        <!-- Action Buttons -->
-        <div class="flex flex-wrap gap-3 mb-6">
-            <a href="{{ route('admin.auctions.edit', $auction) }}"
-               class="btn-auction-admin-primary inline-flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                </svg>
-                Edit Lelang
-            </a>
-            <a href="{{ route('auctions.show', $auction) }}" target="_blank"
-               class="btn-auction-admin-success inline-flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                </svg>
-                Lihat di Frontend
-            </a>
-            <a href="{{ route('admin.auctions.index') }}"
-               class="btn-auction-admin-secondary inline-flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Kembali
-            </a>
-        </div>
-        <!-- Main Content Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <!-- Main Information -->
-            <div class="lg:col-span-2 space-y-6">
-                <!-- Header Card -->
-                <div class="admin-auction-card p-6">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="flex-1">
-                            <h1 class="text-3xl font-bold dark:text-slate-100 dark:text-slate-100 text-zinc-900 mb-2">{{ $auction->title }}</h1>
-                            <p class="text-lg dark:text-slate-300 dark:text-slate-300 text-zinc-600 mb-4">{{ $auction->auction_number }}</p>
-                            @if($auction->description)
-                                <p class="dark:text-slate-300 dark:text-slate-300 text-zinc-700 leading-relaxed">{{ $auction->description }}</p>
-                            @endif
-                        </div>
-                        <div class="flex flex-col space-y-2 ml-4">
-                            @if($auction->is_featured)
-                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-[13px] font-medium bg-yellow-100 text-yellow-800">
-                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    Featured
-                                </span>
-                            @endif
-                            @if($auction->is_urgent)
-                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-[13px] font-medium bg-red-100 text-red-800">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                                    </svg>
-                                    Urgent
-                                </span>
-                            @endif
-                            <span class="status-badge status-{{ $auction->status }}">
-                                {{ $auction->status_label }}
-                            </span>
-                        </div>
-                    </div>
+@section('content')
+@php
+    $images = $auction->images ?? [];
+    $statusColors = [
+        'draft' => 'bg-zinc-100 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300',
+        'published' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+        'registration_open' => 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
+        'registration_closed' => 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+        'sold' => 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+        'cancelled' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+    ];
+    $statusColor = $statusColors[$auction->status] ?? $statusColors['draft'];
+    $rupiah = fn($v) => $v ? 'Rp ' . number_format($v, 0, ',', '.') : '-';
+@endphp
+
+<x-admin.page-header :title="$auction->title" subtitle="{{ $auction->auction_number }}">
+    <x-slot:actions>
+        <a href="{{ route('auctions.show', $auction->slug) }}" target="_blank"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Lihat di Website
+        </a>
+        <x-admin.button href="{{ route('admin.auctions.edit', $auction) }}">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            Edit
+        </x-admin.button>
+    </x-slot:actions>
+</x-admin.page-header>
+
+@if(session('success'))
+    <x-admin.alert type="success" title="Berhasil!" class="mb-5">{{ session('success') }}</x-admin.alert>
+@endif
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    {{-- ═══ KIRI: Detail Utama ═══ --}}
+    <div class="lg:col-span-2 space-y-6">
+
+        {{-- Gallery --}}
+        <x-admin.card :noPadding="true">
+            @if(count($images) > 0)
+            <div x-data="{ active: 0 }">
+                <div class="bg-zinc-100 dark:bg-zinc-800">
+                    @foreach($images as $i => $img)
+                    <img src="{{ \App\Helpers\StorageHelper::url($img) }}"
+                        x-show="active === {{ $i }}" x-cloak
+                        class="w-full h-80 object-cover" alt="">
+                    @endforeach
                 </div>
-
-                <!-- Images Gallery -->
-                @if($auction->images && count($auction->images) > 0)
-                    <div class="admin-auction-card p-6">
-                        <h3 class="text-xl font-semibold mb-4 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            Galeri Foto Objek Lelang
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            @foreach($auction->images as $index => $image)
-                                <div class="relative group cursor-pointer" data-modal="imageModal" data-index="{{ $index }}">
-                                    <img src="{{ \App\Helpers\StorageHelper::url($image) }}"
-                                         alt="Foto {{ $auction->title }} - {{ $index + 1 }}"
-                                         class="w-full h-48 object-cover rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 rounded-xl flex items-center justify-center">
-                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-[11px] px-2 py-1 rounded">
-                                        {{ $index + 1 }}/{{ count($auction->images) }}
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+                @if(count($images) > 1)
+                <div class="p-3 flex gap-2 overflow-x-auto">
+                    @foreach($images as $i => $img)
+                    <button type="button" @click="active = {{ $i }}"
+                        :class="active === {{ $i }} ? 'ring-2 ring-emerald-500' : 'opacity-60 hover:opacity-100'"
+                        class="flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden transition-all">
+                        <img src="{{ \App\Helpers\StorageHelper::url($img) }}" class="w-full h-full object-cover" alt="">
+                    </button>
+                    @endforeach
+                </div>
                 @endif
             </div>
+            @else
+            <div class="h-80 flex items-center justify-center bg-zinc-50 dark:bg-zinc-800 text-zinc-400">
+                <span class="text-sm">Tidak ada gambar</span>
+            </div>
+            @endif
+        </x-admin.card>
 
-            <!-- Sidebar Information -->
-            <div class="space-y-6">
-                <!-- Quick Stats -->
-                <div class="admin-auction-card p-6">
-                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                        Informasi Cepat
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
-                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jenis Aset:</span>
-                            <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->asset_type_label }}</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
-                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Harga Limit:</span>
-                            <span class="font-bold text-amber-600 text-lg">{{ $auction->formatted_limit_price }}</span>
-                        </div>
-                        @if($auction->estimated_price)
-                            <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
-                                <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Nilai Taksiran:</span>
-                                <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->formatted_estimated_price }}</span>
-                            </div>
-                        @endif
-                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
-                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tanggal Lelang:</span>
-                            <div class="text-right">
-                                @if($auction->auction_date)
-                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->auction_date->format('d F Y') }}</div>
-                                    <div class="text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">{{ $auction->auction_date->format('H:i') }} WIB</div>
-                                @else
-                                    <span class="dark:text-slate-400 dark:text-slate-400 text-zinc-500">Belum ditentukan</span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b dark:border-slate-800 border-zinc-100">
-                            <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Lokasi Lelang:</span>
-                            <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 text-right">{{ $auction->auction_location }}</span>
-                        </div>
-                    </div>
+        {{-- Deskripsi --}}
+        @if($auction->description)
+        <x-admin.card title="Deskripsi">
+            <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed whitespace-pre-line">{{ $auction->description }}</p>
+        </x-admin.card>
+        @endif
+
+        {{-- Detail Aset --}}
+        <x-admin.card title="Detail Aset">
+            <dl class="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4">
+                <div>
+                    <dt class="text-xs text-zinc-500 dark:text-zinc-400">Tipe Aset</dt>
+                    <dd class="mt-0.5 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ ucfirst($auction->asset_type ?? '-') }}</dd>
                 </div>
-
-                <!-- Statistics -->
-                <div class="admin-auction-card p-6">
-                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        Statistik
-                    </h3>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="text-center p-3 bg-blue-50 rounded-xl">
-                            <div class="text-2xl font-bold text-blue-600">{{ number_format($auction->view_count) }}</div>
-                            <div class="text-[11px] text-blue-600">Views</div>
-                        </div>
-                        <div class="text-center p-3 bg-emerald-50 rounded-xl">
-                            <div class="text-2xl font-bold text-emerald-600">{{ number_format($auction->interest_count) }}</div>
-                            <div class="text-[11px] text-emerald-600">Interest</div>
-                        </div>
-                        <div class="text-center p-3 bg-purple-50 rounded-xl">
-                            <div class="text-2xl font-bold text-purple-600">{{ number_format($auction->download_count) }}</div>
-                            <div class="text-[11px] text-purple-600">Downloads</div>
-                        </div>
-                    </div>
+                @if($auction->building_condition)
+                <div>
+                    <dt class="text-xs text-zinc-500 dark:text-zinc-400">Kondisi</dt>
+                    <dd class="mt-0.5 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ $auction->building_condition }}</dd>
                 </div>
+                @endif
+                @if($auction->land_area)
+                <div>
+                    <dt class="text-xs text-zinc-500 dark:text-zinc-400">Luas Tanah</dt>
+                    <dd class="mt-0.5 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ number_format($auction->land_area, 0) }} m²</dd>
+                </div>
+                @endif
+                @if($auction->building_area)
+                <div>
+                    <dt class="text-xs text-zinc-500 dark:text-zinc-400">Luas Bangunan</dt>
+                    <dd class="mt-0.5 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ number_format($auction->building_area, 0) }} m²</dd>
+                </div>
+                @endif
+                @if($auction->asset_description)
+                <div class="col-span-2 md:col-span-3">
+                    <dt class="text-xs text-zinc-500 dark:text-zinc-400">Deskripsi Aset</dt>
+                    <dd class="mt-1 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed whitespace-pre-line">{{ $auction->asset_description }}</dd>
+                </div>
+                @endif
+            </dl>
+        </x-admin.card>
 
-                <!-- Contact Information -->
-                <div class="admin-auction-card p-6">
-                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                        </svg>
-                        Kontak
-                    </h3>
-                    <div class="space-y-3">
-                        @if($auction->contacts && is_array($auction->contacts) && count($auction->contacts) > 0)
-                            @foreach($auction->contacts as $index => $contact)
-                                <div class="{{ $index > 0 ? 'pt-3 border-t dark:border-slate-800 border-zinc-100' : '' }}">
-                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $contact['name'] ?? '-' }}</div>
-                                    <div class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600 mb-1">{{ $contact['position'] ?? 'Staf Lelang' }}</div>
-                                    <div class="space-y-1">
-                                        @if(isset($contact['phone']) && $contact['phone'])
-                                            <a href="tel:{{ $contact['phone'] }}" class="flex items-center text-[13px] text-blue-600 hover:text-blue-800">
-                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                                                </svg>
-                                                {{ $contact['phone'] }}
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div>
-                                <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kontak Person:</span>
-                                <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->contact_person }}</div>
-                            </div>
-                            <div>
-                                <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Telepon:</span>
-                                <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">
-                                    <a href="tel:{{ $auction->contact_phone }}" class="text-blue-600 hover:text-blue-800">
-                                        {{ $auction->contact_phone }}
-                                    </a>
-                                </div>
-                            </div>
-                            @if($auction->contact_email)
-                                <div>
-                                    <span class="text-[13px] dark:text-slate-300 dark:text-slate-300 text-zinc-600">Email:</span>
-                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">
-                                        <a href="mailto:{{ $auction->contact_email }}" class="text-blue-600 hover:text-blue-800">
-                                            {{ $auction->contact_email }}
-                                        </a>
-                                    </div>
-                                </div>
-                            @endif
-                        @endif
-                    </div>
+        {{-- Lokasi --}}
+        @if($auction->address || $auction->city || $auction->province)
+        <x-admin.card title="Lokasi">
+            <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4.5 h-4.5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <div>
+                    <p class="text-sm text-zinc-700 dark:text-zinc-300">{{ $auction->address }}</p>
+                    <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                        {{ implode(', ', array_filter([$auction->village, $auction->district, $auction->city, $auction->province, $auction->postal_code])) }}
+                    </p>
                 </div>
             </div>
-        </div>
+        </x-admin.card>
+        @endif
 
-        <!-- Detailed Information Tabs -->
-        <div class="admin-auction-card">
-            <div class="border-b dark:border-slate-700 border-zinc-200 px-6 pt-6">
-                <nav class="-mb-px flex space-x-8">
-                    <button class="tab-button active border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
-                            data-tab="property">
-                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                        Properti
-                    </button>
-                    <button class="tab-button border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
-                            data-tab="auction">
-                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4h3a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3z"></path>
-                        </svg>
-                        Lelang Agunan
-                    </button>
-                    <button class="tab-button border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
-                            data-tab="legal">
-                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        Legal
-                    </button>
-                    <button class="tab-button border-transparent dark:text-slate-400 dark:text-slate-400 text-zinc-500 hover:dark:text-slate-300 dark:text-slate-300 text-zinc-700 hover:dark:border-slate-600 border-zinc-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-[13px]"
-                            data-tab="contact">
-                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                        </svg>
-                        Kontak
-                    </button>
-                </nav>
-            </div>
-
-            <!-- Tab Contents -->
-            <div class="p-6">
-                <div class="tab-content" id="property">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                </svg>
-                                Detail Properti
-                            </h4>
-                            <div class="space-y-3">
-                                @if($auction->asset_category)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kategori:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->asset_category }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->land_area)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Luas Tanah:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ number_format($auction->land_area, 0) }} m²</span>
-                                    </div>
-                                @endif
-                                @if($auction->building_area)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Luas Bangunan:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ number_format($auction->building_area, 0) }} m²</span>
-                                    </div>
-                                @endif
-                                @if($auction->floors)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jumlah Lantai:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->floors }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->bedrooms)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kamar Tidur:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->bedrooms }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->bathrooms)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kamar Mandi:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->bathrooms }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->parking_spaces)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tempat Parkir:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->parking_spaces }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->year_built)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tahun Dibangun:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->year_built }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->building_condition)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kondisi Bangunan:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->building_condition }}</span>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                                Lokasi
-                            </h4>
-                            <div class="space-y-3">
-                                <div>
-                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Alamat:</span>
-                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->full_address }}</div>
-                                </div>
-                                @if($auction->facilities)
-                                    <div>
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Fasilitas:</span>
-                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->facilities }}</div>
-                                    </div>
-                                @endif
-                                @if($auction->nearby_facilities)
-                                    <div>
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Fasilitas Sekitar:</span>
-                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->nearby_facilities }}</div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
+        {{-- Sertifikat --}}
+        @if($auction->certificate_type || $auction->certificate_number)
+        <x-admin.card title="Sertifikat">
+            <dl class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-4">
+                @if($auction->certificate_type)
+                <div>
+                    <dt class="text-xs text-zinc-500 dark:text-zinc-400">Jenis</dt>
+                    <dd class="mt-0.5 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ $auction->certificate_type }}</dd>
                 </div>
-
-                <div class="tab-content hidden" id="auction">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4h3a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3z"></path>
-                                </svg>
-                                Informasi Lelang Agunan
-                            </h4>
-                            <div class="space-y-3">
-                                <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jenis Lelang Agunan:</span>
-                                    <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->auction_type_label }}</span>
-                                </div>
-                                <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Metode:</span>
-                                    <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->auction_method ?? 'Lelang Agunan Terbuka' }}</span>
-                                </div>
-                                @if($auction->registration_start && $auction->registration_end)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Pendaftaran:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->registration_start->format('d/m/Y') }} - {{ $auction->registration_end->format('d/m/Y') }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->viewing_start && $auction->viewing_end)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Viewing:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->viewing_start->format('d/m/Y') }} - {{ $auction->viewing_end->format('d/m/Y') }}</span>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                                </svg>
-                                Harga & Pembayaran
-                            </h4>
-                            <div class="space-y-3">
-                                @if($auction->calculated_deposit)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Uang Jaminan:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->formatted_calculated_deposit }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->increment_amount)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kelipatan Penawaran:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($auction->increment_amount, 0, ',', '.') }}</span>
-                                    </div>
-                                @endif
-                                <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Batas Pelunasan:</span>
-                                    <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->payment_deadline_days }} hari</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                @endif
+                @if($auction->certificate_number)
+                <div>
+                    <dt class="text-xs text-zinc-500 dark:text-zinc-400">Nomor</dt>
+                    <dd class="mt-0.5 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ $auction->certificate_number }}</dd>
                 </div>
+                @endif
+            </dl>
+        </x-admin.card>
+        @endif
 
-                <div class="tab-content hidden" id="legal">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                Sertifikat
-                            </h4>
-                            <div class="space-y-3">
-                                @if($auction->certificate_type)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jenis Sertifikat:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->certificate_type_label }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->certificate_number)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Nomor Sertifikat:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->certificate_number }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->certificate_date)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Tanggal Terbit:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->certificate_date->format('d F Y') }}</span>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                </svg>
-                                Legal
-                            </h4>
-                            <div class="space-y-3">
-                                @if($auction->creditor_name)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Kreditur:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->creditor_name }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->debt_amount)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Jumlah Hutang:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">Rp {{ number_format($auction->debt_amount, 0, ',', '.') }}</span>
-                                    </div>
-                                @endif
-                                @if($auction->court_decision)
-                                    <div class="flex justify-between py-2 border-b dark:border-slate-800 border-zinc-100">
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600">Putusan Pengadilan:</span>
-                                        <span class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900">{{ $auction->court_decision }}</span>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        {{-- Info Debitur --}}
+        @if($auction->debtor_name)
+        <x-admin.card title="Debitur">
+            <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ $auction->debtor_name }}</p>
+        </x-admin.card>
+        @endif
 
-                <div class="tab-content hidden" id="contact">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                </svg>
-                                Penyelenggara
-                            </h4>
-                            <div class="space-y-3">
-                                @if($auction->organizer_name)
-                                    <div>
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Nama:</span>
-                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->organizer_name }}</div>
-                                    </div>
-                                @endif
-                                @if($auction->organizer_address)
-                                    <div>
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Alamat:</span>
-                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->organizer_address }}</div>
-                                    </div>
-                                @endif
-                                @if($auction->organizer_phone)
-                                    <div>
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Telepon:</span>
-                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
-                                            <a href="tel:{{ $auction->organizer_phone }}" class="text-blue-600 hover:text-blue-800">
-                                                {{ $auction->organizer_phone }}
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4 dark:text-slate-100 dark:text-slate-100 text-zinc-900 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                Kontak Person
-                            </h4>
-                            <div class="space-y-3">
-                                <div>
-                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Nama:</span>
-                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->contact_person }}</div>
-                                </div>
-                                @if($auction->contact_position)
-                                    <div>
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Jabatan:</span>
-                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">{{ $auction->contact_position }}</div>
-                                    </div>
-                                @endif
-                                <div>
-                                    <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Telepon:</span>
-                                    <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
-                                        <a href="tel:{{ $auction->contact_phone }}" class="text-blue-600 hover:text-blue-800">
-                                            {{ $auction->contact_phone }}
-                                        </a>
-                                    </div>
-                                </div>
-                                @if($auction->contact_email)
-                                    <div>
-                                        <span class="dark:text-slate-300 dark:text-slate-300 text-zinc-600 block mb-1">Email:</span>
-                                        <div class="font-medium dark:text-slate-100 dark:text-slate-100 text-zinc-900 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 p-3 rounded-xl">
-                                            <a href="mailto:{{ $auction->contact_email }}" class="text-blue-600 hover:text-blue-800">
-                                                {{ $auction->contact_email }}
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Image Modal -->
-        <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
-            <div class="relative max-w-4xl max-h-full">
-                <button data-modal="imageModal" data-action="close" class="absolute top-4 right-4 text-white hover:text-zinc-300 z-10">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-                <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-xl">
-                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                    <button data-modal="imageModal" data-action="prev" class="bg-black bg-opacity-50 text-white p-2 rounded-lg hover:bg-opacity-75">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                    </button>
-                    <button data-modal="imageModal" data-action="next" class="bg-black bg-opacity-50 text-white p-2 rounded-lg hover:bg-opacity-75">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
-    @push('scripts')
-    <script nonce="{{ $nonce }}">
-        document.addEventListener('DOMContentLoaded', function() {
-            // Image gallery data
-            const images = @js($auction->images ? array_map(function($image) { return \App\Helpers\StorageHelper::url($image); }, $auction->images) : []);
-            let currentImageIndex = 0;
+    {{-- ═══ KANAN: Sidebar ═══ --}}
+    <div class="space-y-6">
 
-            // Tab functionality
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const tabId = this.dataset.tab;
+        {{-- Status --}}
+        <x-admin.card title="Status">
+            <div class="flex items-center justify-between">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold {{ $statusColor }}">{{ $auction->status_label ?? ucfirst($auction->status) }}</span>
+                <span class="text-xs text-zinc-500 dark:text-zinc-400">{{ number_format($auction->view_count) }} dilihat</span>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+                @if($auction->is_featured)
+                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 font-medium">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        Unggulan
+                    </span>
+                @endif
+            </div>
+            <div class="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 space-y-2">
+                <div class="flex justify-between text-xs">
+                    <span class="text-zinc-500 dark:text-zinc-400">Dipublikasi</span>
+                    <span class="font-medium text-zinc-700 dark:text-zinc-300">{{ $auction->published_at ? \Carbon\Carbon::parse($auction->published_at)->format('d M Y') : '-' }}</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                    <span class="text-zinc-500 dark:text-zinc-400">Dibuat</span>
+                    <span class="font-medium text-zinc-700 dark:text-zinc-300">{{ $auction->created_at?->format('d M Y') }}</span>
+                </div>
+            </div>
+        </x-admin.card>
 
-                    // Remove active class from all buttons
-                    document.querySelectorAll('.tab-button').forEach(btn => {
-                        btn.classList.remove('active', 'border-orange-500', 'text-orange-600');
-                        btn.classList.add('border-transparent', 'dark:text-slate-400 dark:text-slate-400 text-zinc-500');
-                    });
+        {{-- Info Lelang --}}
+        <x-admin.card title="Informasi Lelang">
+            <dl class="space-y-3">
+                <div class="flex items-start gap-3">
+                    <svg class="w-4 h-4 text-zinc-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <div>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Tanggal Lelang</p>
+                        <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ $auction->auction_date ? \Carbon\Carbon::parse($auction->auction_date)->translatedFormat('l, d M Y') : '-' }}</p>
+                        @if($auction->auction_time)
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400">{{ $auction->auction_time }}</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-4 h-4 text-zinc-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <div>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Lokasi</p>
+                        <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ $auction->auction_location ?? '-' }}</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-4 h-4 text-zinc-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Jenis</p>
+                        <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ ucwords(str_replace('_', ' ', $auction->auction_type ?? '-')) }}</p>
+                    </div>
+                </div>
+                @if($auction->auction_url)
+                <a href="{{ $auction->auction_url }}" target="_blank" class="flex items-center gap-2 text-xs text-emerald-600 hover:text-emerald-700 font-semibold pt-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    Buka Link Lelang
+                </a>
+                @endif
+            </dl>
+        </x-admin.card>
 
-                    // Add active class to clicked button
-                    this.classList.add('active', 'border-orange-500', 'text-orange-600');
-                    this.classList.remove('border-transparent', 'dark:text-slate-400 dark:text-slate-400 text-zinc-500');
+        {{-- Harga --}}
+        <x-admin.card title="Harga">
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-zinc-500 dark:text-zinc-400">Harga Limit</span>
+                    <span class="text-base font-bold text-zinc-900 dark:text-zinc-100">{{ $rupiah($auction->limit_price) }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-zinc-500 dark:text-zinc-400">Uang Jaminan</span>
+                    <span class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ $rupiah($auction->deposit_amount) }}</span>
+                </div>
+            </div>
+        </x-admin.card>
 
-                    // Hide all tab contents
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.add('hidden');
-                    });
+        {{-- Kontak --}}
+        @if($auction->contact_name || $auction->contact_phone || $auction->contact_email)
+        <x-admin.card title="Kontak">
+            <div class="space-y-3 text-sm">
+                @if($auction->contact_name)
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    </div>
+                    <span class="font-semibold text-zinc-900 dark:text-zinc-100">{{ $auction->contact_name }}</span>
+                </div>
+                @endif
+                @if($auction->contact_phone)
+                <div class="flex items-center gap-3">
+                    <svg class="w-4 h-4 text-zinc-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span class="text-zinc-700 dark:text-zinc-300">{{ $auction->contact_phone }}</span>
+                </div>
+                @endif
+                @if($auction->contact_email)
+                <div class="flex items-center gap-3">
+                    <svg class="w-4 h-4 text-zinc-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span class="text-zinc-700 dark:text-zinc-300">{{ $auction->contact_email }}</span>
+                </div>
+                @endif
+            </div>
+        </x-admin.card>
+        @endif
 
-                    // Show selected tab content
-                    document.getElementById(tabId).classList.remove('hidden');
-                });
-            });
-
-            // Set first tab as active
-            const firstTab = document.querySelector('.tab-button[data-tab="property"]');
-            if (firstTab) {
-                firstTab.classList.add('border-orange-500', 'text-orange-600');
-                firstTab.classList.remove('border-transparent', 'dark:text-slate-400 dark:text-slate-400 text-zinc-500');
-            }
-
-            // Image modal functions
-            window.openImageModal = function(index) {
-                if (images.length === 0) return;
-
-                currentImageIndex = index;
-                const modal = document.getElementById('imageModal');
-                const modalImage = document.getElementById('modalImage');
-
-                modalImage.src = images[currentImageIndex];
-                modalImage.alt = `{{ $auction->title }} - Foto ${currentImageIndex + 1}`;
-                modal.classList.remove('hidden');
-
-                // Prevent body scroll
-                document.body.style.overflow = 'hidden';
-            }
-
-            window.closeImageModal = function() {
-                const modal = document.getElementById('imageModal');
-                modal.classList.add('hidden');
-
-                // Restore body scroll
-                document.body.style.overflow = 'auto';
-            }
-
-            window.nextImage = function() {
-                if (images.length === 0) return;
-
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                const modalImage = document.getElementById('modalImage');
-                modalImage.src = images[currentImageIndex];
-                modalImage.alt = `{{ $auction->title }} - Foto ${currentImageIndex + 1}`;
-            }
-
-            window.previousImage = function() {
-                if (images.length === 0) return;
-
-                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                const modalImage = document.getElementById('modalImage');
-                modalImage.src = images[currentImageIndex];
-                modalImage.alt = `{{ $auction->title }} - Foto ${currentImageIndex + 1}`;
-            }
-
-            // Keyboard navigation for image modal
-            document.addEventListener('keydown', function(e) {
-                const modal = document.getElementById('imageModal');
-                if (modal && !modal.classList.contains('hidden')) {
-                    switch(e.key) {
-                        case 'Escape':
-                            closeImageModal();
-                            break;
-                        case 'ArrowLeft':
-                            previousImage();
-                            break;
-                        case 'ArrowRight':
-                            nextImage();
-                            break;
-                    }
-                }
-            });
-
-            // Close modal when clicking outside the image
-            const modalEl = document.getElementById('imageModal');
-            if (modalEl) {
-                modalEl.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        closeImageModal();
-                    }
-                });
-            }
-
-            // Image modal triggers
-            document.querySelectorAll('[data-modal="imageModal"][data-index]').forEach(el => {
-                el.addEventListener('click', function() {
-                    openImageModal(parseInt(this.dataset.index));
-                });
-            });
-            document.querySelector('[data-modal="imageModal"][data-action="close"]')?.addEventListener('click', closeImageModal);
-            document.querySelector('[data-modal="imageModal"][data-action="prev"]')?.addEventListener('click', previousImage);
-            document.querySelector('[data-modal="imageModal"][data-action="next"]')?.addEventListener('click', nextImage);
-        });
-    </script>
-    @endpush
-</x-admin-auction-layout>
+    </div>
+</div>
+@endsection

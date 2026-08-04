@@ -63,7 +63,7 @@ class StorageController extends Controller
 
                 if ($result->isInfected()) {
                     $scanner->quarantine($file);
-                    \Log::warning('Malicious file blocked', [
+                    logger()->warning('Malicious file blocked', [
                         'file' => $file->getClientOriginalName(),
                         'virus' => $result->detail,
                     ]);
@@ -72,10 +72,22 @@ class StorageController extends Controller
                         ->with("error", "File '{$file->getClientOriginalName()}' diblokir: {$result->detail}");
                 }
 
-                $filename = $this->generateUniqueFilename(
-                    $path,
-                    $file->getClientOriginalName(),
-                );
+                // Ekstensi dipaksa dari MIME, bukan dari nama asli client
+                $safeBase = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) ?: 'file';
+                $ext = $this->extensionFromMime($file->getMimeType(), pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
+
+                if ($ext === null) {
+                    logger()->warning('File blocked: tipe tidak diizinkan', [
+                        'file' => $file->getClientOriginalName(),
+                        'mime' => $file->getMimeType(),
+                    ]);
+
+                    return redirect()
+                        ->route("admin.storage.index", ["path" => $path])
+                        ->with("error", "File '{$file->getClientOriginalName()}' diblokir: tipe file tidak diizinkan.");
+                }
+
+                $filename = $this->generateUniqueFilename($path, $safeBase, $ext);
                 $file->storeAs($path, $filename, $this->disk);
                 $uploaded++;
 
@@ -225,7 +237,7 @@ class StorageController extends Controller
             $directories = Storage::disk($this->disk)->directories($path);
             $files = Storage::disk($this->disk)->files($path);
         } catch (\Exception $e) {
-            \Log::error('StorageController: gagal baca direktori', ['path' => $path, 'error' => $e->getMessage()]);
+            logger()->error('StorageController: gagal baca direktori', ['path' => $path, 'error' => $e->getMessage()]);
             return [];
         }
 
@@ -253,7 +265,7 @@ class StorageController extends Controller
                 "size" => $this->safeFileSize($file),
                 "modified" => $this->safeLastModified($file),
                 "extension" => pathinfo($file, PATHINFO_EXTENSION),
-                "url" => Storage::disk($this->disk)->url($file),
+                "url" => Storage::disk($this->disk)->exists($file) ? \App\Helpers\StorageHelper::url($file) : null,
             ];
         }
 
@@ -351,22 +363,57 @@ class StorageController extends Controller
         return $ext ? "{$name}.{$ext}" : $name;
     }
 
+    /**
+     * Paksa ekstensi file dari MIME terdeteksi (anti ekstensi spoofing).
+     * Ekstensi dari nama asli client TIDAK dipercaya — file bernama
+     * "shell.php" berisi JPEG bisa lolos validasi mimes dan tersimpan
+     * sebagai .php bila ini tidak dipaksa.
+     */
+    protected function extensionFromMime(string $mime, ?string $fallbackExt = null): ?string
+    {
+        $map = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+            'image/webp' => 'webp',
+            'application/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'application/vnd.ms-excel' => 'xls',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx',
+            'application/vnd.ms-powerpoint' => 'ppt',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx',
+            'text/plain' => 'txt',
+            'text/csv' => 'csv',
+        ];
+
+        if (isset($map[$mime])) {
+            return $map[$mime];
+        }
+
+        // MIME tidak dikenal (mis. application/octet-stream utk dokumen) —
+        // terima ekstensi client HANYA jika masuk whitelist aman.
+        $fallbackExt = $fallbackExt !== null ? strtolower($fallbackExt) : null;
+        $safeExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv'];
+        if ($fallbackExt !== null && in_array($fallbackExt, $safeExts, true)) {
+            return $fallbackExt === 'jpeg' ? 'jpg' : $fallbackExt;
+        }
+
+        return null;
+    }
+
     protected function generateUniqueFilename(
         string $path,
-        string $filename,
+        string $safeName,
+        string $ext,
     ): string {
-        $name = pathinfo($filename, PATHINFO_FILENAME);
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $safeName = Str::slug($name);
-        $finalName = $ext ? "{$safeName}.{$ext}" : $safeName;
+        $finalName = "{$safeName}.{$ext}";
 
         $fullPath = $path ? "{$path}/{$finalName}" : $finalName;
         $counter = 1;
 
         while (Storage::disk($this->disk)->exists($fullPath)) {
-            $finalName = $ext
-                ? "{$safeName}-{$counter}.{$ext}"
-                : "{$safeName}-{$counter}";
+            $finalName = "{$safeName}-{$counter}.{$ext}";
             $fullPath = $path ? "{$path}/{$finalName}" : $finalName;
             $counter++;
         }
@@ -383,6 +430,8 @@ class StorageController extends Controller
     {
         try {
             if (!auth()->check()) {
+
+
                 return response()->json(
                     [
                         "error" => "Authentication required",
@@ -503,7 +552,7 @@ class StorageController extends Controller
                 "path" => $file,
                 "type" => "file",
                 "extension" => $extension,
-                "url" => Storage::disk($this->disk)->url($file),
+                "url" => \App\Helpers\StorageHelper::url($file),
                 "isImage" => $isImage,
             ];
         }
@@ -577,13 +626,20 @@ class StorageController extends Controller
                 Storage::disk("public")->makeDirectory($path);
             }
 
-            // Generate unique filename
-            $filename =
-                time() .
-                "_" .
-                Str::random(10) .
-                "." .
-                $file->getClientOriginalExtension();
+            // Generate unique filename — ekstensi dipaksa dari MIME
+            $ext = $this->extensionFromMime($file->getMimeType(), pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
+
+            if ($ext === null) {
+                return response()->json(
+                    [
+                        "success" => false,
+                        "message" => "Tipe file tidak diizinkan.",
+                    ],
+                    422,
+                );
+            }
+
+            $filename = time() . "_" . Str::random(10) . "." . $ext;
 
             // Store file
             $storedPath = $file->storeAs($path, $filename, "public");
@@ -598,8 +654,8 @@ class StorageController extends Controller
                 );
             }
 
-            // Get full URL
-            $url = Storage::disk('public')->url($storedPath);
+            // Get full URL (relatif same-origin, konsisten dgn StorageHelper::url)
+            $url = \App\Helpers\StorageHelper::url($storedPath);
 
             return response()->json([
                 "success" => true,
@@ -615,7 +671,7 @@ class StorageController extends Controller
             return response()->json(
                 [
                     "success" => false,
-                    "message" => "Failed to upload image: " . $e->getMessage(),
+                    "message" => "Gagal mengunggah gambar. Silakan coba lagi.",
                 ],
                 500,
             );
@@ -697,7 +753,7 @@ class StorageController extends Controller
                     'name'     => basename($path),
                     'size'     => $this->safeFileSize($path) ?? 0,
                     'modified' => $this->safeLastModified($path),
-                    'url'      => Storage::disk($this->disk)->url($path),
+                    'url'      => \App\Helpers\StorageHelper::url($path),
                     'extension' => strtolower(pathinfo($path, PATHINFO_EXTENSION)),
                 ];
             }
@@ -743,14 +799,27 @@ class StorageController extends Controller
         // Brochure
         Brochure::whereNotNull('file_path')->pluck('file_path')->each(fn($v) => $paths[] = $v);
 
-        // Auction — images & documents berupa array JSON
-        Auction::whereNotNull('images')->get()->each(function ($auction) use (&$paths) {
-            foreach ($auction->images ?? [] as $img) $paths[] = $img;
-        });
-        Auction::whereNotNull('documents')->get()->each(function ($auction) use (&$paths) {
-            foreach ($auction->documents ?? [] as $doc) $paths[] = $doc;
+        // Auction — images berupa array JSON
+        Auction::whereNotNull('images')->pluck('images')->each(function ($v) use (&$paths) {
+            foreach (json_decode($v, true) ?? [] as $img) $paths[] = $img;
         });
 
-        return array_filter(array_unique($paths));
+        // Normalisasi: bentuk relatif disk (tanpa prefix "storage/") agar
+        // cocok dengan path dari getAllStorageFiles(). Tanpa ini, file yang
+        // tersimpan dgn prefix "storage/..." di DB akan dianggap orphaned
+        // padahal masih ter-referensi → berisiko TERHAPUS (data loss).
+        return array_values(array_filter(array_unique(array_map(
+            fn(string $p) => $this->normalizeStoragePath($p),
+            $paths,
+        ))));
+    }
+
+    /**
+     * Normalisasi path ke bentuk relatif disk (tanpa prefix "storage/").
+     */
+    protected function normalizeStoragePath(string $path): string
+    {
+        $path = str_replace('\\', '/', $path);
+        return str_starts_with($path, 'storage/') ? substr($path, 8) : $path;
     }
 }

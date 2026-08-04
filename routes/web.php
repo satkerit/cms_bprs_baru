@@ -279,12 +279,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role', 'idle.timeou
     // Storage Management
     Route::get('storage', [App\Http\Controllers\Admin\StorageController::class, 'index'])->name('storage.index');
     Route::post('storage/upload', [App\Http\Controllers\Admin\StorageController::class, 'upload'])->name('storage.upload')->middleware('throttle:uploads');
-    Route::delete('storage/delete', [App\Http\Controllers\Admin\StorageController::class, 'delete'])->name('storage.delete');
-    Route::put('storage/rename', [App\Http\Controllers\Admin\StorageController::class, 'rename'])->name('storage.rename');
-    Route::post('storage/create-folder', [App\Http\Controllers\Admin\StorageController::class, 'createFolder'])->name('storage.create-folder');
+    Route::delete('storage/delete', [App\Http\Controllers\Admin\StorageController::class, 'delete'])->name('storage.delete')->middleware('throttle:admin.storage');
+    Route::put('storage/rename', [App\Http\Controllers\Admin\StorageController::class, 'rename'])->name('storage.rename')->middleware('throttle:admin.storage');
+    Route::post('storage/create-folder', [App\Http\Controllers\Admin\StorageController::class, 'createFolder'])->name('storage.create-folder')->middleware('throttle:admin.storage');
     Route::get('storage/download', [App\Http\Controllers\Admin\StorageController::class, 'download'])->name('storage.download');
     Route::get('storage/orphaned', [App\Http\Controllers\Admin\StorageController::class, 'orphanedFiles'])->name('storage.orphaned');
-    Route::post('storage/cleanup-orphaned', [App\Http\Controllers\Admin\StorageController::class, 'cleanupOrphaned'])->name('storage.cleanup-orphaned');
+    Route::post('storage/cleanup-orphaned', [App\Http\Controllers\Admin\StorageController::class, 'cleanupOrphaned'])->name('storage.cleanup-orphaned')->middleware('throttle:admin.storage');
 
     // Audit Trails Management
     Route::get('audit-trails', [App\Http\Controllers\Admin\AuditTrailController::class, 'index'])->name('audit-trails.index');

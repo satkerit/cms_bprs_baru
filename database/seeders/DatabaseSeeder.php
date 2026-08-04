@@ -22,11 +22,11 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             HeroSlideSeeder::class,
             OfficeSeeder::class,
-            AuctionSeeder::class,
             NewsSeeder::class,
             FinancingConfigSeeder::class,
             KasKelilingSeeder::class,
             BrochureSeeder::class,
+            AuctionSeeder::class,
             SiteSettingSeeder::class,
         ]);
     }

@@ -67,13 +67,24 @@ class StorageServeController extends Controller
         $lastModified = Storage::disk('public')->lastModified($path);
         $fileSize = Storage::disk('public')->size($path);
 
-        // Serve file dengan header caching
-        return response()->file($fullPath, [
+        $headers = [
             'Content-Type' => $mimeType,
             'Content-Length' => $fileSize,
             'Cache-Control' => 'public, max-age=31536000, immutable',
             'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
             'ETag' => '"' . md5($lastModified . $fileSize) . '"',
-        ]);
+        ];
+
+        // SVG berpotensi membawa script (stored XSS) jika disajikan inline.
+        // Paksa sebagai attachment + sandbox agar tidak dieksekusi di konteks origin.
+        if (in_array($extension, ['svg'], true)) {
+            $headers['Content-Disposition'] = 'attachment; filename="' . basename($path) . '"';
+            $headers['Content-Security-Policy'] = 'sandbox';
+            $headers['X-Content-Type-Options'] = 'nosniff';
+            $headers['Cache-Control'] = 'private, no-store';
+        }
+
+        // Serve file dengan header caching
+        return response()->file($fullPath, $headers);
     }
 }

@@ -33,7 +33,7 @@
 
     {{-- Description --}}
     @if($description)
-        <p class="text-[13px] text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">{{ $description }}</p>
+        <p class="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed">{{ $description }}</p>
     @endif
 
     {{-- Action Button --}}

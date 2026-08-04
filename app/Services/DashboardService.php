@@ -27,7 +27,7 @@ class DashboardService
             return [
                 'newsCount' => News::count(),
                 'productCount' => Product::count(),
-                'upcomingAuctions' => Auction::where('status', 'upcoming')->count(),
+                'upcomingAuctions' => Auction::whereIn('status', ['published','registration_open','registration_closed'])->count(),
                 'pendingComplaints' => Complaint::where('status', 'pending')->count(),
                 'recentNews' => News::latest()->take(5)->get(),
                 'recentComplaints' => Complaint::latest()->take(5)->get(),

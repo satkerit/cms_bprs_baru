@@ -1,341 +1,297 @@
 @php
-    $inputClass = 'w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-900 dark:text-slate-100';
-    $labelClass = 'block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1';
-    $old = fn($field, $default = null) => old($field, $auction?->{$field} ?? $default);
+    $isEdit = isset($auction) && $auction->exists;
+    $model = $isEdit ? $auction : null;
+    $inputClass = 'w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500';
+    $labelClass = 'block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5';
+    $sectionHeader = 'text-sm font-semibold text-zinc-900 dark:text-zinc-100';
+    function auctionValue($model, $key, $default = '') {
+        if ($model) {
+            $v = $model->{$key} ?? $default;
+            if ($key === 'auction_time' && $v) return \Carbon\Carbon::parse($v)->format('H:i');
+            if (in_array($key, ['auction_date','certificate_date','featured_until']) && $v) return \Carbon\Carbon::parse($v)->format('Y-m-d');
+            return $v ?? $default;
+        }
+        return old($key, $default);
+    }
 @endphp
 
-{{-- ==================== SEKSI 1: INFORMASI DASAR ==================== --}}
-<x-admin.card title="Informasi Dasar">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="space-y-6" x-data="auctionForm('{{ request()->routeIs('admin.auctions.edit') ? 'edit' : 'create' }}')">
 
-        {{-- Judul --}}
-        <div class="md:col-span-2">
-            <label class="{{ $labelClass }}">Judul Lelang <span class="text-red-500">*</span></label>
-            <input type="text" name="title" value="{{ $old('title') }}" required
-                placeholder="cth: Rumah Tinggal 2 Lantai di Pangkalpinang"
-                class="{{ $inputClass }} @error('title') border-red-400 @enderror">
-            @error('title') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Nomor Lelang --}}
-        <div>
-            <label class="{{ $labelClass }}">Nomor Lelang <span class="text-red-500">*</span></label>
-            <input type="text" name="auction_number" value="{{ $old('auction_number') }}" required
-                placeholder="cth: LLG-2024-001"
-                class="{{ $inputClass }} @error('auction_number') border-red-400 @enderror">
-            @error('auction_number') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Status --}}
-        <div>
-            <label class="{{ $labelClass }}">Status <span class="text-red-500">*</span></label>
-            <select name="status" required class="{{ $inputClass }} @error('status') border-red-400 @enderror">
-                <option value="">-- Pilih Status --</option>
-                @foreach(\App\Enums\AuctionStatus::cases() as $s)
-                    <option value="{{ $s->value }}" @selected($old('status') === $s->value)>{{ $s->label() }}</option>
-                @endforeach
-            </select>
-            @error('status') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Jenis Aset --}}
-        <div>
-            <label class="{{ $labelClass }}">Jenis Aset <span class="text-red-500">*</span></label>
-            <select name="asset_type" required class="{{ $inputClass }} @error('asset_type') border-red-400 @enderror">
-                <option value="">-- Pilih Jenis Aset --</option>
-                @foreach(\App\Enums\AssetType::cases() as $a)
-                    <option value="{{ $a->value }}" @selected($old('asset_type') === $a->value)>{{ $a->label() }}</option>
-                @endforeach
-            </select>
-            @error('asset_type') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Unggulan --}}
-        <div class="flex items-center gap-3">
-            <label class="relative inline-flex items-center cursor-pointer">
-                <input type="hidden" name="is_featured" value="0">
-                <input type="checkbox" name="is_featured" value="1"
-                    @if($old('is_featured', false)) checked @endif
-                    class="sr-only peer">
-                <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:ring-2 peer-focus:ring-emerald-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-            </label>
-            <span class="text-sm text-slate-700 dark:text-slate-300">Tandai sebagai Unggulan</span>
-        </div>
-
-        {{-- Deskripsi --}}
-        <div class="md:col-span-2">
-            <label class="{{ $labelClass }}">Deskripsi</label>
-            <textarea name="description" rows="5"
-                placeholder="Deskripsi lengkap tentang aset lelang..."
-                class="{{ $inputClass }} @error('description') border-red-400 @enderror">{{ $old('description') }}</textarea>
-            @error('description') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-    </div>
-</x-admin.card>
-
-{{-- ==================== SEKSI 2: DETAIL ASET ==================== --}}
-<x-admin.card title="Detail Aset">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-        {{-- Jenis Sertifikat --}}
-        <div>
-            <label class="{{ $labelClass }}">Jenis Sertifikat</label>
-            <select name="certificate_type" class="{{ $inputClass }}">
-                <option value="">-- Pilih Sertifikat --</option>
-                @foreach(\App\Enums\CertificateType::cases() as $c)
-                    <option value="{{ $c->value }}" @selected($old('certificate_type') === $c->value)>{{ $c->label() }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        {{-- Nomor Sertifikat --}}
-        <div>
-            <label class="{{ $labelClass }}">Nomor Sertifikat</label>
-            <input type="text" name="certificate_number" value="{{ $old('certificate_number') }}"
-                placeholder="cth: 1234/SHM/2020"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Luas Tanah --}}
-        <div>
-            <label class="{{ $labelClass }}">Luas Tanah (m²)</label>
-            <input type="number" name="land_area" value="{{ $old('land_area') }}"
-                min="0" step="0.01" placeholder="cth: 120"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Luas Bangunan --}}
-        <div>
-            <label class="{{ $labelClass }}">Luas Bangunan (m²)</label>
-            <input type="number" name="building_area" value="{{ $old('building_area') }}"
-                min="0" step="0.01" placeholder="cth: 90"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Alamat --}}
-        <div class="md:col-span-2">
-            <label class="{{ $labelClass }}">Alamat <span class="text-red-500">*</span></label>
-            <input type="text" name="address" value="{{ $old('address') }}" required
-                placeholder="Jl. Contoh No. 1, Kelurahan, Kecamatan"
-                class="{{ $inputClass }} @error('address') border-red-400 @enderror">
-            @error('address') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Kota --}}
-        <div>
-            <label class="{{ $labelClass }}">Kota / Kabupaten</label>
-            <input type="text" name="city" value="{{ $old('city') }}"
-                placeholder="cth: Pangkalpinang"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Provinsi --}}
-        <div>
-            <label class="{{ $labelClass }}">Provinsi</label>
-            <input type="text" name="province" value="{{ $old('province') }}"
-                placeholder="cth: Kep. Bangka Belitung"
-                class="{{ $inputClass }}">
-        </div>
-
-    </div>
-</x-admin.card>
-
-{{-- ==================== SEKSI 3: PELAKSANAAN LELANG ==================== --}}
-<x-admin.card title="Pelaksanaan Lelang">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-        {{-- Tanggal Lelang --}}
-        <div>
-            <label class="{{ $labelClass }}">Tanggal Lelang <span class="text-red-500">*</span></label>
-            <input type="date" name="auction_date"
-                value="{{ $auction?->auction_date ? $auction->auction_date->format('Y-m-d') : old('auction_date') }}"
-                required
-                class="{{ $inputClass }} @error('auction_date') border-red-400 @enderror">
-            @error('auction_date') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Waktu Lelang --}}
-        <div>
-            <label class="{{ $labelClass }}">Waktu Lelang</label>
-            <input type="time" name="auction_time"
-                value="{{ $old('auction_time', $auction?->auction_time) }}"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Lokasi Lelang --}}
-        <div class="md:col-span-2">
-            <label class="{{ $labelClass }}">Lokasi / Tempat Lelang</label>
-            <input type="text" name="auction_location"
-                value="{{ $old('auction_location', $auction?->auction_location) }}"
-                placeholder="cth: Kantor KPKNL Pangkalpinang / Online via url"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Tipe Lelang --}}
-        <div>
-            <label class="{{ $labelClass }}">Tipe Lelang</label>
-            <select name="auction_type" class="{{ $inputClass }}">
-                <option value="">-- Pilih Tipe --</option>
-                @foreach(\App\Enums\AuctionType::cases() as $t)
-                    <option value="{{ $t->value }}" @selected($old('auction_type', $auction?->auction_type) === $t->value)>{{ $t->label() }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        {{-- Metode Lelang --}}
-        <div>
-            <label class="{{ $labelClass }}">Metode Pelaksanaan</label>
-            <select name="auction_method" class="{{ $inputClass }}">
-                <option value="">-- Pilih Metode --</option>
-                @foreach([
-                    'open_bidding'    => 'Open Bidding (Terbuka)',
-                    'closed_bidding'  => 'Closed Bidding (Tertutup)',
-                    'email'           => 'Penawaran via Email',
-                    'internet'        => 'Lelang Internet',
-                    'langsung'        => 'Tatap Muka / Langsung',
-                ] as $val => $lbl)
-                    <option value="{{ $val }}" @selected($old('auction_method', $auction?->auction_method) === $val)>{{ $lbl }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        {{-- Harga Limit --}}
-        <div>
-            <label class="{{ $labelClass }}">Harga Limit (Rp) <span class="text-red-500">*</span></label>
-            <input type="number" name="limit_price" value="{{ $old('limit_price', $auction?->limit_price) }}"
-                min="0" step="1" required
-                placeholder="cth: 500000000"
-                class="{{ $inputClass }} @error('limit_price') border-red-400 @enderror">
-            @error('limit_price') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Harga Estimasi --}}
-        <div>
-            <label class="{{ $labelClass }}">Harga Estimasi (Rp)</label>
-            <input type="number" name="estimated_price" value="{{ $old('estimated_price', $auction?->estimated_price) }}"
-                min="0" step="1"
-                placeholder="cth: 600000000"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Uang Jaminan --}}
-        <div>
-            <label class="{{ $labelClass }}">Uang Jaminan Penawaran (Rp)</label>
-            <input type="number" name="deposit_amount" value="{{ $old('deposit_amount', $auction?->deposit_amount) }}"
-                min="0" step="1"
-                placeholder="cth: 50000000"
-                class="{{ $inputClass }}">
-        </div>
-
-    </div>
-</x-admin.card>
-
-{{-- ==================== SEKSI 4: KONTAK & MEDIA ==================== --}}
-<x-admin.card title="Kontak & Media">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-        {{-- Contact Person --}}
-        <div class="md:col-span-2">
-            <label class="{{ $labelClass }}">Nama Contact Person</label>
-            <input type="text" name="contact_person" value="{{ $old('contact_person', $auction?->contact_person) }}"
-                placeholder="cth: Budi Santoso"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Telepon --}}
-        <div>
-            <label class="{{ $labelClass }}">Nomor Telepon</label>
-            <input type="text" name="contact_phone" value="{{ $old('contact_phone', $auction?->contact_phone) }}"
-                placeholder="cth: 0821-xxxx-xxxx"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- WhatsApp --}}
-        <div>
-            <label class="{{ $labelClass }}">Nomor WhatsApp</label>
-            <input type="text" name="contact_whatsapp" value="{{ $old('contact_whatsapp', $auction?->contact_whatsapp) }}"
-                placeholder="cth: 628xx (format internasional)"
-                class="{{ $inputClass }}">
-        </div>
-
-        {{-- Upload Foto --}}
-        <div class="md:col-span-2">
-            <label class="{{ $labelClass }}">Upload Foto Aset</label>
-            <input type="file" name="images[]" multiple accept="image/*"
-                class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-emerald-50 file:text-emerald-700 dark:file:bg-emerald-900/30 dark:file:text-emerald-400 hover:file:bg-emerald-100 cursor-pointer">
-            <p class="mt-1 text-xs text-slate-500">Format: JPEG, PNG, WebP. Maksimal 5MB per file.</p>
-            @error('images.*') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Preview gambar existing (saat edit) --}}
-        @if($auction && is_array($auction->images) && count($auction->images))
-        <div class="md:col-span-2">
-            <label class="{{ $labelClass }}">Foto Saat Ini</label>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-1">
-                @foreach($auction->images as $i => $img)
-                    @php $url = $auction->thumbnailUrl($i) ?: $auction->imageUrl($i); @endphp
-                    @if($url)
-                    <div class="relative group rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 aspect-video">
-                        <img src="{{ $url }}" alt="Foto {{ $i+1 }}" class="w-full h-full object-cover">
-                        <label class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
-                            <input type="checkbox" name="delete_images[]" value="{{ $img }}"
-                                class="sr-only peer">
-                            <div class="peer-checked:bg-red-500 bg-white/20 border-2 border-white rounded-full w-7 h-7 flex items-center justify-center transition-colors">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                            </div>
-                            <span class="ml-1.5 text-white text-xs font-medium">Hapus</span>
-                        </label>
-                    </div>
-                    @endif
-                @endforeach
+    @if($isEdit && !empty($model->images))
+    <x-admin.card title="Gambar Saat Ini">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            @foreach($model->images as $idx => $img)
+            @php $imgUrl = \App\Helpers\StorageHelper::url($img); @endphp
+            <div class="relative rounded-xl border border-zinc-200 dark:border-zinc-700 overflow-hidden"
+                :class="deleted[{{ $idx }}] ? 'ring-2 ring-red-500 opacity-60' : ''">
+                <img src="{{ $imgUrl }}" alt="" class="w-full h-28 object-cover">
+                {{-- Tombol hapus selalu terlihat --}}
+                <button type="button" @click="toggleDelete({{ $idx }})"
+                    :title="deleted[{{ $idx }}] ? 'Batalkan penghapusan' : 'Hapus gambar'"
+                    class="absolute top-1.5 left-1.5 p-1.5 rounded-full transition-colors"
+                    :class="deleted[{{ $idx }}] ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'bg-white/90 text-red-600 shadow-sm hover:bg-red-500 hover:text-white dark:bg-zinc-800/90'">
+                    <svg x-show="deleted[{{ $idx }}]" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    <svg x-show="!deleted[{{ $idx }}]" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+                {{-- Overlay besar saat hover / ditandai hapus --}}
+                <button type="button"
+                    @click="toggleDelete({{ $idx }})"
+                    class="absolute inset-0 flex items-center justify-center font-semibold text-xs transition-all"
+                    :class="deleted[{{ $idx }}] ? 'bg-red-500/70 text-white' : 'bg-red-500/0 text-transparent hover:bg-red-500/60 hover:text-white'">
+                    <span x-show="deleted[{{ $idx }}]">Batal Hapus</span>
+                    <span x-show="!deleted[{{ $idx }}]">Hapus</span>
+                </button>
+                <input type="hidden" name="deleted_images[]" value="{{ $img }}" :disabled="!deleted[{{ $idx }}]">
+                <span class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-zinc-900/60 text-white text-[10px]">#{{ $idx+1 }}</span>
             </div>
-            <p class="mt-1.5 text-xs text-slate-500">Centang foto untuk menghapusnya saat menyimpan.</p>
+            @endforeach
         </div>
-        @endif
+        <p class="mt-3 text-xs text-zinc-500 dark:text-zinc-400">Klik ikon tempat sampah untuk menandai penghapusan. Gambar yang ditandai dihapus permanen setelah tombol "Simpan Perubahan".</p>
+    </x-admin.card>
+    @endif
 
-    </div>
-</x-admin.card>
-
-{{-- ==================== SEKSI 5: HASIL LELANG (hanya tampil saat status=sold) ==================== --}}
-<div x-data="{ status: '{{ $old('status', $auction?->status?->value) }}' }" x-show="status === 'sold'" x-transition>
-    <x-admin.card title="Hasil Lelang">
-        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Isi bagian ini setelah lelang berhasil terjual.</p>
+    {{-- ═══════════ 1. INFORMASI DASAR ═══════════ --}}
+    <x-admin.card title="Informasi Dasar">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
-                <label class="{{ $labelClass }}">Harga Menang (Rp)</label>
-                <input type="number" name="winning_bid"
-                    value="{{ $old('winning_bid', $auction?->winning_bid) }}"
-                    min="0" step="1"
-                    placeholder="cth: 550000000"
-                    class="{{ $inputClass }}">
+                <label class="{{ $labelClass }}">Judul Lelang <span class="text-red-500">*</span></label>
+                <input type="text" name="title" value="{{ auctionValue($model, 'title') }}" required class="{{ $inputClass }}" placeholder="Contoh: Rumah Tinggal SHM di Pangkalpinang">
             </div>
             <div>
-                <label class="{{ $labelClass }}">Nama Pemenang</label>
-                <input type="text" name="winner_name"
-                    value="{{ $old('winner_name', $auction?->winner_name) }}"
-                    placeholder="Nama peserta pemenang"
-                    class="{{ $inputClass }}">
+                <label class="{{ $labelClass }}">Nomor Lelang <span class="text-red-500">*</span></label>
+                <input type="text" name="auction_number" value="{{ auctionValue($model, 'auction_number') }}" required class="{{ $inputClass }}" placeholder="Contoh: 012/2026/BBN-II">
             </div>
             <div>
-                <label class="{{ $labelClass }}">Tanggal Terjual</label>
-                <input type="date" name="sold_at"
-                    value="{{ $auction?->sold_at ? $auction->sold_at->format('Y-m-d') : old('sold_at') }}"
-                    class="{{ $inputClass }}">
+                <label class="{{ $labelClass }}">Status <span class="text-red-500">*</span></label>
+                <select name="status" class="{{ $inputClass }}">
+                    @foreach($statuses as $s)
+                        <option value="{{ $s->value }}" @selected(auctionValue($model, 'status', 'draft') === $s->value)>{{ $s->label() }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="mt-5">
+            <label class="{{ $labelClass }}">Deskripsi Singkat</label>
+            <textarea name="description" rows="3" class="{{ $inputClass }} resize-none" placeholder="Ringkasan singkat objek lelang yang ditampilkan di halaman publik.">{{ auctionValue($model, 'description') }}</textarea>
+        </div>
+    </x-admin.card>
+
+    {{-- ═══════════ 2. DETAIL ASET ═══════════ --}}
+    <x-admin.card title="Detail Aset">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label class="{{ $labelClass }}">Tipe Aset <span class="text-red-500">*</span></label>
+                <select name="asset_type" class="{{ $inputClass }}">
+                    @foreach($assetTypes as $type)
+                        <option value="{{ $type }}" @selected(auctionValue($model, 'asset_type') === $type)>{{ ucfirst($type) }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Luas Tanah (m²)</label>
+                <input type="number" step="0.01" name="land_area" value="{{ auctionValue($model, 'land_area') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Luas Bangunan (m²)</label>
+                <input type="number" step="0.01" name="building_area" value="{{ auctionValue($model, 'building_area') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Kondisi Bangunan</label>
+                <input type="text" name="building_condition" value="{{ auctionValue($model, 'building_condition') }}" class="{{ $inputClass }}" placeholder="Bagus, Sedang, dll">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Jenis Sertifikat</label>
+                <select name="certificate_type" class="{{ $inputClass }}">
+                    <option value="">Pilih</option>
+                    @foreach(['SHM','SHGB','SHP','AJB','PPJB','Girik','BPKB','Lainnya'] as $ct)
+                        <option value="{{ $ct }}" @selected(auctionValue($model, 'certificate_type') === $ct)>{{ $ct }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Nomor Sertifikat</label>
+                <input type="text" name="certificate_number" value="{{ auctionValue($model, 'certificate_number') }}" class="{{ $inputClass }}">
+            </div>
+        </div>
+        <div class="mt-5">
+            <label class="{{ $labelClass }}">Deskripsi Aset</label>
+            <textarea name="asset_description" rows="4" class="{{ $inputClass }} resize-none" placeholder="Kondisi fisik, spesifikasi, dan hal penting lain tentang objek lelang.">{{ auctionValue($model, 'asset_description') }}</textarea>
+        </div>
+    </x-admin.card>
+
+    {{-- ═══════════ 3. LOKASI ASET ═══════════ --}}
+    <x-admin.card title="Lokasi Aset">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="md:col-span-3">
+                <label class="{{ $labelClass }}">Alamat Lengkap <span class="text-red-500">*</span></label>
+                <input type="text" name="address" value="{{ auctionValue($model, 'address') }}" required class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Kelurahan</label>
+                <input type="text" name="village" value="{{ auctionValue($model, 'village') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Kecamatan</label>
+                <input type="text" name="district" value="{{ auctionValue($model, 'district') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Kota/Kabupaten</label>
+                <input type="text" name="city" value="{{ auctionValue($model, 'city') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Provinsi</label>
+                <input type="text" name="province" value="{{ auctionValue($model, 'province') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Kode Pos</label>
+                <input type="text" name="postal_code" value="{{ auctionValue($model, 'postal_code') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Nama Debitur</label>
+                <input type="text" name="debtor_name" value="{{ auctionValue($model, 'debtor_name') }}" class="{{ $inputClass }}" placeholder="Pemilik agunan">
             </div>
         </div>
     </x-admin.card>
+
+    {{-- ═══════════ 4. INFORMASI LELANG ═══════════ --}}
+    <x-admin.card title="Informasi Lelang">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label class="{{ $labelClass }}">Jenis Lelang <span class="text-red-500">*</span></label>
+                <select name="auction_type" class="{{ $inputClass }}">
+                    @foreach(['eksekusi_hak_tanggungan' => 'Eksekusi Hak Tanggungan','eksekusi_fidusia' => 'Eksekusi Fidusia','eksekusi_hipotik' => 'Eksekusi Hipotik','non_eksekusi_wajib' => 'Non Eksekusi Wajib','non_eksekusi_sukarela' => 'Non Eksekusi Sukarela'] as $atVal => $atLabel)
+                        <option value="{{ $atVal }}" @selected(auctionValue($model, 'auction_type', 'eksekusi_hak_tanggungan') === $atVal)>{{ $atLabel }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Tanggal Lelang</label>
+                <input type="date" name="auction_date" value="{{ auctionValue($model, 'auction_date') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Waktu Lelang</label>
+                <input type="time" name="auction_time" value="{{ auctionValue($model, 'auction_time') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Lokasi Pelaksanaan <span class="text-red-500">*</span></label>
+                <input type="text" name="auction_location" value="{{ auctionValue($model, 'auction_location') }}" required class="{{ $inputClass }}" placeholder="Contoh: Kantor KPKNL Pangkalpinang">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">URL Lelang (KPKNL)</label>
+                <input type="url" name="auction_url" value="{{ auctionValue($model, 'auction_url') }}" class="{{ $inputClass }}" placeholder="https://...">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Penyelenggara</label>
+                <input type="text" name="organizer_name" value="{{ auctionValue($model, 'organizer_name') }}" class="{{ $inputClass }}" placeholder="Contoh: KPKNL Pangkalpinang">
+            </div>
+        </div>
+    </x-admin.card>
+
+    {{-- ═══════════ 5. HARGA & JAMINAN ═══════════ --}}
+    <x-admin.card title="Harga & Jaminan">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label class="{{ $labelClass }}">Harga Limit (Rp)</label>
+                <input type="text" name="limit_price" value="{{ auctionValue($model, 'limit_price') }}" class="{{ $inputClass }}" placeholder="500000000">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Harga Estimasi (Rp)</label>
+                <input type="text" name="estimated_price" value="{{ auctionValue($model, 'estimated_price') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Uang Jaminan (Rp)</label>
+                <input type="text" name="deposit_amount" value="{{ auctionValue($model, 'deposit_amount') }}" class="{{ $inputClass }}">
+            </div>
+        </div>
+    </x-admin.card>
+
+    {{-- ═══════════ 6. KONTAK ═══════════ --}}
+    <x-admin.card title="Kontak" subtitle="Informasi kontak yang ditampilkan kepada publik untuk pertanyaan lelang">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label class="{{ $labelClass }}">Nama Kontak Person</label>
+                <input type="text" name="contact_name" value="{{ auctionValue($model, 'contact_name') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Telepon</label>
+                <input type="text" name="contact_phone" value="{{ auctionValue($model, 'contact_phone') }}" class="{{ $inputClass }}">
+            </div>
+            <div>
+                <label class="{{ $labelClass }}">Email</label>
+                <input type="email" name="contact_email" value="{{ auctionValue($model, 'contact_email') }}" class="{{ $inputClass }}">
+            </div>
+        </div>
+    </x-admin.card>
+
+    {{-- ═══════════ 7. GAMBAR ASET ═══════════ --}}
+    <x-admin.card title="Gambar Aset" subtitle="Opsional — bisa unggah banyak gambar sekaligus (format: JPEG/PNG/JPG/WebP)">
+        <div>
+            <div class="flex flex-wrap">
+                <label class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-dashed border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 text-sm font-medium hover:border-emerald-500 hover:text-emerald-600 cursor-pointer transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    Pilih Gambar
+                    <input type="file" name="images[]" accept="image/*" multiple class="sr-only" @change="images = Array.from($event.target.files)">
+                </label>
+                <span class="text-xs text-zinc-400 dark:text-zinc-500 self-center" x-text="images.length > 0 ? images.length + ' gambar dipilih' : 'Belum ada gambar dipilih'"></span>
+            </div>
+            <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                <template x-for="(img, i) in images" :key="img.name + i">
+                    <div class="relative rounded-xl border border-zinc-200 dark:border-zinc-700 overflow-hidden aspect-square">
+                        <img :src="URL.createObjectURL(img)" class="w-full h-full object-cover" alt="">
+                        <button type="button" @click="images.splice(i, 1)"
+                            class="absolute top-1.5 right-1.5 p-1 rounded-full bg-zinc-900/60 text-white hover:bg-red-500 transition-colors">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </x-admin.card>
+
+    {{-- ═══════════ 8. PUBLIKASI ═══════════ --}}
+    <x-admin.card title="Publikasi">
+        <div class="space-y-5">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" name="is_featured" value="1" @checked(auctionValue($model, 'is_featured')) class="rounded border-zinc-300 dark:border-zinc-600 text-emerald-600 focus:ring-emerald-500">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Tampilkan di Unggulan</span>
+            </label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <label class="{{ $labelClass }}">Meta Title</label>
+                    <input type="text" name="meta_title" value="{{ auctionValue($model, 'meta_title') }}" class="{{ $inputClass }}">
+                </div>
+                <div>
+                    <label class="{{ $labelClass }}">Meta Description</label>
+                    <textarea name="meta_description" rows="3" class="{{ $inputClass }} resize-none">{{ auctionValue($model, 'meta_description') }}</textarea>
+                </div>
+            </div>
+        </div>
+    </x-admin.card>
+
+    {{-- Submit --}}
+    <div class="flex items-center justify-end gap-3 sticky bottom-4">
+        <a href="{{ route('admin.auctions.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">
+            Batal
+        </a>
+        <x-admin.button type="submit" variant="default">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            {{ $isEdit ? 'Simpan Perubahan' : 'Simpan Lelang' }}
+        </x-admin.button>
+    </div>
+
+    <input type="hidden" name="published_at" value="{{ auctionValue($model, 'published_at') ? \Carbon\Carbon::parse($model->published_at)->format('Y-m-d H:i:s') : now() }}">
 </div>
 
-{{-- Listen perubahan status untuk show/hide seksi hasil lelang via Alpine dispatch --}}
 @push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const statusSelect = document.querySelector('select[name="status"]');
-        if (!statusSelect) return;
-        statusSelect.addEventListener('change', function () {
-            statusSelect.dispatchEvent(new Event('input', { bubbles: true }));
-        });
-    });
+<script nonce="{{ $nonce }}">
+    function auctionForm(mode) {
+        return {
+            images: [],
+            deleted: [],
+            toggleDelete(idx) {
+                this.deleted[idx] = !this.deleted[idx];
+            }
+        };
+    }
 </script>
 @endpush

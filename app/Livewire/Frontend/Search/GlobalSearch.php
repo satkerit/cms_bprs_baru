@@ -71,7 +71,7 @@ class GlobalSearch extends Component
                 'title' => $item->title,
                 'excerpt' => Str::limit($item->description, 100),
                 'url' => route('auctions.show', $item->slug),
-                'date' => $item->auction_date->format('d M Y'),
+                'date' => $item->auction_date ? $item->auction_date->format('d M Y') : null,
             ]);
 
         $this->results = $news->concat($products)->concat($auctions)->toArray();
