@@ -279,7 +279,7 @@
         </x-admin.button>
     </div>
 
-    <input type="hidden" name="published_at" value="{{ auctionValue($model, 'published_at') ? \Carbon\Carbon::parse($model->published_at)->format('Y-m-d H:i:s') : now() }}">
+    <input type="hidden" name="published_at" value="{{ $model?->published_at ? \Carbon\Carbon::parse($model->published_at)->format('Y-m-d H:i:s') : old('published_at', now()) }}">
 </div>
 
 @push('scripts')
