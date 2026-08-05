@@ -223,7 +223,7 @@
                             @endif
 
                             @if($auction->auction_url)
-                            <a href="{{ $auction->auction_url }}" target="_blank" rel="noopener"
+                            <a href="{{ $auction->auction_url }}" target="_blank" rel="nofollow noopener noreferrer"
                                 class="mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-emerald-200 dark:border-emerald-900/60 text-emerald-700 dark:text-emerald-300 font-bold hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all duration-300 text-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                                 Lihat Lelang Resmi

@@ -91,7 +91,7 @@
                             @endphp
                             @foreach($socialLinks as $name => $link)
                                 @if($link['url'])
-                                <a href="{{ $link['url'] }}" target="_blank"
+                                <a href="{{ $link['url'] }}" target="_blank" rel="nofollow noopener noreferrer"
                                    class="group relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-white/5 border border-white/10 hover:-translate-y-1"
                                    aria-label="{{ ucfirst($name) }}">
                                     {{-- Glow on hover --}}

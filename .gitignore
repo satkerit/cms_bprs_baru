@@ -98,5 +98,5 @@ Homestead.yaml
 /obsidian-vault*
 /graphify-out
 /.ulpi
-
+/tests/*
 

@@ -76,6 +76,15 @@ class NewsController extends Controller
                     '@type' => 'Person',
                     'name' => $news->author ?? 'Admin BPRS Babel'
                 ]
+            ])
+            ->addSchema([
+                '@context' => 'https://schema.org',
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => route('home')],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => 'Berita & Artikel', 'item' => route('news.index')],
+                    ['@type' => 'ListItem', 'position' => 3, 'name' => $news->title, 'item' => route('news.show', $news->slug)],
+                ]
             ]);
 
         // Cache related news — invalidated when news is saved/deleted (see News model booted)

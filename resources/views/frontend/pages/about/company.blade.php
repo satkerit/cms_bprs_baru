@@ -1,5 +1,5 @@
 <x-frontend-layout>
-    <x-slot:title>Profil Perusahaan - {{ $info->name ?? config('app.name') }}</x-slot:title>
+    <x-slot:title>Profil Perusahaan - {{ config('app.name') }}</x-slot:title>
     <x-slot:metaDescription>{{ $info->tagline ?? 'Profil perusahaan — visi, misi, sejarah, dan informasi lengkap.' }}</x-slot:metaDescription>
     <x-slot:metaKeywords>Profil Perusahaan, {{ $info->name ?? config('app.name') }}, Visi Misi, Sejarah Perusahaan, OJK, LPS</x-slot:metaKeywords>
 

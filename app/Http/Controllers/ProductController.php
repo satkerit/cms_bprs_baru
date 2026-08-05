@@ -88,6 +88,15 @@ class ProductController extends Controller
                     'name' => config('app.name'),
                     'url' => url('/')
                 ]
+            ])
+            ->addSchema([
+                '@context' => 'https://schema.org',
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => route('home')],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => 'Produk & Layanan', 'item' => route('products.simpanan-syariah')],
+                    ['@type' => 'ListItem', 'position' => 3, 'name' => $product->name, 'item' => route('products.show', $product->slug)],
+                ]
             ]);
 
         return view('frontend.pages.products.show', compact('product'));

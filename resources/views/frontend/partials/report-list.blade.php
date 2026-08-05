@@ -12,7 +12,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @foreach($reports as $report)
     <div class="bg-white dark:bg-slate-900 rounded-xl shadow-lg shadow-black/5 border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group">
-        <a href="{{ \App\Helpers\StorageHelper::url($report->file_path) }}" target="_blank" class="block no-underline">
+        <a href="{{ \App\Helpers\StorageHelper::url($report->file_path) }}" target="_blank" rel="noopener" class="block no-underline">
             <div class="p-6">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
@@ -31,7 +31,7 @@
         </a>
         <div class="px-6 pb-5 flex gap-2 border-t border-border/50 dark:border-slate-800/50 pt-4">
             <a href="{{ \App\Helpers\StorageHelper::url($report->file_path) }}"
-               target="_blank"
+               target="_blank" rel="noopener"
                class="report-link flex-1 min-h-[44px] px-4 py-2 bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-foreground dark:text-slate-200 text-sm rounded-lg flex items-center justify-center hover:bg-muted dark:hover:bg-slate-700 transition-colors">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -40,7 +40,7 @@
             </a>
             @if($report->file_path)
             <a href="{{ \App\Helpers\StorageHelper::url($report->file_path) }}"
-               target="_blank"
+               target="_blank" rel="noopener"
                class="min-h-[44px] px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm rounded-lg flex items-center justify-center transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>

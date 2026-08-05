@@ -48,7 +48,7 @@
                         {{-- Button-in-Button CTA --}}
                         <div class="mt-6 sm:mt-8 flex justify-center">
                             <a href="{{ \App\Helpers\StorageHelper::url($companyInfo->organization_structure) }}"
-                               target="_blank"
+                               target="_blank" rel="noopener"
                                class="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
                                 <span>Lihat Ukuran Penuh</span>

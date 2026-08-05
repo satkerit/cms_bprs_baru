@@ -1,5 +1,5 @@
 <x-frontend-layout>
-    <x-slot:title>Beranda - BPRS Bangka Belitung</x-slot:title>
+    <x-slot:title>Beranda - {{ config('app.name') }}</x-slot:title>
     <x-slot:metaDescription>BPRS Bangka Belitung - Bank Pembiayaan Rakyat Syariah terpercaya di Bangka Belitung. Menyediakan produk simpanan syariah, pembiayaan syariah, deposito syariah, dan kas keliling untuk masyarakat.</x-slot:metaDescription>
     <x-slot:metaKeywords>BPRS Bangka Belitung, Bank Syariah, Simpanan Syariah, Pembiayaan Syariah, Deposito Syariah, Kas Keliling, BPR Syariah, Bangka, Belitung</x-slot:metaKeywords>
 

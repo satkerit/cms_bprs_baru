@@ -12,7 +12,7 @@ class HeroSlideSeeder extends Seeder
         HeroSlide::updateOrCreate(
             ['title' => 'Selamat Datang di BPR Syariah'],
             [
-                'subtitle' => 'Solusi Keuangan Syariah Terpercaya untuk Kemajuan Bersama',
+                'subtitle' => 'Solusi Keuangan Syariah',
                 'link_url' => '/tentang-kami/perusahaan',
                 'link_text' => 'Pelajari Lebih Lanjut',
                 'is_active' => true,
@@ -23,7 +23,7 @@ class HeroSlideSeeder extends Seeder
         HeroSlide::updateOrCreate(
             ['title' => 'Produk Simpanan Syariah'],
             [
-                'subtitle' => 'Investasi yang Aman dan Menguntungkan Sesuai Prinsip Syariah',
+                'subtitle' => 'Investasi Sesuai Prinsip Syariah',
                 'link_url' => '/produk-layanan/simpanan-syariah',
                 'link_text' => 'Lihat Produk',
                 'is_active' => true,
@@ -34,8 +34,8 @@ class HeroSlideSeeder extends Seeder
         HeroSlide::updateOrCreate(
             ['title' => 'Pembiayaan Syariah'],
             [
-                'subtitle' => 'Wujudkan Impian Anda dengan Pembiayaan Syariah yang Mudah dan Terpercaya',
-                'link_url' => '/produk-layanan/pembiayaan-syariah',
+                'subtitle' => 'Wujudkan Impian Anda dengan Pembiayaan Syariah',
+                'link_url' => '/produk/pembiayaan-syariah',
                 'link_text' => 'Ajukan Sekarang',
                 'is_active' => true,
                 'order_position' => 3

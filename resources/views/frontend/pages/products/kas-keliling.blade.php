@@ -204,7 +204,7 @@
                 @if($product->brochure)
                 <div class="text-center mt-8 sm:mt-10 reveal-up" x-intersect="$el.classList.add('is-visible')">
                     <a href="{{ \App\Helpers\StorageHelper::url($product->brochure) }}"
-                       target="_blank"
+                       target="_blank" rel="noopener"
                        class="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] text-sm sm:text-base">
                         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>

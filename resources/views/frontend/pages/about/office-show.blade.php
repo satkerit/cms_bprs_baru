@@ -82,7 +82,7 @@
                         </div>
                         <div class="p-4 bg-muted/50 flex flex-wrap gap-3">
                             <a href="https://www.google.com/maps?q={{ $office->latitude }},{{ $office->longitude }}"
-                               target="_blank"
+                               target="_blank" rel="nofollow noopener noreferrer"
                                class="inline-flex items-center px-4 py-2 bg-card border border-border rounded-lg text-xs font-medium text-muted-foreground hover:bg-muted/50 hover:border-border transition">
                                 <svg class="w-4 h-4 mr-2 text-red-600" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -90,7 +90,7 @@
                                 Buka di Google Maps
                             </a>
                             <a href="{{ $office->directions_url }}"
-                               target="_blank"
+                               target="_blank" rel="nofollow noopener noreferrer"
                                class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-700 transition shadow-emerald-500/20">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
