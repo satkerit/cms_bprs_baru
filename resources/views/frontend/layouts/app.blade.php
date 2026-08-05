@@ -18,7 +18,21 @@
 
     <meta name="csp-nonce" content="{{ $nonce }}">
 
-    {{-- SEO Meta Tags --}}
+    {{-- SEO Meta Tags — wire per-page slots to SeoMeta before generating --}}
+    @php
+        $__seoTitle = isset($title) ? trim(strip_tags((string) $title)) : '';
+        if ($__seoTitle !== '') {
+            \App\Services\Seo\SeoMeta::setTitle($__seoTitle, false);
+        }
+        $__seoDesc = isset($metaDescription) ? trim(strip_tags((string) $metaDescription)) : '';
+        if ($__seoDesc !== '') {
+            \App\Services\Seo\SeoMeta::setDescription($__seoDesc);
+        }
+        $__seoKeywords = isset($metaKeywords) ? trim(strip_tags((string) $metaKeywords)) : '';
+        if ($__seoKeywords !== '') {
+            \App\Services\Seo\SeoMeta::setKeywords($__seoKeywords);
+        }
+    @endphp
     {!! \App\Services\Seo\SeoMeta::generate() !!}
 
     {{-- DNS Prefetch & Preconnect for performance --}}
@@ -65,8 +79,21 @@
     @livewireStyles(['nonce' => $nonce])
     @stack('head')
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="EU80N6YBFCctbdfGZIb5gg" async nonce="{{ $nonce }}"></script>
+
+    {{-- Google Tag Manager --}}
+    <script nonce="{{ $nonce }}">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5CVH77VQ');</script>
+    {{-- End Google Tag Manager --}}
 </head>
 <body class="font-sans antialiased bg-background text-foreground selection:bg-emerald-200/60 selection:text-emerald-900 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-emerald-500/30 dark:selection:text-emerald-200">
+
+    {{-- Google Tag Manager (noscript) --}}
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CVH77VQ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    {{-- End Google Tag Manager (noscript) --}}
 
     {{-- Skip to main content link for keyboard users --}}
     <a href="#main-content"

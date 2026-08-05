@@ -381,6 +381,9 @@ Route::prefix('api')->group(function () {
 // Sitemap Route
 Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
+// llms.txt Route (https://llmstxt.org)
+Route::get('/llms.txt', App\Http\Controllers\LlmsTxtController::class)->name('llms.txt');
+
 // Include authentication routes
 require __DIR__ . '/auth.php';
 

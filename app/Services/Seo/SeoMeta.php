@@ -21,6 +21,29 @@ class SeoMeta
     protected $tags = [];
     protected $canonical;
     protected $schema = [];
+    protected $robots;
+
+    /**
+     * Kanonikalkan URL saat ini ke host dari config('app.url')
+     * agar canonical & og:url konsisten di semua host (www vs non-www).
+     */
+    private static function canonicalUrl(): string
+    {
+        $current = url()->current();
+        $base = config('app.url');
+
+        if (!$base) {
+            return $current;
+        }
+        $baseHost = parse_url($base, PHP_URL_HOST);
+        if (!$baseHost) {
+            return $current;
+        }
+        $baseScheme = parse_url($base, PHP_URL_SCHEME) ?: 'https';
+        $path = (string) parse_url($current, PHP_URL_PATH);
+
+        return $baseScheme . '://' . $baseHost . $path;
+    }
 
     private function __construct()
     {
@@ -29,8 +52,17 @@ class SeoMeta
         $this->description = $company?->meta_description ?? 'BPRS Bangka Belitung - Mitra Keuangan Syariah Terpercaya';
         $this->keywords = $company?->meta_keywords ?? 'bank syariah, bprs, bangka belitung, keuangan syariah';
         $this->image = $company?->logo ? asset('storage/' . $company->logo) : asset('images/default-og.jpg');
-        $this->url = url()->current();
-        $this->canonical = url()->current();
+        $this->url = static::canonicalUrl();
+        $this->canonical = static::canonicalUrl();
+        $this->robots = 'index, follow';
+        try {
+            $settings = \App\Models\SiteSetting::getSettings();
+            if (!empty($settings->seo_robots_default)) {
+                $this->robots = $settings->seo_robots_default;
+            }
+        } catch (\Throwable $e) {
+            // keep default if settings unavailable (e.g. during migration)
+        }
     }
 
     public static function getInstance()
@@ -98,6 +130,13 @@ class SeoMeta
         return $instance;
     }
 
+    public static function setRobots($robots)
+    {
+        $instance = self::getInstance();
+        $instance->robots = $robots;
+        return $instance;
+    }
+
     public static function addSchema($schemaData)
     {
         $instance = self::getInstance();
@@ -126,7 +165,17 @@ class SeoMeta
                 'availableLanguage' => ['Indonesian', 'English']
             ]
         ];
-        
+        if ($company?->address) {
+            $baseSchema['address'] = [
+                '@type' => 'PostalAddress',
+                'streetAddress' => $company->address,
+                'addressCountry' => 'ID'
+            ];
+        }
+        if ($company?->email) {
+            $baseSchema['email'] = $company->email;
+        }
+
         // Add Social Profiles to Schema if available
         if ($company && ($company->facebook || $company->instagram || $company->twitter)) {
             $sameAs = [];
@@ -138,11 +187,11 @@ class SeoMeta
             }
         }
 
-        // Add Base Schema if not already present or if it's homepage
+        // Organization schema on every page so search engines & AI crawlers identify the entity
+        array_unshift($instance->schema, $baseSchema);
+
+        // WebSite SearchAction schema hanya di homepage
         if (request()->is('/')) {
-            array_unshift($instance->schema, $baseSchema);
-            
-            // Add WebSite Schema for Sitelinks Search Box
             $instance->schema[] = [
                 '@context' => 'https://schema.org',
                 '@type' => 'WebSite',
@@ -165,5 +214,10 @@ class SeoMeta
             return $this->$name;
         }
         return null;
+    }
+
+    public function __isset($name)
+    {
+        return property_exists($this, $name) && isset($this->$name);
     }
 }

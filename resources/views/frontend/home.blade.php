@@ -66,6 +66,43 @@
         </div>
     </section>
 
+    {{-- ═══ ABOUT / INTRO ═══ --}}
+    <section class="py-14 lg:py-20 bg-muted dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <span class="eyebrow-badge mb-3 inline-flex">Tentang Kami</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-foreground tracking-tight leading-tight">
+                    Bank Syariah Terpercaya di Kepulauan Bangka Belitung
+                </h2>
+            </div>
+            <div class="max-w-4xl mx-auto text-center text-secondary dark:text-slate-400 space-y-4 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                <p>
+                    PT. Bank Perekonomian Rakyat Syariah (BPRS) Bangka Belitung adalah bank syariah yang terdaftar dan diawasi
+                    oleh Otoritas Jasa Keuangan (OJK) serta merupakan peserta penjaminan Lembaga Penjamin Simpanan (LPS).
+                    Seluruh produk dan layanan kami telah disetujui oleh Dewan Pengawas Syariah sehingga aman dan sesuai
+                    prinsip syariah.
+                </p>
+                <p>
+                    Kami melayani kebutuhan keuangan masyarakat Negeri Serumpun Sebalai melalui <a href="{{ route('products.simpanan-syariah') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">simpanan syariah</a>
+                    (tabungan wadiah, tabungan pelajar, dan deposito mudharabah), <a href="{{ route('products.pembiayaan-syariah') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">pembiayaan syariah</a>
+                    (modal kerja, kendaraan bermotor, multiguna, hingga pembiayaan sertifikasi guru), serta layanan
+                    <a href="{{ route('products.kas-keliling') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">kas keliling</a>
+                    yang menjangkau berbagai wilayah di Bangka dan Belitung.
+                </p>
+                <p>
+                    Dengan kantor pusat di Pangkalpinang dan jaringan kantor cabang di Sungailiat, Mentok, Koba, Toboali,
+                    Tanjung Pandan, dan Manggar, BPRS Bangka Belitung siap mendampingi pertumbuhan UMKM dan ekonomi syariah di daerah.
+                    Mulai dari menabung, berinvestasi, hingga mendapatkan pembiayaan sesuai kebutuhan.
+                </p>
+                <div class="pt-2">
+                    <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 hover:shadow-lg transition-all duration-300">
+                        Hubungi Kami
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- ═══ WHY CHOOSE US ═══ --}}
     <section class="py-14 lg:py-20 bg-white dark:bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

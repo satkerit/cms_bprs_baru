@@ -3,7 +3,7 @@
 <meta name="description" content="{{ $seo->description }}">
 <meta name="keywords" content="{{ $seo->keywords }}">
 <link rel="canonical" href="{{ $seo->canonical }}">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="{{ $seo->robots }}">
 <meta name="author" content="{{ config('app.name') }}">
 
 <!-- Open Graph / Facebook -->

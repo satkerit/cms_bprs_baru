@@ -88,7 +88,7 @@ class SecurityHeaders
             "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net https://cdn.jsdelivr.net https://cdnjs.cloudflare.com data:",
             "img-src 'self' data: https: blob:",
             "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://tile.openstreetmap.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org https://nominatim.openstreetmap.org http://api.aladhan.com https://analytics.ahrefs.com",
-            "frame-src 'self' https://www.google.com https://maps.google.com blob:",
+            "frame-src 'self' https://www.google.com https://maps.google.com blob: https://www.googletagmanager.com",
             "frame-ancestors 'self'",
             "form-action 'self'",
             "base-uri 'self'",

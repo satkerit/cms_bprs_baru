@@ -3,6 +3,7 @@
 <!-- Hero Slider - Contained Design -->
 @if($heroSlides->count() > 0)
 <section class="relative overflow-hidden" aria-label="Hero Banner">
+    <h1 class="sr-only">BPRS Bangka Belitung – Bank Perekonomian Rakyat Syariah di Kepulauan Bangka Belitung</h1>
     <div class="relative group rounded-2xl overflow-hidden shadow-lg"
          role="region"
          aria-label="Hero slider"
@@ -60,7 +61,7 @@
                                 type="image/webp">
                         @endif
                         <img src="{{ \App\Helpers\StorageHelper::url($compressedImage) }}"
-                             alt=""
+                             alt="{{ $slide->title ?? 'Banner BPRS Bangka Belitung' }}"
                              class="w-full h-full object-cover"
                              style="object-position: {{ $objectPosition }};"
                              loading="{{ $isActive ? 'eager' : 'lazy' }}"
@@ -87,10 +88,13 @@
                             </div>
                             @endif
 
-                            <h1 class="hero-content text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-2 sm:mb-3 drop-shadow-lg transform transition-all duration-500 delay-150 {{ $isActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0' }}"
+                            @php $slideHead = trim($slide->subtitle ?? $slide->title ?? ''); @endphp
+                            @if($slideHead !== '')
+                            <h2 class="hero-content text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-2 sm:mb-3 drop-shadow-lg transform transition-all duration-500 delay-150 {{ $isActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0' }}"
                                 data-hide="translate-y-8 opacity-0">
-                                {{ $slide->subtitle ?? $slide->title }}
-                            </h1>
+                                {{ $slideHead }}
+                            </h2>
+                            @endif
 
                             @if(($slide->show_subtitle ?? true) && ($slide->subtitle ?? $slide->title) && $slide->title && $slide->title !== ($slide->subtitle ?? ''))
                             <p class="hero-content text-sm sm:text-base text-white/80 leading-relaxed mb-4 sm:mb-5 drop-shadow transform transition-all duration-500 delay-200 {{ $isActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0' }}"
