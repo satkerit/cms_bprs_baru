@@ -87,7 +87,7 @@
                     (tabungan wadiah, tabungan pelajar, dan deposito mudharabah), <a href="{{ route('products.pembiayaan-syariah') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">pembiayaan syariah</a>
                     (modal kerja, kendaraan bermotor, multiguna, hingga pembiayaan sertifikasi guru), serta layanan
                     <a href="{{ route('products.kas-keliling') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">kas keliling</a>
-                    yang menjangkau berbagai wilayah di Bangka dan Belitung.
+                    yang menjangkau berbagai wilayah di Bangka
                 </p>
                 <p>
                     Dengan kantor pusat di Pangkalpinang dan jaringan kantor cabang di Sungailiat, Mentok, Koba, Toboali,
