@@ -38,7 +38,7 @@
                     </div>
 
                     <p class="text-white/80 dark:text-slate-300 leading-relaxed text-sm mb-6">
-                        {{ $company->footer_description ?? $company->short_description ?? 'Melayani dengan prinsip syariah untuk kesejahteraan masyarakat Negeri Serumpun Sebalai. Terpercaya, amanah, dan profesional.' }}
+                        {{ $company->footer_description ?? $company->short_description ?? 'Melayani dengan prinsip syariah untuk kesejahteraan masyarakat Negeri Serumpun Sebalai.' }}
                     </p>
 
                     {{-- Regulatory Info ── --}}
