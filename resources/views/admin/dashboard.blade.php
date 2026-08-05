@@ -406,7 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: {
                     beginAtZero: true,
                     grid: { color: c.gridColor },
-                    ticks: { font: { size: 11 }, color: c.tickColor, stepSize: 1, padding: 8 }
+                    ticks: { font: { size: 11 }, color: c.tickColor, precision: 0, padding: 8 }
                 }
             }
         };
