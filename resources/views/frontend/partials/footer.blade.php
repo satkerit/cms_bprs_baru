@@ -208,7 +208,6 @@
                     &copy; {{ date('Y') }} {{ $company->name ?? 'BPRS Bangka Belitung' }}. All rights reserved.
                     <br class="sm:hidden">
                     <span class="hidden sm:inline">—</span>
-                    <span class="text-white/50">Bank Perekonomian Rakyat Syariah (BPRS) Bangka Belitung.</span>
                 </p>
                 <div class="flex items-center gap-4 text-xs">
                     <span class="text-white/50">v{{ config('app.version', '1.1') }}</span>
