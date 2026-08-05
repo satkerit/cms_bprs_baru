@@ -7,6 +7,7 @@ use App\Models\SiteSetting;
 use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
 
 class SiteSettingController extends Controller
 {
@@ -25,7 +26,7 @@ class SiteSettingController extends Controller
 
         try {
             $validated = $request->validate([
-                'hero_slider_delay' => 'nullable|integer|min:1000|max:10000',
+                'hero_slider_delay' => 'nullable|integer|min:1000|max:20000',
                 'hero_slide_limit' => 'nullable|integer|min:1|max:20',
                 'maintenance_mode' => 'nullable|boolean',
                 'maintenance_message' => 'nullable|string|max:500',
@@ -33,11 +34,11 @@ class SiteSettingController extends Controller
                 'maintenance_end_time' => 'nullable|date',
                 'maintenance_pages' => 'nullable|array',
                 'maintenance_pages.*' => 'string',
-                'upload_max_filesize' => 'nullable|string|regex:/^\d+(K|M|G)?$/i',
-                'post_max_size' => 'nullable|string|regex:/^\d+(K|M|G)?$/i',
+                'upload_max_filesize' => 'nullable|string|regex:/^\d+[KMG]?$/i',
+                'post_max_size' => 'nullable|string|regex:/^\d+[KMG]?$/i',
                 'max_execution_time' => 'nullable|integer|min:30|max:3600',
                 'max_input_time' => 'nullable|integer|min:30|max:3600',
-                'memory_limit' => 'nullable|string|regex:/^\d+(K|M|G)?$/i',
+                'memory_limit' => 'nullable|string|regex:/^\d+[KMG]?$/i',
                 'max_file_uploads' => 'nullable|integer|min:1|max:100',
                 // ===== Feature-specific upload size limits =====
                 'max_image_size_kb' => 'nullable|integer|min:512|max:102400',
@@ -53,12 +54,12 @@ class SiteSettingController extends Controller
                 'seo_twitter_handle'       => 'nullable|string|max:100',
                 'seo_google_verification'  => 'nullable|string|max:200',
                 'seo_bing_verification'    => 'nullable|string|max:200',
-                'seo_robots_default'       => 'nullable|string|in:index,follow,noindex,nofollow,noindex\,nofollow',
+                'seo_robots_default'       => ['nullable', 'string', Rule::in(['index, follow', 'index, nofollow', 'noindex, follow', 'noindex, nofollow'])],
                 'seo_canonical_enabled'    => 'nullable|boolean',
 
             ], [
                 'hero_slider_delay.min' => 'Delay slider minimal 1000ms',
-                'hero_slider_delay.max' => 'Delay slider maksimal 10000ms',
+                'hero_slider_delay.max' => 'Delay slider maksimal 20000ms',
                 'hero_slide_limit.min' => 'Jumlah slide hero minimal 1',
                 'hero_slide_limit.max' => 'Jumlah slide hero maksimal 20',
                 'maintenance_message.max' => 'Pesan maintenance maksimal 500 karakter',
