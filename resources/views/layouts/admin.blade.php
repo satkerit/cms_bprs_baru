@@ -328,12 +328,12 @@
             <main id="admin-main-content" class="flex-1 p-4 sm:p-6 lg:p-8 w-full max-w-full">
                 {{-- SweetAlert Flash Notifications --}}
                 @php
-                    $__swalFlash = json_encode(array_filter([
+                    $__swalFlash = json_encode(array_values(array_filter([
                         session('success') ? ['type' => 'success', 'title' => 'Berhasil!', 'text' => session('success')] : null,
                         session('error') ? ['type' => 'error', 'title' => 'Gagal!', 'text' => session('error')] : null,
                         session('warning') ? ['type' => 'warning', 'title' => 'Peringatan!', 'text' => session('warning')] : null,
                         session('info') ? ['type' => 'info', 'title' => 'Informasi', 'text' => session('info')] : null,
-                    ]));
+                    ])));
                 @endphp
                 <div id="swal-flash"
                      data-messages='{{ $__swalFlash }}'

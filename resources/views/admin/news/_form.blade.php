@@ -137,8 +137,7 @@
                 <div>
                     <label for="category" class="block text-sm font-medium text-foreground mb-1">Kategori <span class="text-destructive">*</span></label>
                     <x-admin.select id="category" name="category" required>
-                        <option value="">Pilih Kategori</option>
-                        @foreach(['Berita', 'Artikel', 'Pengumuman', 'Promo', 'Event'] as $cat)
+                        @foreach(['Berita', 'Event', 'Artikel', 'Pengumuman', 'Promo'] as $cat)
                             <option value="{{ $cat }}" {{ old('category', $news->category ?? '') === $cat ? 'selected' : '' }}>
                                 {{ $cat }}
                             </option>

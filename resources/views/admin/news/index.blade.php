@@ -31,13 +31,11 @@
                     <div class="flex items-center gap-4">
                         @if(!empty($item->featured_image))
                             <img src="{{ \App\Helpers\StorageHelper::url($item->featured_image) }}" alt="{{ $item->title }}"
-                                 class="w-12 h-12 rounded-xl object-cover dark:bg-slate-800 bg-zinc-100 ring-1 ring-zinc-200/60 flex-shrink-0
-                                        transition-all duration-300"
-                                 loading="lazy">
+                                 class="w-12 h-12 rounded-xl object-cover flex-shrink-0 dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 ring-1 ring-zinc-200/60">
                         @else
                             <div class="w-12 h-12 rounded-xl dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 ring-1 ring-zinc-200/60 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 dark:text-slate-500 dark:text-slate-500 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                <svg class="w-6 h-6 dark:text-slate-500 dark:text-slate-500 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                                 </svg>
                             </div>
                         @endif

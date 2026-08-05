@@ -44,6 +44,8 @@ class NewsController extends Controller
         $this->authorizeCreate('news.create');
 
         $data = $request->validated();
+        // slide_images diproses terpisah sebagai galeri & tidak boleh mass-assign ke model
+        unset($data['slide_images']);
         $data['is_published'] = $request->boolean('is_published');
         $data['author'] = auth()->user()->name;
         $data['author_id'] = auth()->id();
@@ -80,6 +82,8 @@ class NewsController extends Controller
         $this->authorizeEdit('news.edit');
 
         $data = $request->validated();
+        // slide_images diproses terpisah sebagai galeri & tidak boleh mass-assign ke model
+        unset($data['slide_images']);
         $data['is_published'] = $request->boolean('is_published');
 
         // Handle featured image upload

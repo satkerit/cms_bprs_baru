@@ -27,10 +27,13 @@
         ];
     @endphp
 
-    {{-- ═══ HERO — tinta gelap, aksen amber ═══ --}}
-    <section class="relative bg-slate-950 text-white overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(217,119,6,0.12),transparent_50%)]"></div>
-        <div class="absolute -top-20 right-10 w-80 h-80 rounded-full border border-amber-400/10"></div>
+    {{-- ═══ HERO — latar emerald (sama dengan produk/laporan), font editorial ═══ --}}
+    <section class="relative text-white overflow-hidden">
+        <div class="absolute inset-0 hero-gradient">
+            <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+            <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-float-slow" style="animation-delay: 3s;"></div>
+        </div>
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-14 sm:pt-16 sm:pb-16">
             <div>
                 <p class="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] text-amber-400/90 mb-4 flex items-center gap-3">
