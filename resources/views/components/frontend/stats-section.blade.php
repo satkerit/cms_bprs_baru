@@ -51,8 +51,8 @@
                 <div class="text-3xl font-bold text-foreground mb-1 tracking-tight">
                     <span x-data="statsCounter"
                           data-target="{{ $companyInfo->stat_branch_offices }}"
-                          data-suffix="+"
-                          x-text="value + suffix">0+</span>
+                          data-suffix=""
+                          x-text="value + suffix">0</span>
                 </div>
                 <p class="text-xs font-semibold text-secondary uppercase tracking-wider">Kantor Cabang</p>
             </div>
@@ -84,8 +84,8 @@
                 <div class="text-3xl font-bold text-foreground mb-1 tracking-tight">
                     <span x-data="statsCounter"
                           data-target="{{ $companyInfo->stat_cash_offices }}"
-                          data-suffix="+"
-                          x-text="value + suffix">0+</span>
+                          data-suffix=""
+                          x-text="value + suffix">0</span>
                 </div>
                 <p class="text-xs font-semibold text-secondary uppercase tracking-wider">Kantor Kas</p>
             </div>
@@ -103,8 +103,8 @@
                 <div class="text-3xl font-bold text-foreground mb-1 tracking-tight">
                     <span x-data="statsCounter"
                           data-target="{{ $companyInfo->stat_mobile_cash_offices }}"
-                          data-suffix="+"
-                          x-text="value + suffix">0+</span>
+                          data-suffix=""
+                          x-text="value + suffix">0</span>
                 </div>
                 <p class="text-xs font-semibold text-secondary uppercase tracking-wider">Kas Keliling</p>
             </div>

@@ -235,7 +235,7 @@
                             <div class="sm:col-span-2">
                                 <div class="prose prose-sm prose-emerald max-w-none text-muted-foreground">
                                     <template x-if="member && member.biography">
-                                        <p x-html="member.biography.replace(/\n/g, '<br>')" class="whitespace-pre-line leading-relaxed text-sm sm:text-base"></p>
+                                        <p x-html="member.biography.replace(/\n/g, '<br>')" class="whitespace-pre-line [overflow-wrap:anywhere] leading-relaxed text-sm sm:text-base"></p>
                                     </template>
                                     <template x-if="!member || !member.biography">
                                         <p class="text-sm text-muted-foreground italic">Biografi belum tersedia.</p>
@@ -244,7 +244,7 @@
                             </div>
 
                             {{-- Kolom kanan: Pendidikan & Pengalaman --}}
-                            <div class="sm:col-span-1 space-y-4">
+                            <div class="sm:col-span-1 min-w-0 space-y-4">
                                 <template x-if="member && member.education && member.education.length > 0">
                                     <div class="bg-muted/50 dark:bg-slate-800/50 rounded-xl p-4 border border-border dark:border-slate-700">
                                         <h4 class="font-bold text-foreground mb-3 flex items-center text-sm">
@@ -253,9 +253,9 @@
                                         </h4>
                                         <ul class="space-y-2">
                                             <template x-for="edu in member.education" :key="edu">
-                                                <li class="flex items-start text-sm text-muted-foreground">
+                                                <li class="flex items-start text-sm text-muted-foreground min-w-0">
                                                     <span class="mr-2 mt-2 w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span>
-                                                    <span x-text="edu"></span>
+                                                    <span class="break-words min-w-0" x-text="edu"></span>
                                                 </li>
                                             </template>
                                         </ul>
@@ -270,9 +270,9 @@
                                         </h4>
                                         <ul class="space-y-2">
                                             <template x-for="exp in member.experience" :key="exp">
-                                                <li class="flex items-start text-sm text-muted-foreground">
+                                                <li class="flex items-start text-sm text-muted-foreground min-w-0">
                                                     <span class="mr-2 mt-2 w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span>
-                                                    <span x-text="exp"></span>
+                                                    <span class="[overflow-wrap:anywhere] min-w-0" x-text="exp"></span>
                                                 </li>
                                             </template>
                                         </ul>
