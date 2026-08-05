@@ -79,7 +79,7 @@ class SecurityHeaders
             // 'unsafe-eval' WAJIB dipertahankan: Alpine.js v3 (vendor-alpine) & SweetAlert2 mengevaluasi
             // ekspresi via `new Function()`. Tanpa 'unsafe-eval', seluruh interaktivitas UI (x-data/x-on/modal)
             // rusak di production. Risiko L1 diterima — di-mitigasi nonce + tanpa input user dieval.
-            "script-src 'nonce-{$nonce}' 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com https://cdn.ckeditor.com https://analytics.ahrefs.com https://www.clarity.ms",
+            "script-src 'nonce-{$nonce}' 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com https://cdn.ckeditor.com https://analytics.ahrefs.com https://www.clarity.ms https://www.googletagmanager.com",
             // Styles: Allow self, unsafe-inline (for Alpine.js dynamic styles and nonce-based <style> tags),
             // unsafe-hashes (for style attributes), and trusted CDNs
             // Note: 'unsafe-inline' takes effect when no nonce is present in style-src.
@@ -87,7 +87,7 @@ class SecurityHeaders
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com",
             "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net https://cdn.jsdelivr.net https://cdnjs.cloudflare.com data:",
             "img-src 'self' data: https: blob:",
-            "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://tile.openstreetmap.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org https://nominatim.openstreetmap.org http://api.aladhan.com https://analytics.ahrefs.com",
+            "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://tile.openstreetmap.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org https://nominatim.openstreetmap.org http://api.aladhan.com https://analytics.ahrefs.com https://www.googletagmanager.com",
             "frame-src 'self' https://www.google.com https://maps.google.com blob: https://www.googletagmanager.com",
             "frame-ancestors 'self'",
             "form-action 'self'",
