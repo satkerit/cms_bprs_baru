@@ -305,9 +305,9 @@
                 @if(count($statsGrid) > 0 || $profileImage)
                 <div class="space-y-6 reveal-up" style="transition-delay:100ms">
                     @if($profileImage)
-                    <div class="rounded-2xl overflow-hidden shadow-lg">
-                        <img src="{{ $profileImage }}" alt="{{ $companyName }}"
-                             class="w-full h-48 sm:h-56 object-cover">
+                    <div class="rounded-2xl overflow-hidden shadow-lg bg-muted max-w-[1080px]">
+                        <img src="{{ $profileImage }}" alt="{{ $companyName }}" loading="lazy"
+                             class="w-full aspect-square object-cover">
                     </div>
                     @endif
                     @if(count($statsGrid) > 0)

@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                             {{-- Office List --}}
-                            <div class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-2.5 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                            <div class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-2.5 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent max-h-[420px] lg:max-h-none">
                                 @foreach($offices as $office)
                                 @php
                                     $typeColors = [
