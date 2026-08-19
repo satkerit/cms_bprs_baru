@@ -24,10 +24,8 @@ class CheckMaintenanceMode
             return $next($request);
         }
 
-        $settings = \Illuminate\Support\Facades\Cache::remember('maintenance_settings', 60, function () {
-            return SiteSetting::first();
-        });
-        
+        $settings = SiteSetting::getSettings();
+
         // Jika tidak ada settings, lewati maintenance check
         if (!$settings) {
             return $next($request);
@@ -41,18 +39,12 @@ class CheckMaintenanceMode
             return $next($request);
         }
 
-        // Check global maintenance mode first
-        if ($settings->maintenance_mode) {
-            // Check if maintenance end time has passed
-            if ($settings->maintenance_end_time && $settings->maintenance_end_time->isPast()) {
-                $settings->update(['maintenance_mode' => false]);
-                SiteSetting::clearCache();
-            } else {
-                return response()->view('errors.503', [
-                    'message' => $settings->maintenance_message,
-                    'endTime' => $settings->maintenance_end_time,
-                ], 503);
-            }
+        // Check global maintenance mode
+        if (SiteSetting::isMaintenanceMode()) {
+            return response()->view('errors.503', [
+                'message' => $settings->maintenance_message,
+                'endTime' => $settings->maintenance_end_time,
+            ], 503);
         }
 
         // Check partial/page-specific maintenance
@@ -95,7 +87,7 @@ class CheckMaintenanceMode
 
             // Pattern match with wildcard
             if (str_ends_with($pattern, '*')) {
-                $prefix = rtrim($pattern, '/*');
+                $prefix = rtrim(rtrim($pattern, '*'), '/');
                 if (str_starts_with(ltrim($path, '/'), $prefix)) {
                     return true;
                 }
@@ -131,7 +123,7 @@ class CheckMaintenanceMode
             }
 
             if (str_ends_with($pattern, '*')) {
-                $prefix = rtrim($pattern, '/*');
+                $prefix = rtrim(rtrim($pattern, '*'), '/');
                 if (str_starts_with(ltrim($path, '/'), $prefix)) {
                     return $pageKey;
                 }

@@ -294,7 +294,7 @@ class SiteSetting extends Model
 
             // Pattern match with wildcard
             if (str_ends_with($pattern, '*')) {
-                $prefix = rtrim($pattern, '/*');
+                $prefix = rtrim(rtrim($pattern, '*'), '/');
                 if (str_starts_with(ltrim($path, '/'), $prefix)) {
                     return true;
                 }
@@ -332,7 +332,7 @@ class SiteSetting extends Model
             }
 
             if (str_ends_with($pattern, '*')) {
-                $prefix = rtrim($pattern, '/*');
+                $prefix = rtrim(rtrim($pattern, '*'), '/');
                 if (str_starts_with(ltrim($path, '/'), $prefix)) {
                     return $pageKey;
                 }
@@ -361,17 +361,11 @@ class SiteSetting extends Model
     public static function clearCache(): void
     {
         Cache::forget('site_settings');
-        // Force clear jika menggunakan file/database cache
-        Cache::flush(); // Uncomment jika perlu clear semua cache
     }
 
     protected static function booted(): void
     {
         static::saved(function () {
-            self::clearCache();
-        });
-
-        static::updated(function () {
             self::clearCache();
         });
 

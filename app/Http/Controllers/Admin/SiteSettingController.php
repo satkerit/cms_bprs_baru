@@ -92,7 +92,7 @@ class SiteSettingController extends Controller
             // Handle maintenance_pages - if not present, set to empty array
             $validated['maintenance_pages'] = $request->input('maintenance_pages', []);
 
-            $settings = SiteSetting::getSettings();
+            $settings = SiteSetting::getFreshSettings();
 
             // Use fill then save to ensure all attributes are set
             $settings->fill($validated);
