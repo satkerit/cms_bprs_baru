@@ -1,81 +1,81 @@
-{{-- ═══ BOARD MEMBER CARD — Premium Edition ═══ --}}
-<article class="group relative w-36 sm:w-40 md:w-44 lg:w-48 flex-shrink-0 flex flex-col rounded-2xl overflow-hidden
-                shadow-md hover:shadow-xl hover:shadow-emerald-500/20 hover:-translate-y-1.5
-                transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] touch-manipulation cursor-pointer"
-         x-data
-         @click="$dispatch('open-modal', { member: @js($member->toArray() + ['photo_url' => \App\Helpers\StorageHelper::url($member->photo)]) })">
+@php $accent = $accent ?? 'emerald'; @endphp
 
-    {{-- Photo area — square with overlay --}}
-    <div class="relative aspect-[3/4] overflow-hidden rounded-2xl ring-2 ring-emerald-500/30 group-hover:ring-emerald-500/70 transition-all duration-500">
+{{-- ═══ BOARD MEMBER CARD ═══ --}}
+<article class="group flex flex-col items-center text-center">
 
-        {{-- Background gradient (fallback / base) --}}
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900"></div>
+    {{-- Photo --}}
+    <div class="relative w-full mb-4">
+        <div class="relative aspect-[3/4] overflow-hidden rounded-2xl
+                    ring-1 ring-black/5 dark:ring-white/10
+                    shadow-lg group-hover:shadow-2xl
+                    group-hover:shadow-{{ $accent }}-500/20
+                    transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
 
-        {{-- Pattern decoration --}}
-        <div class="absolute inset-0 opacity-10"
-             style="background-image: radial-gradient(circle at 20% 20%, white 1px, transparent 1px), radial-gradient(circle at 80% 80%, white 1px, transparent 1px); background-size: 24px 24px;"></div>
+            {{-- Background gradient fallback --}}
+            <div class="absolute inset-0 bg-gradient-to-br
+                @if($accent === 'amber') from-amber-800 via-amber-700 to-amber-900
+                @else from-emerald-800 via-emerald-700 to-emerald-900
+                @endif"></div>
 
-        {{-- Photo --}}
-        @if($member->photo)
-        <div class="absolute inset-0">
-            <x-optimized-image
-                src="{{ \App\Helpers\StorageHelper::url($member->photo) }}"
-                alt="{{ $member->name }}"
-                class="w-full h-full object-cover object-top scale-100 group-hover:scale-105
-                       transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]
-                       group-hover:brightness-110 group-hover:contrast-105"
-                :lazy="$index >= 3"
-                :priority="$index < 3"
-                aspect-ratio="3/4"
-            />
-        </div>
-        @else
-        {{-- Placeholder avatar --}}
-        <div class="absolute inset-0 flex items-end justify-center pb-8">
-            <div class="w-28 h-28 rounded-full bg-white/20 backdrop-blur-sm ring-4 ring-white/30 flex items-center justify-center">
-                <svg class="w-14 h-14 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
+            {{-- Subtle pattern --}}
+            <div class="absolute inset-0 opacity-[0.07]"
+                 style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+            {{-- Photo --}}
+            @if($member->photo)
+            <div class="absolute inset-0">
+                <x-optimized-image
+                    src="{{ \App\Helpers\StorageHelper::url($member->photo) }}"
+                    alt="{{ $member->name }}"
+                    class="w-full h-full object-cover object-top
+                           scale-100 group-hover:scale-[1.04]
+                           transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                    :lazy="$index >= 4"
+                    :priority="$index < 4"
+                    aspect-ratio="3/4"
+                />
             </div>
-        </div>
-        @endif
-
-        {{-- Permanent gradient overlay (bottom) --}}
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-        {{-- Hover overlay (top tint) --}}
-        <div class="absolute inset-0 bg-emerald-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-        {{-- Name + position — always visible at bottom --}}
-        <div class="absolute inset-x-0 bottom-0 p-5">
-            {{-- Position badge --}}
-            <div class="mb-2">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider
-                             bg-emerald-500/90 backdrop-blur-sm text-white shadow-sm">
-                    {{ $member->position }}
-                </span>
+            @else
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 rounded-full bg-white/15 backdrop-blur-sm ring-2 ring-white/25 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
             </div>
+            @endif
 
-            {{-- Name --}}
-            <h3 class="text-base font-bold text-white leading-snug line-clamp-2 group-hover:text-emerald-200 transition-colors duration-300">
-                {{ $member->name }}
-            </h3>
+            {{-- Bottom vignette --}}
+            <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent"></div>
 
-            {{-- Bio teaser — slides up on hover --}}
-            <div class="overflow-hidden max-h-0 group-hover:max-h-16 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
-                <p class="text-white/75 text-xs leading-relaxed mt-1.5 line-clamp-2">
-                    {{ Str::limit(strip_tags($member->biography ?? 'Anggota manajemen BPRS Bangka Belitung'), 80) }}
-                </p>
-            </div>
+            {{-- Hover shimmer --}}
+            <div class="absolute inset-0
+                @if($accent === 'amber') bg-amber-500/10
+                @else bg-emerald-500/10
+                @endif
+                opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         </div>
 
-        {{-- "Lihat Profil" CTA — slides in on hover --}}
-        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-400">
-            <div class="w-9 h-9 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-                </svg>
-            </div>
+        {{-- Position badge — floats below photo --}}
+        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap shadow-md
+                @if($accent === 'amber')
+                    bg-amber-500 text-white
+                @else
+                    bg-emerald-600 text-white
+                @endif">
+                {{ $member->position }}
+            </span>
         </div>
     </div>
+
+    {{-- Name --}}
+    <div class="mt-4 px-1">
+        <h3 class="text-sm sm:text-base font-semibold text-foreground dark:text-slate-100 leading-snug line-clamp-2
+                   group-hover:text-{{ $accent }}-600 dark:group-hover:text-{{ $accent }}-400
+                   transition-colors duration-300">
+            {{ $member->name }}
+        </h3>
+    </div>
+
 </article>
