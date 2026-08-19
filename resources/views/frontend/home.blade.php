@@ -72,14 +72,14 @@
             <div class="text-center mb-8 reveal-up" x-intersect="$el.classList.add('is-visible')">
                 <span class="eyebrow-badge mb-3 inline-flex">Tentang Kami</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground tracking-tight leading-tight">
-                    Bank Syariah Terpercaya di Kepulauan Bangka Belitung
+                    Bank Syariah di Kepulauan Bangka Belitung
                 </h2>
             </div>
             <div class="max-w-4xl mx-auto text-center text-secondary dark:text-slate-400 space-y-4 reveal-up" x-intersect="$el.classList.add('is-visible')">
                 <p>
                     PT. Bank Perekonomian Rakyat Syariah (BPRS) Bangka Belitung adalah bank syariah yang terdaftar dan diawasi
                     oleh Otoritas Jasa Keuangan (OJK) serta merupakan peserta penjaminan Lembaga Penjamin Simpanan (LPS).
-                    Seluruh produk dan layanan kami telah disetujui oleh Dewan Pengawas Syariah sehingga aman dan sesuai
+                    Seluruh produk dan layanan kami telah disetujui oleh Dewan Pengawas Syariah sehingga sesuai
                     prinsip syariah.
                 </p>
                 <p>
