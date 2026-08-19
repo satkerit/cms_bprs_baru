@@ -14,7 +14,8 @@ Route::get('/dev-diagnostics', function (\Illuminate\Http\Request $request) {
     if (! app()->environment('local')) {
         abort(404);
     }
-    if (! hash_equals((string) config('app.secret_cache_token'), (string) $request->query('token', ''))) {
+    $token = (string) config('app.secret_cache_token', '');
+    if (empty($token) || ! hash_equals($token, (string) $request->query('token', ''))) {
         abort(403);
     }
     $configFile = base_path('bootstrap/cache/config.php');

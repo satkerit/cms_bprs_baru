@@ -49,6 +49,28 @@ class SecuritySetting extends Model
         'enable_session_tracking' => 'boolean',
     ];
 
+    /**
+     * Nilai default yang aman untuk deploy pertama.
+     * Dipakai saat create([]) maupun saat instance kosong (fallback).
+     */
+    protected $attributes = [
+        'rate_limit_web'              => 60,
+        'rate_limit_admin'            => 60,
+        'rate_limit_login'            => 5,
+        'rate_limit_password_reset'   => 5,
+        'rate_limit_download'         => 30,
+        'block_threshold'             => 10,
+        'block_duration_hours'        => 1,
+        'enable_suspicious_blocking'  => true,
+        'enable_rate_limiting'        => true,
+        'log_security_events'         => true,
+        'session_lifetime'            => 60,
+        'idle_timeout'                => 15,
+        'idle_warning'                => 2,
+        'auto_extend_session'         => false,
+        'enable_session_tracking'     => true,
+    ];
+
     public static function getSettings(): self
     {
         return Cache::remember('security_settings', 3600, function () {

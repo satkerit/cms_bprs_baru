@@ -385,6 +385,11 @@ class ScanResult
         return $this->status === self::CLEAN || $this->status === self::SKIPPED;
     }
 
+    public function isError(): bool
+    {
+        return $this->status === self::ERROR;
+    }
+
     public function isInfected(): bool
     {
         return $this->status === self::INFECTED;

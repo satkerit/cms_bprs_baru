@@ -200,6 +200,9 @@ class HeroImageService
     public function deleteHeroImages(array $images): void
     {
         foreach ($images as $sizeImages) {
+            if (isset($sizeImages['avif'])) {
+                Storage::disk('public')->delete($sizeImages['avif']);
+            }
             if (isset($sizeImages['webp'])) {
                 Storage::disk('public')->delete($sizeImages['webp']);
             }

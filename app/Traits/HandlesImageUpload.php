@@ -60,6 +60,13 @@ trait HandlesImageUpload
                 app(FileScanner::class)->quarantine($file);
                 throw new \Exception('File diblokir: ' . ($result->detail ?? 'terindikasi berbahaya'));
             }
+            if ($result->isError()) {
+                \Log::warning('FileScanner error — file rejected for safety', [
+                    'file' => $file->getClientOriginalName(),
+                    'error' => $result->detail ?? 'unknown',
+                ]);
+                throw new \Exception('File ditolak: scanner tidak dapat memverifikasi keamanan file.');
+            }
 
             if ($oldPath) {
                 Storage::disk('public')->delete($oldPath);

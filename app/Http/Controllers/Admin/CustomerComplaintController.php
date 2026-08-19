@@ -81,16 +81,23 @@ class CustomerComplaintController extends Controller
 
         $oldStatus = $customerComplaint->status;
 
-        if ($validated['status'] === 'resolved' && $customerComplaint->status !== 'resolved') {
-            $validated['resolved_at'] = now();
+        // Explicit assignment untuk field publik yang boleh di-mass-assign
+        $customerComplaint->priority = $validated['priority'];
+
+        // Explicit assignment untuk field admin-only (tidak di $fillable)
+        $customerComplaint->status      = $validated['status'];
+        $customerComplaint->resolution  = $validated['resolution'] ?? null;
+        $customerComplaint->admin_notes = $validated['admin_notes'] ?? null;
+
+        if ($validated['status'] === 'resolved' && $oldStatus !== 'resolved') {
+            $customerComplaint->resolved_at = now();
         }
 
-        // Set handler if status changes to in_progress
-        if ($validated['status'] === 'in_progress' && !$customerComplaint->handled_by) {
-            $validated['handled_by'] = Auth::id();
+        if ($validated['status'] === 'in_progress' && ! $customerComplaint->handled_by) {
+            $customerComplaint->handled_by = Auth::id();
         }
 
-        $customerComplaint->update($validated);
+        $customerComplaint->save();
 
         // Send email notification if status changed
         if ($oldStatus !== $validated['status'] && $customerComplaint->email) {

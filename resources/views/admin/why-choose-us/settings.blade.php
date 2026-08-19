@@ -53,25 +53,41 @@
  <!-- Image Upload -->
  <div class="space-y-6">
  <div class="space-y-4">
- <label class="text-[11px] font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 block">Gambar Utama Section</label>  <div x-data="{ preview: '{{ $settings->section_image ? \App\Helpers\StorageHelper::url($settings->section_image) : null }}' }" class="border-2 border-dashed dark:border-slate-700 border-zinc-200 rounded-xl p-6 text-center hover:border-amber-400 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 h-full min-h-[300px] flex flex-col justify-center items-center">
- <input type="file" name="section_image" class="w-full h-full opacity-0" accept="image/png, image/jpeg, image/webp" @change="preview = URL.createObjectURL($event.target.files[0])">
+ <label class="text-[11px] font-semibold dark:text-slate-100 dark:text-slate-100 text-zinc-900 block">Gambar Utama Section</label>  <div x-data="{ preview: '{{ $settings->section_image ? \App\Helpers\StorageHelper::url($settings->section_image) : '' }}' }"
+     class="relative border-2 border-dashed dark:border-slate-700 border-zinc-200 rounded-xl hover:border-amber-400 dark:bg-slate-800/50 bg-zinc-50 min-h-[300px] flex flex-col justify-center items-center cursor-pointer overflow-hidden"
+     @click="$refs.fileInput.click()">
 
- <div x-show="!preview" class="space-y-3">
- <div class="w-16 h-16 bg-white border dark:text-slate-400 dark:text-slate-400 text-zinc-500 rounded-xl flex items-center justify-center">
- <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
- </div>
- <div>
- <p class="text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500">Upload Gambar Section</p>
- <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">Disarankan ukuran 600x700px atau portrait</p>
- </div>
- </div>
+    {{-- Hidden file input --}}
+    <input x-ref="fileInput" type="file" name="section_image" class="hidden" accept="image/png, image/jpeg, image/webp"
+           @change="preview = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : preview">
 
- <div x-show="preview" x-cloak class="w-full h-full">
- <img :src="preview" class="w-full h-full object-contain rounded-xl max-h-[300px]">
- <div class="bg-black/40 flex items-center justify-center opacity-0 rounded-xl">
- <p class="text-white font-medium text-[11px]">Ganti Gambar</p>
- </div>
- </div>
+    {{-- Empty state --}}
+    <div x-show="!preview" class="flex flex-col items-center gap-3 p-6">
+        <div class="w-16 h-16 bg-white border dark:text-slate-400 text-zinc-500 rounded-xl flex items-center justify-center">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        </div>
+        <div>
+            <p class="text-[11px] font-semibold dark:text-slate-400 text-zinc-500">Klik untuk upload gambar</p>
+            <p class="text-[11px] dark:text-slate-400 text-zinc-500 mt-1">PNG, JPG, WebP — disarankan 600x700px (portrait)</p>
+        </div>
+    </div>
+
+    {{-- Preview --}}
+    <div x-show="preview" x-cloak class="relative w-full group">
+        <img :src="preview" class="w-full object-contain rounded-xl max-h-[300px]">
+        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+            <svg class="w-8 h-8 text-white mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <p class="text-white font-semibold text-[11px]">Klik untuk ganti gambar</p>
+        </div>
+    </div>
+
+    {{-- Tombol hapus gambar --}}
+    <div x-show="preview" x-cloak class="absolute top-2 right-2">
+        <button type="button" @click.stop="preview = ''; $refs.fileInput.value = ''"
+                class="w-7 h-7 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
  </div>
  </div>
  </div>

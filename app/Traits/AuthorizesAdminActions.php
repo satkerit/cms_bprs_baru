@@ -11,6 +11,10 @@ trait AuthorizesAdminActions
     {
         $user = auth()->user();
 
+        if (!$user) {
+            abort(401);
+        }
+
         if ($user->isSuperAdmin()) {
             return;
         }
@@ -35,6 +39,10 @@ trait AuthorizesAdminActions
     {
         $user = auth()->user();
 
+        if (!$user) {
+            abort(401);
+        }
+
         if ($user->isSuperAdmin()) {
             return;
         }
@@ -50,6 +58,10 @@ trait AuthorizesAdminActions
     protected function authorizeEdit(string $permission): void
     {
         $user = auth()->user();
+
+        if (!$user) {
+            abort(401);
+        }
 
         if ($user->isSuperAdmin()) {
             return;
@@ -123,6 +135,10 @@ trait AuthorizesAdminActions
     protected function authorizeSuperAdmin(): void
     {
         $user = auth()->user();
+
+        if (!$user) {
+            abort(401);
+        }
 
         if (!$user->isSuperAdmin()) {
             abort(403, 'Hanya Super Admin yang dapat mengakses halaman ini.');

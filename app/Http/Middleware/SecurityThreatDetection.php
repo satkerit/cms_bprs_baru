@@ -14,29 +14,21 @@ use Symfony\Component\HttpFoundation\Response;
 class SecurityThreatDetection
 {
     protected array $excludedRoutes = [
-        // From BlockSuspiciousRequests
+        // Non-admin routes yang aman di-skip sepenuhnya
         'storage/*',
         'logout',
         'sanctum/*',
         '_ignition/*',
-        'admin/storage/*',
-        'admin/*/upload*',
-        'admin/storage/upload-editor-image',
-        // From DetectSuspiciousActivity
         'telescope/*',
         '__clockwork/*',
-        'admin/company-info*',
-        'admin/news*',
-        'admin/products*',
-        'admin/hero-slides*',
-        'admin/why-choose-us*',
-        'admin/board-members*',
-        'admin/offices*',
-        'admin/careers*',
-        'admin/brochures*',
-        'admin/auctions*',
-        'admin/reports*',
-        'admin/site-settings*',
+    ];
+
+    // Route admin yang benar-benar perlu di-exclude (file upload & rich text editor)
+    // — kontennya sengaja mengandung HTML/script, sehingga XSS/SQLi detection tidak relevan
+    protected array $adminUploadRoutes = [
+        'admin/storage/*',
+        'admin/storage/upload-editor-image',
+        'admin/*/upload*',
         'admin/storage*',
     ];
 
@@ -91,14 +83,22 @@ class SecurityThreatDetection
                 return $this->blockResponse($request);
             }
 
+            // Route admin (non-upload) dijalankan dalam mode log-only: deteksi tetap berjalan
+            // untuk audit trail insider threat / session hijacking, tapi tidak memblokir request.
+            $adminLogOnly = $this->isAdminRoute($request) && !$this->isAdminUploadRoute($request);
+
             if ($this->hasSuspiciousUrl($request)) {
                 $this->recordThreat($request, $ip, 'suspicious_url', $settings);
-                return $this->blockResponse($request);
+                if (!$adminLogOnly) {
+                    return $this->blockResponse($request);
+                }
             }
 
             if ($this->hasSuspiciousUserAgent($request)) {
                 $this->recordThreat($request, $ip, 'suspicious_agent', $settings);
-                return $this->blockResponse($request);
+                if (!$adminLogOnly) {
+                    return $this->blockResponse($request);
+                }
             }
 
             $inputsToCheck = $this->collectInputs($request);
@@ -106,7 +106,9 @@ class SecurityThreatDetection
 
             if ($threat) {
                 $this->recordThreat($request, $ip, $threat['type'], $settings, $threat['input'], $threat['pattern']);
-                return $this->blockResponse($request);
+                if (!$adminLogOnly) {
+                    return $this->blockResponse($request);
+                }
             }
         } catch (\Throwable $e) {
             Log::error('SecurityThreatDetection error: ' . $e->getMessage());
@@ -118,6 +120,22 @@ class SecurityThreatDetection
     protected function isExcludedRoute(Request $request): bool
     {
         foreach ($this->excludedRoutes as $route) {
+            if ($request->is($route)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function isAdminRoute(Request $request): bool
+    {
+        return $request->is('admin/*') || $request->is('admin');
+    }
+
+    protected function isAdminUploadRoute(Request $request): bool
+    {
+        foreach ($this->adminUploadRoutes as $route) {
             if ($request->is($route)) {
                 return true;
             }

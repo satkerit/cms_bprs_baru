@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ResponseCache\Facades\ResponseCache;
@@ -153,10 +154,10 @@ class ProductService
      */
     public function invalidateCache(): void
     {
-        Cache::forget('products_home_6');
-        Cache::forget('products_simpanan_syariah');
-        Cache::forget('products_pembiayaan_syariah');
-        Cache::forget('products_deposito_syariah');
+        Cache::forget(Config::get('cache-keys.products_home'));
+        Cache::forget(Config::get('cache-keys.products') . 'simpanan_syariah');
+        Cache::forget(Config::get('cache-keys.products') . 'pembiayaan_syariah');
+        Cache::forget(Config::get('cache-keys.products') . 'deposito_syariah');
         ResponseCache::clear();
     }
 }

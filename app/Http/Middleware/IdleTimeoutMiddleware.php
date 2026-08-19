@@ -31,8 +31,14 @@ class IdleTimeoutMiddleware
             return $next($request);
         }
 
-        // Skip for storage and download routes
-        if ($request->is('storage/*') || str_contains($request->getPathInfo(), '/download/')) {
+        // Skip for storage routes
+        if ($request->is('storage/*')) {
+            return $next($request);
+        }
+
+        // Skip for specific download routes by name (lebih aman dari substring check)
+        $skipRoutes = ['admin.reports.download', 'admin.files.download'];
+        if (in_array($request->route()?->getName(), $skipRoutes)) {
             return $next($request);
         }
 

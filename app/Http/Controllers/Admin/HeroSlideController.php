@@ -10,6 +10,7 @@ use App\Models\SiteSetting;
 use App\Traits\AuthorizesAdminActions;
 use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,16 +42,18 @@ class HeroSlideController extends Controller
             'hero_slide_limit' => 'required|integer|min:1|max:20',
         ]);
 
-        $settings = SiteSetting::first();
-        if ($settings) {
-            $settings->update($validated);
-        } else {
-            // Create default settings if not exists
-            SiteSetting::create(array_merge([
-                'maintenance_mode' => false,
-                'maintenance_message' => 'Website sedang dalam pemeliharaan untuk peningkatan layanan. Silakan kembali beberapa saat lagi.',
-            ], $validated));
-        }
+        DB::transaction(function () use ($validated) {
+            $settings = SiteSetting::lockForUpdate()->first();
+            if ($settings) {
+                $settings->update($validated);
+            } else {
+                // Create default settings if not exists
+                SiteSetting::create(array_merge([
+                    'maintenance_mode' => false,
+                    'maintenance_message' => 'Website sedang dalam pemeliharaan untuk peningkatan layanan. Silakan kembali beberapa saat lagi.',
+                ], $validated));
+            }
+        });
 
         // Clear cache
         SiteSetting::clearCache();

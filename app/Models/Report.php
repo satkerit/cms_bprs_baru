@@ -29,8 +29,6 @@ class Report extends Model
         'posting_mode', // auto, manual
         'posted_at',
         'scheduled_at',
-        'preview_count',
-        'download_count'
     ];
 
     protected $casts = [

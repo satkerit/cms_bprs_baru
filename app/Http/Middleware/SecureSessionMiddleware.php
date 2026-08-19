@@ -239,17 +239,22 @@ class SecureSessionMiddleware
     /**
      * Cache user role in session to avoid repeated DB queries.
      * The session cache is invalidated inside RoleController when role changes.
+     * Cache expires after 15 minutes (900 seconds) to detect role downgrades promptly.
      */
     private function cacheUserRoleInSession(): void
     {
-        if (!Session::has('cached_role')) {
-            $user = auth()->user()->load('roleModel.permissions');
+        $cachedAt = Session::get('cached_role_at', 0);
+        $isExpired = (now()->timestamp - $cachedAt) > 900; // 15 menit
+
+        if (!Session::has('cached_role') || $isExpired) {
+            $user = auth()->user()->fresh()->load('roleModel.permissions');
 
             Session::put('cached_role', [
                 'name' => $user->roleModel?->name,
                 'display_name' => $user->roleModel?->display_name,
                 'permissions' => $user->roleModel?->permissions?->pluck('name')->toArray() ?? [],
             ]);
+            Session::put('cached_role_at', now()->timestamp);
         }
     }
 

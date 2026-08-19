@@ -72,6 +72,16 @@ class StorageController extends Controller
                         ->with("error", "File '{$file->getClientOriginalName()}' diblokir: {$result->detail}");
                 }
 
+                if ($result->isError()) {
+                    \Log::warning('FileScanner error — file rejected for safety', [
+                        'file' => $file->getClientOriginalName(),
+                        'error' => $result->detail ?? 'unknown',
+                    ]);
+                    return redirect()
+                        ->route("admin.storage.index", ["path" => $path])
+                        ->with("error", "File '{$file->getClientOriginalName()}' ditolak: scanner tidak dapat memverifikasi keamanan file.");
+                }
+
                 // Ekstensi dipaksa dari MIME, bukan dari nama asli client
                 $safeBase = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) ?: 'file';
                 $ext = $this->extensionFromMime($file->getMimeType(), pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
@@ -614,6 +624,20 @@ class StorageController extends Controller
                     [
                         "success" => false,
                         "message" => "File diblokir: " . ($result->detail ?? 'terindikasi berbahaya'),
+                    ],
+                    422,
+                );
+            }
+
+            if ($result->isError()) {
+                \Log::warning('FileScanner error — file rejected for safety', [
+                    'file' => $file->getClientOriginalName(),
+                    'error' => $result->detail ?? 'unknown',
+                ]);
+                return response()->json(
+                    [
+                        "success" => false,
+                        "message" => "File ditolak: scanner tidak dapat memverifikasi keamanan file.",
                     ],
                     422,
                 );

@@ -65,7 +65,6 @@ class Auction extends Model
         // Status
         'status',
         'is_featured',
-        'view_count',
         'published_at',
     ];
 

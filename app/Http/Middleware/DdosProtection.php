@@ -16,8 +16,11 @@ class DdosProtection extends BaseDdosProtection
         'favicon.ico',
         'robots.txt',
         '_debugbar/*',
-        'login',
         'logout',
+    ];
+
+    protected array $loginThresholds = [
+        'same_endpoint' => 10, // max 10 req/menit untuk route login
     ];
 
     protected array $suspiciousPatterns;
@@ -89,6 +92,10 @@ class DdosProtection extends BaseDdosProtection
             Cache::put($key, 1, 60);
         }
 
-        return $count > $this->suspiciousPatterns['same_endpoint'];
+        $threshold = ($path === 'login')
+            ? $this->loginThresholds['same_endpoint']
+            : $this->suspiciousPatterns['same_endpoint'];
+
+        return $count > $threshold;
     }
 }

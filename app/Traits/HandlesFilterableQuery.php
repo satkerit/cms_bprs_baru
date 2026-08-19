@@ -23,7 +23,9 @@ trait HandlesFilterableQuery
                     $query->where($column, 'like', "%{$value}%");
                     break;
                 case 'or_like':
-                    $query->orWhere($column, 'like', "%{$value}%");
+                    $query->where(function ($q) use ($column, $value) {
+                        $q->orWhere($column, 'like', "%{$value}%");
+                    });
                     break;
                 case 'search':
                     $search = $value;

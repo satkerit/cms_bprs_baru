@@ -291,8 +291,8 @@ class CheckMenuPermission
             }
         }
 
-        // If no match found, allow access (route not restricted)
-        return null;
+        // If no match found, deny access (default-deny principle)
+        abort(403, "Akses ditolak: route tidak dikenali oleh sistem permission.");
     }
 
     private function resolveLoginRoute(Request $request): string

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Complaint extends Model
 {
@@ -48,10 +49,13 @@ class Complaint extends Model
 
     public static function generateTicketNumber(): string
     {
-        $prefix = 'WBS';
-        $date = now()->format('Ymd');
-        $random = strtoupper(substr(md5(uniqid()), 0, 6));
-        return "{$prefix}-{$date}-{$random}";
+        return DB::transaction(function () {
+            $prefix = 'WBS';
+            $date = now()->format('Ymd');
+            $last = static::lockForUpdate()->orderByDesc('id')->first();
+            $nextNum = $last ? (intval(substr($last->ticket_number, -6)) + 1) : 1;
+            return "{$prefix}-{$date}-" . str_pad($nextNum, 6, '0', STR_PAD_LEFT);
+        });
     }
 
     public function scopePending($query)

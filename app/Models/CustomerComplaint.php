@@ -34,11 +34,15 @@ class CustomerComplaint extends Model
         'incident_date',
         'attachments',
         'priority',
+    ];
+
+    // Field admin-only — hanya boleh diisi via explicit assignment, bukan mass assignment
+    protected $guarded = [
         'status',
         'resolution',
         'admin_notes',
         'handled_by',
-        'resolved_at'
+        'resolved_at',
     ];
 
     protected $casts = [
