@@ -97,118 +97,193 @@
         </div>
     </section>
 
-    {{-- ═══ MAP & OFFICES — Double-Bezel ═══ --}}
-    <section class="pb-16 lg:pb-20 relative bg-white dark:bg-slate-950">
+    {{-- ═══ MAP & OFFICES — Redesigned ═══ --}}
+    <section class="pb-16 lg:pb-20 relative bg-white dark:bg-slate-950" id="mapContainer" x-data="officeMapData()" x-init="init()">
         <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
             <div class="absolute top-20 left-0 w-72 h-72 bg-emerald-50/60 rounded-full blur-[120px]"></div>
             <div class="absolute bottom-20 right-0 w-64 h-64 bg-amber-50/30 rounded-full blur-[120px]"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up" x-intersect="$el.classList.add('is-visible')">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8" id="mapContainer" x-data="officeMapData()" x-init="init()">
-                {{-- Interactive Map --}}
-                <div class="lg:col-span-2">
-                    <div class="double-bezel">
-                        <div class="double-bezel-inner p-0 overflow-hidden flex flex-col">
-                            {{-- Map Header --}}
-                            <div class="p-4 sm:p-5 border-b border-border/50 flex items-center justify-between bg-white/50">
-                                <h2 class="font-bold text-foreground flex items-center text-base sm:text-lg tracking-tight">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 mr-3 shrink-0">
-                                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                    </span>
-                                    Peta Lokasi Kantor
-                                </h2>
-                                <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-100/50">
-                                    {{ $officesWithCoords->count() }} Lokasi
-                                </span>
-                            </div>
-                            {{-- Map --}}
-                            <div id="officeMap" class="flex-1 w-full bg-muted min-h-[350px] sm:min-h-[450px]" style="border-radius: 0 0 var(--radius-double-inner) var(--radius-double-inner);"></div>
-                        </div>
-                    </div>
-                </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                {{-- Office List Sidebar --}}
-                <div class="lg:col-span-1">
-                    <div class="double-bezel h-full">
-                        <div class="double-bezel-inner p-0 overflow-hidden flex flex-col h-full">
-                            {{-- Header + Filter --}}
-                            <div class="p-4 sm:p-5 border-b border-border/50 bg-white/50">
-                                <h2 class="font-bold text-foreground mb-3 text-base sm:text-lg flex items-center gap-2">
-                                    <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
-                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                                    </span>
-                                    Daftar Kantor
-                                </h2>
-                                {{-- Filter Pills --}}
-                                <div class="flex flex-wrap gap-1.5"><button @click="filterType = 'all'" :class="filterType === 'all' ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/20' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 hover:bg-muted dark:hover:bg-slate-700 border border-border/60'" class="px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-200 active:scale-[0.97]">
-                                    Semua
-                                </button>
-                                    <button @click="filterType = 'pusat'" :class="filterType === 'pusat' ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/20' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 hover:bg-muted dark:hover:bg-slate-700 border border-border/60'" class="px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-200 active:scale-[0.97]">
-                                    Pusat
-                                </button>
-                                    <button @click="filterType = 'cabang'" :class="filterType === 'cabang' ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/20' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 hover:bg-muted dark:hover:bg-slate-700 border border-border/60'" class="px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-200 active:scale-[0.97]">
-                                    Cabang
-                                </button>
-                                    <button @click="filterType = 'kas'" :class="filterType === 'kas' ? 'bg-primary text-white shadow-sm shadow-primary/20' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 hover:bg-muted dark:hover:bg-slate-700 border border-border/60'" class="px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-200 active:scale-[0.97]">
-                                        Kas
-                                    </button>
-                                </div>
-                            </div>
-                            {{-- Office List --}}
-                            <div class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-2.5 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent max-h-[420px] lg:max-h-none">
-                                @foreach($offices as $office)
-                                @php
-                                    $typeColors = [
-                                        'pusat' => 'bg-amber-500',
-                                        'cabang' => 'bg-blue-500',
-                                        'kas' => 'bg-primary',
-                                        'kas_keliling' => 'bg-emerald-600'
-                                    ];
-                                    $badgeColors = [
-                                        'pusat' => 'text-amber-700 bg-amber-50 border-amber-200',
-                                        'cabang' => 'text-blue-700 bg-blue-50 border-blue-200',
-                                        'kas' => 'text-primary-700 bg-primary-50 border-primary-200'
-                                    ];
-                                @endphp
-                                <div x-show="filterType === 'all' || filterType === '{{ $office->type }}'"
-                                     x-transition:enter="transition ease-out duration-300"
-                                     x-transition:enter-start="opacity-0 translate-y-3"
-                                     x-transition:enter-end="opacity-100 translate-y-0"
-                                     @click="selectOffice({{ $office->id }}, {{ $office->latitude ?? 'null' }}, {{ $office->longitude ?? 'null' }})"
-                                     :class="selectedOffice === {{ $office->id }} ? 'ring-2 ring-emerald-500 bg-emerald-50/50' : 'hover:bg-muted/50'"
-                                     class="p-3 sm:p-3.5 rounded-xl border border-border/50 cursor-pointer transition-all duration-200 group active:scale-[0.99]">
-                                    <div class="flex items-start gap-3">
-                                        <div class="w-9 h-9 sm:w-10 sm:h-10 {{ $typeColors[$office->type] ?? 'bg-primary' }} rounded-xl flex items-center justify-center shrink-0 text-white font-bold text-xs sm:text-sm shadow-sm group-hover:scale-110 transition-transform duration-300">
-                                            {{ substr($office->type_label, 0, 1) }}
-                                        </div>
-                                        <div class="flex-1 min-w-0">
-                                            <div class="flex items-center gap-2 mb-0.5">
-                                                <h3 class="text-xs sm:text-sm font-bold text-foreground truncate">{{ $office->name }}</h3>
-                                                <span class="shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold border {{ $badgeColors[$office->type] ?? 'text-primary-700 bg-primary-50 border-primary-200' }}">
-                                                    {{ $office->type_label }}
-                                                </span>
-                                            </div>
-                                            <p class="text-xs text-secondary line-clamp-2 leading-relaxed">{{ $office->address }}</p>
-                                            @if($office->phone)
-                                            <p class="text-xs text-emerald-600 mt-1.5 font-medium flex items-center gap-1">
-                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                                {{ $office->phone }}
-                                            </p>
-                                            @endif
-                                        </div>
-                                        @if($office->has_coordinates)
-                                        <span class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-100 transition-colors duration-200" title="Lihat di peta">
-                                            <svg class="w-3.5 h-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
+            {{-- Peta Full Width --}}
+            <div class="reveal-up mb-8 sm:mb-10" x-intersect="$el.classList.add('is-visible')">
+                <div class="double-bezel">
+                    <div class="double-bezel-inner p-0 overflow-hidden">
+                        <div class="p-4 sm:p-5 border-b border-border/50 flex items-center justify-between bg-white/50 dark:bg-slate-900/50">
+                            <h2 class="font-bold text-foreground flex items-center text-base sm:text-lg tracking-tight">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 mr-3 shrink-0">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                </span>
+                                Peta Lokasi Kantor
+                            </h2>
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-100/50">
+                                {{ $officesWithCoords->count() }} Lokasi
+                            </span>
                         </div>
+                        <div id="officeMap" class="w-full bg-muted" style="height: 420px; border-radius: 0 0 var(--radius-double-inner) var(--radius-double-inner);"></div>
                     </div>
                 </div>
             </div>
+
+            {{-- Section Header + Filter --}}
+            <div class="reveal-up flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6" x-intersect="$el.classList.add('is-visible')">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-foreground dark:text-slate-100 tracking-tight">Daftar Kantor</h2>
+                    <p class="text-sm text-secondary dark:text-slate-400 mt-1">Temukan kantor kami yang terdekat dengan Anda</p>
+                </div>
+                {{-- Filter Pills --}}
+                <div class="flex flex-wrap gap-2">
+                    <button @click="filterType = 'all'"
+                            :class="filterType === 'all' ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/25 border-transparent' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 border-border/60 hover:border-emerald-300 hover:text-emerald-600'"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full border transition-all duration-200 active:scale-[0.97]">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        Semua ({{ $offices->count() }})
+                    </button>
+                    <button @click="filterType = 'pusat'"
+                            :class="filterType === 'pusat' ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/25 border-transparent' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 border-border/60 hover:border-amber-300 hover:text-amber-600'"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full border transition-all duration-200 active:scale-[0.97]">
+                        <span class="w-2 h-2 rounded-full bg-current"></span>
+                        Pusat
+                    </button>
+                    <button @click="filterType = 'cabang'"
+                            :class="filterType === 'cabang' ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/25 border-transparent' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 border-border/60 hover:border-blue-300 hover:text-blue-600'"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full border transition-all duration-200 active:scale-[0.97]">
+                        <span class="w-2 h-2 rounded-full bg-current"></span>
+                        Cabang
+                    </button>
+                    <button @click="filterType = 'kas'"
+                            :class="filterType === 'kas' ? 'bg-primary text-white shadow-sm shadow-primary/25 border-transparent' : 'bg-white dark:bg-slate-800 text-secondary dark:text-slate-300 border-border/60 hover:border-primary/50 hover:text-primary'"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full border transition-all duration-200 active:scale-[0.97]">
+                        <span class="w-2 h-2 rounded-full bg-current"></span>
+                        Kas
+                    </button>
+                </div>
+            </div>
+
+            {{-- Office Card Grid --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 reveal-up" x-intersect="$el.classList.add('is-visible')">
+                @foreach($offices as $office)
+                @php
+                    $typeConfig = [
+                        'pusat' => [
+                            'bg'     => 'bg-amber-500',
+                            'light'  => 'bg-amber-50 dark:bg-amber-900/20',
+                            'border' => 'border-amber-200 dark:border-amber-800/40',
+                            'badge'  => 'text-amber-700 bg-amber-50 border-amber-200 dark:text-amber-400 dark:bg-amber-900/30 dark:border-amber-800/40',
+                            'ring'   => 'ring-amber-400',
+                            'icon'   => 'text-amber-600',
+                            'action' => 'text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20',
+                        ],
+                        'cabang' => [
+                            'bg'     => 'bg-blue-500',
+                            'light'  => 'bg-blue-50 dark:bg-blue-900/20',
+                            'border' => 'border-blue-200 dark:border-blue-800/40',
+                            'badge'  => 'text-blue-700 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-900/30 dark:border-blue-800/40',
+                            'ring'   => 'ring-blue-400',
+                            'icon'   => 'text-blue-600',
+                            'action' => 'text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20',
+                        ],
+                        'kas' => [
+                            'bg'     => 'bg-emerald-600',
+                            'light'  => 'bg-emerald-50 dark:bg-emerald-900/20',
+                            'border' => 'border-emerald-200 dark:border-emerald-800/40',
+                            'badge'  => 'text-emerald-700 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-900/30 dark:border-emerald-800/40',
+                            'ring'   => 'ring-emerald-400',
+                            'icon'   => 'text-emerald-600',
+                            'action' => 'text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20',
+                        ],
+                        'kas_keliling' => [
+                            'bg'     => 'bg-teal-500',
+                            'light'  => 'bg-teal-50 dark:bg-teal-900/20',
+                            'border' => 'border-teal-200 dark:border-teal-800/40',
+                            'badge'  => 'text-teal-700 bg-teal-50 border-teal-200 dark:text-teal-400 dark:bg-teal-900/30 dark:border-teal-800/40',
+                            'ring'   => 'ring-teal-400',
+                            'icon'   => 'text-teal-600',
+                            'action' => 'text-teal-600 hover:bg-teal-50 dark:hover:bg-teal-900/20',
+                        ],
+                    ];
+                    $cfg = $typeConfig[$office->type] ?? $typeConfig['kas'];
+                @endphp
+                <div x-show="filterType === 'all' || filterType === '{{ $office->type }}'"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     @click="selectOffice({{ $office->id }}, {{ $office->latitude ?? 'null' }}, {{ $office->longitude ?? 'null' }})"
+                     :class="selectedOffice === {{ $office->id }} ? 'ring-2 {{ $cfg['ring'] }} shadow-lg -translate-y-0.5' : 'hover:shadow-md hover:-translate-y-0.5'"
+                     class="group relative bg-white dark:bg-slate-900 rounded-2xl border border-border/60 dark:border-slate-700/60 cursor-pointer transition-all duration-300 overflow-hidden">
+
+                    {{-- Colored top bar --}}
+                    <div class="h-1.5 w-full {{ $cfg['bg'] }}"></div>
+
+                    <div class="p-5">
+                        {{-- Header: icon + badge --}}
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 {{ $cfg['light'] }} rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300">
+                                    <svg class="w-5 h-5 {{ $cfg['icon'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border {{ $cfg['badge'] }} mb-1">
+                                        {{ $office->type_label }}
+                                    </span>
+                                    <h3 class="text-sm font-bold text-foreground dark:text-slate-100 leading-tight line-clamp-2">{{ $office->name }}</h3>
+                                </div>
+                            </div>
+                            @if($office->has_coordinates)
+                            <div class="shrink-0 w-7 h-7 rounded-lg {{ $cfg['light'] }} flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-200" title="Tersedia di peta">
+                                <svg class="w-3.5 h-3.5 {{ $cfg['icon'] }}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            </div>
+                            @endif
+                        </div>
+
+                        {{-- Address --}}
+                        <div class="flex items-start gap-2 mb-3">
+                            <svg class="w-3.5 h-3.5 text-secondary dark:text-slate-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <p class="text-xs text-secondary dark:text-slate-400 leading-relaxed line-clamp-2">{{ $office->address }}</p>
+                        </div>
+
+                        @if($office->phone)
+                        <div class="flex items-center gap-2 mb-4">
+                            <svg class="w-3.5 h-3.5 text-secondary dark:text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <p class="text-xs font-medium text-secondary dark:text-slate-400">{{ $office->phone }}</p>
+                        </div>
+                        @else
+                        <div class="mb-4"></div>
+                        @endif
+
+                        {{-- Action Buttons --}}
+                        <div class="flex gap-2 pt-3 border-t border-border/40 dark:border-slate-700/40">
+                            @if($office->phone)
+                            <a href="tel:{{ $office->phone }}"
+                               @click.stop
+                               class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold {{ $cfg['action'] }} border border-border/50 dark:border-slate-700/50 transition-colors duration-200">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                Telepon
+                            </a>
+                            @endif
+                            @if($office->directions_url)
+                            <a href="{{ $office->directions_url }}"
+                               target="_blank" rel="noopener noreferrer"
+                               @click.stop
+                               class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold {{ $cfg['action'] }} border border-border/50 dark:border-slate-700/50 transition-colors duration-200">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                                Arahkan
+                            </a>
+                            @endif
+                            @if(!$office->phone && !$office->directions_url)
+                            <span class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-secondary dark:text-slate-500 border border-border/40 dark:border-slate-700/40">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Info tidak tersedia
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
         </div>
     </section>
 
