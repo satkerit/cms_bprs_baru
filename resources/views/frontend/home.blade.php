@@ -72,7 +72,7 @@
             <div class="text-center mb-8 reveal-up" x-intersect="$el.classList.add('is-visible')">
                 <span class="eyebrow-badge mb-3 inline-flex">Tentang Kami</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground tracking-tight leading-tight">
-                    Bank Syariah di Kepulauan Bangka Belitung
+                    Bank Syariah Bangka Belitung
                 </h2>
             </div>
             <div class="max-w-4xl mx-auto text-center text-secondary dark:text-slate-400 space-y-4 reveal-up" x-intersect="$el.classList.add('is-visible')">
