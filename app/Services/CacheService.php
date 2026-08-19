@@ -353,6 +353,7 @@ class CacheService
                 ResponseCache::clear();
             }
         } catch (\Exception $e) {
+            \Log::warning('Failed to clear response cache: ' . $e->getMessage());
         }
     }
 
@@ -370,6 +371,7 @@ class CacheService
                 ResponseCache::clear();
             }
         } catch (\Exception $e) {
+            \Log::warning('Failed to clear response cache: ' . $e->getMessage());
         }
     }
 
@@ -457,6 +459,7 @@ class CacheService
                 ResponseCache::clear();
             }
         } catch (\Exception $e) {
+            \Log::warning('Failed to clear response cache: ' . $e->getMessage());
         }
     }
 
@@ -477,6 +480,7 @@ class CacheService
                 ResponseCache::clear();
             }
         } catch (\Exception $e) {
+            \Log::warning('Failed to clear response cache: ' . $e->getMessage());
         }
     }
 

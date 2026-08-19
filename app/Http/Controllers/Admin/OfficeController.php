@@ -86,13 +86,12 @@ class OfficeController extends Controller
     public function destroy(Office $office)
     {
         $this->authorizeDelete('offices.delete');
-
-        if ($office->photo) {
-            Storage::disk('public')->delete($office->photo);
-        }
-
         try {
+            $oldPhoto = $office->photo;
             $office->delete();
+            if ($oldPhoto) {
+                Storage::disk('public')->delete($oldPhoto);
+            }
             return redirect()->route('admin.offices.index')->with('success', 'Kantor berhasil dihapus.');
         } catch (\Exception $e) {
             return redirect()->route('admin.offices.index')->with('error', 'Gagal menghapus kantor: ' . $e->getMessage());

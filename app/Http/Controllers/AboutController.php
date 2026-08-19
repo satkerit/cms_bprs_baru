@@ -45,19 +45,7 @@ class AboutController extends Controller
     {
         try {
             $type = $request->query('type');
-
-            \Log::info('AboutController::offices called', [
-                'type' => $type,
-                'request_type' => gettype($type)
-            ]);
-
             $offices = app(CacheService::class)->getOffices($type);
-
-            \Log::info('AboutController::offices - offices loaded', [
-                'count' => $offices->count(),
-                'type' => $type
-            ]);
-
             return view('frontend.pages.about.offices', [
                 'offices' => $offices,
                 'metaDescription' => 'Daftar kantor cabang, kantor kas, dan kas keliling BPRS Bangka Belitung di seluruh Kepulauan Bangka Belitung. Temukan kantor terdekat untuk layanan perbankan syariah.',
@@ -67,7 +55,6 @@ class AboutController extends Controller
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
             ]);
 
             throw $e;

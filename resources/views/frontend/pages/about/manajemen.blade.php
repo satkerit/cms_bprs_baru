@@ -21,7 +21,7 @@
             </span>
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">Tentang Manajemen</h1>
             <p class="text-base sm:text-lg md:text-xl text-white/90 mx-auto px-4 leading-relaxed">
-                {{ $companyInfo?->name ?? 'BPRS Bangka Belitung' }} yang memastikan tata kelola bank berjalan transparan, akuntabel, dan sesuai prinsip syariah.
+                {{ $companyInfo?->name ?? 'BPRS Bangka Belitung' }} memastikan seluruh tata kelola bank berjalan transparan, akuntabel, dan sesuai prinsip syariah.
             </p>
         </div>
         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-muted/30 to-transparent"></div>
