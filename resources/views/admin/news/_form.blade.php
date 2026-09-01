@@ -219,7 +219,7 @@
 async function deleteGalleryImage(imageId, btn) {
     if (!confirm('Hapus gambar ini?')) return;
     try {
-        const response = await fetch(`/admin/news/images/${imageId}`, {
+        const response = await fetch(`/admin/news/image/${imageId}`, {
             method: 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
