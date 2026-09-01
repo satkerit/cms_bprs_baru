@@ -159,18 +159,24 @@ window.imagePicker = function (config = {}) {
         items: [],
         breadcrumbs: [],
         selectedItem: null,
+        // Single mode
         previewUrl: config.initialPreview || "",
         fromStorage: false,
         storagePath: "",
+        shouldDelete: false,
+        // Multiple mode
+        multiple: config.multiple || false,
+        previews: [],
+        // Common
         inputId: config.inputId || "",
         hasExistingImage: config.hasExistingImage || false,
-        shouldDelete: false,
         deleteFieldName: config.deleteFieldName || "",
 
         init() {
             console.log("[Alpine] imagePicker initialized:", {
                 previewUrl: this.previewUrl,
                 inputId: this.inputId,
+                multiple: this.multiple,
             });
         },
 
@@ -207,47 +213,100 @@ window.imagePicker = function (config = {}) {
 
         confirmSelection() {
             if (this.selectedItem) {
-                this.previewUrl = this.selectedItem.url;
-                this.fromStorage = true;
-                this.storagePath = this.selectedItem.path;
+                if (this.multiple) {
+                    // Add to previews for multiple mode
+                    this.previews.push({
+                        url: this.selectedItem.url,
+                        path: this.selectedItem.path,
+                        fromStorage: true,
+                        isNew: false,
+                    });
+                } else {
+                    this.previewUrl = this.selectedItem.url;
+                    this.fromStorage = true;
+                    this.storagePath = this.selectedItem.path;
+                }
                 this.shouldDelete = false;
                 this.showModal = false;
                 this.selectedItem = null;
 
-                // Reset file input if any
                 const input = document.getElementById(this.inputId);
                 if (input) input.value = "";
             }
         },
 
         handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
 
-            if (file.type.startsWith("image/")) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    this.previewUrl = e.target.result;
-                    this.fromStorage = false;
-                    this.storagePath = "";
-                    this.shouldDelete = false;
-                };
-                reader.readAsDataURL(file);
+            if (this.multiple) {
+                // Multiple mode: process all files for preview only
+                // Browser will handle form submission with all files in input
+                Array.from(files).forEach((file) => {
+                    if (file.type.startsWith("image/")) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            // Check if already exists to avoid duplicates
+                            const exists = this.previews.some(
+                                (p) => p.path === file.name && p.isNew,
+                            );
+                            if (!exists) {
+                                this.previews.push({
+                                    url: e.target.result,
+                                    path: file.name,
+                                    fromStorage: false,
+                                    isNew: true,
+                                });
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            } else {
+                // Single mode: process first file only
+                const file = files[0];
+                if (file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.previewUrl = e.target.result;
+                        this.fromStorage = false;
+                        this.storagePath = "";
+                        this.shouldDelete = false;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        },
+
+        removePreview(index) {
+            this.previews.splice(index, 1);
+            // For multiple mode, we don't reset input to preserve other files
+            // For single mode, reset input
+            if (!this.multiple) {
+                const input = document.getElementById(this.inputId);
+                if (input) input.value = "";
             }
         },
 
         clearSelection() {
-            this.previewUrl = "";
-            this.fromStorage = false;
-            this.storagePath = "";
+            if (this.multiple) {
+                this.previews = [];
+            } else {
+                this.previewUrl = "";
+                this.fromStorage = false;
+                this.storagePath = "";
+            }
             this.shouldDelete = true;
 
-            // Reset file input
             const input = document.getElementById(this.inputId);
             if (input) input.value = "";
         },
 
-        // Aliases for backward compatibility or different naming conventions
+        get hasPreviews() {
+            return this.multiple ? this.previews.length > 0 : !!this.previewUrl;
+        },
+
+        // Aliases
         openModal() {
             this.openStorageModal();
         },
@@ -856,7 +915,10 @@ window.missionPoints = function (initial = []) {
     return {
         points: initial,
         get missionJoined() {
-            return this.points.map((p) => (p.text || '').trim()).filter(Boolean).join('\n');
+            return this.points
+                .map((p) => (p.text || "").trim())
+                .filter(Boolean)
+                .join("\n");
         },
     };
 };

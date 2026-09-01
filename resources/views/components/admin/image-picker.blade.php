@@ -6,6 +6,7 @@
     'hint' => null,
     'required' => false,
     'previewClass' => 'h-20',
+    'multiple' => false,
 ])
 
 @php
@@ -23,7 +24,8 @@
     inputId: @js($inputId),
     initialPreview: @js($previewUrl),
     hasExistingImage: @js($hasExistingImage),
-    deleteFieldName: @js($deleteFieldName)
+    deleteFieldName: @js($deleteFieldName),
+    multiple: @js($multiple)
 })">
     @if($label)
         <label class="block text-[13px] font-medium dark:text-slate-300 text-zinc-700 mb-1.5">
@@ -32,10 +34,38 @@
         </label>
     @endif
 
-    {{-- Preview --}}
+    {{-- Single Mode Preview --}}
+    @if(!$multiple)
     <div class="mb-3" x-show="previewUrl" x-cloak>
         <img :src="previewUrl" alt="Preview" class="rounded-xl border dark:border-slate-700 border-zinc-200 dark:bg-slate-800/50 bg-zinc-50 {{ $previewClass }} w-full" style="object-fit: contain;">
     </div>
+    @endif
+
+    {{-- Multiple Mode Preview Grid --}}
+    @if($multiple)
+    <div class="mb-3" x-show="previews.length > 0" x-cloak>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+            <template x-for="(preview, index) in previews" :key="index">
+                <div class="relative group aspect-square rounded-lg overflow-hidden border dark:border-slate-700 border-zinc-200">
+                    <img :src="preview.url" class="w-full h-full object-cover">
+                    <button type="button"
+                        @click="removePreview(index)"
+                        class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md">
+                        &times;
+                    </button>
+                </div>
+            </template>
+        </div>
+    </div>
+    {{-- Hidden file inputs for form submission (multiple mode) --}}
+    <template x-for="(preview, index) in previews.filter(p => p.isNew)" :key="'file-' + index">
+        <input type="file"
+               name="{{ $name }}[]"
+               :id="'{{ $inputId }}_' + index"
+               class="hidden"
+               :class="preview.file ? '' : 'hidden'">
+    </template>
+    @endif
 
     {{-- Hidden input for storage path --}}
     <input type="hidden" name="{{ $name }}_from_storage" :value="fromStorage ? storagePath : ''">
@@ -50,7 +80,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
             </svg>
             <span>Upload dari PC</span>
-            <input type="file" name="{{ $name }}" id="{{ $inputId }}" accept="{{ $accept }}" class="sr-only" @change="handleFileSelect($event)">
+            <input type="file" name="{{ $name }}" id="{{ $inputId }}" accept="{{ $accept }}" @if($multiple)multiple @endif class="sr-only" @change="handleFileSelect($event)">
         </label>
 
         {{-- Select from Storage --}}
@@ -62,7 +92,7 @@
         </button>
 
         {{-- Clear --}}
-        <button type="button" x-show="previewUrl" x-cloak @click="clearSelection()" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200/60 rounded-xl hover:bg-red-100 transition-colors">
+        <button type="button" x-show="@js($multiple) ? previews.length > 0 : previewUrl" x-cloak @click="clearSelection()" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200/60 rounded-xl hover:bg-red-100 transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
