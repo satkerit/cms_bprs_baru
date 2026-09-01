@@ -122,7 +122,7 @@
                                     @foreach($news->images as $image)
                                     <div class="block aspect-square rounded-xl overflow-hidden bg-muted dark:bg-slate-800 ring-1 ring-border/30 dark:ring-slate-700/50 transition-all duration-300 group">
                                         <x-optimized-image
-                                            :src="storage_url($image->image)"
+                                            :src="storage_url($image->image_path)"
                                             :alt="$news->title . ' - Gambar ' . ($loop->iteration)"
                                             :lazy="true"
                                             class="w-full h-full transition-all duration-500 group-hover:scale-110"
