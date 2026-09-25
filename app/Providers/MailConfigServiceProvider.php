@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\EmailSetting;
+use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -22,11 +23,24 @@ class MailConfigServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Only apply if table exists and we're not in console (migrations)
-        if ($this->app->runningInConsole()) {
-            return;
-        }
+        $this->applyMailConfig();
 
+        // Queue worker adalah proses long-running: config yang dimuat sekali saat boot
+        // menjadi basi (stale) bila SMTP diubah dari dashboard admin. Muat ulang setiap
+        // job diproses agar email antrean (mis. notifikasi pengaduan) memakai SMTP terbaru.
+        if ($this->app->runningInConsole()) {
+            $this->app['events']->listen(
+                JobProcessing::class,
+                fn () => $this->applyMailConfig(),
+            );
+        }
+    }
+
+    /**
+     * Terapkan konfigurasi mail dari tabel email_settings (bila tersedia).
+     */
+    protected function applyMailConfig(): void
+    {
         try {
             if (!Schema::hasTable('email_settings')) {
                 return;

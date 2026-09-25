@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Frontend\Newsletter;
 
+use App\Models\NewsletterSubscriber;
 use Livewire\Component;
 
 class Subscribe extends Component
@@ -21,11 +22,12 @@ class Subscribe extends Component
     {
         $this->validate();
 
-        // Here you can save to database or integrate with email service
-        // For example: Mailchimp, SendGrid, etc.
-
-        // Example: Save to database
-        // Newsletter::firstOrCreate(['email' => $this->email]);
+        // Simpan sebagai subscriber aktif. Bila email pernah berhenti berlangganan,
+        // aktifkan kembali alih-alih membuat duplikat (email bersifat unique).
+        NewsletterSubscriber::updateOrCreate(
+            ['email' => $this->email],
+            ['subscribed_at' => now(), 'unsubscribed_at' => null],
+        );
 
         session()->flash('success', 'Terima kasih! Anda telah berlangganan newsletter kami.');
 

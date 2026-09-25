@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\SecureSessionMiddleware;
+use App\Http\Requests\Admin\User\StoreUserRequest;
+use App\Http\Requests\Admin\User\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Role;
 use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -46,17 +47,11 @@ class UserController extends Controller
         return view('admin.users.form', compact('roles'));
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         $this->authorizeCreate('users.create');
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'role_id' => 'required|exists:roles,id',
-            'is_active' => 'boolean',
-        ]);
+        $validated = $request->validated();
 
         // Prevent non-super-admin from creating super admins
         /** @var \App\Models\User $currentUser */
@@ -68,11 +63,15 @@ class UserController extends Controller
             }
         }
 
-        $validated['password'] = Hash::make($validated['password']);
-        $validated['is_active'] = $request->boolean('is_active');
-
         try {
-            User::create($validated);
+            $user = new User();
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->password = Hash::make($validated['password']);
+            $user->role_id = $validated['role_id'];
+            $user->is_active = $request->boolean('is_active');
+            $user->save();
+
             return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan.');
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal menambahkan pengguna: ' . $e->getMessage())->withInput();
@@ -87,17 +86,11 @@ class UserController extends Controller
         return view('admin.users.form', compact('user', 'roles'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->authorizeEdit('users.edit');
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => ['nullable', 'confirmed', Password::defaults()],
-            'role_id' => 'required|exists:roles,id',
-            'is_active' => 'boolean',
-        ]);
+        $validated = $request->validated();
 
         // Prevent non-super-admin from elevating roles or changing super admin data
         /** @var \App\Models\User $currentUser */
@@ -113,16 +106,17 @@ class UserController extends Controller
             }
         }
 
-        if ($request->filled('password')) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
-
-        $validated['is_active'] = $request->boolean('is_active');
-
         try {
-            $user->update($validated);
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->role_id = $validated['role_id'];
+            $user->is_active = $request->boolean('is_active');
+
+            if (!empty($validated['password'])) {
+                $user->password = Hash::make($validated['password']);
+            }
+
+            $user->save();
 
             // Clear cached role if the updated user is the current user (self-role-change)
             // or if the role_id changed

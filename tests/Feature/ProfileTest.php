@@ -70,14 +70,14 @@ class ProfileTest extends TestCase
             ->actingAs($user)
             ->put(route('admin.profile.password'), [
                 'current_password' => 'password',
-                'password' => 'new-password',
-                'password_confirmation' => 'new-password',
+                'password' => 'P@ssw0rd!Secure9#',
+                'password_confirmation' => 'P@ssw0rd!Secure9#',
             ]);
 
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect(route('admin.profile.edit'));
 
-        $this->assertTrue(Hash::check('new-password', $user->fresh()->password));
+        $this->assertTrue(Hash::check('P@ssw0rd!Secure9#', $user->fresh()->password));
     }
 }

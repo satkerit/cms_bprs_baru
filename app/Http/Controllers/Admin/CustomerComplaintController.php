@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CustomerComplaint\UpdateCustomerComplaintStatusRequest;
 use App\Jobs\SendCustomerComplaintStatusEmail;
 use App\Models\CustomerComplaint;
 use App\Traits\AuthorizesAdminActions;
@@ -68,16 +69,11 @@ class CustomerComplaintController extends Controller
         return view('admin.customer-complaints.show', compact('customerComplaint'));
     }
 
-    public function update(Request $request, CustomerComplaint $customerComplaint)
+    public function update(UpdateCustomerComplaintStatusRequest $request, CustomerComplaint $customerComplaint)
     {
         $this->authorizeAny(['complaints.manage']);
 
-        $validated = $request->validate([
-            'status' => 'required|in:pending,in_progress,resolved,closed',
-            'priority' => 'required|in:low,medium,high',
-            'resolution' => 'nullable|string',
-            'admin_notes' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         $oldStatus = $customerComplaint->status;
 

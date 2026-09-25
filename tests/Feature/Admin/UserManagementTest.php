@@ -36,8 +36,8 @@ class UserManagementTest extends TestCase
         $userData = [
             'name' => 'New User',
             'email' => 'newuser@example.com',
-            'password' => 'Password123!',
-            'password_confirmation' => 'Password123!',
+            'password' => 'P@ssw0rd!Secure9#',
+            'password_confirmation' => 'P@ssw0rd!Secure9#',
             'role_id' => $role->id,
             'is_active' => true,
         ];

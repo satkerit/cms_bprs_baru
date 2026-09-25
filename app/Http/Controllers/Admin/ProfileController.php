@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+use App\Http\Requests\Admin\Profile\UpdateProfilePasswordRequest;
+use App\Http\Requests\Admin\Profile\UpdateProfileRequest;
+use App\Models\PasswordHistory;
+use Illuminate\Validation\ValidationException;
 
 class ProfileController extends Controller
 {
@@ -23,19 +24,14 @@ class ProfileController extends Controller
     /**
      * Update the user profile.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Admin\Profile\UpdateProfileRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(UpdateProfileRequest $request)
     {
         $user = auth()->user();
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-        ]);
-
-        $user->update($validated);
+        $user->update($request->validated());
 
         return redirect()->route('admin.profile.edit')
             ->with('success', 'Profil berhasil diperbarui.');
@@ -44,22 +40,32 @@ class ProfileController extends Controller
     /**
      * Update the user password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Admin\Profile\UpdateProfilePasswordRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updatePassword(Request $request)
+    public function updatePassword(UpdateProfilePasswordRequest $request)
     {
-        $request->validate([
-            'current_password' => ['required', function ($attribute, $value, $fail) {
-                if (!Hash::check($value, auth()->user()->password)) {
-                    $fail('Password saat ini tidak sesuai.');
-                }
-            }],
-            'password' => ['required', 'confirmed', Password::defaults()],
+        $user = auth()->user();
+        $validated = $request->validated();
+
+        // Kebijakan anti-reuse: tolak bila sama dengan salah satu dari 5 password terakhir
+        if ($user->hasUsedPassword($validated['password'])) {
+            throw ValidationException::withMessages([
+                'password' => 'Password ini sudah pernah digunakan. Silakan gunakan password yang berbeda.',
+            ]);
+        }
+
+        // Simpan password baru ke riwayat agar cek reuse berlaku untuk update berikutnya
+        PasswordHistory::savePassword($user->id, $validated['password']);
+
+        $user->update([
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
         ]);
 
-        auth()->user()->update([
-            'password' => Hash::make($request->password),
+        // Log perubahan password untuk keperluan audit
+        \Log::info('Password changed via admin profile', [
+            'user_id' => $user->id,
+            'ip' => $request->ip() ?? '0.0.0.0',
         ]);
 
         return redirect()->route('admin.profile.edit')

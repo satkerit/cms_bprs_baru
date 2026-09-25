@@ -2,111 +2,50 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Log;
+
 /**
- * Simple HTML Sanitizer for WYSIWYG content
- * Allows safe HTML tags while removing potentially dangerous content
+ * HTML Sanitizer untuk konten WYSIWYG.
+ *
+ * Memakai HTMLPurifier (via mews/purifier) sebagai mesin utama: parser HTML
+ * sungguhan dengan whitelist tag/atribut, sehingga jauh lebih kuat terhadap
+ * bypass XSS/mXSS dibanding sanitasi berbasis regex.
+ *
+ * Profil whitelist didefinisikan di config/purifier.php pada key "cms".
+ * API (clean/sanitize) dipertahankan agar pemakaian di model tidak berubah.
  */
 class HtmlSanitizer
 {
     /**
-     * Allowed HTML tags
+     * Profil konfigurasi HTMLPurifier yang dipakai.
      */
-    protected static array $allowedTags = [
-        'p',
-        'br',
-        'strong',
-        'b',
-        'em',
-        'i',
-        'u',
-        's',
-        'strike',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'ul',
-        'ol',
-        'li',
-        'a',
-        'img',
-        'blockquote',
-        'pre',
-        'code',
-        'table',
-        'thead',
-        'tbody',
-        'tr',
-        'th',
-        'td',
-        'div',
-        'span',
-        'hr',
-    ];
-
-    /**
-     * Allowed attributes per tag
-     */
-    protected static array $allowedAttributes = [
-        'a' => ['href', 'title', 'target', 'rel'],
-        'img' => ['src', 'alt', 'title', 'width', 'height', 'class'],
-        'div' => ['class', 'style'],
-        'span' => ['class', 'style'],
-        'p' => ['class', 'style'],
-        'table' => ['class', 'border', 'cellpadding', 'cellspacing'],
-        'th' => ['colspan', 'rowspan', 'class'],
-        'td' => ['colspan', 'rowspan', 'class'],
-        '*' => ['class'], // Allow class on all elements
-    ];
-
-    /**
-     * Dangerous patterns to remove
-     */
-    protected static array $dangerousPatterns = [
-        '/<script\b[^>]*>(.*?)<\/script>/is',
-        '/javascript\s*:/i',
-        '/vbscript\s*:/i',
-        '/on\w+\s*=/i', // onclick, onload, onerror, etc.
-        '/data\s*:/i',
-        '/<iframe\b[^>]*>(.*?)<\/iframe>/is',
-        '/<object\b[^>]*>(.*?)<\/object>/is',
-        '/<embed\b[^>]*>/is',
-        '/<form\b[^>]*>(.*?)<\/form>/is',
-        '/<input\b[^>]*>/is',
-        '/<button\b[^>]*>(.*?)<\/button>/is',
-        '/<textarea\b[^>]*>(.*?)<\/textarea>/is',
-        '/<select\b[^>]*>(.*?)<\/select>/is',
-        '/expression\s*\(/i', // CSS expression
-        '/url\s*\(\s*["\']?\s*javascript/i',
-    ];
+    protected const PROFILE = 'cms';
 
     /**
      * Sanitize HTML content
      */
     public static function clean(?string $html): string
     {
-        if (empty($html)) {
+        if ($html === null || trim($html) === '') {
             return '';
         }
 
-        // Remove dangerous patterns first
-        foreach (self::$dangerousPatterns as $pattern) {
-            $html = preg_replace($pattern, '', $html);
+        try {
+            $clean = \Purifier::clean($html, self::PROFILE);
+        } catch (\Throwable $e) {
+            // Fail-closed: bila sanitizer gagal (mis. cache tidak writable),
+            // buang seluruh tag dan sisakan teks polos agar tidak ada HTML
+            // tak tersanitasi yang lolos ke halaman.
+            Log::error('HtmlSanitizer: Purifier gagal, fallback ke strip_tags', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return strip_tags($html);
         }
 
-        // Strip tags except allowed ones
-        $allowedTagsString = '<' . implode('><', self::$allowedTags) . '>';
-        $html = strip_tags($html, $allowedTagsString);
-
-        // Clean attributes
-        $html = self::cleanAttributes($html);
-
-        // Ensure links are safe
-        $html = self::sanitizeLinks($html);
-
-        return $html;
+        // Tambahkan target + rel pada link eksternal (perilaku yang dipertahankan
+        // dari implementasi sebelumnya).
+        return self::sanitizeLinks($clean);
     }
 
     /**
@@ -115,79 +54,6 @@ class HtmlSanitizer
     public static function sanitize(?string $html): string
     {
         return self::clean($html);
-    }
-
-    /**
-     * Clean attributes from HTML tags
-     */
-    protected static function cleanAttributes(string $html): string
-    {
-        // Match all HTML tags with attributes
-        return preg_replace_callback(
-            '/<(\w+)([^>]*)>/i',
-            function ($matches) {
-                $tag = strtolower($matches[1]);
-                $attributes = $matches[2];
-
-                if (empty(trim($attributes))) {
-                    return "<{$tag}>";
-                }
-
-                // Get allowed attributes for this tag
-                $allowed = array_merge(
-                    self::$allowedAttributes['*'] ?? [],
-                    self::$allowedAttributes[$tag] ?? []
-                );
-
-                if (empty($allowed)) {
-                    return "<{$tag}>";
-                }
-
-                // Parse and filter attributes
-                $cleanAttributes = [];
-                preg_match_all('/(\w+)\s*=\s*["\']([^"\']*)["\']|(\w+)\s*=\s*(\S+)/i', $attributes, $attrMatches, PREG_SET_ORDER);
-
-                foreach ($attrMatches as $attr) {
-                    $name = strtolower($attr[1] ?? $attr[3]);
-                    $value = $attr[2] ?? $attr[4];
-
-                    if (in_array($name, $allowed)) {
-                        // Additional sanitization for specific attributes
-                        $value = self::sanitizeAttributeValue($name, $value);
-                        if ($value !== null) {
-                            $cleanAttributes[] = $name . '="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';
-                        }
-                    }
-                }
-
-                $attrString = empty($cleanAttributes) ? '' : ' ' . implode(' ', $cleanAttributes);
-                return "<{$tag}{$attrString}>";
-            },
-            $html
-        );
-    }
-
-    /**
-     * Sanitize attribute values
-     */
-    protected static function sanitizeAttributeValue(string $name, string $value): ?string
-    {
-        // Check for javascript: in href/src
-        if (in_array($name, ['href', 'src'])) {
-            if (preg_match('/^\s*(javascript|vbscript|data):/i', $value)) {
-                return null;
-            }
-        }
-
-        // Clean style attribute
-        if ($name === 'style') {
-            // Remove dangerous CSS
-            $value = preg_replace('/expression\s*\(/i', '', $value);
-            $value = preg_replace('/javascript\s*:/i', '', $value);
-            $value = preg_replace('/url\s*\([^)]*\)/i', '', $value);
-        }
-
-        return $value;
     }
 
     /**

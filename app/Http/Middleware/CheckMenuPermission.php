@@ -75,11 +75,6 @@ class CheckMenuPermission
         // Storage (accessible to all authenticated users for image picker)
         "admin.storage" => null,
 
-        // Hero slider upload (group terpisah di routes/hero-slider-routes.php)
-        "hero-slider.upload" => "hero-slides",
-        "hero-slider.preview" => "hero-slides",
-        "hero-slider.size-recommendations" => "hero-slides",
-
         // Monitoring (accessible to admin roles)
         "admin.audit-trails" => "audit-trails",
         "admin.visitor-stats" => "visitor-stats",

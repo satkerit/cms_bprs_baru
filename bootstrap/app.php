@@ -12,9 +12,6 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware(['web', 'throttle:120,1'])
-                ->group(base_path('routes/hero-slider-routes.php'));
-
             // Include debug routes
             Route::middleware('web')->group(base_path('routes/debug.php'));
 
