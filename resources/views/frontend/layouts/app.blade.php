@@ -18,6 +18,11 @@
 
     <meta name="csp-nonce" content="{{ $nonce }}">
 
+    {{-- Referrer-Policy halaman: menimpa header 'same-origin' dari edge/server agar tile OSM
+         menerima Referer (wajib per kebijakan OSM: tanpa Referer -> 403 Access Denied).
+         strict-origin-when-cross-origin: URL lengkap same-origin, hanya origin untuk cross-origin. --}}
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
     {{-- SEO Meta Tags — wire per-page slots to SeoMeta before generating --}}
     @php
         $__seoTitle = isset($title) ? trim(strip_tags((string) $title)) : '';

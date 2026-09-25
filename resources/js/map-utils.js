@@ -60,9 +60,16 @@ function createMap(containerId, points, opts = {}) {
         [0, 0],
         2,
     );
+    // OSM menolak tile tanpa Referer (403 "No referer sent. Access denied").
+    // referrerPolicy element-level menimpa Referrer-Policy halaman/header yang ketat (mis. same-origin
+    // yang di-set oleh edge/server), sehingga Referer tetap terkirim untuk tile OSM.
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
-        attribution: "&copy; OpenStreetMap",
+        // Atribusi wajib per kebijakan OSM (https://operations.osmfoundation.org/policies/tiles/):
+        // teks "OpenStreetMap contributors" + link ke copyright
+        attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+        referrerPolicy: "no-referrer-when-downgrade",
     }).addTo(m);
 
     const markers = [];
