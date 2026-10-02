@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Product\StoreProductRequest;
 use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Models\Brochure;
 use App\Models\Product;
+use App\Services\FileScanner;
 use App\Services\ProductService;
 use App\Traits\AuthorizesAdminActions;
 use App\Traits\HandlesImageUpload;
@@ -62,6 +63,7 @@ class ProductController extends Controller
         // Handle brochure upload (takes precedence over library selection)
         $brochurePath = null;
         if ($request->hasFile('brochure')) {
+            FileScanner::assertSafe($request->file('brochure'));
             $brochurePath = $request->file('brochure')->store('products/brochures', 'public');
         }
 
@@ -102,6 +104,7 @@ class ProductController extends Controller
         // Handle brochure (file upload or library selection)
         $brochurePath = null;
         if ($request->hasFile('brochure')) {
+            FileScanner::assertSafe($request->file('brochure'));
             $brochurePath = $request->file('brochure')->store('products/brochures', 'public');
         }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auction\StoreAuctionRequest;
 use App\Http\Requests\Admin\Auction\UpdateAuctionRequest;
 use App\Models\Auction;
+use App\Services\FileScanner;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -68,6 +69,7 @@ class AuctionController extends Controller
         if ($request->hasFile('images')) {
             $slug = $data['slug'];
             foreach ($request->file('images') as $image) {
+                FileScanner::assertSafe($image);
                 $result       = ImageService::upload($image, [
                     'dir'     => "auctions/{$slug}",
                     'formats' => ['webp', 'jpg'],
@@ -110,6 +112,7 @@ class AuctionController extends Controller
         if ($request->hasFile('images')) {
             $slug = $auction->slug;
             foreach ($request->file('images') as $image) {
+                FileScanner::assertSafe($image);
                 $result           = ImageService::upload($image, [
                     'dir'         => "auctions/{$slug}",
                     'formats'     => ['webp', 'jpg'],

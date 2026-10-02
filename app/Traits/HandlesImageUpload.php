@@ -55,24 +55,14 @@ trait HandlesImageUpload
         if ($request->hasFile($fieldName)) {
             $file = $request->file($fieldName);
 
-            $result = app(FileScanner::class)->scan($file);
-            if ($result->isInfected()) {
-                app(FileScanner::class)->quarantine($file);
-                throw new \Exception('File diblokir: ' . ($result->detail ?? 'terindikasi berbahaya'));
-            }
-            if ($result->isError()) {
-                \Log::warning('FileScanner error — file rejected for safety', [
-                    'file' => $file->getClientOriginalName(),
-                    'error' => $result->detail ?? 'unknown',
-                ]);
-                throw new \Exception('File ditolak: scanner tidak dapat memverifikasi keamanan file.');
-            }
+            $newPath = $this->storeOptimizedImage($file, $storagePath);
 
-            if ($oldPath) {
+            // Hapus file lama hanya setelah file baru tersimpan & lolos scan
+            if ($oldPath && $oldPath !== $newPath) {
                 Storage::disk('public')->delete($oldPath);
             }
 
-            return $this->storeOptimizedImage($file, $storagePath);
+            return $newPath;
         }
 
         // Return old path if no new image
@@ -85,6 +75,9 @@ trait HandlesImageUpload
      */
     protected function storeOptimizedImage(UploadedFile $file, string $storagePath): string
     {
+        // Security gate: scan sebelum apa pun disimpan (fail-closed via ValidationException)
+        FileScanner::assertSafe($file);
+
         // Increase memory limit and execution time for image processing
         $originalMemoryLimit = ini_get('memory_limit');
         $originalTimeLimit = ini_get('max_execution_time');

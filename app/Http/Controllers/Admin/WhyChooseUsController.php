@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\WhyChooseUs\UpdateWhyChooseUsRequest;
 use App\Models\WhyChooseUs;
 use App\Models\WhyChooseUsSetting;
 use App\Services\CacheService;
+use App\Services\FileScanner;
 use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -44,6 +45,7 @@ class WhyChooseUsController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('icon')) {
+            FileScanner::assertSafe($request->file('icon'));
             $path = $request->file('icon')->store('why-choose-us', 'public');
             $validated['icon'] = $path;
         }
@@ -79,11 +81,12 @@ class WhyChooseUsController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('icon')) {
+            FileScanner::assertSafe($request->file('icon'));
+            $path = $request->file('icon')->store('why-choose-us', 'public');
+            $validated['icon'] = $path;
             if ($whyChooseUs->icon) {
                 Storage::disk('public')->delete($whyChooseUs->icon);
             }
-            $path = $request->file('icon')->store('why-choose-us', 'public');
-            $validated['icon'] = $path;
         }
 
         try {
@@ -149,11 +152,12 @@ class WhyChooseUsController extends Controller
         $settings = WhyChooseUsSetting::getSettings();
 
         if ($request->hasFile('section_image')) {
+            FileScanner::assertSafe($request->file('section_image'));
+            $path = $request->file('section_image')->store('why-choose-us', 'public');
+            $validated['section_image'] = $path;
             if ($settings->section_image) {
                 Storage::disk('public')->delete($settings->section_image);
             }
-            $path = $request->file('section_image')->store('why-choose-us', 'public');
-            $validated['section_image'] = $path;
         }
 
         if (!$request->has('is_active')) {

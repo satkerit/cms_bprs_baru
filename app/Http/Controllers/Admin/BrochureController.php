@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Brochure\StoreBrochureRequest;
+use App\Models\AuditTrail;
 use App\Models\Brochure;
+use App\Services\FileScanner;
 use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -33,6 +36,7 @@ class BrochureController extends Controller
         $validated = $request->validated();
 
         $file = $request->file('file');
+        FileScanner::assertSafe($file);
         $originalName = $file->getClientOriginalName();
         $filename = Str::random(40) . '.pdf';
         $path = $file->storeAs('uploads/brosur-syariah', $filename, 'public');

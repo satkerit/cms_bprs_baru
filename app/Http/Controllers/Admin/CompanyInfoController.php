@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CompanyInfo\UpdateCompanyInfoRequest;
 use App\Models\CompanyInfo;
+use App\Services\FileScanner;
 use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -119,15 +120,18 @@ class CompanyInfoController extends Controller
 
             // Handle new file upload
             if ($request->hasFile($field)) {
-                // Delete old file if exists
-                if ($company && $company->$field) {
-                    Storage::disk('public')->delete($company->$field);
-                }
-
                 // Store new file using Laravel 12 approach
                 $file = $request->file($field);
+                FileScanner::assertSafe($file);
+
                 $filename = $this->generateUniqueFilename($file, $field);
-                $validated[$field] = $file->storeAs($path, $filename, 'public');
+                $newPath = $file->storeAs($path, $filename, 'public');
+                $validated[$field] = $newPath;
+
+                // Hapus file lama hanya setelah file baru lolos scan & tersimpan
+                if ($newPath && $company && $company->$field) {
+                    Storage::disk('public')->delete($company->$field);
+                }
             } elseif ($company) {
                 // Keep existing file if no new upload and no deletion
                 $validated[$field] = $company->$field;
@@ -227,7 +231,7 @@ class CompanyInfoController extends Controller
 
         $request->validate([
             'file' => 'required|file|max:' . get_upload_max_size('image'),
-            'path' => 'nullable|string',
+            'path' => 'nullable|string|max:255|not_regex:/(\.\.|\/|\\\\)/',
             'type' => 'required|in:image,icon,document',
         ]);
 
@@ -243,6 +247,13 @@ class CompanyInfoController extends Controller
                     'message' => 'Invalid file type',
                 ], 422);
             }
+
+            // Security: scan konten (magic bytes, PHP tag, dll.) — ekstensi saja tidak cukup
+            FileScanner::assertSafe($file);
+
+            // Security: sanitize path — hanya subfolder company yang diizinkan
+            $path = str($path)->replace(['..', '/', '\\'], '')->trim('/')->toString();
+            $path = $path !== '' ? $path : 'company';
 
             $filename = $this->generateUniqueFilename($file, $type);
             $storedPath = $file->storeAs($path, $filename, 'public');
@@ -271,7 +282,7 @@ class CompanyInfoController extends Controller
         $this->authorizeDelete('settings.company');
 
         $request->validate([
-            'path' => 'required|string',
+            'path' => 'required|string|max:255|not_regex:/\.\./',
         ]);
 
         try {

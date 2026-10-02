@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Report\StoreReportRequest;
 use App\Http\Requests\Admin\Report\UpdateReportRequest;
 use App\Models\Report;
 use App\Services\CacheService;
+use App\Services\FileScanner;
 use App\Traits\AuthorizesAdminActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -58,10 +59,12 @@ class ReportController extends Controller
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                
+
                 if (!$file->isValid()) {
                     return back()->withInput()->with('error', 'File tidak valid. Silakan coba lagi.');
                 }
+
+                FileScanner::assertSafe($file);
 
                 $validated['file_path'] = $file->store('reports', 'public');
                 $validated['file_size'] = $file->getSize();
@@ -116,20 +119,23 @@ class ReportController extends Controller
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                
+
                 if (!$file->isValid()) {
                     return back()->withInput()->with('error', 'File tidak valid. Silakan coba lagi.');
                 }
 
-                if ($report->file_path) {
-                    Storage::disk('public')->delete($report->file_path);
-                }
+                FileScanner::assertSafe($file);
 
-                $validated['file_path'] = $file->store('reports', 'public');
+                $newPath = $file->store('reports', 'public');
+                $validated['file_path'] = $newPath;
                 $validated['file_size'] = $file->getSize();
 
                 if (!$validated['file_path']) {
                     return back()->withInput()->with('error', 'Gagal menyimpan file. Periksa permission folder storage.');
+                }
+
+                if ($report->file_path && $report->file_path !== $newPath) {
+                    Storage::disk('public')->delete($report->file_path);
                 }
             }
 

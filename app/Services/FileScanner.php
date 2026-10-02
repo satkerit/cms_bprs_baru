@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class FileScanner
 {
@@ -28,14 +29,44 @@ class FileScanner
         ];
     }
 
-    public function scan(UploadedFile $file): ScanResult
+    /**
+     * Scan upload dan lempar ValidationException bila terindikasi berbahaya
+     * atau scanner gagal (fail-closed). Satu baris per call site controller.
+     */
+    public static function assertSafe(UploadedFile $file): void
     {
-        if (!$this->enabled) {
-            return ScanResult::skipped();
+        $scanner = app(self::class);
+        $result = $scanner->scan($file);
+
+        if ($result->isInfected()) {
+            $scanner->quarantine($file);
+            Log::warning('Upload diblokir FileScanner', [
+                'file' => $file->getClientOriginalName(),
+                'detail' => $result->detail,
+            ]);
+            throw ValidationException::withMessages([
+                'upload' => 'File diblokir: ' . ($result->detail ?? 'terindikasi berbahaya'),
+            ]);
         }
 
+        if ($result->isError()) {
+            Log::warning('FileScanner error — upload ditolak (fail-closed)', [
+                'file' => $file->getClientOriginalName(),
+                'error' => $result->detail ?? 'unknown',
+            ]);
+            throw ValidationException::withMessages([
+                'upload' => 'File ditolak: scanner tidak dapat memverifikasi keamanan file.',
+            ]);
+        }
+    }
+
+
+    public function scan(UploadedFile $file): ScanResult
+    {
         try {
-            $result = $this->scanWithClamAv($file);
+            $result = $this->enabled
+                ? $this->scanWithClamAv($file)
+                : null;
 
             if ($result !== null) {
                 return $result;
@@ -52,12 +83,10 @@ class FileScanner
 
     public function scanPath(string $absolutePath, ?string $originalName = null): ScanResult
     {
-        if (!$this->enabled) {
-            return ScanResult::skipped();
-        }
-
         try {
-            $result = $this->scanWithClamAvPath($absolutePath);
+            $result = $this->enabled
+                ? $this->scanWithClamAvPath($absolutePath)
+                : null;
 
             if ($result !== null) {
                 return $result;
