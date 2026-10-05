@@ -90,6 +90,14 @@ class SecurityHeaders
             "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net https://cdn.jsdelivr.net data:",
             "connect-src 'self' https://cdn.jsdelivr.net https://tile.openstreetmap.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org https://nominatim.openstreetmap.org http://api.aladhan.com https://analytics.ahrefs.com https://www.googletagmanager.com",
             "frame-src 'self' https://www.google.com https://maps.google.com blob: https://www.googletagmanager.com",
+            // img-src eksplisit agar tidak fallback ke default-src 'self' yang memblokir gambar CMS
+            // (logo/hero/news) yang di-serve dari origin berbeda jika APP_URL vs host akses tidak sinkron
+            // (www vs non-www). Izinkan data:/blob: untuk placeholder base64 dan https: untuk gambar
+            // eksternal yang mungkin disisipkan admin di konten berita/produk.
+            "img-src 'self' data: blob: https:",
+            "media-src 'self' https:",
+            "worker-src 'self' blob:",
+            "manifest-src 'self'",
             "frame-ancestors 'self'",
             "form-action 'self'",
             "base-uri 'self'",
