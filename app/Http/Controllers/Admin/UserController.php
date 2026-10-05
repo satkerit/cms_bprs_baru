@@ -74,7 +74,8 @@ class UserController extends Controller
 
             return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menambahkan pengguna: ' . $e->getMessage())->withInput();
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat menambahkan pengguna. Silakan coba lagi.')->withInput();
         }
     }
 
@@ -126,7 +127,8 @@ class UserController extends Controller
 
             return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil diperbarui.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memperbarui pengguna: ' . $e->getMessage())->withInput();
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui pengguna. Silakan coba lagi.')->withInput();
         }
     }
 
@@ -144,7 +146,8 @@ class UserController extends Controller
             $user->delete();
             return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', 'Gagal menghapus pengguna: ' . $e->getMessage());
+            report($e);
+            return redirect()->route('admin.users.index')->with('error', 'Terjadi kesalahan saat menghapus pengguna. Silakan coba lagi.');
         }
     }
 }

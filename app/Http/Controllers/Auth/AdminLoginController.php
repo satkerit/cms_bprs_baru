@@ -10,41 +10,20 @@ use Illuminate\Validation\ValidationException;
 
 class AdminLoginController extends Controller
 {
+    /**
+     * Batas minimum (detik) antara form dirender dan form dikirim.
+     * Manusia butuh waktu mengetik email & kata sandi; bot mengirim hampir instan.
+     */
+    private const MIN_FORM_SECONDS = 2;
+
     public function showLoginForm()
     {
-        $num1 = random_int(10, 99);
-        $num2 = random_int(10, 99);
-        $op = random_int(0, 2);
-        $operator = match ($op) {
-            0 => '+',
-            1 => '-',
-            2 => '×',
-        };
+        // Verifikasi senyap: cukup catat waktu form dibuat.
+        // Pengguna tidak perlu menjawab apa pun — bot akan tertangkap
+        // oleh honeypot, cek waktu, dan rate limiter di method login().
+        session(['login_form_issued_at' => now()->timestamp]);
 
-        if ($operator === '-' && $num1 < $num2) {
-            [$num1, $num2] = [$num2, $num1];
-        }
-        if ($operator === '×') {
-            $num1 = random_int(10, 30);
-            $num2 = random_int(2, 9);
-        }
-
-        $answer = match ($operator) {
-            '+' => $num1 + $num2,
-            '-' => $num1 - $num2,
-            '×' => $num1 * $num2,
-        };
-
-        $expiresAt = now()->addMinutes(5)->timestamp;
-
-        session([
-            'login_captcha_answer' => $answer,
-            'login_captcha_expires' => $expiresAt,
-        ]);
-
-        return view('auth.admin-login', [
-            'captcha_question' => "$num1 $operator $num2 = ?",
-        ]);
+        return view('auth.admin-login');
     }
 
     public function login(Request $request)
@@ -52,46 +31,37 @@ class AdminLoginController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
-            'captcha_answer' => 'required|numeric',
         ]);
-
-        $captchaKey = 'captcha-attempt-' . ($request->ip() ?? '0.0.0.0');
-        if (RateLimiter::tooManyAttempts($captchaKey, 5)) {
-            throw ValidationException::withMessages([
-                'captcha_answer' => ['Terlalu banyak percobaan. Silakan tunggu ' . RateLimiter::availableIn($captchaKey) . ' detik.'],
-            ]);
-        }
-
-        $sessionAnswer = session('login_captcha_answer');
-        $sessionExpires = session('login_captcha_expires');
-
-        if ($sessionAnswer === null || $sessionExpires === null) {
-            throw ValidationException::withMessages([
-                'captcha_answer' => ['Sesi CAPTCHA tidak ditemukan. Silakan refresh halaman.'],
-            ]);
-        }
-
-        if (now()->timestamp > $sessionExpires) {
-            session()->forget(['login_captcha_answer', 'login_captcha_expires']);
-            throw ValidationException::withMessages([
-                'captcha_answer' => ['CAPTCHA telah kedaluwarsa. Silakan refresh halaman.'],
-            ]);
-        }
-
-        if ((int)$request->captcha_answer !== (int)$sessionAnswer) {
-            RateLimiter::hit($captchaKey, 60);
-            session()->forget(['login_captcha_answer', 'login_captcha_expires']);
-            throw ValidationException::withMessages([
-                'captcha_answer' => ['Jawaban keamanan salah. Silakan refresh halaman dan coba lagi.'],
-            ]);
-        }
-
-        RateLimiter::clear($captchaKey);
 
         $key = 'admin-login-' . ($request->ip() ?? '0.0.0.0');
         if (RateLimiter::tooManyAttempts($key, 5)) {
             throw ValidationException::withMessages([
                 'email' => ['Terlalu banyak percobaan login. Silakan coba lagi dalam ' . RateLimiter::availableIn($key) . ' detik.'],
+            ]);
+        }
+
+        // --- Verifikasi senyap (tanpa tantangan yang terlihat oleh pengguna) ---
+
+        // 1) Honeypot: kolom tersembunyi yang tidak akan pernah diisi manusia.
+        //    Bot otomatis mengisi semua kolom yang ia temukan di HTML.
+        if ($request->filled('website')) {
+            RateLimiter::hit($key, 60);
+
+            // Pesan generik agar bot tidak mengetahui bahwa honeypot terdeteksi.
+            throw ValidationException::withMessages([
+                'email' => ['Email atau password salah.'],
+            ]);
+        }
+
+        // 2) Cek waktu: bot mengirim form seketika setelah halaman dimuat,
+        //    sedangkan manusia butuh waktu untuk mengisi email dan kata sandi.
+        //    Kolom hilang berarti form tidak pernah dibuka (POST langsung).
+        $issuedAt = session('login_form_issued_at');
+        if ($issuedAt === null || (now()->timestamp - (int)$issuedAt) < self::MIN_FORM_SECONDS) {
+            RateLimiter::hit($key, 60);
+
+            throw ValidationException::withMessages([
+                'email' => ['Sesi login tidak valid. Silakan muat ulang halaman dan coba lagi.'],
             ]);
         }
 
@@ -124,7 +94,7 @@ class AdminLoginController extends Controller
 
             RateLimiter::clear($key);
 
-            session()->forget(['login_captcha_answer', 'login_captcha_expires']);
+            session()->forget('login_form_issued_at');
 
             \App\Models\AuditTrail::log('login', 'Admin login: ' . $user->name);
 

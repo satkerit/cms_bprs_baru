@@ -15,13 +15,13 @@
             <x-admin.card title="Driver Email">
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">Mail Driver <span class="text-red-600">*</span></label>
-                        <select name="mailer" id="mailer" class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Mail Driver <span class="text-red-600">*</span></label>
+                        <select name="mailer" id="mailer" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                             @foreach($mailers as $value => $label)
                             <option value="{{ $value }}" {{ old('mailer', $settings->mailer ?? 'smtp') == $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
                         </select>
-                        <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Pilih metode pengiriman email</p>
+                        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Pilih metode pengiriman email</p>
                     </div>
                 </div>
             </x-admin.card>
@@ -37,13 +37,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <x-admin.input name="username" label="Username" :value="old('username', $settings->username ?? '')" placeholder="email@domain.com" hint="Username untuk autentikasi SMTP" autocomplete="username"/>
                         <div>
-                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">Password</label>
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Password</label>
                             <input type="password"
                                 name="password"
                                 autocomplete="current-password"
-                                class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                class="w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                                 placeholder="{{ $settings && $settings->hasPassword() ? '••••••••' : 'Masukkan password' }}">
-                            <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
                                 @if($settings && $settings->hasPassword())
                                     Kosongkan jika tidak ingin mengubah password
                                 @else
@@ -54,13 +54,13 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">Enkripsi</label>
-                        <select name="encryption" class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Enkripsi</label>
+                        <select name="encryption" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                             @foreach($encryptions as $value => $label)
                             <option value="{{ $value }}" {{ old('encryption', $settings->encryption ?? 'tls') == $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
                         </select>
-                        <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">TLS direkomendasikan untuk keamanan</p>
+                        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">TLS direkomendasikan untuk keamanan</p>
                     </div>
                 </div>
             </x-admin.card>
@@ -83,14 +83,14 @@
             {{-- Career Application Address --}}
             <x-admin.card title="Pengiriman Lamaran Karier">
                 <div class="space-y-4">
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Alamat yang ditampilkan di halaman detail lowongan karier sebagai tujuan pengiriman lamaran (fisik & email).</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Alamat yang ditampilkan di halaman detail lowongan karier sebagai tujuan pengiriman lamaran (fisik & email).</p>
                     <x-admin.input type="email" name="career_recipient_email" label="Email Pengiriman Lamaran" :value="old('career_recipient_email', $settings->career_recipient_email ?? '')" placeholder="personalia@domain.com" hint="Alamat email tujuan kirim lamaran (opsional, default: personalia.bsbb@gmail.com)"/>
                     <div>
-                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">Alamat Fisik Pengiriman Lamaran</label>
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Alamat Fisik Pengiriman Lamaran</label>
                         <textarea name="career_recipient_address" rows="3"
-                            class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            class="w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                             placeholder="Contoh: TJ TOWER, Jl. Kampung Melayu, Bukit Merapin, Pangkalpinang">{{ old('career_recipient_address', $settings->career_recipient_address ?? '') }}</textarea>
-                        <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Alamat kantor untuk pengiriman lamaran fisik (opsional, default: alamat perusahaan di Profil Perusahaan)</p>
+                        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Alamat kantor untuk pengiriman lamaran fisik (opsional, default: alamat perusahaan di Profil Perusahaan)</p>
                     </div>
                 </div>
             </x-admin.card>
@@ -100,7 +100,7 @@
                 <form action="{{ route('admin.settings.email.test') }}" method="POST">
                     @csrf
                     <div class="space-y-4">
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Kirim email test untuk memastikan konfigurasi sudah benar.</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Kirim email test untuk memastikan konfigurasi sudah benar.</p>
                         <x-admin.input type="email" name="test_email" label="Email Tujuan" :value="auth()->user()->email" placeholder="test@example.com" required/>
                         <x-admin.button type="submit" variant="secondary">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,9 +141,9 @@
                             <li>Encryption: TLS</li>
                         </ul>
                     </div>
-                    <div class="p-3 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg">
-                        <p class="font-medium text-zinc-900 dark:text-zinc-100 mb-1">Tips</p>
-                        <ul class="text-zinc-700 dark:text-zinc-400 text-xs space-y-1">
+                    <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                        <p class="font-medium text-slate-900 dark:text-slate-100 mb-1">Tips</p>
+                        <ul class="text-slate-700 dark:text-slate-400 text-xs space-y-1">
                             <li>• Gunakan App Password untuk Gmail</li>
                             <li>• Pastikan 2FA aktif di akun email</li>
                             <li>• Port 587 + TLS paling umum</li>
@@ -158,9 +158,9 @@
                     @if($settings && $settings->host)
                     <div class="flex items-center gap-2 text-xs">
                         <div class="w-2 h-2 rounded-full bg-sky-500"></div>
-                        <span class="text-zinc-700 dark:text-zinc-300">SMTP dikonfigurasi</span>
+                        <span class="text-slate-700 dark:text-slate-300">SMTP dikonfigurasi</span>
                     </div>
-                    <div class="text-xs text-zinc-500 dark:text-zinc-400 space-y-1">
+                    <div class="text-xs text-slate-500 dark:text-slate-400 space-y-1">
                         <p>Driver: {{ $settings->mailer }}</p>
                         <p>Host: {{ $settings->host }}:{{ $settings->port }}</p>
                         <p>From: {{ $settings->from_address }}</p>
@@ -168,9 +168,9 @@
                     @else
                     <div class="flex items-center gap-2 text-xs">
                         <div class="w-2 h-2 rounded-full bg-amber-400"></div>
-                        <span class="text-zinc-700 dark:text-zinc-300">Belum dikonfigurasi</span>
+                        <span class="text-slate-700 dark:text-slate-300">Belum dikonfigurasi</span>
                     </div>
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Silakan isi konfigurasi SMTP untuk mengaktifkan pengiriman email.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Silakan isi konfigurasi SMTP untuk mengaktifkan pengiriman email.</p>
                     @endif
                 </div>
             </x-admin.card>

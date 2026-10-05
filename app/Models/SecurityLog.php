@@ -105,7 +105,7 @@ class SecurityLog extends Model
      */
     protected static function sanitizePayload(array $data): array
     {
-        $sensitiveKeys = ['password', 'password_confirmation', 'token', 'api_key', 'secret', '_token'];
+        $sensitiveKeys = ['password', 'password_confirmation', 'token', 'api_key', 'secret', '_token', 'current_password', 'new_password', 'new_password_confirmation', 'remember_token'];
 
         foreach ($data as $key => $value) {
             // Filter out files/UploadedFile objects as they cannot be JSON encoded

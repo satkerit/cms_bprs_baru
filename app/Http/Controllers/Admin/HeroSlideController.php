@@ -85,8 +85,8 @@ class HeroSlideController extends Controller
 
             return redirect()->route('admin.hero-slides.index')->with('success', 'Slide berhasil ditambahkan.');
         } catch (\Exception $e) {
-            Log::error('Error creating hero slide: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Gagal menambahkan slide. Silakan coba lagi.');
+            report($e);
+            return back()->withInput()->with('error', 'Terjadi kesalahan saat menambahkan slide. Silakan coba lagi.');
         }
     }
 
@@ -110,8 +110,8 @@ class HeroSlideController extends Controller
 
             return redirect()->route('admin.hero-slides.index')->with('success', 'Slide berhasil diperbarui.');
         } catch (\Exception $e) {
-            Log::error('Error updating hero slide: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Gagal memperbarui slide. Silakan coba lagi.');
+            report($e);
+            return back()->withInput()->with('error', 'Terjadi kesalahan saat memperbarui slide. Silakan coba lagi.');
         }
     }
 
@@ -128,8 +128,8 @@ class HeroSlideController extends Controller
 
             return redirect()->route('admin.hero-slides.index')->with('success', 'Slide berhasil dihapus.');
         } catch (\Exception $e) {
-            Log::error('Error deleting hero slide: ' . $e->getMessage());
-            return back()->with('error', 'Gagal menghapus slide. Silakan coba lagi.');
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat menghapus slide. Silakan coba lagi.');
         }
     }
 

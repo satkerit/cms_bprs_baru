@@ -200,20 +200,18 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* Captcha box entrance */
-        .captcha-box {
-            animation: captchaFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            will-change: transform, opacity;
+        /* Honeypot anti-bot: kolom jebakan yang tak terlihat oleh manusia,
+           tetapi tetap "terlihat" oleh bot yang membaca & mengisi HTML. */
+        .hp-field {
+            position: absolute !important;
+            left: -9999px !important;
+            top: -9999px !important;
+            width: 1px !important;
+            height: 1px !important;
+            opacity: 0 !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
         }
-        @keyframes captchaFade {
-            0% { opacity: 0; transform: translateY(8px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Input cleanup */
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type="number"] { -moz-appearance: textfield; }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-emerald-50/50 login-grid relative overflow-hidden">
@@ -280,6 +278,12 @@
                       @submit="isLoading = true">
                     @csrf
 
+                    <!-- Honeypot anti-bot: jangan diisi (tidak terlihat oleh manusia) -->
+                    <div class="hp-field" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" value="" tabindex="-1" autocomplete="off">
+                    </div>
+
                     <!-- Email -->
                     <div class="mb-5 form-field" x-show="fields.email" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4">
                         <label for="email" class="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
@@ -334,30 +338,6 @@
                         @enderror
                     </div>
 
-                    <!-- Captcha -->
-                    @if(isset($captcha_question))
-                    <div class="mb-5 form-field captcha-box" x-show="fields.captcha" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4">
-                        <label class="text-sm font-semibold text-gray-700 mb-1.5 block">Verifikasi Keamanan</label>
-                        <div class="flex items-center justify-between gap-4 bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl px-4 py-3">
-                            <div>
-                                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Hitung</p>
-                                <p class="text-lg font-bold text-gray-900">{{ $captcha_question }}</p>
-                            </div>
-                            <input type="number" name="captcha_answer" required placeholder="?"
-                                   aria-label="Jawaban captcha"
-                                   class="w-16 text-center rounded-lg border border-gray-200 px-2 py-2 text-lg font-bold text-gray-900
-                                          focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20
-                                          @error('captcha_answer') border-red-300 bg-red-50/50 @enderror">
-                        </div>
-                        @error('captcha_answer')
-                        <p class="flex items-center gap-1 text-xs text-red-600 mt-1.5">
-                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            {{ $message }}
-                        </p>
-                        @enderror
-                    </div>
-                    @endif
-
                     <!-- Remember me -->
                     <div class="mb-6 form-field" x-show="fields.remember" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4">
                         <label class="inline-flex items-center gap-2.5 cursor-pointer select-none group">
@@ -402,10 +382,10 @@
     <script nonce="{{ $nonce }}">
         document.addEventListener('alpine:init', () => {
             Alpine.data('loginForm', () => ({
-                fields: { email: false, password: false, captcha: false, remember: false, submit: false },
+                fields: { email: false, password: false, remember: false, submit: false },
                 init() {
                     // Stagger entrance: reveal fields one by one
-                    const timings = { email: 0, password: 150, captcha: 300, remember: 400, submit: 500 };
+                    const timings = { email: 0, password: 150, remember: 300, submit: 450 };
                     Object.entries(timings).forEach(([key, delay]) => {
                         setTimeout(() => { this.fields[key] = true; }, delay);
                     });

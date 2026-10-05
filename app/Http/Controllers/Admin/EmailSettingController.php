@@ -91,9 +91,9 @@ class EmailSettingController extends Controller
             return redirect()->route('admin.settings.email')
                 ->with('success', 'Pengaturan email berhasil disimpan.');
         } catch (\Exception $e) {
-            Log::error('Error saving email settings: ' . $e->getMessage());
+            report($e);
             return back()->withInput()
-                ->with('error', 'Gagal menyimpan pengaturan email: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat menyimpan pengaturan email. Silakan coba lagi.');
         }
     }
 
@@ -130,8 +130,8 @@ class EmailSettingController extends Controller
 
             return back()->with('success', 'Email test berhasil dikirim ke ' . $request->test_email);
         } catch (\Exception $e) {
-            Log::error('Error sending test email: ' . $e->getMessage());
-            return back()->with('error', 'Gagal mengirim email test: ' . $e->getMessage());
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat mengirim email test. Silakan coba lagi.');
         }
     }
 

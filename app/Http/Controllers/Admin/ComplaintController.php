@@ -118,7 +118,8 @@ class ComplaintController extends Controller
 
             return redirect()->route('admin.complaints.show', $complaint)->with('success', 'Status pengaduan berhasil diperbarui.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memperbarui pengaduan: ' . $e->getMessage());
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui pengaduan. Silakan coba lagi.');
         }
     }
 
@@ -130,7 +131,8 @@ class ComplaintController extends Controller
             $complaint->delete();
             return redirect()->route('admin.complaints.index')->with('success', 'Pengaduan berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->route('admin.complaints.index')->with('error', 'Gagal menghapus pengaduan: ' . $e->getMessage());
+            report($e);
+            return redirect()->route('admin.complaints.index')->with('error', 'Terjadi kesalahan saat menghapus pengaduan. Silakan coba lagi.');
         }
     }
 }

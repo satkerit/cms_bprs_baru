@@ -247,7 +247,7 @@ class StorageController extends Controller
             $directories = Storage::disk($this->disk)->directories($path);
             $files = Storage::disk($this->disk)->files($path);
         } catch (\Exception $e) {
-            logger()->error('StorageController: gagal baca direktori', ['path' => $path, 'error' => $e->getMessage()]);
+            report($e);
             return [];
         }
 

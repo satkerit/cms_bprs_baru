@@ -3,6 +3,7 @@
     'name' => null,
     'model' => null,
     'options' => [],
+    'value' => null,
     'error' => null,
     'helper' => null,
     'required' => false,
@@ -12,6 +13,7 @@
 @php
     $selectId = $name ?? $model;
     $errorId = $selectId ? $selectId . '-error' : null;
+    $currentValue = $value;
 @endphp
 
 <div class="space-y-1.5">
@@ -37,8 +39,13 @@
             @if($placeholder)
                 <option value="">{{ $placeholder }}</option>
             @endif
-            @foreach($options as $key => $label)
-                <option value="{{ $key }}">{{ $label }}</option>
+            @foreach($options as $key => $optionLabel)
+                @php
+                    $selected = $currentValue !== null
+                        ? (string) $key === (string) $currentValue
+                        : (is_string($key) && old($name) !== null && (string) old($name) === (string) $key);
+                @endphp
+                <option value="{{ $key }}" {{ $selected ? 'selected' : '' }}>{{ $optionLabel }}</option>
             @endforeach
             {{ $slot ?? '' }}
         </select>

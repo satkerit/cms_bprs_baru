@@ -39,12 +39,7 @@ class AuctionController extends Controller
 
         $auctions = $query->paginate(15)->withQueryString();
 
-        $stats = [
-            'total'             => Auction::count(),
-            'registration_open' => Auction::where('status', AuctionStatus::RegistrationOpen->value)->count(),
-            'sold'              => Auction::where('status', AuctionStatus::Sold->value)->count(),
-            'draft'             => Auction::where('status', AuctionStatus::Draft->value)->count(),
-        ];
+        $stats = Auction::getCachedStats();
 
         return view('admin.auctions.index', compact('auctions', 'stats'));
     }

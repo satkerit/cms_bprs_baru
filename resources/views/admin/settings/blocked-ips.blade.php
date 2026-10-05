@@ -36,17 +36,17 @@
  <div class="overflow-x-auto">
  <table class="w-full border-collapse">
  <thead>
- <tr class="border-b dark:border-slate-700 border-zinc-200/70 dark:bg-slate-800/50 bg-zinc-50/80">
- <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">IP Address</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Reason</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Attempts</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Blocked Until</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Type</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Created</th>
- <th class="pl-4 pr-5 py-3.5 text-right text-[11px] font-semibold dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Aksi</th>
+ <tr class="border-b dark:border-slate-700 border-slate-200/70 dark:bg-slate-800/50 bg-slate-50/80">
+ <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">IP Address</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Reason</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Attempts</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Blocked Until</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Type</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Created</th>
+ <th class="pl-4 pr-5 py-3.5 text-right text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Aksi</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-zinc-100/80">
+ <tbody class="divide-y divide-slate-100/80">
  @forelse($blockedIps as $block)
  <tr class="table-row-hover">
  <td class="pl-5 pr-4 py-3.5">
@@ -130,52 +130,52 @@
  x-transition:leave-start="opacity-100 scale-100"
  x-transition:leave-end="opacity-0 scale-95"
  class="fixed inset-0 z-50 flex items-center justify-center p-4">
- <div class="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl w-full max-w-md p-6">
- <h3 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-5">Blokir IP Manual</h3>
+ <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-full max-w-md p-6">
+ <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-5">Blokir IP Manual</h3>
 
  <form action="{{ route('admin.settings.blocked-ips.block') }}" method="POST" class="space-y-4">
  @csrf
 
  <div>
- <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+ <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
  IP Address
  </label>
  <input type="text" name="ip_address" required
  placeholder="192.168.1.1"
- class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono">
- <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Masukkan IP address yang ingin diblokir</p>
+ class="w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono">
+ <p class="mt-1 text-[11px] dark:text-slate-400 text-slate-500">Masukkan IP address yang ingin diblokir</p>
  </div>
 
  <div>
- <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+ <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
  Alasan
  </label>
  <input type="text" name="reason"
  placeholder="Contoh: Suspicious activity, Brute force attempt"
- class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+ class="w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
  </div>
 
  <div class="flex items-center">
  <input type="checkbox" name="is_permanent" id="is_permanent" value="1"
  x-model="permanent"
- class="rounded border-zinc-300 dark:border-zinc-600 text-emerald-600">
- <label for="is_permanent" class="ml-2 text-[11px] dark:text-slate-300 text-zinc-700">Blokir Permanen</label>
+ class="rounded border-slate-300 dark:border-slate-600 text-emerald-600">
+ <label for="is_permanent" class="ml-2 text-[11px] dark:text-slate-300 text-slate-700">Blokir Permanen</label>
  </div>
 
  <div x-show="!permanent">
- <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+ <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
  Durasi (jam)
  </label>
  <input type="number" name="duration_hours" value="24" min="1" max="168"
- class="w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
- <p class="mt-1 text-[11px] dark:text-slate-400 text-zinc-500">Durasi pemblokiran dalam jam (1-168 jam / 1-7 hari)</p>
+ class="w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+ <p class="mt-1 text-[11px] dark:text-slate-400 text-slate-500">Durasi pemblokiran dalam jam (1-168 jam / 1-7 hari)</p>
  </div>
 
  <div class="flex gap-3 pt-4">
  <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-xl font-medium text-sm">
  Blokir IP
  </button>
- <button type="button" @click="open = false" class="px-4 py-2 dark:bg-slate-800/50 bg-zinc-50 dark:text-slate-300 text-zinc-700 rounded-xl font-medium text-sm">
+ <button type="button" @click="open = false" class="px-4 py-2 dark:bg-slate-800/50 bg-slate-50 dark:text-slate-300 text-slate-700 rounded-xl font-medium text-sm">
  Batal
  </button>
  </div>

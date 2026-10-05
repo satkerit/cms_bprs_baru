@@ -96,7 +96,7 @@
                                     <button type="button" @click="active = {{ $i }}"
                                         :class="active === {{ $i }} ? 'ring-2 ring-emerald-500' : 'opacity-60 hover:opacity-100'"
                                         class="flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden transition-all">
-                                        <img src="{{ \App\Helpers\StorageHelper::url($img) }}" class="w-full h-full object-cover" alt="">
+                                        <img src="{{ \App\Helpers\StorageHelper::url($img) }}" class="w-full h-full object-cover" alt="Lelang {{ $auction->title }} - Gambar {{ $loop->iteration }}">
                                     </button>
                                     @endforeach
                                 </div>

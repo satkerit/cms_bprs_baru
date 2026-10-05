@@ -1,9 +1,9 @@
 @php
     $isEdit = isset($auction) && $auction->exists;
     $model = $isEdit ? $auction : null;
-    $inputClass = 'w-full rounded-xl border border-zinc-300 dark:border-zinc-600 px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500';
-    $labelClass = 'block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5';
-    $sectionHeader = 'text-sm font-semibold text-zinc-900 dark:text-zinc-100';
+    $inputClass = 'w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500';
+    $labelClass = 'block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5';
+    $sectionHeader = 'text-sm font-semibold text-slate-900 dark:text-slate-100';
     function auctionValue($model, $key, $default = '') {
         if ($model) {
             $v = $model->{$key} ?? $default;
@@ -22,14 +22,14 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             @foreach($model->images as $idx => $img)
             @php $imgUrl = \App\Helpers\StorageHelper::url($img); @endphp
-            <div class="relative rounded-xl border border-zinc-200 dark:border-zinc-700 overflow-hidden"
+            <div class="relative rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden"
                 :class="deleted[{{ $idx }}] ? 'ring-2 ring-red-500 opacity-60' : ''">
                 <img src="{{ $imgUrl }}" alt="" class="w-full h-28 object-cover">
                 {{-- Tombol hapus selalu terlihat --}}
                 <button type="button" @click="toggleDelete({{ $idx }})"
                     :title="deleted[{{ $idx }}] ? 'Batalkan penghapusan' : 'Hapus gambar'"
                     class="absolute top-1.5 left-1.5 p-1.5 rounded-full transition-colors"
-                    :class="deleted[{{ $idx }}] ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'bg-white/90 text-red-600 shadow-sm hover:bg-red-500 hover:text-white dark:bg-zinc-800/90'">
+                    :class="deleted[{{ $idx }}] ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'bg-white/90 text-red-600 shadow-sm hover:bg-red-500 hover:text-white dark:bg-slate-800/90'">
                     <svg x-show="deleted[{{ $idx }}]" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     <svg x-show="!deleted[{{ $idx }}]" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </button>
@@ -42,11 +42,11 @@
                     <span x-show="!deleted[{{ $idx }}]">Hapus</span>
                 </button>
                 <input type="hidden" name="deleted_images[]" value="{{ $img }}" :disabled="!deleted[{{ $idx }}]">
-                <span class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-zinc-900/60 text-white text-[10px]">#{{ $idx+1 }}</span>
+                <span class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-slate-900/60 text-white text-[10px]">#{{ $idx+1 }}</span>
             </div>
             @endforeach
         </div>
-        <p class="mt-3 text-xs text-zinc-500 dark:text-zinc-400">Klik ikon tempat sampah untuk menandai penghapusan. Gambar yang ditandai dihapus permanen setelah tombol "Simpan Perubahan".</p>
+        <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">Klik ikon tempat sampah untuk menandai penghapusan. Gambar yang ditandai dihapus permanen setelah tombol "Simpan Perubahan".</p>
     </x-admin.card>
     @endif
 
@@ -227,19 +227,19 @@
     <x-admin.card title="Gambar Aset" subtitle="Opsional — bisa unggah banyak gambar sekaligus (format: JPEG/PNG/JPG/WebP)">
         <div>
             <div class="flex flex-wrap">
-                <label class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-dashed border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 text-sm font-medium hover:border-emerald-500 hover:text-emerald-600 cursor-pointer transition-colors">
+                <label class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400 text-sm font-medium hover:border-emerald-500 hover:text-emerald-600 cursor-pointer transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                     Pilih Gambar
                     <input type="file" name="images[]" accept="image/*" multiple class="sr-only" @change="images = Array.from($event.target.files)">
                 </label>
-                <span class="text-xs text-zinc-400 dark:text-zinc-500 self-center" x-text="images.length > 0 ? images.length + ' gambar dipilih' : 'Belum ada gambar dipilih'"></span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 self-center" x-text="images.length > 0 ? images.length + ' gambar dipilih' : 'Belum ada gambar dipilih'"></span>
             </div>
             <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 <template x-for="(img, i) in images" :key="img.name + i">
-                    <div class="relative rounded-xl border border-zinc-200 dark:border-zinc-700 overflow-hidden aspect-square">
+                    <div class="relative rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden aspect-square">
                         <img :src="URL.createObjectURL(img)" class="w-full h-full object-cover" alt="">
                         <button type="button" @click="images.splice(i, 1)"
-                            class="absolute top-1.5 right-1.5 p-1 rounded-full bg-zinc-900/60 text-white hover:bg-red-500 transition-colors">
+                            class="absolute top-1.5 right-1.5 p-1 rounded-full bg-slate-900/60 text-white hover:bg-red-500 transition-colors">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                         </button>
                     </div>
@@ -252,8 +252,8 @@
     <x-admin.card title="Publikasi">
         <div class="space-y-5">
             <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" name="is_featured" value="1" @checked(auctionValue($model, 'is_featured')) class="rounded border-zinc-300 dark:border-zinc-600 text-emerald-600 focus:ring-emerald-500">
-                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Tampilkan di Unggulan</span>
+                <input type="checkbox" name="is_featured" value="1" @checked(auctionValue($model, 'is_featured')) class="rounded border-slate-300 dark:border-slate-600 text-emerald-600 focus:ring-emerald-500">
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Tampilkan di Unggulan</span>
             </label>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
@@ -270,7 +270,7 @@
 
     {{-- Submit --}}
     <div class="flex items-center justify-end gap-3 sticky bottom-4">
-        <a href="{{ route('admin.auctions.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">
+        <a href="{{ route('admin.auctions.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
             Batal
         </a>
         <x-admin.button type="submit" variant="default">

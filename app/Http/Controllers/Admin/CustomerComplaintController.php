@@ -105,7 +105,7 @@ class CustomerComplaintController extends Controller
                     resolution: $validated['resolution'] ?? null,
                 );
             } catch (\Exception $e) {
-                Log::error('Failed to dispatch customer complaint email job: ' . $e->getMessage());
+                report($e);
             }
         }
 

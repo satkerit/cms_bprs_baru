@@ -91,7 +91,8 @@ class CompanyInfoController extends Controller
                 'trace' => $e->getTraceAsString()
             ]);
 
-            return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()])
+            report($e);
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.'])
                 ->withInput();
         }
     }
@@ -196,12 +197,13 @@ class CompanyInfoController extends Controller
                 'path' => $path,
                 'items' => $items,
             ]);
+            }
         } catch (\Exception $e) {
-            Log::error('Storage browse error: ' . $e->getMessage());
+            report($e);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error browsing storage',
+                'message' => 'Terjadi kesalahan saat membaca direktori. Silakan coba lagi.',
                 'items' => [],
             ], 500);
         }
@@ -265,11 +267,11 @@ class CompanyInfoController extends Controller
                 'filename' => $filename,
             ]);
         } catch (\Exception $e) {
-            Log::error('File upload error: ' . $e->getMessage());
+            report($e);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Upload failed: ' . $e->getMessage(),
+                'message' => 'Terjadi kesalahan saat mengunggah file. Silakan coba lagi.',
             ], 500);
         }
     }
@@ -302,11 +304,11 @@ class CompanyInfoController extends Controller
                 'message' => 'File not found',
             ], 404);
         } catch (\Exception $e) {
-            Log::error('File delete error: ' . $e->getMessage());
+            report($e);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Delete failed: ' . $e->getMessage(),
+                'message' => 'Terjadi kesalahan saat menghapus file. Silakan coba lagi.',
             ], 500);
         }
     }

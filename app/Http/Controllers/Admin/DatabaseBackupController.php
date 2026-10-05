@@ -18,7 +18,7 @@ class DatabaseBackupController extends Controller
 
     public function index()
     {
-        $this->authorizeView('storage.view');
+        $this->authorizeView('backup.view');
 
         try {
             $backups = $this->getBackupFiles();
@@ -46,7 +46,7 @@ class DatabaseBackupController extends Controller
 
     public function create(Request $request)
     {
-        $this->authorizeEdit('storage.manage');
+        $this->authorizeEdit('backup.create');
 
         $request->validate([
             'backup_type' => 'required|in:full,structure_only,data_only',
@@ -94,13 +94,14 @@ class DatabaseBackupController extends Controller
                 'download_url' => route('admin.database-backup.download', ['filename' => $filename]),
             ]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Gagal membuat backup: ' . $e->getMessage()], 500);
+            report($e);
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat membuat backup. Silakan coba lagi.'], 500);
         }
     }
 
     public function download(Request $request, $filename)
     {
-        $this->authorizeView('storage.view');
+        $this->authorizeView('backup.download');
 
         $filename = basename($filename);
         $filePath = storage_path("app/{$this->backupPath}/{$filename}");
@@ -125,7 +126,7 @@ class DatabaseBackupController extends Controller
 
     public function delete(Request $request, $filename)
     {
-        $this->authorizeDelete('storage.manage');
+        $this->authorizeDelete('backup.delete');
 
         $filename = basename($filename);
         $filePath = storage_path("app/{$this->backupPath}/{$filename}");
@@ -140,7 +141,8 @@ class DatabaseBackupController extends Controller
 
             return response()->json(['success' => true, 'message' => 'Backup berhasil dihapus.']);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Gagal menghapus backup: ' . $e->getMessage()], 500);
+            report($e);
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menghapus backup. Silakan coba lagi.'], 500);
         }
     }
 

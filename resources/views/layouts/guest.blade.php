@@ -14,11 +14,11 @@
         <!-- Scripts -->
         @vite(['resources/js/app.js', 'resources/css/app.css'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <body class="font-sans text-slate-900 antialiased">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-100">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-24 h-24 fill-current text-gray-500" />
+                    <x-application-logo class="w-24 h-24 fill-current text-slate-500" />
                 </a>
             </div>
 

@@ -86,11 +86,7 @@ class ReportController extends Controller
 
             return redirect()->route('admin.reports.index')->with('success', 'Laporan berhasil ditambahkan.');
         } catch (\Exception $e) {
-            Log::error('Failed to create report', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'request' => $request->except('file')
-            ]);
+            report($e);
             return back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan laporan. Silakan coba lagi.');
         }
     }
@@ -151,12 +147,7 @@ class ReportController extends Controller
 
             return redirect()->route('admin.reports.index')->with('success', 'Laporan berhasil diperbarui.');
         } catch (\Exception $e) {
-            Log::error('Failed to update report', [
-                'report_id' => $report->id,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'request' => $request->except('file')
-            ]);
+            report($e);
             return back()->withInput()->with('error', 'Terjadi kesalahan saat memperbarui laporan. Silakan coba lagi.');
         }
     }
@@ -174,12 +165,8 @@ class ReportController extends Controller
 
             return redirect()->route('admin.reports.index')->with('success', 'Laporan berhasil dihapus.');
         } catch (\Exception $e) {
-            Log::error('Failed to delete report', [
-                'report_id' => $report->id,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            return redirect()->route('admin.reports.index')->with('error', 'Gagal menghapus laporan. Silakan coba lagi.');
+            report($e);
+            return redirect()->route('admin.reports.index')->with('error', 'Terjadi kesalahan saat menghapus laporan. Silakan coba lagi.');
         }
     }
 

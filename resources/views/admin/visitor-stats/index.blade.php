@@ -8,7 +8,7 @@
  <form method="GET" class="flex items-center gap-2" x-data="{ period: '{{ $period }}' }">
  <div class="flex items-center gap-2">
  <select name="period" x-model="period" @change="period !== 'custom' ? $el.form.submit() : null"
- class="rounded-xl border-0 py-2 px-4 text-gray-900 bg-white focus:ring-2 text-xs">
+ class="rounded-xl border-0 py-2 px-4 text-slate-900 bg-white focus:ring-2 text-xs">
  <option value="today">Hari Ini</option>
  <option value="7days">7 Hari Terakhir</option>
  <option value="30days">30 Hari Terakhir</option>
@@ -21,10 +21,10 @@
 
  <div x-show="period === 'custom'" class="flex items-center gap-2" x-transition style="display: none;">
  <input type="date" name="start_date" value="{{ $startDate->format('Y-m-d') }}"
- class="rounded-xl border-0 py-2 px-4 text-gray-900 bg-white focus:ring-2 text-xs">
- <span class="text-gray-400">-</span>
+ class="rounded-xl border-0 py-2 px-4 text-slate-900 bg-white focus:ring-2 text-xs">
+ <span class="text-slate-400">-</span>
  <input type="date" name="end_date" value="{{ $endDate->format('Y-m-d') }}"
- class="rounded-xl border-0 py-2 px-4 text-gray-900 bg-white focus:ring-2 text-xs">
+ class="rounded-xl border-0 py-2 px-4 text-slate-900 bg-white focus:ring-2 text-xs">
  <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-medium">
  Filter
  </button>
@@ -38,8 +38,8 @@
  <div class="bg-white rounded-2xl border border-slate-100 p-6">
  <div class="flex items-center justify-between">
  <div>
- <p class="text-xs font-medium text-gray-500">Total Kunjungan</p>
- <p class="text-4xl font-bold text-gray-900 mt-1">{{ number_format($stats['total_visits']) }}</p>
+ <p class="text-xs font-medium text-slate-500">Total Kunjungan</p>
+ <p class="text-4xl font-bold text-slate-900 mt-1">{{ number_format($stats['total_visits']) }}</p>
  </div>
  <div class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center">
  <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,8 +53,8 @@
  <div class="bg-white rounded-2xl border border-slate-100 p-6">
  <div class="flex items-center justify-between">
  <div>
- <p class="text-xs font-medium text-gray-500">Pengunjung Unik</p>
- <p class="text-4xl font-bold text-gray-900 mt-1">{{ number_format($stats['unique_visitors']) }}</p>
+ <p class="text-xs font-medium text-slate-500">Pengunjung Unik</p>
+ <p class="text-4xl font-bold text-slate-900 mt-1">{{ number_format($stats['unique_visitors']) }}</p>
  </div>
  <div class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center">
  <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,8 +67,8 @@
  <div class="bg-white rounded-2xl border border-slate-100 p-6">
  <div class="flex items-center justify-between">
  <div>
- <p class="text-xs font-medium text-gray-500">Kunjungan Hari Ini</p>
- <p class="text-4xl font-bold text-gray-900 mt-1">{{ number_format($stats['today_visits']) }}</p>
+ <p class="text-xs font-medium text-slate-500">Kunjungan Hari Ini</p>
+ <p class="text-4xl font-bold text-slate-900 mt-1">{{ number_format($stats['today_visits']) }}</p>
  </div>
  <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
  <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,14 +78,14 @@
  </div>
  </div>
 
- <div class="bg-white rounded-2xl border border-slate-100 p-6">
+ <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6">
  <div class="flex items-center justify-between">
  <div>
- <p class="text-xs font-medium text-gray-500">Unik Hari Ini</p>
- <p class="text-4xl font-bold text-gray-900 mt-1">{{ number_format($stats['today_unique']) }}</p>
+ <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Unik Hari Ini</p>
+ <p class="text-4xl font-bold text-slate-900 dark:text-slate-100 mt-1">{{ number_format($stats['today_unique']) }}</p>
  </div>
- <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
- <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center">
+ <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
  </svg>
  </div>
@@ -107,17 +107,17 @@
  @forelse($topPages as $index => $page)
  <div class="px-6 py-3 flex items-center justify-between">
  <div class="flex items-center gap-3 min-w-0">
- <span class="shrink-0 w-6 h-6 rounded-full bg-gray-50 text-gray-700 text-xs font-medium flex items-center justify-center">
+ <span class="shrink-0 w-6 h-6 rounded-full bg-slate-50 text-slate-700 text-xs font-medium flex items-center justify-center">
  {{ $index + 1 }}
  </span>
- <span class="text-xs text-gray-700" title="{{ $page->url }}">
+ <span class="text-xs text-slate-700" title="{{ $page->url }}">
  {{ Str::limit(parse_url($page->url, PHP_URL_PATH) ?: '/', 40) }}
  </span>
  </div>
- <span class="text-xs font-semibold text-gray-900">{{ number_format($page->visits) }}</span>
+ <span class="text-xs font-semibold text-slate-900">{{ number_format($page->visits) }}</span>
  </div>
  @empty
- <div class="px-6 py-8 text-center text-gray-500">Belum ada data</div>
+ <div class="px-6 py-8 text-center text-slate-500">Belum ada data</div>
  @endforelse
  </div>
  </x-admin.card>
@@ -129,12 +129,12 @@
  <div class="px-6 py-3 flex items-center justify-between">
  <div class="flex items-center gap-3">
  <span class="text-3xl">🌍</span>
- <span class="text-xs text-gray-700">{{ $country->country }}</span>
+ <span class="text-xs text-slate-700">{{ $country->country }}</span>
  </div>
- <span class="text-xs font-semibold text-gray-900">{{ number_format($country->total) }}</span>
+ <span class="text-xs font-semibold text-slate-900">{{ number_format($country->total) }}</span>
  </div>
  @empty
- <div class="px-6 py-8 text-center text-gray-500">Belum ada data</div>
+ <div class="px-6 py-8 text-center text-slate-500">Belum ada data</div>
  @endforelse
  </div>
  </x-admin.card>
@@ -150,15 +150,15 @@
  @endphp
  <div>
  <div class="flex justify-between text-xs mb-1">
- <span class="text-gray-700">{{ $browser->browser }}</span>
- <span class="text-gray-500">{{ number_format($percentage, 1) }}%</span>
+ <span class="text-slate-700">{{ $browser->browser }}</span>
+ <span class="text-slate-500">{{ number_format($percentage, 1) }}%</span>
  </div>
- <div class="w-full bg-gray-50 rounded-full h-2">
+ <div class="w-full bg-slate-50 rounded-full h-2">
  <div class="bg-sky-500 h-2 rounded-full" style="width: {{ $percentage }}%"></div>
  </div>
  </div>
  @empty
- <p class="text-center text-gray-500 py-4">Belum ada data</p>
+ <p class="text-center text-slate-500 py-4">Belum ada data</p>
  @endforelse
  </div>
  </x-admin.card>
@@ -177,15 +177,15 @@
  @endphp
  <div>
  <div class="flex justify-between text-xs mb-1">
- <span class="text-gray-700">{{ $icon }} {{ ucfirst($device->device_type) }}</span>
- <span class="text-gray-500">{{ number_format($percentage, 1) }}%</span>
+ <span class="text-slate-700">{{ $icon }} {{ ucfirst($device->device_type) }}</span>
+ <span class="text-slate-500">{{ number_format($percentage, 1) }}%</span>
  </div>
- <div class="w-full bg-gray-50 rounded-full h-2">
+ <div class="w-full bg-slate-50 rounded-full h-2">
  <div class="bg-sky-500 h-2 rounded-full" style="width: {{ $percentage }}%"></div>
  </div>
  </div>
  @empty
- <p class="text-center text-gray-500 py-4">Belum ada data</p>
+ <p class="text-center text-slate-500 py-4">Belum ada data</p>
  @endforelse
  </div>
  </x-admin.card>
@@ -199,15 +199,15 @@
  @endphp
  <div>
  <div class="flex justify-between text-xs mb-1">
- <span class="text-gray-700">{{ $platform->platform }}</span>
- <span class="text-gray-500">{{ number_format($percentage, 1) }}%</span>
+ <span class="text-slate-700">{{ $platform->platform }}</span>
+ <span class="text-slate-500">{{ number_format($percentage, 1) }}%</span>
  </div>
- <div class="w-full bg-gray-50 rounded-full h-2">
+ <div class="w-full bg-slate-50 rounded-full h-2">
  <div class="bg-sky-500-light0 h-2 rounded-full" style="width: {{ $percentage }}%"></div>
  </div>
  </div>
  @empty
- <p class="text-center text-gray-500 py-4">Belum ada data</p>
+ <p class="text-center text-slate-500 py-4">Belum ada data</p>
  @endforelse
  </div>
  </x-admin.card>
@@ -217,16 +217,16 @@
 <x-admin.card title="Pengunjung Terbaru" :noPadding="true">
  <div >    <table class="w-full border-collapse">
  <thead>
- <tr class="border-b dark:border-slate-700 border-zinc-200/70 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/80">
- <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Waktu</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">IP</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Lokasi</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Perangkat</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Browser</th>
- <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Halaman</th>
+ <tr class="border-b dark:border-slate-700 border-slate-200/70 dark:bg-slate-800/50 bg-slate-50/80">
+ <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Waktu</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">IP</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Lokasi</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Perangkat</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Browser</th>
+ <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Halaman</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-zinc-100/80">
+ <tbody class="divide-y divide-slate-100/80">
  @forelse($recentVisitors as $visitor)
  <tr class="table-row-hover">
  <td class="pl-5 pr-4 py-3.5">
@@ -241,7 +241,7 @@
  <div class="table-cell-secondary">{{ $visitor->country ?? '-' }}</div>
  </td>
  <td class="px-5 py-3.5">
- <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[11px] font-medium {{ $visitor->device_type == 'mobile' ? 'bg-sky-100 text-sky-700' : ($visitor->device_type == 'tablet' ? 'bg-purple-100 text-purple-700' : 'dark:bg-slate-800 dark:bg-slate-800 bg-zinc-100 dark:text-slate-300 dark:text-slate-300 text-zinc-600') }}">
+ <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[11px] font-medium {{ $visitor->device_type == 'mobile' ? 'bg-sky-100 text-sky-700' : ($visitor->device_type == 'tablet' ? 'bg-purple-100 text-purple-700' : 'dark:bg-slate-800 bg-slate-100 dark:text-slate-300 text-slate-600') }}">
  {{ ucfirst($visitor->device_type ?? 'Unknown') }}
  </span>
  </td>

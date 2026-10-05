@@ -33,7 +33,9 @@ class WhyChooseUsController extends Controller
     public function create()
     {
         $this->authorizeCreate('why_choose_us.manage');
-        return view('admin.why-choose-us.create');
+        $item = new WhyChooseUs();
+        $themes = WhyChooseUs::getThemes();
+        return view('admin.why-choose-us.create', compact('item', 'themes'));
     }
 
     /**
@@ -58,8 +60,9 @@ class WhyChooseUsController extends Controller
             return redirect()->route('admin.why-choose-us.index')
                 ->with('success', 'Item berhasil ditambahkan.');
         } catch (\Exception $e) {
+            report($e);
             return redirect()->route('admin.why-choose-us.index')
-                ->with('error', 'Gagal menambahkan item: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat menambahkan item. Silakan coba lagi.');
         }
     }
 
@@ -69,7 +72,9 @@ class WhyChooseUsController extends Controller
     public function edit(WhyChooseUs $whyChooseUs)
     {
         $this->authorizeEdit('why_choose_us.manage');
-        return view('admin.why-choose-us.edit', compact('whyChooseUs'));
+        $item = $whyChooseUs;
+        $themes = WhyChooseUs::getThemes();
+        return view('admin.why-choose-us.edit', compact('item', 'themes'));
     }
 
     /**
@@ -97,8 +102,9 @@ class WhyChooseUsController extends Controller
             return redirect()->route('admin.why-choose-us.index')
                 ->with('success', 'Item berhasil diperbarui.');
         } catch (\Exception $e) {
+            report($e);
             return redirect()->route('admin.why-choose-us.index')
-                ->with('error', 'Gagal memperbarui item: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat memperbarui item. Silakan coba lagi.');
         }
     }
 
@@ -120,8 +126,9 @@ class WhyChooseUsController extends Controller
             return redirect()->route('admin.why-choose-us.index')
                 ->with('success', 'Item berhasil dihapus.');
         } catch (\Exception $e) {
+            report($e);
             return redirect()->route('admin.why-choose-us.index')
-                ->with('error', 'Gagal menghapus item: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat menghapus item. Silakan coba lagi.');
         }
     }
 
@@ -172,8 +179,9 @@ class WhyChooseUsController extends Controller
             return redirect()->route('admin.why-choose-us.settings')
                 ->with('success', 'Pengaturan berhasil disimpan.');
         } catch (\Exception $e) {
+            report($e);
             return redirect()->route('admin.why-choose-us.settings')
-                ->with('error', 'Gagal menyimpan pengaturan: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat menyimpan pengaturan. Silakan coba lagi.');
         }
     }
 }

@@ -3,273 +3,263 @@
 @section('title', $item->exists ? 'Edit Item' : 'Tambah Item')
 
 @section('content')
+@php
+    $isEdit = $item->exists;
+@endphp
+
 <x-admin.page-header
- :title="$item->exists ? 'Edit Item' : 'Tambah Item'"
- :subtitle="$item->exists ? 'Edit data keunggulan' : 'Tambahkan data keunggulan baru'"
+    :title="$isEdit ? 'Edit Item' : 'Tambah Item'"
+    :subtitle="$isEdit ? 'Edit data keunggulan' : 'Tambahkan data keunggulan baru'"
 >
- <x-slot:actions>
- <x-admin.button href="{{ route('admin.why-choose-us.index') }}" variant="secondary" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>'>
- Kembali
- </x-admin.button>
- </x-slot:actions>
+    <x-slot:actions>
+        <x-admin.button href="{{ route('admin.why-choose-us.index') }}" variant="secondary" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>'>
+            Kembali
+        </x-admin.button>
+    </x-slot:actions>
 </x-admin.page-header>
 
-<form action="{{ $item->exists ? route('admin.why-choose-us.update', $item) : route('admin.why-choose-us.store') }}" 
- method="POST" 
- enctype="multipart/form-data" 
- id="whyChooseUsForm">
- @csrf
- @if($item->exists)
- @method('PUT')
- @endif
+@if($errors->any())
+    <x-admin.alert type="error" title="Periksa kembali input Anda" class="mb-6">
+        Ada {{ $errors->count() }} isian yang perlu diperbaiki.
+    </x-admin.alert>
+@endif
 
- <div class="md:grid md:grid-cols-12 gap-8">
- {{-- Main Content --}}
- <div class="md:col-span-8 space-y-6">
- {{-- Basic Information --}}
- <x-admin.card title="Informasi Dasar" subtitle="Data utama keunggulan">
- <div class="space-y-5">
- <!-- Title -->
- <div>
- <label for="title" class="block text-xs font-semibold text-gray-700 mb-2">
- Judul <span class="text-red-600">*</span>
- </label>
- <input type="text"
- name="title"
- id="title"
- value="{{ old('title', $item->title ?? '') }}"
- required
- placeholder="Contoh: Pelayanan Terbaik"
- class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 @error('title') border-red-500 @enderror">
- @error('title')
- <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>
- @enderror
- </div>
+<form action="{{ $isEdit ? route('admin.why-choose-us.update', $item) : route('admin.why-choose-us.store') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      id="whyChooseUsForm">
+    @csrf
+    @if($isEdit) @method('PUT') @endif
 
- <!-- Description -->
- <div>
- <label for="description" class="block text-xs font-semibold text-gray-700 mb-2">
- Deskripsi <span class="text-red-600">*</span>
- </label>
- <textarea name="description"
- id="description"
- rows="4"
- required
- placeholder="Jelaskan keunggulan ini secara detail..."
- class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none @error('description') border-red-500 @enderror">{{ old('description', $item->description ?? '') }}</textarea>
- @error('description')
- <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>
- @enderror
- </div>
- </div>
- </x-admin.card>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {{-- Main Content --}}
+        <div class="lg:col-span-8 space-y-6">
+            {{-- Basic Information --}}
+            <x-admin.card title="Informasi Dasar" subtitle="Data utama keunggulan" accent="emerald">
+                <div class="space-y-5">
+                    <x-admin.input
+                        name="title"
+                        label="Judul"
+                        :value="old('title', $item->title ?? '')"
+                        placeholder="Contoh: Pelayanan Terbaik"
+                        required
+                        :error="$errors->first('title')"
+                    />
 
- {{-- Icon --}}
- <x-admin.card title="Icon" subtitle="Upload icon untuk item ini">
- <div>
- @if($item->exists && $item->icon)
- <div class="mb-3 p-4 bg-gray-50 rounded-lg border border-gray-200" id="currentIconContainer">
- <img src="{{ \App\Helpers\StorageHelper::url($item->icon) }}" 
- alt="Current icon" 
- class="w-20 h-20 object-contain"
- id="currentIcon">
- <p class="text-xs text-gray-500 text-center mt-2">Icon saat ini</p>
- <button type="button" 
- data-action="remove-current-icon"
- class="mt-2 w-full text-xs text-red-600 hover:text-red-600 font-medium">
- Hapus Icon
- </button>
- </div>
- @endif
+                    <x-admin.textarea
+                        name="description"
+                        label="Deskripsi"
+                        :value="old('description', $item->description ?? '')"
+                        placeholder="Jelaskan keunggulan ini secara detail..."
+                        :rows="4"
+                        required
+                        :error="$errors->first('description')"
+                    />
+                </div>
+            </x-admin.card>
 
- <div >
- <input type="file"
- name="icon"
- id="icon"
- accept="image/png,image/svg+xml,image/jpeg,image/webp"
- class="hidden"
- data-action="preview-icon">
- <label for="icon" 
- class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-500">
- <div class="flex flex-col items-center justify-center pt-5 pb-6">
- <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
- </svg>
- <p class="text-xs text-gray-500 font-medium">Upload Icon</p>
- <p class="text-xs text-gray-400">PNG, SVG, JPG (Max 2MB)</p>
- </div>
- </label>
- </div>
+            {{-- Icon --}}
+            <x-admin.card title="Icon" subtitle="Upload icon untuk item ini" accent="gold">
+                <div class="space-y-4">
+                    @if($item->exists && $item->icon)
+                        <div class="p-4 rounded-xl border border-slate-200/70 dark:border-slate-800/70 bg-slate-50/70 dark:bg-slate-800/30" id="currentIconContainer">
+                            <div class="flex items-center gap-4">
+                                <img src="{{ \App\Helpers\StorageHelper::url($item->icon) }}"
+                                     alt="Current icon"
+                                     class="w-20 h-20 object-contain rounded-xl bg-white dark:bg-slate-900 p-2 ring-1 ring-slate-200/70 dark:ring-slate-700/70">
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Icon saat ini</p>
+                                    <p class="text-[13px] text-slate-500 dark:text-slate-400 mt-0.5">Akan diganti jika Anda upload icon baru.</p>
+                                    <button type="button"
+                                        data-action="remove-current-icon"
+                                        class="mt-2 text-[13px] font-semibold text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors">
+                                        Hapus Icon
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
- <!-- Icon Preview -->
- <div id="iconPreview" class="hidden mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
- <img src="" alt="Icon preview" class="w-20 h-20 object-contain" id="iconPreviewImg">
- <p class="text-xs text-gray-500 text-center mt-2">Preview Icon</p>
- <button type="button" 
- data-action="clear-icon-preview"
- class="mt-2 w-full text-xs text-red-600 hover:text-red-600 font-medium">
- Batal
- </button>
- </div>
+                    <div>
+                        <input type="file"
+                               name="icon"
+                               id="icon"
+                               accept="image/png,image/svg+xml,image/jpeg,image/webp"
+                               class="sr-only"
+                               data-action="preview-icon">
+                        <label for="icon"
+                               class="group flex flex-col items-center justify-center w-full h-36 px-4 py-6 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl cursor-pointer
+                                      hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30
+                                      transition-all duration-200">
+                            <div class="flex flex-col items-center justify-center text-center">
+                                <div class="w-12 h-12 mb-3 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/50 flex items-center justify-center transition-colors">
+                                    <svg class="w-6 h-6 text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">Upload Icon</p>
+                                <p class="text-[12px] text-slate-500 dark:text-slate-400 mt-1">PNG, SVG, JPG, atau WebP (Max 2MB)</p>
+                            </div>
+                        </label>
+                    </div>
 
- <p class="text-xs text-gray-500 mt-2">
- <strong>Rekomendasi:</strong> Icon SVG atau PNG transparan, ukuran 200x200px (1:1) untuk tampilan optimal.
- </p>
- @error('icon')
- <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>
- @enderror
- </div>
- </x-admin.card>
- </div>
+                    {{-- Icon Preview --}}
+                    <div id="iconPreview" class="hidden p-4 rounded-xl border border-slate-200/70 dark:border-slate-800/70 bg-slate-50/70 dark:bg-slate-800/30">
+                        <div class="flex items-center gap-4">
+                            <img src="" alt="Icon preview" id="iconPreviewImg" class="w-20 h-20 object-contain rounded-xl bg-white dark:bg-slate-900 p-2 ring-1 ring-slate-200/70 dark:ring-slate-700/70">
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Preview Icon Baru</p>
+                                <p class="text-[13px] text-slate-500 dark:text-slate-400 mt-0.5">Akan disimpan saat submit form.</p>
+                                <button type="button"
+                                    data-action="clear-icon-preview"
+                                    class="mt-2 text-[13px] font-semibold text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors">
+                                    Batalkan Pilihan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
- {{-- Sidebar --}}
- <div class="md:col-span-4 space-y-6">
- {{-- Settings --}}
- <x-admin.card title="Pengaturan" subtitle="Konfigurasi tampilan">
- <div class="space-y-5">
- <!-- Color Theme -->
- <div>
- <label for="color_theme" class="block text-xs font-semibold text-gray-700 mb-2">
- Tema Warna <span class="text-red-600">*</span>
- </label>
- <select name="color_theme"
- id="color_theme"
- required
- class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 @error('color_theme') border-red-500 @enderror">
- @foreach($themes as $value => $label)
- <option value="{{ $value }}" {{ old('color_theme', $item->color_theme ?? 'primary') == $value ? 'selected' : '' }}>
- {{ $label }}
- </option>
- @endforeach
- </select>
- <p class="text-xs text-gray-500 mt-1.5">Warna untuk background icon</p>
- @error('color_theme')
- <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>
- @enderror
- </div>
+                    <p class="text-[12px] text-slate-500 dark:text-slate-400 flex items-start gap-2">
+                        <svg class="w-4 h-4 shrink-0 mt-0.5 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span><strong>Rekomendasi:</strong> Icon SVG atau PNG transparan, ukuran 200×200px (1:1) untuk tampilan optimal.</span>
+                    </p>
+                    @error('icon')
+                        <p class="text-[12px] text-red-600 flex items-center gap-1" role="alert">
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+            </x-admin.card>
+        </div>
 
- <!-- Sort Order -->
- <div>
- <label for="sort_order" class="block text-xs font-semibold text-gray-700 mb-2">
- Urutan Tampil <span class="text-red-600">*</span>
- </label>
- <input type="number"
- name="sort_order"
- id="sort_order"
- value="{{ old('sort_order', $item->sort_order ?? 0) }}"
- required
- min="0"
- class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 @error('sort_order') border-red-500 @enderror">
- <p class="text-xs text-gray-500 mt-1.5">Semakin kecil, semakin awal ditampilkan</p>
- @error('sort_order')
- <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>
- @enderror
- </div>
+        {{-- Sidebar --}}
+        <div class="lg:col-span-4 space-y-6">
+            {{-- Settings --}}
+            <x-admin.card title="Pengaturan" subtitle="Konfigurasi tampilan" accent="sky">
+                <div class="space-y-5">
+                    <x-admin.select
+                        name="color_theme"
+                        label="Tema Warna"
+                        :options="$themes"
+                        :value="old('color_theme', $item->color_theme ?? 'primary')"
+                        required
+                        helper="Warna untuk background icon"
+                        :error="$errors->first('color_theme')"
+                    />
 
- <!-- Is Active -->
- <div class="pt-2">
- <label class="flex "items-center justify-between">
- <div>
- <span class="text-xs font-semibold text-gray-700">Status Aktif</span>
- <p class="text-xs text-gray-500 mt-0.5">Tampilkan di frontend</p>
- </div>
- <div >
- <input type="checkbox"
- name="is_active"
- value="1"
- 
- {{ old('is_active', $item->is_active ?? true) ? 'checked' : '' }}>
- <div class="w-11 h-6 bg-gray-200 -checked:after:translate-x-full rtl:-checked:after:-translate-x-full -checked:after:border-white after:content-[''] after: after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after: -checked:bg-primary-600"></div>
- </div>
- </label>
- </div>
- </div>
- </x-admin.card>
+                    <x-admin.input
+                        type="number"
+                        name="sort_order"
+                        label="Urutan Tampil"
+                        :value="old('sort_order', $item->sort_order ?? 0)"
+                        required
+                        min="0"
+                        helper="Semakin kecil, semakin awal ditampilkan"
+                        :error="$errors->first('sort_order')"
+                    />
 
- {{-- Action Buttons --}}
- <x-admin.card :noPadding="true">
- <div class="p-5 space-y-3">
- <button type="submit" 
- class="w-full px-4 py-2.5 bg-primary-600 text-white font-semibold rounded-lg flex items-center justify-center gap-2">
- <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
- </svg>
- {{ $item->exists ? 'Simpan Perubahan' : 'Simpan Data' }}
- </button>
- 
- <a href="{{ route('admin.why-choose-us.index') }}" 
- class="w-full px-4 py-2.5 bg-gray-50 text-gray-700 font-semibold rounded-lg flex items-center justify-center gap-2">
- <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
- </svg>
- Batal
- </a>
- </div>
- </x-admin.card>
- </div>
- </div>
+                    {{-- Toggle Switch --}}
+                    <div class="pt-3 border-t border-slate-100/80 dark:border-slate-800/80">
+                        <label for="is_active" class="flex items-center justify-between gap-3 cursor-pointer select-none">
+                            <div class="min-w-0">
+                                <span class="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Status Aktif</span>
+                                <p class="text-[12px] text-slate-500 dark:text-slate-400 mt-0.5">Tampilkan di frontend</p>
+                            </div>
+                            <div class="relative shrink-0">
+                                <input type="checkbox"
+                                       name="is_active"
+                                       id="is_active"
+                                       value="1"
+                                       {{ old('is_active', $item->is_active ?? true) ? 'checked' : '' }}
+                                       class="peer sr-only">
+                                <div class="w-11 h-6 rounded-full bg-slate-200 dark:bg-slate-700 peer-checked:bg-gradient-to-r peer-checked:from-emerald-600 peer-checked:to-emerald-500 transition-colors duration-200 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-200 peer-checked:after:translate-x-full peer-checked:after:border-white shadow-sm"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </x-admin.card>
+
+            {{-- Action Buttons --}}
+            <x-admin.card :noPadding="true">
+                <div class="p-5 space-y-3">
+                    <x-admin.button type="submit" variant="primary" class="w-full justify-center"
+                        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>'>
+                        {{ $isEdit ? 'Simpan Perubahan' : 'Simpan Data' }}
+                    </x-admin.button>
+
+                    <x-admin.button href="{{ route('admin.why-choose-us.index') }}" variant="secondary" class="w-full justify-center"
+                        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>'>
+                        Batal
+                    </x-admin.button>
+                </div>
+            </x-admin.card>
+        </div>
+    </div>
 </form>
 @endsection
 
 @push('scripts')
 <script nonce="{{ $nonce }}">
 (function() {
- 'use strict';
+    'use strict';
 
- document.querySelector('[data-action="remove-current-icon"]').addEventListener('click', function() {
- window.Swal.fire({
- title: 'Hapus Icon?',
- text: 'Icon saat ini akan dihapus.',
- icon: 'warning',
- showCancelButton: true,
- confirmButtonColor: '#dc2626',
- cancelButtonColor: '#6b7280',
- confirmButtonText: 'Ya, Hapus!',
- cancelButtonText: 'Batal',
- reverseButtons: true
- }).then((result) => {
- if (result.isConfirmed) {
- const container = document.getElementById('currentIconContainer');
- if (container) {
- container.remove();
- }
- window.Swal.fire({
- icon: 'success',
- title: 'Terhapus!',
- text: 'Icon akan dihapus saat Anda menyimpan.',
- timer: 2000,
- showConfirmButton: false
- });
- }
- });
- });
+    const removeBtn = document.querySelector('[data-action="remove-current-icon"]');
+    if (removeBtn) {
+        removeBtn.addEventListener('click', function() {
+            window.Swal.fire({
+                title: 'Hapus Icon?',
+                text: 'Icon saat ini akan dihapus.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const container = document.getElementById('currentIconContainer');
+                    if (container) container.remove();
+                    window.Swal.fire({
+                        icon: 'success',
+                        title: 'Terhapus!',
+                        text: 'Icon akan dihapus saat Anda menyimpan.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        });
+    }
 
- document.querySelector('[data-action="preview-icon"]').addEventListener('change', function(event) {
- const file = event.target.files[0];
- if (file) {
- const reader = new FileReader();
- reader.onload = function(e) {
- document.getElementById('iconPreviewImg').src = e.target.result;
- document.getElementById('iconPreview').classList.remove('hidden');
- 
- const currentContainer = document.getElementById('currentIconContainer');
- if (currentContainer) {
- currentContainer.classList.add('hidden');
- }
- }
- reader.readAsDataURL(file);
- }
- });
+    const previewInput = document.querySelector('[data-action="preview-icon"]');
+    if (previewInput) {
+        previewInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('iconPreviewImg').src = e.target.result;
+                document.getElementById('iconPreview').classList.remove('hidden');
+                const currentContainer = document.getElementById('currentIconContainer');
+                if (currentContainer) currentContainer.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 
- document.querySelector('[data-action="clear-icon-preview"]').addEventListener('click', function() {
- document.getElementById('icon').value = '';
- document.getElementById('iconPreview').classList.add('hidden');
- 
- const currentContainer = document.getElementById('currentIconContainer');
- if (currentContainer) {
- currentContainer.classList.remove('hidden');
- }
- });
+    const clearBtn = document.querySelector('[data-action="clear-icon-preview"]');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            document.getElementById('icon').value = '';
+            document.getElementById('iconPreview').classList.add('hidden');
+            const currentContainer = document.getElementById('currentIconContainer');
+            if (currentContainer) currentContainer.classList.remove('hidden');
+        });
+    }
 })();
 </script>
 @endpush

@@ -391,13 +391,9 @@ class CacheService
             }
         }
 
-        // Since we can't pattern-match all report list cache keys for all drivers,
-        // flush all application cache to ensure no stale report data is left
-        try {
-            Cache::flush();
-        } catch (\Exception $e) {
-            // Ignore errors flushing cache
-        }
+        // Cache::flush() dihapus karena performa turun saat preview/download report
+        // Halaman yang ter-cache dengan response cache tidak perlu diinvalidasi
+        // karena preview_count dan unduhan harusnya diambil via AJAX jika butuh real-time
 
         // Clear response cache from Spatie (will help clear any cached pages)
         try {

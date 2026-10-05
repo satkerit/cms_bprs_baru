@@ -58,8 +58,9 @@ class BrochureController extends Controller
                 ['filename' => $filename, 'original_name' => $originalName, 'size' => $file->getSize()]
             );
         } catch (\Exception $e) {
+            report($e);
             return redirect()->route('admin.brochures.index')
-                ->with('error', 'Gagal mengunggah brosur: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat mengunggah brosur. Silakan coba lagi.');
         }
 
         if ($request->wantsJson()) {
@@ -84,8 +85,9 @@ class BrochureController extends Controller
             return redirect()->route('admin.brochures.index')
                 ->with('success', 'Brosur berhasil dihapus.');
         } catch (\Exception $e) {
+            report($e);
             return redirect()->route('admin.brochures.index')
-                ->with('error', 'Gagal menghapus brosur: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat menghapus brosur. Silakan coba lagi.');
         }
     }
 

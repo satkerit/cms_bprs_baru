@@ -86,30 +86,33 @@ class LogVisitorVisit implements ShouldQueue
             return ['country' => 'Local', 'country_code' => 'LO', 'city' => 'Local'];
         }
 
-        try {
-            // Timeout pendek agar job (yang kini dijalankan afterResponse) tidak memblokir proses.
-            $context = stream_context_create(['http' => ['timeout' => 3]]);
-            $response = @file_get_contents("http://ip-api.com/json/{$ip}?fields=status,country,countryCode,region,city,timezone,lat,lon,isp", false, $context);
-            if ($response) {
-                $data = json_decode($response, true);
-                if ($data && ($data['status'] ?? null) === 'success') {
-                    return [
-                        'country' => $data['country'] ?? null,
-                        'country_code' => $data['countryCode'] ?? null,
-                        'city' => $data['city'] ?? null,
-                        'region' => $data['region'] ?? null,
-                        'timezone' => $data['timezone'] ?? null,
-                        'latitude' => $data['lat'] ?? null,
-                        'longitude' => $data['lon'] ?? null,
-                        'isp' => $data['isp'] ?? null,
-                    ];
+        $cacheKey = "geo_ip_{$ip}";
+        return \Illuminate\Support\Facades\Cache::remember($cacheKey, now()->addDays(7), function () use ($ip) {
+            try {
+                // Timeout pendek agar job (yang kini dijalankan afterResponse) tidak memblokir proses.
+                $context = stream_context_create(['http' => ['timeout' => 3]]);
+                $response = @file_get_contents("http://ip-api.com/json/{$ip}?fields=status,country,countryCode,region,city,timezone,lat,lon,isp", false, $context);
+                if ($response) {
+                    $data = json_decode($response, true);
+                    if ($data && ($data['status'] ?? null) === 'success') {
+                        return [
+                            'country' => $data['country'] ?? null,
+                            'country_code' => $data['countryCode'] ?? null,
+                            'city' => $data['city'] ?? null,
+                            'region' => $data['region'] ?? null,
+                            'timezone' => $data['timezone'] ?? null,
+                            'latitude' => $data['lat'] ?? null,
+                            'longitude' => $data['lon'] ?? null,
+                            'isp' => $data['isp'] ?? null,
+                        ];
+                    }
                 }
+            } catch (\Exception $e) {
+                Log::warning('Geo IP lookup failed', ['ip' => $ip, 'error' => $e->getMessage()]);
             }
-        } catch (\Exception $e) {
-            Log::warning('Geo IP lookup failed', ['ip' => $ip, 'error' => $e->getMessage()]);
-        }
 
-        return [];
+            return [];
+        });
     }
 
     /**

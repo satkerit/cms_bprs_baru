@@ -48,6 +48,14 @@ class ComposerUpdateController extends Controller
     {
         $this->authorizeAny(['settings.composer']);
 
+        if (!config('app.composer_web_update_enabled', !app()->environment('production'))) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Composer update via web dinonaktifkan di production. Gunakan SSH/CI.',
+                'output' => null,
+            ], 403);
+        }
+
         if (!auth()->user()->isSuperAdmin()) {
             return response()->json([
                 'success' => false,

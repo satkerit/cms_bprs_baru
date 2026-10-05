@@ -54,7 +54,8 @@ class OfficeController extends Controller
             Office::create($validated);
             return redirect()->route('admin.offices.index')->with('success', 'Kantor berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menambahkan kantor: ' . $e->getMessage())->withInput();
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat menambahkan kantor. Silakan coba lagi.')->withInput();
         }
     }
 
@@ -79,7 +80,8 @@ class OfficeController extends Controller
             $office->update($validated);
             return redirect()->route('admin.offices.index')->with('success', 'Kantor berhasil diperbarui.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memperbarui kantor: ' . $e->getMessage())->withInput();
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui kantor. Silakan coba lagi.')->withInput();
         }
     }
 
@@ -94,7 +96,8 @@ class OfficeController extends Controller
             }
             return redirect()->route('admin.offices.index')->with('success', 'Kantor berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->route('admin.offices.index')->with('error', 'Gagal menghapus kantor: ' . $e->getMessage());
+            report($e);
+            return redirect()->route('admin.offices.index')->with('error', 'Terjadi kesalahan saat menghapus kantor. Silakan coba lagi.');
         }
     }
 }

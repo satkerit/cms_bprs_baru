@@ -38,8 +38,8 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label class="block text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Tipe Laporan <span class="text-red-600">*</span></label>
- <select name="type" class="block w-full rounded-xl border-zinc-300 text-[13px] @error('type') border-red-500 @enderror">
+ <label class="block text-[11px] font-medium dark:text-slate-300 text-slate-700 mb-1">Tipe Laporan <span class="text-red-600">*</span></label>
+ <select name="type" class="block w-full rounded-xl border-slate-300 text-[13px] @error('type') border-red-500 @enderror">
  <option value="keuangan_publikasi" {{ old('type', $report->type ?? '') == 'keuangan_publikasi' ? 'selected' : '' }}>Laporan Keuangan Publikasi</option>
  <option value="tata_kelola" {{ old('type', $report->type ?? '') == 'tata_kelola' ? 'selected' : '' }}>Laporan Tata Kelola</option>
  <option value="tahunan" {{ old('type', $report->type ?? '') == 'tahunan' ? 'selected' : '' }}>Laporan Tahunan</option>
@@ -54,8 +54,8 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label class="block text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Kuartal</label>
- <select name="quarter" class="block w-full rounded-xl border-zinc-300 text-[13px]">
+ <label class="block text-[11px] font-medium dark:text-slate-300 text-slate-700 mb-1">Kuartal</label>
+ <select name="quarter" class="block w-full rounded-xl border-slate-300 text-[13px]">
  <option value="">Tidak Ada (Tahunan)</option>
  <option value="1" {{ old('quarter', $report->quarter ?? '') == '1' ? 'selected' : '' }}>Q1 (Januari - Maret)</option>
  <option value="2" {{ old('quarter', $report->quarter ?? '') == '2' ? 'selected' : '' }}>Q2 (April - Juni)</option>
@@ -64,38 +64,38 @@
  </select>
  </div>
  <div>
- <label class="block text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Tanggal Publish <span class="text-red-600">*</span></label>
+ <label class="block text-[11px] font-medium dark:text-slate-300 text-slate-700 mb-1">Tanggal Publish <span class="text-red-600">*</span></label>
  <input type="date" name="published_date"
  value="{{ old('published_date', isset($report) && $report->posted_at ? $report->posted_at->format('Y-m-d') : date('Y-m-d')) }}"
- class="block w-full rounded-xl border-zinc-300 text-[13px] @error('published_date') border-red-500 @enderror"
+ class="block w-full rounded-xl border-slate-300 text-[13px] @error('published_date') border-red-500 @enderror"
  required>
- <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">Tanggal yang akan ditampilkan di halaman publik</p>
+ <p class="text-[11px] dark:text-slate-400 text-slate-500 mt-1">Tanggal yang akan ditampilkan di halaman publik</p>
  @error('published_date')<p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>@enderror
  </div>
  </div>
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <label class="block text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Mode Posting <span class="text-red-600">*</span></label>
- <select name="posting_mode" x-model="postingMode" class="block w-full rounded-xl border-zinc-300 text-[13px] @error('posting_mode') border-red-500 @enderror">
+ <label class="block text-[11px] font-medium dark:text-slate-300 text-slate-700 mb-1">Mode Posting <span class="text-red-600">*</span></label>
+ <select name="posting_mode" x-model="postingMode" class="block w-full rounded-xl border-slate-300 text-[13px] @error('posting_mode') border-red-500 @enderror">
  <option value="auto">Langsung Publish</option>
  <option value="manual">Jadwalkan</option>
  </select>
  @error('posting_mode')<p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>@enderror
  </div>
  <div x-show="postingMode === 'manual'" x-transition>
- <label class="block text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Jadwal Tayang <span class="text-red-600" x-show="postingMode === 'manual'">*</span></label>
+ <label class="block text-[11px] font-medium dark:text-slate-300 text-slate-700 mb-1">Jadwal Tayang <span class="text-red-600" x-show="postingMode === 'manual'">*</span></label>
  <input type="datetime-local" name="scheduled_at"
  value="{{ old('scheduled_at', isset($report) && $report->scheduled_at ? $report->scheduled_at->format('Y-m-d\TH:i') : '') }}"
- class="block w-full rounded-xl border-zinc-300 text-[13px] @error('scheduled_at') border-red-500 @enderror">
- <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 mt-1">Waktu laporan akan ditampilkan di website</p>
+ class="block w-full rounded-xl border-slate-300 text-[13px] @error('scheduled_at') border-red-500 @enderror">
+ <p class="text-[11px] dark:text-slate-400 text-slate-500 mt-1">Waktu laporan akan ditampilkan di website</p>
  @error('scheduled_at')<p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>@enderror
  </div>
  </div>
 
  <div>
- <label class="block text-[11px] font-medium dark:text-slate-300 dark:text-slate-300 text-zinc-700 mb-1">Deskripsi</label>
- <textarea name="description" rows="3" class="block w-full rounded-xl border-zinc-300 text-[13px] @error('description') border-red-500 @enderror">{{ old('description', $report->description ?? '') }}</textarea>
+ <label class="block text-[11px] font-medium dark:text-slate-300 text-slate-700 mb-1">Deskripsi</label>
+ <textarea name="description" rows="3" class="block w-full rounded-xl border-slate-300 text-[13px] @error('description') border-red-500 @enderror">{{ old('description', $report->description ?? '') }}</textarea>
  @error('description')<p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>@enderror
  </div>
  </div>
@@ -107,15 +107,15 @@
  <div class="flex items-center gap-2">
  <input type="checkbox" name="is_published" id="is_published" value="1"
  {{ old('is_published', $report->is_published ?? true) ? 'checked' : '' }}
- class="rounded border-zinc-300 text-sky-600">
- <label for="is_published" class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">Publikasikan</label>
+ class="rounded border-slate-300 text-sky-600">
+ <label for="is_published" class="text-[11px] dark:text-slate-300 text-slate-700">Publikasikan</label>
  </div>
  </x-admin.card>
 
  <x-admin.card title="File Laporan">
  <div class="space-y-3">
- @if(isset($report) && $report->file_path)                <div class="p-3 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50 rounded-xl">
-                            <p class="text-[11px] dark:text-slate-300 dark:text-slate-300 text-zinc-700">File saat ini:</p>
+ @if(isset($report) && $report->file_path)                <div class="p-3 dark:bg-slate-800/50 bg-slate-50 rounded-xl">
+                            <p class="text-[11px] dark:text-slate-300 text-slate-700">File saat ini:</p>
                             <a href="{{ \App\Helpers\StorageHelper::url($report->file_path) }}" target="_blank" class="text-[11px] text-sky-600 hover:underline">
                                 📄 Lihat File ({{ number_format($report->file_size / 1024 / 1024, 2) }} MB)
                             </a>
@@ -124,8 +124,8 @@
                         @php $documentMaxKb = get_upload_max_size('document'); $documentMaxBytes = $documentMaxKb * 1024; $documentMaxMb = round($documentMaxKb / 1024); @endphp
                         <input type="file" name="file" accept=".pdf" {{ isset($report) ? '' : 'required' }}
                             @change="validateReportFileSize($el, {{ $documentMaxBytes }})"
-                            class="block w-full text-[13px] dark:text-slate-400 dark:text-slate-400 text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-sky-100">
-                        <p class="text-[11px] dark:text-slate-400 dark:text-slate-400 text-zinc-500">Format PDF. Maks {{ $documentMaxMb }}MB</p>
+                            class="block w-full text-[13px] dark:text-slate-400 text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-sky-100">
+                        <p class="text-[11px] dark:text-slate-400 text-slate-500">Format PDF. Maks {{ $documentMaxMb }}MB</p>
                         <p id="file-size-error" class="text-[11px] text-red-600 hidden"></p>
                         @error('file')<p class="text-[11px] text-red-600">{{ $message }}</p>@enderror
  </div>

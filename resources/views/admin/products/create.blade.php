@@ -62,7 +62,7 @@
                         <label for="type" class="block text-sm font-semibold text-slate-700 mb-1.5 ml-0.5">
                             Tipe Produk <span class="text-red-500">*</span>
                         </label>
-                        <select name="type" id="type" x-model="type" required class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
+                        <select name="type" id="type" x-model="type" required class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
                             <option value="">Pilih Tipe Produk</option>
                             <option value="simpanan_syariah" {{ old('type') == 'simpanan_syariah' ? 'selected' : '' }}>Simpanan Syariah</option>
                             <option value="pembiayaan_syariah" {{ old('type') == 'pembiayaan_syariah' ? 'selected' : '' }}>Pembiayaan Syariah</option>
@@ -79,7 +79,7 @@
                         </label>
                         <textarea name="short_description" id="short_description" rows="2"
                                   placeholder="Ringkasan singkat tentang produk (maks 500 karakter)"
-                                  class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">{{ old('short_description') }}</textarea>
+                                  class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">{{ old('short_description') }}</textarea>
                         <p class="mt-1.5 text-xs text-slate-500 ml-0.5">Akan ditampilkan di halaman daftar produk</p>
                     </div>
 
@@ -89,7 +89,7 @@
                         </label>
                         <textarea name="description" id="description" rows="6" required
                                   placeholder="Jelaskan detail produk secara lengkap..."
-                                  class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all @error('description') ring-red-300 focus:ring-red-500 bg-red-50/50 @enderror">{{ old('description') }}</textarea>
+                                  class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all @error('description') ring-red-300 focus:ring-red-500 bg-red-50/50 @enderror">{{ old('description') }}</textarea>
                         @error('description')
                             <p class="mt-1.5 text-xs text-red-600 font-medium ml-0.5">{{ $message }}</p>
                         @enderror
@@ -112,7 +112,7 @@
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-3">
                             <span class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 Fitur Produk
@@ -123,7 +123,7 @@
                                 <div class="flex gap-2 group">
                                     <input type="text" :name="'features['+index+']'" x-model="item.value"
                                            placeholder="Masukkan fitur produk"
-                                           class="flex-1 rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
+                                           class="flex-1 rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
                                     <button type="button" @click="removeItem(index)"
                                             class="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
                                             x-show="items.length > 1">
@@ -134,7 +134,7 @@
                                 </div>
                             </template>
                             <button type="button" @click="addItem()"
-                                    class="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-green-700 mt-2">
+                                    class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-600 hover:text-green-700 mt-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
@@ -149,7 +149,7 @@
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-3">
                             <span class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
                                 </svg>
                                 Keunggulan Produk
@@ -160,7 +160,7 @@
                                 <div class="flex gap-2 group">
                                     <input type="text" :name="'benefits['+index+']'" x-model="item.value"
                                            placeholder="Masukkan keunggulan produk"
-                                           class="flex-1 rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
+                                           class="flex-1 rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
                                     <button type="button" @click="removeItem(index)"
                                             class="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
                                             x-show="items.length > 1">
@@ -171,7 +171,7 @@
                                 </div>
                             </template>
                             <button type="button" @click="addItem()"
-                                    class="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-green-700 mt-2">
+                                    class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-600 hover:text-green-700 mt-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
@@ -197,7 +197,7 @@
                                 <div class="flex gap-2 group">
                                     <input type="text" :name="'requirements['+index+']'" x-model="item.value"
                                            placeholder="Masukkan persyaratan"
-                                           class="flex-1 rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
+                                           class="flex-1 rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm sm:leading-6 hover:ring-slate-300 transition-all">
                                     <button type="button" @click="removeItem(index)"
                                             class="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
                                             x-show="items.length > 1">
@@ -208,7 +208,7 @@
                                 </div>
                             </template>
                             <button type="button" @click="addItem()"
-                                    class="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-green-700 mt-2">
+                                    class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-600 hover:text-green-700 mt-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
@@ -234,7 +234,7 @@
                             <input type="checkbox" name="is_active" id="is_active" value="1"
                                    {{ old('is_active', true) ? 'checked' : '' }}
                                    class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                         </label>
                     </div>
 
@@ -289,7 +289,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="brochure_id" class="block text-sm font-semibold text-slate-700 mb-2">Pilih Brosur dari Library</label>
-                                <select name="brochure_id" id="brochure_id" class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm">
+                                <select name="brochure_id" id="brochure_id" class="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm">
                                     <option value="">-- Pilih Brosur (Opsional) --</option>
                                     @foreach($brochures as $brochure)
                                         <option value="{{ $brochure->id }}" {{ old('brochure_id') == $brochure->id ? 'selected' : '' }}>

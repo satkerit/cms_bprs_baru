@@ -6,8 +6,8 @@
 <div class="space-y-6">
  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
  <div>
- <h1 class="text-5xl font-bold text-gray-900">Simple Backup Database</h1>
- <p class="text-gray-500 mt-1">Test backup functionality</p>
+ <h1 class="text-5xl font-bold text-slate-900">Simple Backup Database</h1>
+ <p class="text-slate-500 mt-1">Test backup functionality</p>
  </div>
  <button data-action="create-backup"
  class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg">
@@ -20,22 +20,22 @@
 
  {{-- Database Info --}}
  <div class="bg-white rounded-lg border p-6">
- <h2 class="text-3xl font-semibold text-gray-900 mb-4">Database Info</h2>
+ <h2 class="text-3xl font-semibold text-slate-900 mb-4">Database Info</h2>
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
- <span class="text-gray-500">Database:</span>
+ <span class="text-slate-500">Database:</span>
  <span class="font-medium ml-2">{{ $databaseInfo['name'] }}</span>
  </div>
  <div>
- <span class="text-gray-500">Host:</span>
+ <span class="text-slate-500">Host:</span>
  <span class="font-medium ml-2">{{ $databaseInfo['host'] }}:{{ $databaseInfo['port'] }}</span>
  </div>
  <div>
- <span class="text-gray-500">Tables:</span>
+ <span class="text-slate-500">Tables:</span>
  <span class="font-medium ml-2">{{ $databaseInfo['table_count'] }}</span>
  </div>
  <div>
- <span class="text-gray-500">Total Backups:</span>
+ <span class="text-slate-500">Total Backups:</span>
  <span class="font-medium ml-2">{{ $storageInfo['total_backups'] }}</span>
  </div>
  </div>
@@ -44,20 +44,20 @@
  {{-- Backup List --}}
  <div class="bg-white rounded-lg border">
  <div class="px-6 py-4 border-b">
- <h2 class="text-3xl font-semibold text-gray-900">Backup Files</h2>
+ <h2 class="text-3xl font-semibold text-slate-900">Backup Files</h2>
  </div>
 
  @if($backups->count() > 0)
  <div class="overflow-x-auto">
  <table class="w-full border-collapse">
  <thead>
- <tr class="border-b dark:border-slate-700 border-zinc-200/70 dark:bg-slate-800/50 dark:bg-slate-800/50 bg-zinc-50/80">
- <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">File</th>
- <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Size</th>
- <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 dark:text-slate-400 text-zinc-500 uppercase tracking-[0.05em]">Created</th>
+ <tr class="border-b dark:border-slate-700 border-slate-200/70 dark:bg-slate-800/50 bg-slate-50/80">
+ <th class="pl-5 pr-4 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">File</th>
+ <th class="px-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Size</th>
+ <th class="pl-4 pr-5 py-3.5 text-left text-[11px] font-semibold dark:text-slate-400 text-slate-500 uppercase tracking-[0.05em]">Created</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-zinc-100/80">
+ <tbody class="divide-y divide-slate-100/80">
  @foreach($backups as $backup)
  <tr class="table-row-hover">
  <td class="pl-5 pr-4 py-3.5">
@@ -76,7 +76,7 @@
  </div>
  @else
  <div class="px-6 py-12 text-center">
- <p class="text-gray-500">Belum ada backup. Klik tombol "Buat Backup Test" untuk membuat backup pertama.</p>
+ <p class="text-slate-500">Belum ada backup. Klik tombol "Buat Backup Test" untuk membuat backup pertama.</p>
  </div>
  @endif
  </div>

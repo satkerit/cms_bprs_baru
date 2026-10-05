@@ -810,8 +810,12 @@ class ImageService
             return self::$ffmpegAvailable;
         }
 
-        $test = shell_exec('where ffmpeg 2>NUL');
-        self::$ffmpegAvailable = !empty($test);
+        if (PHP_OS_FAMILY === 'Windows') {
+            $test = @shell_exec('where ffmpeg 2>NUL');
+        } else {
+            $test = @shell_exec('command -v ffmpeg 2>/dev/null');
+        }
+        self::$ffmpegAvailable = !empty(trim($test ?? ''));
         return self::$ffmpegAvailable;
     }
 
@@ -820,14 +824,26 @@ class ImageService
      */
     protected static function findFFmpegBinary(): string
     {
-        $possiblePaths = [
-            'ffmpeg',
-            'C:\\ffmpeg\\bin\\ffmpeg.exe',
-            'C:\\ProgramData\\chocolatey\\bin\\ffmpeg.exe',
-        ];
+        $configPath = config('services.ffmpeg.path');
+        if ($configPath && file_exists($configPath)) {
+            return $configPath;
+        }
+
+        $possiblePaths = ['ffmpeg'];
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $possiblePaths[] = 'C:\\ffmpeg\\bin\\ffmpeg.exe';
+            $possiblePaths[] = 'C:\\ProgramData\\chocolatey\\bin\\ffmpeg.exe';
+        } else {
+            $possiblePaths[] = '/usr/bin/ffmpeg';
+            $possiblePaths[] = '/usr/local/bin/ffmpeg';
+        }
+
+        $whichCmd = PHP_OS_FAMILY === 'Windows' ? 'where' : 'command -v';
+        $nullRedirect = PHP_OS_FAMILY === 'Windows' ? '2>NUL' : '2>/dev/null';
 
         foreach ($possiblePaths as $path) {
-            $test = shell_exec('where ' . escapeshellarg($path) . ' 2>NUL');
+            $test = @shell_exec($whichCmd . ' ' . escapeshellarg($path) . ' ' . $nullRedirect);
             if ($test) {
                 $lines = explode("\n", trim($test));
                 return trim($lines[0]);

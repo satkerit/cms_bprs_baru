@@ -14,31 +14,34 @@ class NewsController extends Controller
         SeoMeta::setTitle('Berita & Artikel')
             ->setDescription('Berita terbaru dan artikel informatif seputar perbankan syariah dari BPRS Bangka Belitung.');
 
-        // Build a cache key from current query params (page/search/category)
-        $page = $request->input('page', 1);
-        $search = $request->input('search', '');
-        $category = $request->input('category', '');
-        $cacheKey = 'news_index_' . md5("{$page}|{$search}|{$category}");
+        $query = News::query()
+            ->select(['id', 'title', 'slug', 'excerpt', 'featured_image', 'published_at', 'category'])
+            ->where('is_published', true)
+            ->where('published_at', '<=', now());
 
-        $news = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($request) {
-            $query = News::query()
-                ->select(['id', 'title', 'slug', 'excerpt', 'featured_image', 'published_at', 'category'])
-                ->where('is_published', true)
-                ->where('published_at', '<=', now());
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('excerpt', 'like', '%' . $request->search . '%');
+            });
+        }
 
-            if ($request->filled('search')) {
-                $query->where(function ($q) use ($request) {
-                    $q->where('title', 'like', '%' . $request->search . '%')
-                        ->orWhere('excerpt', 'like', '%' . $request->search . '%');
-                });
-            }
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
 
-            if ($request->filled('category')) {
-                $query->where('category', $request->category);
-            }
+        // P-02 fix: skip cache when search param present to prevent cache flooding
+        if ($request->filled('search')) {
+            $news = $query->orderBy('published_at', 'desc')->paginate(12)->withQueryString();
+        } else {
+            $page = $request->input('page', 1);
+            $category = $request->input('category', '');
+            $cacheKey = 'news_index_' . md5("{$page}|{$category}");
 
-            return $query->orderBy('published_at', 'desc')->paginate(12)->withQueryString();
-        });
+            $news = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($query) {
+                return $query->orderBy('published_at', 'desc')->paginate(12)->withQueryString();
+            });
+        }
 
         // Categories are already cached via CacheService
         $categories = app(\App\Services\CacheService::class)->getNewsCategories();

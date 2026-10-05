@@ -26,7 +26,7 @@
             <div class="absolute inset-0">
                 <x-optimized-image
                     src="{{ \App\Helpers\StorageHelper::url($member->photo) }}"
-                    alt="{{ $member->name }}"
+                    alt="Foto {{ $member->name }} - {{ $member->position }}"
                     class="w-full h-full object-cover object-top
                            scale-100 group-hover:scale-[1.04]
                            transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"

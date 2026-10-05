@@ -17,13 +17,13 @@
 @endphp
 <div class="p-6 space-y-4">
     {{-- Header skeleton --}}
-    <div class="h-10 bg-gradient-to-r from-zinc-100 via-zinc-50 to-zinc-100 rounded-xl animate-pulse"></div>
+    <div class="h-10 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 rounded-xl animate-pulse"></div>
     {{-- Rows --}}
     @for($i = 0; $i < $rows; $i++)
         <div class="grid {{ $gridCols }} gap-4">
             @for($j = 0; $j < min($columns, 6); $j++)
                 <div class="{{ $j === 0 ? $firstColSpan : '' }}">
-                    <div class="h-4 bg-gradient-to-r from-zinc-100 via-zinc-50 to-zinc-100 rounded-lg animate-pulse" style="animation-delay: {{ $i * 100 }}ms"></div>
+                    <div class="h-4 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 rounded-lg animate-pulse" style="animation-delay: {{ $i * 100 }}ms"></div>
                 </div>
             @endfor
         </div>

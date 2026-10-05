@@ -105,8 +105,9 @@ class SiteSettingController extends Controller
                 ->withErrors($e->validator)
                 ->withInput();
         } catch (\Throwable $e) {
+            report($e);
             return redirect()->route('admin.site-settings.index')
-                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
+                ->with('error', 'Terjadi kesalahan saat menyimpan pengaturan. Silakan coba lagi.')
                 ->withInput();
         }
     }
@@ -144,9 +145,10 @@ class SiteSettingController extends Controller
                 'errors' => $e->validator->errors()
             ], 422);
         } catch (\Exception $e) {
+            report($e);
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat memperbarui jumlah slide. Silakan coba lagi.'
             ], 500);
         }
     }

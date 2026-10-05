@@ -16,8 +16,8 @@ abstract class Controller
             return redirect()->route($redirectRoute)->with('success', $successMessage);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            return back()->with('error', 'Gagal: ' . $e->getMessage())->withInput();
+            report($e);
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.')->withInput();
         }
     }
 

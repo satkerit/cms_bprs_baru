@@ -17,7 +17,7 @@
 
 <div class="space-y-1.5">
     @if($label)
-        <label for="{{ $textareaId }}" class="block text-[13px] font-medium text-slate-700">
+        <label for="{{ $textareaId }}" class="block text-[13px] font-medium text-slate-700 dark:text-slate-300">
             {{ $label }}
             @if($required)
                 <span class="text-red-500">*</span>

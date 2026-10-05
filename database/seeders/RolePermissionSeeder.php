@@ -94,9 +94,10 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'storage.view', 'display_name' => 'Lihat File Manager', 'group' => 'settings'],
             ['name' => 'storage.manage', 'display_name' => 'Kelola File', 'group' => 'settings'],
 
-            // Database Backup
+            // Database Backup (audit: S-02 - permission khusus backup, bukan storage.view)
+            ['name' => 'backup.view', 'display_name' => 'Lihat Daftar Backup', 'group' => 'settings'],
             ['name' => 'backup.create', 'display_name' => 'Buat Backup Database', 'group' => 'settings'],
-            ['name' => 'backup.restore', 'display_name' => 'Restore Database', 'group' => 'settings'],
+            ['name' => 'backup.download', 'display_name' => 'Unduh Backup Database', 'group' => 'settings'],
             ['name' => 'backup.delete', 'display_name' => 'Hapus Backup', 'group' => 'settings'],
 
             // Board Members
