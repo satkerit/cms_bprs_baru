@@ -11,16 +11,18 @@ use Illuminate\Validation\ValidationException;
 class AdminLoginController extends Controller
 {
     /**
-     * Batas minimum (detik) antara form dirender dan form dikirim.
-     * Manusia butuh waktu mengetik email & kata sandi; bot mengirim hampir instan.
+     * Maksimal waktu session form login (120 menit).
+     * Selaras dengan SESSION_LIFETIME agar tidak memblokir user yang wajar.
+     * Hanya untuk mencegah token form yang menggantung terlalu lama.
      */
-    private const MIN_FORM_SECONDS = 2;
+    private const MAX_FORM_SECONDS = 7200;
 
     public function showLoginForm()
     {
-        // Verifikasi senyap: cukup catat waktu form dibuat.
-        // Pengguna tidak perlu menjawab apa pun — bot akan tertangkap
-        // oleh honeypot, cek waktu, dan rate limiter di method login().
+        // Catat waktu form dibuat. Hanya dipakai sebagai batas atas (MAX_FORM_SECONDS)
+        // untuk mencegah form menggantung terlalu lama — BUKAN untuk memblokir
+        // submit cepat, karena autofill browser & password manager sah-sah saja
+        // mengisi form seketika. Deteksi bot mengandalkan honeypot + rate limiter.
         session(['login_form_issued_at' => now()->timestamp]);
 
         return view('auth.admin-login');
@@ -53,22 +55,23 @@ class AdminLoginController extends Controller
             ]);
         }
 
-        // 2) Cek waktu: bot mengirim form seketika setelah halaman dimuat,
-        //    sedangkan manusia butuh waktu untuk mengisi email dan kata sandi.
-        //    Kolom hilang berarti form tidak pernah dibuka (POST langsung).
+        // 2) Batas atas usia form: mencegah form yang menggantung terlalu lama
+        //    (mis. halaman login dibiarkan terbuka berhari-hari lalu disubmit).
+        //    Tidak ada batas bawah — autofill browser/password manager sah,
+        //    sehingga submit cepat TIDAK boleh diblokir. Deteksi bot mengandalkan
+        //    honeypot (langkah 1) dan rate limiter.
         $issuedAt = session('login_form_issued_at');
-        if ($issuedAt === null || (now()->timestamp - (int)$issuedAt) < self::MIN_FORM_SECONDS) {
-            RateLimiter::hit($key, 60);
 
+        if ($issuedAt !== null && (now()->timestamp - (int) $issuedAt) > self::MAX_FORM_SECONDS) {
             throw ValidationException::withMessages([
-                'email' => ['Sesi login tidak valid. Silakan muat ulang halaman dan coba lagi.'],
+                'email' => ['Sesi login telah kedaluwarsa. Silakan muat ulang halaman dan login kembali.'],
             ]);
         }
 
         if (Auth::guard('web')->attempt($request->only('email', 'password'), $request->filled('remember'))) {
             $request->session()->regenerate();
 
-            $user = Auth::user();
+            $user = Auth::user()->load('roleModel.permissions');
 
             if (!$user->is_active) {
                 Auth::guard('web')->logout();
@@ -95,6 +98,13 @@ class AdminLoginController extends Controller
             RateLimiter::clear($key);
 
             session()->forget('login_form_issued_at');
+
+            session()->put('cached_role', [
+                'name' => $user->roleModel?->name,
+                'display_name' => $user->roleModel?->display_name,
+                'permissions' => $user->roleModel?->permissions?->pluck('name')->toArray() ?? [],
+            ]);
+            session()->put('cached_role_at', now()->timestamp);
 
             \App\Models\AuditTrail::log('login', 'Admin login: ' . $user->name);
 

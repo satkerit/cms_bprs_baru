@@ -197,7 +197,6 @@ class CompanyInfoController extends Controller
                 'path' => $path,
                 'items' => $items,
             ]);
-            }
         } catch (\Exception $e) {
             report($e);
 

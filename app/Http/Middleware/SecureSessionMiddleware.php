@@ -247,7 +247,7 @@ class SecureSessionMiddleware
         $isExpired = (now()->timestamp - $cachedAt) > 900; // 15 menit
 
         if (!Session::has('cached_role') || $isExpired) {
-            $user = auth()->user()->fresh()->load('roleModel.permissions');
+            $user = auth()->user()->load('roleModel.permissions');
 
             Session::put('cached_role', [
                 'name' => $user->roleModel?->name,
