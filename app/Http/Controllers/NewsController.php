@@ -15,7 +15,7 @@ class NewsController extends Controller
             ->setDescription('Berita terbaru dan artikel informatif seputar perbankan syariah dari BPRS Bangka Belitung.');
 
         $query = News::query()
-            ->select(['id', 'title', 'slug', 'excerpt', 'featured_image', 'published_at', 'category'])
+            ->select(['id', 'title', 'slug', 'excerpt', 'featured_image', 'published_at', 'category', 'content'])
             ->where('is_published', true)
             ->where('published_at', '<=', now());
 

@@ -111,24 +111,142 @@
                             </div>
                             @endif
 
-                            {{-- Gallery Images --}}
+                            {{-- Gallery Images — Interactive Lightbox --}}
                             @if($news->images && $news->images->count() > 0)
-                            <div class="p-6 sm:p-8">
-                                <span class="eyebrow-badge inline-flex mb-4">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    Galeri Foto
-                                </span>
-                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+                            <div class="p-6 sm:p-8" x-data="{ 
+                                lightbox: false, 
+                                currentIndex: 0, 
+                                images: {{ $news->images->pluck('image_path')->map(fn($p) => storage_url($p))->toJson() }},
+                                open(index) { 
+                                    this.currentIndex = index; 
+                                    this.lightbox = true; 
+                                    document.body.style.overflow = 'hidden';
+                                },
+                                close() { 
+                                    this.lightbox = false; 
+                                    document.body.style.overflow = '';
+                                },
+                                next() { 
+                                    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+                                },
+                                prev() { 
+                                    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+                                }
+                            }" @keydown.escape.window="close()" @keydown.arrow-right.window="lightbox && next()" @keydown.arrow-left.window="lightbox && prev()">
+                                <div class="flex items-center justify-between mb-5">
+                                    <span class="eyebrow-badge inline-flex">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        Galeri Foto
+                                    </span>
+                                    <span class="text-xs text-secondary dark:text-slate-400 font-medium">{{ $news->images->count() }} foto</span>
+                                </div>
+
+                                {{-- Masonry Grid dengan Hover Overlay --}}
+                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 auto-rows-max">
                                     @foreach($news->images as $image)
-                                    <div class="block aspect-square rounded-xl overflow-hidden bg-muted dark:bg-slate-800 ring-1 ring-border/30 dark:ring-slate-700/50 transition-all duration-300 group">
-                                        <x-optimized-image
-                                            :src="storage_url($image->image_path)"
-                                            :alt="$news->title . ' - Gambar ' . ($loop->iteration)"
-                                            :lazy="true"
-                                            class="w-full h-full transition-all duration-500 group-hover:scale-110"
-                                            aspect-ratio="1/1" />
+                                    <div class="group cursor-pointer" @click="open({{ $loop->index }})">
+                                        <div class="relative rounded-xl overflow-hidden bg-muted dark:bg-slate-800 ring-1 ring-border/30 dark:ring-slate-700/50 hover:ring-emerald-300/50 dark:hover:ring-emerald-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 aspect-square">
+                                            <x-optimized-image
+                                                :src="storage_url($image->image_path)"
+                                                :alt="$news->title . ' - Gambar ' . ($loop->iteration)"
+                                                :lazy="true"
+                                                class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-90"
+                                                aspect-ratio="1/1" />
+                                            
+                                            {{-- Hover Overlay dengan Zoom Icon --}}
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-between p-3">
+                                                <span class="text-white text-xs font-medium">{{ $loop->iteration }} / {{ $news->images->count() }}</span>
+                                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm text-white">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     @endforeach
+                                </div>
+
+                                {{-- Lightbox Modal Fullscreen --}}
+                                <div x-show="lightbox" 
+                                     x-cloak
+                                     x-transition:enter="transition ease-out duration-300"
+                                     x-transition:enter-start="opacity-0"
+                                     x-transition:enter-end="opacity-100"
+                                     x-transition:leave="transition ease-in duration-200"
+                                     x-transition:leave-start="opacity-100"
+                                     x-transition:leave-end="opacity-0"
+                                     class="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm flex items-center justify-center"
+                                     @click.self="close()"
+                                     x-data="{
+                                         touchStartX: 0,
+                                         touchEndX: 0,
+                                         handleSwipe() {
+                                             const diff = this.touchStartX - this.touchEndX;
+                                             if (Math.abs(diff) > 50) {
+                                                 diff > 0 ? next() : prev();
+                                             }
+                                         }
+                                     }"
+                                     @touchstart="touchStartX = $event.changedTouches[0].screenX"
+                                     @touchend="touchEndX = $event.changedTouches[0].screenX; handleSwipe()">
+                                    
+                                    {{-- Close Button --}}
+                                    <button @click="close()" 
+                                            class="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300 active:scale-95">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </button>
+
+                                    {{-- Counter --}}
+                                    <div class="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white text-xs sm:text-sm font-medium">
+                                        <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
+                                    </div>
+
+                                    {{-- Navigation Prev --}}
+                                    <button @click="prev()" 
+                                            x-show="images.length > 1"
+                                            class="absolute left-2 sm:left-4 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300 active:scale-95">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                                    </button>
+
+                                    {{-- Image Container dengan Loading Skeleton --}}
+                                    <div class="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center px-4 sm:px-8">
+                                        {{-- Loading Skeleton --}}
+                                        <div class="absolute inset-0 flex items-center justify-center" x-show="lightbox">
+                                            <div class="w-16 h-16 rounded-full border-4 border-white/20 border-t-white/80 animate-spin"></div>
+                                        </div>
+                                        {{-- Image --}}
+                                        <img x-show="lightbox"
+                                             x-transition:enter="transition ease-out duration-300"
+                                             x-transition:enter-start="opacity-0 scale-95"
+                                             x-transition:enter-end="opacity-100 scale-100"
+                                             :src="images[currentIndex]"
+                                             :alt="`{{ $news->title }} - Gambar ${currentIndex + 1}`"
+                                             class="max-w-full max-h-full object-contain rounded-lg shadow-2xl relative z-10"
+                                             @load="$event.target.previousElementSibling.style.display = 'none'">
+                                    </div>
+
+                                    {{-- Navigation Next --}}
+                                    <button @click="next()" 
+                                            x-show="images.length > 1"
+                                            class="absolute right-2 sm:right-4 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300 active:scale-95">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                                    </button>
+
+                                    {{-- Keyboard Hint (Desktop Only) --}}
+                                    <div class="hidden sm:flex absolute bottom-4 left-1/2 -translate-x-1/2 items-center gap-4 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white text-xs">
+                                        <span class="flex items-center gap-1.5">
+                                            <kbd class="px-2 py-0.5 rounded bg-white/20 font-mono">ESC</kbd> Tutup
+                                        </span>
+                                        <span x-show="images.length > 1" class="flex items-center gap-1.5">
+                                            <kbd class="px-2 py-0.5 rounded bg-white/20 font-mono">←</kbd>
+                                            <kbd class="px-2 py-0.5 rounded bg-white/20 font-mono">→</kbd> Navigasi
+                                        </span>
+                                    </div>
+
+                                    {{-- Swipe Hint (Mobile Only) --}}
+                                    <div class="sm:hidden absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white text-xs text-center">
+                                        <span x-show="images.length > 1">Geser untuk navigasi • Tap di luar untuk tutup</span>
+                                        <span x-show="images.length <= 1">Tap di luar untuk tutup</span>
+                                    </div>
                                 </div>
                             </div>
                             @endif
