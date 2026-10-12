@@ -77,6 +77,11 @@ class HeroSlide extends Model
         $this->attributes['subtitle'] = \App\Helpers\HtmlSanitizer::clean($value);
     }
 
+    public function setLinkUrlAttribute($value)
+    {
+        $this->attributes['link_url'] = $value ? trim(preg_replace('/[\x00-\x1F\x7F\xEF\xBF\xBD]/u', '', $value)) : null;
+    }
+
     protected static function booted(): void
     {
         $clearCache = function () {

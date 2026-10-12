@@ -9,30 +9,24 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        // Simpanan Syariah
+        // Kas Keliling
         Product::updateOrCreate(
-            ['name' => 'Tabungan Wadiah'],
+            ['name' => 'Kas Keliling'],
             [
-                'type' => 'simpanan_syariah',
-                'description' => 'Tabungan dengan akad wadiah yang memberikan kemudahan dan keamanan dalam menyimpan dana dengan prinsip syariah.',
+                'type' => 'kas_keliling',
+                'description' => 'Layanan kas keliling untuk memudahkan nasabah bertransaksi secara langsung di berbagai titik lokasi.',
                 'features' => [
-                    'Setoran awal minimal Rp 50.000',
-                    'Tidak ada biaya administrasi bulanan',
-                    'Dapat ditarik kapan saja',
-                    'Mendapat bonus sesuai kebijakan bank',
-                    'Fasilitas ATM dan internet banking'
+                    'Jemput tabungan langsung',
+                    'Setoran dan penarikan tunai',
+                    'Informasi produk dan layanan',
                 ],
                 'requirements' => [
                     'KTP yang masih berlaku',
-                    'NPWP (untuk setoran di atas Rp 20 juta)',
-                    'Setoran awal minimal Rp 50.000',
-                    'Mengisi formulir pembukaan rekening'
+                    'Buku tabungan / kartu identitas nasabah',
                 ],
                 'benefits' => [
-                    'Aman dan terpercaya',
-                    'Sesuai prinsip syariah',
-                    'Mudah diakses',
-                    'Bonus yang kompetitif'
+                    'Lebih dekat dan praktis',
+                    'Aman dan efisien',
                 ],
                 'is_active' => true,
                 'order_position' => 1

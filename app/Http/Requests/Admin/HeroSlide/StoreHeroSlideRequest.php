@@ -44,6 +44,7 @@ class StoreHeroSlideRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
+            'link_url' => $this->filled('link_url') ? trim(preg_replace('/[\x00-\x1F\x7F\xEF\xBF\xBD]/u', '', (string)$this->input('link_url'))) : null,
             'is_active' => $this->boolean('is_active'),
             'show_title' => $this->boolean('show_title'),
             'show_subtitle' => $this->boolean('show_subtitle'),
