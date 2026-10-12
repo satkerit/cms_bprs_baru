@@ -18,7 +18,7 @@ class UpdateHeroSlideRequest extends FormRequest
         return [
             'title' => 'nullable|string|max:255',
             'subtitle' => 'nullable|string|max:500',
-            'image' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$heroMaxKb}|dimensions:min_width=1920,min_height=800,max_width=7680,max_height=4320",
+            'image' => "nullable|image|mimes:jpeg,png,jpg,webp|max:{$heroMaxKb}",
             'link_url' => 'nullable|string|max:255',
             'link_text' => 'nullable|string|max:100',
             'is_active' => 'boolean',

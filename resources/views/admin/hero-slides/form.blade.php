@@ -56,7 +56,7 @@
                     @error('image')<p class="text-[13px] text-red-600 font-medium">{{ $message }}</p>@enderror
 
                     {{-- Focal Point Selector --}}
-                    @if($heroSlide && $heroSlide->image)
+                    @if(isset($heroSlide) && $heroSlide->image)
                     <x-admin.card title="Titik Fokus (Focal Point)">
                         <div class="space-y-3">
                             <p class="text-[12px] dark:text-slate-400 text-slate-500">Klik pada gambar untuk menentukan titik fokus. Titik ini akan dijaga agar tetap terlihat di semua ukuran layar.</p>
