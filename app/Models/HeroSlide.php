@@ -79,7 +79,26 @@ class HeroSlide extends Model
 
     public function setLinkUrlAttribute($value)
     {
-        $this->attributes['link_url'] = $value ? trim(preg_replace('/[\x00-\x1F\x7F\xEF\xBF\xBD]/u', '', $value)) : null;
+        if (!$value) {
+            $this->attributes['link_url'] = null;
+            return;
+        }
+
+        // Hapus UTF-8 replacement char (\uFFFD / 0xEF 0xBF 0xBD) dan kontrol karakter
+        $cleaned = str_replace(["\xEF\xBF\xBD", "\u{FFFD}"], '', (string) $value);
+        $cleaned = preg_replace('/[\x00-\x1F\x7F]/u', '', $cleaned);
+
+        $this->attributes['link_url'] = trim($cleaned) !== '' ? trim($cleaned) : null;
+    }
+
+    public function getLinkUrlAttribute($value)
+    {
+        if (!$value) {
+            return null;
+        }
+
+        $cleaned = str_replace(["\xEF\xBF\xBD", "\u{FFFD}"], '', (string) $value);
+        return trim($cleaned) !== '' ? trim($cleaned) : null;
     }
 
     protected static function booted(): void
