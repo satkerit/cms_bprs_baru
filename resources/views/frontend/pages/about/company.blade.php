@@ -201,7 +201,7 @@
                         @if($info?->ojk_license || $info?->ojk_tagline)
                         <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 text-center border border-white/15">
                             <div class="text-2xl sm:text-3xl font-bold text-emerald-300">OJK</div>
-                            <div class="text-xs text-white/70 mt-1 leading-tight">Terdaftar &amp;<br>Diawasi</div>
+                            <div class="text-xs text-white/70 mt-1 leading-tight">Berizin &amp;<br>Diawasi</div>
                         </div>
                         @endif
                         @if($info?->lps_tagline || $info?->lps_guarantee_amount)
