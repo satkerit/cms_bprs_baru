@@ -248,6 +248,126 @@ class CompanyInfo extends Model
     }
 
     /**
+     * Jam operasional ternormalisasi (7 hari berurutan: Senin–Minggu).
+     * Sumber tunggal untuk halaman detail kantor & kontak.
+     * Mendukung format: indexed+day (form admin), keyed nama hari, keyed string lama,
+     * rentang gabungan ("Senin - Jumat"), dan "Setiap Hari".
+     */
+    public function operationalSchedule(): array
+    {
+        $canonicalDays = ['Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu', 'Minggu'];
+        $raw = is_array($this->operational_hours) ? $this->operational_hours : [];
+
+        $hoursMap = [];
+        foreach ($raw as $key => $value) {
+            if ($key === 'notes') {
+                continue;
+            }
+            if (is_array($value)) {
+                if (isset($value['day'])) {
+                    $entry = $value;
+                } elseif (is_numeric($key)) {
+                    $entry = array_merge($value, ['day' => $canonicalDays[(int) $key] ?? (string) $key]);
+                } else {
+                    $entry = array_merge(['day' => (string) $key], $value);
+                }
+            } elseif (is_string($value) && is_string($key)) {
+                $text = trim($value);
+                $closed = in_array(strtolower($text), ['tutup', 'libur', 'closed', 'off', '-', '', '0'], true);
+                $open = $close = null;
+                if (!$closed && preg_match('/(\d{1,2}:\d{2})\s*[-–—]\s*(\d{1,2}:\d{2})/', $text, $m)) {
+                    $open = $m[1];
+                    $close = $m[2];
+                }
+                $entry = ['day' => (string) $key, 'active' => !$closed, 'open' => $open, 'close' => $close];
+            } else {
+                continue;
+            }
+            $hoursMap[(string) ($entry['day'] ?? '')] = $entry;
+        }
+
+        $normDay = fn($s) => mb_strtolower(str_replace(["'", '’'], '', trim((string) $s)));
+        $expanded = [];
+        foreach ($hoursMap as $label => $entry) {
+            $normLabel = $normDay($label);
+            $matched = false;
+            foreach ($canonicalDays as $i => $startDay) {
+                for ($j = $i; $j < count($canonicalDays); $j++) {
+                    $endDay = $canonicalDays[$j];
+                    $pattern = '/^' . preg_quote($normDay($startDay), '/') . '.*' . preg_quote($normDay($endDay), '/') . '$/';
+                    if (preg_match($pattern, $normLabel)) {
+                        for ($k = $i; $k <= $j; $k++) {
+                            $expanded[$canonicalDays[$k]] = array_merge($entry, ['day' => $canonicalDays[$k]]);
+                        }
+                        $matched = true;
+                        break 2;
+                    }
+                }
+            }
+            if (!$matched && $normLabel === 'setiaphari') {
+                foreach ($canonicalDays as $day) {
+                    $expanded[$day] = array_merge($entry, ['day' => $day]);
+                }
+                $matched = true;
+            }
+            if (!$matched) {
+                $single = false;
+                foreach ($canonicalDays as $day) {
+                    if ($normDay($label) === $normDay($day)) {
+                        $expanded[$day] = array_merge($entry, ['day' => $day]);
+                        $single = true;
+                        break;
+                    }
+                }
+                if (!$single) {
+                    $expanded[$label] = $entry;
+                }
+            }
+        }
+        $hoursMap = $expanded;
+
+        $hasAnyData = count($hoursMap) > 0;
+        $schedule = [];
+        foreach ($canonicalDays as $day) {
+            if (isset($hoursMap[$day])) {
+                $schedule[] = $hoursMap[$day];
+            } else {
+                $defaultActive = !$hasAnyData && in_array($day, ['Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at"], true);
+                $schedule[] = [
+                    'day' => $day,
+                    'active' => $defaultActive,
+                    'open' => $defaultActive ? '08:00' : null,
+                    'close' => $defaultActive ? '15:00' : null,
+                ];
+            }
+        }
+
+        return array_merge($schedule, array_filter(
+            $hoursMap,
+            fn($entry, $label) => !in_array($label, $canonicalDays, true),
+            ARRAY_FILTER_USE_BOTH
+        ));
+    }
+
+    /**
+     * Ringkasan singkat jam operasional untuk kartu (mis. "Sen—Jum 08:00—15:00").
+     */
+    public function operationalHoursSummary(): string
+    {
+        $active = array_values(array_filter($this->operationalSchedule(), fn($e) => !empty($e['active'])));
+        if (empty($active)) {
+            return 'Tutup';
+        }
+
+        $first = $active[0];
+        $last = end($active);
+        $range = $first['day'] === $last['day'] ? $first['day'] : $first['day'] . '—' . $last['day'];
+        $times = ($first['open'] && $first['close']) ? " {$first['open']}—{$first['close']}" : '';
+
+        return $range . $times;
+    }
+
+    /**
      * Get social media links
      */
     protected function socialMediaLinks(): Attribute

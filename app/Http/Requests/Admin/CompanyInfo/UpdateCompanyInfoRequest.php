@@ -23,11 +23,11 @@ class UpdateCompanyInfoRequest extends FormRequest
             'established_year' => 'nullable|integer|min:1900|max:' . date('Y'),
 
             // Contact Information
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string|max:50',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:50',
             'fax' => 'nullable|string|max:50',
             'whatsapp' => 'nullable|string|max:50',
-            'email' => 'nullable|email|max:255',
+            'email' => 'required|email|max:255',
             'email_contact' => 'nullable|email|max:255',
             'email_complaint' => 'nullable|email|max:255',
             'email_whistleblowing' => 'nullable|email|max:255',
@@ -91,6 +91,9 @@ class UpdateCompanyInfoRequest extends FormRequest
         return [
             'name.required' => 'Nama perusahaan wajib diisi.',
             'name.max' => 'Nama perusahaan maksimal 255 karakter.',
+            'address.required' => 'Alamat wajib diisi.',
+            'phone.required' => 'Nomor telepon wajib diisi.',
+            'email.required' => 'Email utama wajib diisi.',
             'established_year.min' => 'Tahun berdiri minimal 1900.',
             'established_year.max' => 'Tahun berdiri tidak boleh melebihi tahun sekarang.',
             'email.email' => 'Format email utama tidak valid.',

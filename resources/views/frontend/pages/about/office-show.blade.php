@@ -122,8 +122,9 @@
                     </div>
                     @endif
 
-                    <!-- Operational Hours -->
-                    @if($office->operational_hours && count($office->operational_hours) > 0)
+                    <!-- Operational Hours (dari Pengaturan Website) -->
+                    @php $schedule = $companyInfo?->operationalSchedule() ?? []; @endphp
+                    @if(count($schedule) > 0)
                     <div class="bg-card dark:bg-slate-800 rounded-lg shadow-gray-200/50 dark:shadow-none border border-border dark:border-slate-700 overflow-hidden">
                         <div class="px-6 py-5 border-b border-border bg-muted/50/50">
                             <h2 class="text-lg font-semibold font-bold text-foreground flex items-center gap-3">
@@ -137,13 +138,16 @@
                         </div>
                         <div class="p-6">
                             <div class="space-y-3">
-                                @foreach($office->operational_hours as $day => $hours)
+                                @foreach($schedule as $entry)
+                                @php $isOpen = !empty($entry['active']) && $entry['open'] && $entry['close']; @endphp
                                 <div class="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition border border-transparent hover:border-border">
                                     <div class="flex items-center gap-3">
-                                        <span class="w-2 h-2 rounded-full {{ $hours === 'Tutup' || $hours === 'Libur' ? 'bg-red-400' : 'bg-emerald-600' }}"></span>
-                                        <span class="font-semibold text-muted-foreground">{{ $day }}</span>
+                                        <span class="w-2 h-2 rounded-full {{ $isOpen ? 'bg-emerald-600' : 'bg-red-400' }}"></span>
+                                        <span class="font-semibold text-muted-foreground">{{ $entry['day'] }}</span>
                                     </div>
-                                    <span class="text-muted-foreground font-medium {{ $hours === 'Tutup' || $hours === 'Libur' ? 'text-red-500' : 'text-emerald-600' }}">{{ $hours }}</span>
+                                    <span class="text-muted-foreground font-medium {{ $isOpen ? 'text-emerald-600' : 'text-red-500' }}">
+                                        {{ $isOpen ? $entry['open'] . ' - ' . $entry['close'] : 'Tutup' }}
+                                    </span>
                                 </div>
                                 @endforeach
                             </div>
