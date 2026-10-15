@@ -89,7 +89,7 @@
                                 <svg class="w-7 h-7 sm:w-8 sm:h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </div>
                             <p class="text-xs sm:text-sm font-medium text-secondary dark:text-slate-400 mb-1 tracking-wide uppercase">Jam Operasional</p>
-                            <p class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Sen—Jum 08:00—16:00</p>
+                            <p class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Sen—Jum 08:00—15:00</p>
                         </div>
                     </div>
                 </div>
