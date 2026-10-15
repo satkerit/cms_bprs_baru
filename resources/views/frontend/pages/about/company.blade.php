@@ -207,7 +207,7 @@
                         @if($info?->lps_tagline || $info?->lps_guarantee_amount)
                         <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 text-center border border-white/15">
                             <div class="text-2xl sm:text-3xl font-bold text-amber-300">LPS</div>
-                            <div class="text-xs text-white/70 mt-1 leading-tight">Dijamin<br>Pemerintah</div>
+                            <div class="text-xs text-white/70 mt-1 leading-tight">Dijamin<br>LPS (Lembaga Penjamin Simpanan)</div>
                         </div>
                         @endif
                     </div>
@@ -398,9 +398,6 @@
                 <h2 class="text-3xl sm:text-4xl font-bold text-foreground dark:text-slate-100 tracking-tight">
                     Regulasi & Keamanan
                 </h2>
-                <p class="mt-4 text-secondary dark:text-slate-400 text-base">
-                    Dana Anda aman dan diawasi oleh otoritas resmi pemerintah Republik Indonesia.
-                </p>
             </div>
 
             {{-- Cards stacked vertical — tidak ada grid yang bisa overlap --}}
@@ -418,7 +415,7 @@
                         <div class="flex-1 min-w-0">
                             <div class="flex flex-wrap items-center gap-2 mb-2">
                                 <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest bg-emerald-50 dark:bg-emerald-900/40 px-2.5 py-1 rounded-full">OJK</span>
-                                <h3 class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Terdaftar &amp; Diawasi OJK</h3>
+                                <h3 class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Berizin &amp; Diawasi OJK</h3>
                             </div>
                             @if($info?->ojk_license)
                             <p class="text-sm text-secondary dark:text-slate-400 font-mono mb-2">No. {{ $info->ojk_license }}</p>
@@ -443,7 +440,7 @@
                         <div class="flex-1 min-w-0">
                             <div class="flex flex-wrap items-center gap-2 mb-2">
                                 <span class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest bg-amber-50 dark:bg-amber-900/40 px-2.5 py-1 rounded-full">LPS</span>
-                                <h3 class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Dijamin LPS</h3>
+                                <h3 class="text-base sm:text-lg font-bold text-foreground dark:text-slate-100">Peserta Penjaminan LPS</h3>
                             </div>
                             @if($info?->lps_guarantee_amount)
                             <p class="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-2">
