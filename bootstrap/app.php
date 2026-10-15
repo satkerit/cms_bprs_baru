@@ -12,9 +12,6 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            // Include debug routes
-            Route::middleware('web')->group(base_path('routes/debug.php'));
-
             // Explicit route model binding for WhyChooseUs
             Route::bind('why_choose_us', function ($value) {
                 return \App\Models\WhyChooseUs::findOrFail($value);
