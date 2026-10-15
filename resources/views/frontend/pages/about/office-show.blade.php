@@ -34,7 +34,7 @@
                     </div>
                     @endif
                 </div>
-                <h1 class="text-3xl font-bold md:text-5xl font-bold text-white tracking-tight mb-2">{{ $office->name }}</h1>
+                <h1 class="text-3xl font-bold md:text-5xl text-white tracking-tight mb-2">{{ $office->name }}</h1>
                 <p class="text-white/80 text-base">{{ $office->address }}</p>
             </div>
         </div>

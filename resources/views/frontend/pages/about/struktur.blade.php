@@ -66,7 +66,7 @@
                         <div class="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-6">
                             <svg class="w-10 h-10 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
                         </div>
-                        <h3 class="text-lg font-bold text-foreground mb-2">Struktur Organisasi</h3>
+                        <h2 class="text-lg font-bold text-foreground mb-2">Struktur Organisasi</h2>
                         <p class="text-sm text-secondary dark:text-slate-400 w-full">Gambar struktur organisasi sedang dalam proses pembaruan. Silakan hubungi kami untuk informasi lebih lanjut.</p>
                         <div class="mt-8">
                             <a href="{{ route('contact') }}"

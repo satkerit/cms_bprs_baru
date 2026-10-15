@@ -31,7 +31,7 @@
                         @endif
                     @endif
                 </div>
-                <h1 class="text-2xl font-bold sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">{{ $career->title }}</h1>
+                <h1 class="text-2xl font-bold sm:text-3xl md:text-4xl text-white mb-3 sm:mb-4">{{ $career->title }}</h1>
                 <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-base text-white/90">
                     @if($career->department)
                         <span class="flex items-center gap-1.5 sm:gap-2">

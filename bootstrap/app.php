@@ -77,6 +77,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\DdosProtection::class,
             \App\Http\Middleware\LogVisitor::class,
             \App\Http\Middleware\OptimizeResponse::class,
+            \App\Http\Middleware\FrontendCacheHeaders::class,
             \Spatie\ResponseCache\Middlewares\CacheResponse::class,
             \App\Http\Middleware\SecurityHeaders::class,
         ]);

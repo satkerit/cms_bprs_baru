@@ -134,21 +134,7 @@
     </main>
 
     <!-- Footer -->
-    @php
-        $__footerKey = 'frontend_footer';
-        $__footerTtl = now()->addHour();
-    @endphp
-    @if(!\Illuminate\Support\Facades\Cache::has($__footerKey))
-        @php ob_start(); @endphp
-    @endif
-        @include('frontend.partials.footer')
-    @if(!\Illuminate\Support\Facades\Cache::has($__footerKey))
-        @php
-            $__footerContent = ob_get_clean();
-            echo $__footerContent;
-            \Illuminate\Support\Facades\Cache::put($__footerKey, $__footerContent, $__footerTtl);
-        @endphp
-    @endif
+    @include('frontend.partials.footer')
 
     @livewireScripts(['nonce' => $nonce])
     @stack('scripts')

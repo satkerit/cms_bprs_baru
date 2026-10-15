@@ -21,7 +21,7 @@
                         <div class="w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-br from-secondary/10 to-gray-100 rounded-lg sm:rounded-lg mx-auto flex items-center justify-center mb-4 sm:mb-6 p-6 sm:p-8 border border-border">
                             <img src="{{ \App\Helpers\StorageHelper::url($company->logo) }}" alt="{{ $company->name ?? 'Logo' }}" class="max-w-full max-h-full object-contain">
                         </div>
-                        <h2 class="text-2xl sm:text-2xl font-bold text-foreground">Logo {{ $company->name ?? 'BPRS Bangka Belitung' }}</h2>
+                        <h2 class="text-2xl font-bold text-foreground">Logo {{ $company->name ?? 'BPRS Bangka Belitung' }}</h2>
                         <p class="text-xs sm:text-base text-secondary mt-2">Format tersedia: {{ strtoupper($logoExtension) }}</p>
                     </div>
 

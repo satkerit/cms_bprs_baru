@@ -7,7 +7,7 @@
             <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-3xl font-bold sm:text-4xl font-bold text-white mb-3 sm:mb-4 tracking-tight">Brosur Pembiayaan Syariah</h1>
+            <h1 class="text-3xl font-bold sm:text-4xl text-white mb-3 sm:mb-4 tracking-tight">Brosur Pembiayaan Syariah</h1>
             <p class="text-sm sm:text-lg text-emerald-700 mx-auto px-4">
                 Download informasi lengkap mengenai produk pembiayaan syariah kami.
             </p>
@@ -132,8 +132,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                                     </svg>
                                 </div>
-                                <h3 class="text-lg font-bold text-foreground mb-2">Belum ada brosur tersedia</h3>
-                                <p class="text-muted-foreground">Silakan kembali lagi nanti untuk melihat brosur terbaru.</p>
+                                <p class="text-lg font-bold text-foreground mb-2">Belum ada brosur pada kategori lain</p>
+                <p class="text-muted-foreground">Silakan kembali lagi nanti untuk melihat brosur terbaru.</p>
                             </div>
                         @endforelse
                     </div>

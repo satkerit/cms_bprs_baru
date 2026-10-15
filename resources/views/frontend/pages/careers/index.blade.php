@@ -9,7 +9,7 @@
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <h1 class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight">Karir</h1>
+            <h1 class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 sm:mb-6 tracking-tight">Karir</h1>
             <p class="text-sm sm:text-lg md:text-xl text-emerald-700 mx-auto px-4">Bergabunglah bersama kami dan kembangkan karir Anda di industri perbankan syariah yang terus bertumbuh.</p>
         </div>
     </section>
