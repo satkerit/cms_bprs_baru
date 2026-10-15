@@ -35,7 +35,7 @@
         {{ $attributes->merge([
             'class' => 'input resize-y min-h-[100px] ' . ($error ? 'input-error' : '')
         ]) }}
-    >{{ $value }}</textarea>
+    >{{ $value !== '' ? $value : $slot }}</textarea>
 
     @if($helper && !$error)
         <p class="mt-1 text-[12px] text-slate-400 flex items-center gap-1">
