@@ -104,3 +104,25 @@ Homestead.yaml
 /.ulpi
 /tests/*
 
+# ============================================
+# TOOLS (should not be committed)
+# ============================================
+composer.phar
+*.phar
+
+# ============================================
+# PUBLIC DEV MIRROR (local dev only)
+# ============================================
+/public/dev/
+
+# ============================================
+# PURIFIER CACHE (generated at runtime)
+# ============================================
+/storage/app/purifier/
+
+# ============================================
+# TEMPORARY / SNAPSHOT FILES
+# ============================================
+page.html
+*.snap.html
+
